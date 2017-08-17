@@ -9,6 +9,6 @@ package paq_matriculas;
  *
  * @author ITSY
  */
-public class prueba {
+public class Registro {
     
 }
