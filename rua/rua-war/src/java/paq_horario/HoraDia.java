@@ -15,7 +15,7 @@ public class HoraDia extends Pantalla {
     
     public HoraDia(){
     tab_hora_dia.setId("tab_hora_dia");   //identificador
-    tab_hora_dia.setTabla("yavirac_hora_dia", "id_yhodia", 1);
+    tab_hora_dia.setTabla("yavirac_hora_dia", "ide_yhodia", 1);
     tab_hora_dia.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         

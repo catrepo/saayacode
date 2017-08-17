@@ -14,7 +14,7 @@ public class HoraHora extends Pantalla{
   
     public HoraHora(){
     tab_hora_hora.setId("tab_hora_hora");   //identificador
-    tab_hora_hora.setTabla("yavirac_hora_hora", "id_yhohor", 1);
+    tab_hora_hora.setTabla("yavirac_hora_hora", "ide_yhohor", 1);
     tab_hora_hora.dibujar();
         /*agregarComponente(tab_hora_hora);*/ 
         

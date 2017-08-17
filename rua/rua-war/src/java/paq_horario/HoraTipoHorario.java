@@ -11,7 +11,7 @@ public class HoraTipoHorario extends Pantalla {
     
     public HoraTipoHorario(){
     tab_hora_tipo_horario.setId("tab_hora_tipo_horario");   //identificador
-    tab_hora_tipo_horario.setTabla("yavirac_hora_tipo_horario", "id_yhotih", 1);
+    tab_hora_tipo_horario.setTabla("yavirac_hora_tipo_horario", "ide_yhotih", 1);
     tab_hora_tipo_horario.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         
