@@ -45,5 +45,13 @@ public class TipoSangre extends Pantalla{
     public void eliminar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Tabla getTab_tipo_sangre() {
+        return tab_tipo_sangre;
+    }
+
+    public void setTab_tipo_sangre(Tabla tab_tipo_sangre) {
+        this.tab_tipo_sangre = tab_tipo_sangre;
+    }
     
 }
