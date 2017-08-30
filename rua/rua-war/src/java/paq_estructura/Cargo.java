@@ -46,5 +46,13 @@ public class Cargo extends Pantalla {
     public void eliminar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Tabla getTab_cargo() {
+        return tab_cargo;
+    }
+
+    public void setTab_cargo(Tabla tab_cargo) {
+        this.tab_cargo = tab_cargo;
+    }
     
 }
