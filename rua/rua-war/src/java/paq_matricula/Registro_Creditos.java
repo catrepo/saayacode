@@ -13,6 +13,7 @@ import sistema.aplicacion.Pantalla;
 public class Registro_Creditos extends Pantalla {
 
     public Tabla getTab_registro_credito() {
+        
         return tab_registro_credito;
     }
 
@@ -20,6 +21,7 @@ public class Registro_Creditos extends Pantalla {
         this.tab_registro_credito = tab_registro_credito;
     }
 private Tabla tab_registro_credito = new Tabla();//instanciar tabla del framework
+
     public Registro_Creditos() {
         tab_registro_credito.setId("tab_actividad_evaluacion");// todo objeto instanciado poner id 
         tab_registro_credito.setTabla("yavirac_nota_actividad_evaluac", "ide_ynoace", 1);  // nombre de la base de datos ii la clave primaria
