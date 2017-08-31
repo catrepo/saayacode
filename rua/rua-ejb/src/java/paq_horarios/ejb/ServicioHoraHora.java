@@ -13,17 +13,18 @@ import javax.ejb.LocalBean;
  * @author Andres
  */
 @Stateless
-public class ServicioTipoHorario {
+public class ServicioHoraHora {
     
-           /**
+                  /**
      * Retorna el periodo academico vigente
      *
      * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
      * @return sql del periodo academico
      */
-    public String getTipoHorarios(String activo) {
+    public String getHora(String activo) {
         String sql="";
-        sql="select ide_yhotih, descripcion_yhotih from yavirac_hora_tipo_horario  where activo_yhotih in ("+activo+") order by descripcion_yhotih ";
+        sql="select ide_yhohor, descripcion_yhohor from yavirac_hora_hora  where activo_yhohor in ("+activo+") order by descripcion_yhohor desc";
         return sql;
     }
+    
 }
