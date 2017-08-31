@@ -8,9 +8,10 @@ import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
 import paq_estructura.ebj.ServicioEstructuraOrganizacional;
+import paq_estructura.ebj.ServiciosJornada;
+import paq_estructura.ebj.ServiciosModalidad;
 import paq_horarios.ejb.ServicioTipoHorario;
 import paq_horarios.ejb.ServiciosHorarios;
-import servicios.sistema.ServicioSeguridad;
 import sistema.aplicacion.Pantalla;
 
 public class HoraDefinicion extends Pantalla{
@@ -26,7 +27,12 @@ public class HoraDefinicion extends Pantalla{
     
     @EJB
     private final  ServicioTipoHorario ser_tipohorario = (ServicioTipoHorario) utilitario.instanciarEJB(ServicioTipoHorario.class);
-        
+     
+       @EJB
+    private final  ServiciosModalidad ser_modalidad = (ServiciosModalidad) utilitario.instanciarEJB(ServiciosModalidad.class);
+      
+      @EJB
+    private final  ServiciosJornada ser_jornada = (ServiciosJornada) utilitario.instanciarEJB(ServiciosJornada.class);
     
     public HoraDefinicion(){
         
@@ -43,7 +49,9 @@ public class HoraDefinicion extends Pantalla{
     tab_hora_definicion.setTabla("yavirac_hora_definicion_hora", "ide_yhodeh", 1);
     tab_hora_definicion.setCondicion("ide_ystpea=-1");
     tab_hora_definicion.getColumna("ide_yhothj").setCombo(ser_horarios.getHorarios("true,false"));
-      tab_hora_definicion.getColumna("ide_yhotih").setCombo(ser_tipohorario.getHorarios("true,false"));
+      tab_hora_definicion.getColumna("ide_yhotih").setCombo(ser_tipohorario.getTipoHorarios("true,false"));
+      tab_hora_definicion.getColumna("ide_ystjor").setCombo(ser_jornada.getJornada("true,false"));
+      tab_hora_definicion.getColumna("ide_ystmod").setCombo(ser_modalidad.getModalidad("true,false"));
       tab_hora_definicion.getColumna("ide_ystpea").setVisible(false);
     tab_hora_definicion.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
