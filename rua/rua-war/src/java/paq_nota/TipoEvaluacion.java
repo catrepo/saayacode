@@ -31,17 +31,20 @@ public class TipoEvaluacion extends Pantalla{
     
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipo_evaluacion.insertar();
+       
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipo_evaluacion.guardar();
+        guardarPantalla();
+        
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     tab_tipo_evaluacion.eliminar();//boton guardar devido a la tabla
     }
 
     public Tabla getTab_tipo_evaluacion() {
