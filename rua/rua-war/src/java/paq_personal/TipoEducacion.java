@@ -9,6 +9,6 @@ package paq_personal;
  *
  * @author ITSY
  */
-public class personal {
+public class TipoEducacion {
     
 }
