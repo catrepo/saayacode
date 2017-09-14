@@ -8,12 +8,13 @@ package paq_asistencia;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import sistema.aplicacion.Pantalla;
 
 /**
  *
  * @author Janeth Pullotasig
  */
-public class TipoPersonal {
+public class TipoPersonal extends Pantalla {
     private Tabla tab_tipopersonal = new Tabla();
  
    public TipoPersonal() {
@@ -32,10 +33,31 @@ public class TipoPersonal {
         div_tipopersonal.setId("div_tipopersonal");
         div_tipopersonal.dividir1(pat_tipopersonal);
         
-       //agregarComponente(div_tipopersonal);   
+       agregarComponente(div_tipopersonal);   
     }
    
-   
+   @Override
+    public void insertar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void guardar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Tabla getTab_tipopersonal() {
+        return tab_tipopersonal;
+    }
+
+    public void setTab_tipopersonal(Tabla tab_tipopersonal) {
+        this.tab_tipopersonal = tab_tipopersonal;
+    }
     
     
 }
