@@ -32,7 +32,7 @@ public class TipoPersonal {
         div_tipopersonal.setId("div_tipopersonal");
         div_tipopersonal.dividir1(pat_tipopersonal);
         
-       // agregarComponente (div_tipopersonal);   
+       //agregarComponente(div_tipopersonal);   
     }
    
    
