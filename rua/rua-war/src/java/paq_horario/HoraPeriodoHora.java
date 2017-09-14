@@ -8,9 +8,7 @@ import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
-import paq_estructura.ejb.ServiciosJornada;
-import paq_estructura.ejb.ServiciosModalidad;
-import paq_horarios.ejb.ServicioHoraHora;
+
 import paq_horarios.ejb.ServiciosHorarios;
 import sistema.aplicacion.Pantalla;
 /**
@@ -25,15 +23,9 @@ public class HoraPeriodoHora extends Pantalla {
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
   
-      @EJB
-    private final  ServiciosModalidad ser_modalidad = (ServiciosModalidad) utilitario.instanciarEJB(ServiciosModalidad.class);
-      
-      @EJB
-    private final  ServiciosJornada ser_jornada = (ServiciosJornada) utilitario.instanciarEJB(ServiciosJornada.class);
-      
-      @EJB
-    private final  ServicioHoraHora ser_horahora = (ServicioHoraHora) utilitario.instanciarEJB(ServicioHoraHora.class);
-      
+    @EJB
+    private final  ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
+     
     public HoraPeriodoHora(){
         
         com_periodo_academico.setId("cmb_periodo_academico");
@@ -47,9 +39,9 @@ public class HoraPeriodoHora extends Pantalla {
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
     tab_hora_periodo_hora.setTabla("yavirac_hora_periodo_hor", "ide_yhopeh", 1);
      tab_hora_periodo_hora.setCondicion("ide_ystpea=-1");
-     tab_hora_periodo_hora.getColumna("ide_ystmod").setCombo(ser_modalidad.getModalidad("true,false"));
-     tab_hora_periodo_hora.getColumna("ide_ystjor").setCombo(ser_jornada.getJornada("true,false"));
-     tab_hora_periodo_hora.getColumna("ide_yhohor").setCombo(ser_horahora.getHora("true,false"));
+     tab_hora_periodo_hora.getColumna("ide_ystmod").setCombo(ser_estructura_organizacional.getModalidad("true,false"));
+     tab_hora_periodo_hora.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true,false"));
+     tab_hora_periodo_hora.getColumna("ide_yhohor").setCombo(ser_horarios.getHora("true,false"));
      tab_hora_periodo_hora.getColumna("ide_ystpea").setVisible(false);
     tab_hora_periodo_hora.dibujar();
         /*agregarComponente(tab_hora_hora);*/ 
