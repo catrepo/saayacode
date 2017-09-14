@@ -12,7 +12,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author Nicolas
+ * @author Janeth Pullotasig
  */
 public class Biometrico extends Pantalla {
     
