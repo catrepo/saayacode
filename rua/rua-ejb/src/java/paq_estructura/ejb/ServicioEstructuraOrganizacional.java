@@ -28,4 +28,27 @@ public class ServicioEstructuraOrganizacional {
         return sql;
     }
     
+       /**
+     * Retorna la jornada vigente
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de la jornada
+     */
+    public String getJornada(String activo) {
+        String sql="";
+        sql="select ide_ystjor, descripcion_ystjor from yavirac_stror_jornada  where activo_ystjor in ("+activo+") order by descripcion_ystjor desc";
+        return sql;
+    }   
+    
+              /**
+     * Retorna la modalidad
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getModalidad(String activo) {
+        String sql="";
+        sql="select ide_ystmod, descripcion_ystmod from yavirac_stror_modalidad  where activo_ystmod in ("+activo+") order by descripcion_ystmod desc";
+        return sql;
+    }
 }
