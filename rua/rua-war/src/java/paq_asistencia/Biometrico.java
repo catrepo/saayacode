@@ -5,10 +5,13 @@
  */
 package paq_asistencia;
 
+import framework.componentes.Barra;
 import framework.componentes.Division;
+import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
+import sistema.aplicacion.Utilitario;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Biometrico extends Pantalla {
    public Biometrico() {
        
        tab_biometrico.setId("tab_biometrico");
-        tab_biometrico.setTabla("biometrico","ide_yasbio",1);
+        tab_biometrico.setTabla("yavirac_asis_biometrico","ide_yasbio",1);
         tab_biometrico.dibujar();
         
         
@@ -38,17 +41,19 @@ public class Biometrico extends Pantalla {
       } 
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_biometrico.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_biometrico.guardar();
+        guardarPantalla();
+        
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_biometrico.eliminar();
     }
 
     public Tabla getTab_biometrico() {
@@ -58,6 +63,30 @@ public class Biometrico extends Pantalla {
     public void setTab_biometrico(Tabla tab_biometrico) {
         this.tab_biometrico = tab_biometrico;
     }
+
+    public Utilitario getUtilitario() {
+        return utilitario;
+    }
+
+    public void setUtilitario(Utilitario utilitario) {
+        this.utilitario = utilitario;
+    }
+
+    public Barra getBar_botones() {
+        return bar_botones;
+    }
+
+    public void setBar_botones(Barra bar_botones) {
+        this.bar_botones = bar_botones;
+    }
+
+    public Grupo getGru_pantalla() {
+        return gru_pantalla;
+    }
+
+    public void setGru_pantalla(Grupo gru_pantalla) {
+        this.gru_pantalla = gru_pantalla;
+    }
     
-    
+   
 }
