@@ -20,7 +20,7 @@ public class TipoOcupacion extends Pantalla {
  Tabla tab_tipo_ocupacion = new Tabla ();
  
   public TipoOcupacion (){
-      tab_tipo_ocupacion.setId("tab_tipo_ocupacion ");
+      tab_tipo_ocupacion.setId("tab_tipo_ocupacion");
       tab_tipo_ocupacion.setTabla("yavirac_stror_tipo_ocupacion", "ide_ysttio", 1);
       tab_tipo_ocupacion.dibujar();
       
@@ -30,7 +30,7 @@ public class TipoOcupacion extends Pantalla {
       
       Division div_tipo_ocupacion = new Division ();
       div_tipo_ocupacion.setId("div_tipo_ocupacion");
-      div_tipo_ocupacion.dividir1(tab_tipo_ocupacion);
+      div_tipo_ocupacion.dividir1(pa_tipo_ocupacion);
       
       agregarComponente(div_tipo_ocupacion);
       
@@ -65,32 +65,7 @@ public class TipoOcupacion extends Pantalla {
         this.tab_tipo_ocupacion = tab_tipo_ocupacion;
     }
 
-    public Utilitario getUtilitario() {
-        return utilitario;
-    }
-
-    public void setUtilitario(Utilitario utilitario) {
-        this.utilitario = utilitario;
-    }
-
-    public Barra getBar_botones() {
-        return bar_botones;
-    }
-
-    public void setBar_botones(Barra bar_botones) {
-        this.bar_botones = bar_botones;
-    }
-
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
-
     
-   
     
     }
     
