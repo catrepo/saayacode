@@ -28,23 +28,36 @@ public class TipoTelefonia extends Pantalla {
         
         Division div_tipo_telefonia =new Division ();
        div_tipo_telefonia.setId("div_tipo_telefonia");
-       div_tipo_telefonia.dividir1(tab_tipo_telefonia);  
+       div_tipo_telefonia.dividir1(pa_tipo_telefonia);  
        agregarComponente(div_tipo_telefonia); 
 }
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipo_telefonia.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipo_telefonia.guardar();
+                guardarPantalla();
     }
 
     @Override
-    public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void eliminar(){ 
+        tab_tipo_telefonia.eliminar();
+  
+  
+        
     }
+
+    public Tabla getTab_tipo_telefonia() {
+        return tab_tipo_telefonia;
+    }
+
+    public void setTab_tipo_telefonia(Tabla tab_tipo_telefonia) {
+        this.tab_tipo_telefonia = tab_tipo_telefonia;
+    }
+    
     
     
 }
