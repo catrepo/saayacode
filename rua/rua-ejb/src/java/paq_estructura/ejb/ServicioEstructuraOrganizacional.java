@@ -51,4 +51,10 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystmod, descripcion_ystmod from yavirac_stror_modalidad  where activo_ystmod in ("+activo+") order by descripcion_ystmod desc";
         return sql;
     }
+    
+    public String getCodigoMaximoTabla(String tabla, String primario){
+        String sql="";
+        sql="select 1 as codigo, (case when  max("+primario+") is null then 1 else max("+primario+") end) + 1 as maximo from "+tabla;
+        return sql;
+    }
 }
