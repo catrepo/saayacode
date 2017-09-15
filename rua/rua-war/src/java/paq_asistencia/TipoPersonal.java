@@ -20,8 +20,8 @@ public class TipoPersonal extends Pantalla {
    public TipoPersonal() {
        
        tab_tipopersonal.setId("tab_tipopersonal");
-        tab_tipopersonal.setTabla("tipopersonal","ide_yastpe",1);
-        tab_tipopersonal.setHeader("Tipo Personal");
+        tab_tipopersonal.setTabla("yavirac_asis_tipo_personal","ide_yastpe",1);
+         tab_tipopersonal.setHeader("TIPO PERSONAL");
         tab_tipopersonal.dibujar();
         
         
@@ -39,17 +39,20 @@ public class TipoPersonal extends Pantalla {
    
    @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipopersonal.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipopersonal.guardar();
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipopersonal.eliminar();
+        
+                
     }
 
     public Tabla getTab_tipopersonal() {
