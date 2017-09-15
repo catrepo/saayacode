@@ -21,6 +21,7 @@ public class TipoAsistencia extends Pantalla {
        
        tab_tipoasistencia.setId("tab_tipoasistencia");
        tab_tipoasistencia.setTabla("yavirac_asis_tipo_asistencia","ide_yastas",1);
+       tab_tipoasistencia.setHeader("TIPO ASISTENCIA");
        tab_tipoasistencia.dibujar();
         
         
