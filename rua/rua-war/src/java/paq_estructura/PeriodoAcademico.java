@@ -19,17 +19,17 @@ public class PeriodoAcademico extends Pantalla{
     public PeriodoAcademico (){
            
         
-        tab_periodo_academic.setId("tab_periodo_academic");  // todo objeto instanciado poner id 
+        tab_periodo_academic.setId("tab_periodo_academico");  // todo objeto instanciado poner id 
         
         tab_periodo_academic.setTabla("yavirac_stror_periodo_academic","ide_ytiace",1);    // nom bdd
         tab_periodo_academic.dibujar();
         
         PanelTabla pa_periodoacademico = new PanelTabla();
-        pa_periodoacademico.setId("pa_PeriodoAcademico"); // nombre de i
+        pa_periodoacademico.setId("pa_periodoacademico"); // nombre de i
         pa_periodoacademico.setPanelTabla(tab_periodo_academic);
         
         Division div_periodoacademico = new Division();
-        div_periodoacademico.setId("div_PeriodoAcademico");
+        div_periodoacademico.setId("div_periodoacademico");
         div_periodoacademico.dividir1(pa_periodoacademico);
         
         agregarComponente(div_periodoacademico);
@@ -50,6 +50,14 @@ public class PeriodoAcademico extends Pantalla{
     public void eliminar() {
       tab_periodo_academic.eliminar();
       
+    }
+
+    public Tabla getTab_periodo_academic() {
+        return tab_periodo_academic;
+    }
+
+    public void setTab_periodo_academic(Tabla tab_periodo_academic) {
+        this.tab_periodo_academic = tab_periodo_academic;
     }
     
     
