@@ -1,6 +1,7 @@
 
 package paq_horario;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
 import framework.componentes.Combo;
 import framework.componentes.Dialogo;
@@ -38,7 +39,7 @@ public class HoraDefinicion extends Pantalla{
         
         
         com_periodo_academico.setId("cmb_periodo_academico");
-        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
         com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
        
         bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
@@ -46,6 +47,8 @@ public class HoraDefinicion extends Pantalla{
         
         Boton bot_replicar = new Boton();
         bot_replicar.setIcon("ui-icon-newwin");
+        bot_replicar.setValue("Duplicar");
+        bot_replicar.setTitle("Duplicar");
         bar_botones.agregarBoton(bot_replicar);    
         bot_replicar.setMetodo("replicarDefinicionHora");
         
@@ -160,12 +163,20 @@ public class HoraDefinicion extends Pantalla{
             int numero_filas = set_tab_duplicar_def_hora.getNumeroSeleccionados();
             System.out.println("filas eleccionadas "+numero_filas);
             String valor1="";
-            for (int i=0;i<numero_filas;i++){
+            for (int i=1;i<=numero_filas;i++){
                 
-                valor1= set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "ide_yhodeh");
-                System.out.println("xxxx "+valor1);
+                TablaGenerica codigo_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_definicion_hora", "ide_yhodeh"));
+                String primario = codigo_maximo.getValor("maximo");
+                String insertar= ser_horarios.insertReplicaDefinicionHora(primario, com_dia_periodo_activo.getValue().toString(),set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "ide_yhothj"),set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "ide_yhotih") ,set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "ide_ystjor"),set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "ide_ystmod"),set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "hora_inicio_yhodeh"),set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "hora_final_yhodeh"),set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "activo_yhodeh"));
+                //valor1= set_tab_duplicar_def_hora.getTab_seleccion().getValor(i, "ide_yhodeh");
+                //System.out.println("xxxx "+valor1);
+                utilitario.getConexion().ejecutarSql(insertar);
+               
             }
-                
+                 dia_periodo_activo.cerrar();
+                 set_tab_duplicar_def_hora.cerrar();
+                 filtroComboPeriodoAcademnico();
+                 utilitario.agregarMensaje("Duplicado con exito","");
         }
     }
     
