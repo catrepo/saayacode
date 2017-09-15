@@ -25,6 +25,7 @@ public class Biometrico extends Pantalla {
        
        tab_biometrico.setId("tab_biometrico");
         tab_biometrico.setTabla("yavirac_asis_biometrico","ide_yasbio",1);
+        tab_biometrico.setHeader("BIOMETRICO");
         tab_biometrico.dibujar();
         
         
