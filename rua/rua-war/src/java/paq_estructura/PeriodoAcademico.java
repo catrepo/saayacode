@@ -29,8 +29,8 @@ public class PeriodoAcademico extends Pantalla{
         pa_periodoacademico.setPanelTabla(tab_periodo_academic);
         
         Division div_periodoacademico = new Division();
-        div_periodoacademico.setId("div_nacionalidad");
-        div_periodoacademico.dividir1(tab_periodo_academic);
+        div_periodoacademico.setId("div_PeriodoAcademico");
+        div_periodoacademico.dividir1(pa_periodoacademico);
         
         agregarComponente(div_periodoacademico);
     }
