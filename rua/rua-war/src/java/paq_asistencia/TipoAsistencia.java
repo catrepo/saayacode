@@ -20,7 +20,7 @@ public class TipoAsistencia extends Pantalla {
    public TipoAsistencia() {
        
        tab_tipoasistencia.setId("tab_tipoasistencia");
-       tab_tipoasistencia.setTabla("tipoasistencia","ide_yastas",1);
+       tab_tipoasistencia.setTabla("yavirac_asis_tipo_asistencia","ide_yastas",1);
        tab_tipoasistencia.dibujar();
         
         
@@ -37,17 +37,18 @@ public class TipoAsistencia extends Pantalla {
       } 
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       tab_tipoasistencia.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipoasistencia.guardar();
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipoasistencia.eliminar();
     }
 
     public Tabla getTab_tipoasistencia() {
