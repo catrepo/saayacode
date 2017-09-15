@@ -18,7 +18,7 @@ public class TipoMotivo extends Pantalla {
     private Tabla tab_tipomotivo =new  Tabla();
     public TipoMotivo(){
         tab_tipomotivo.setId("tab_tipomotivo");
-        tab_tipomotivo.setTabla("tipomotivo","ide_yastmo",1);
+        tab_tipomotivo.setTabla("yavirac_asis_tipo_motivo","ide_yastmo",1);
         tab_tipomotivo.dibujar();
         
         
@@ -36,17 +36,18 @@ public class TipoMotivo extends Pantalla {
     }
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipomotivo.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipomotivo.guardar();
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipomotivo.eliminar();
     }
 
     public Tabla getTab_tipomotivo() {
