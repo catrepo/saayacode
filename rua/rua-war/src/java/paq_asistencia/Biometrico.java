@@ -15,7 +15,7 @@ import sistema.aplicacion.Utilitario;
 
 /**
  *
- * @author Janeth Pullotasig
+ * @author Janeth Pullotasig and  Nicolas Cajilema
  */
 public class Biometrico extends Pantalla {
     
@@ -64,29 +64,4 @@ public class Biometrico extends Pantalla {
         this.tab_biometrico = tab_biometrico;
     }
 
-    public Utilitario getUtilitario() {
-        return utilitario;
-    }
-
-    public void setUtilitario(Utilitario utilitario) {
-        this.utilitario = utilitario;
-    }
-
-    public Barra getBar_botones() {
-        return bar_botones;
-    }
-
-    public void setBar_botones(Barra bar_botones) {
-        this.bar_botones = bar_botones;
-    }
-
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
-    
-   
 }
