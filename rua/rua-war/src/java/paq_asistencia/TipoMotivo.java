@@ -19,6 +19,7 @@ public class TipoMotivo extends Pantalla {
     public TipoMotivo(){
         tab_tipomotivo.setId("tab_tipomotivo");
         tab_tipomotivo.setTabla("yavirac_asis_tipo_motivo","ide_yastmo",1);
+        tab_tipomotivo.setHeader("TIPO MOTIVO");
         tab_tipomotivo.dibujar();
         
         
