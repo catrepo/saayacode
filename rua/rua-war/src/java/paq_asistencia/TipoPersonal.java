@@ -21,6 +21,7 @@ public class TipoPersonal extends Pantalla {
        
        tab_tipopersonal.setId("tab_tipopersonal");
         tab_tipopersonal.setTabla("tipopersonal","ide_yastpe",1);
+        tab_tipopersonal.setHeader("Tipo Personal");
         tab_tipopersonal.dibujar();
         
         
