@@ -54,6 +54,7 @@ public class TipoMotivo extends Pantalla {
         return tab_tipomotivo;
     
     }
-   
-    
+   public void setTab_tipomotivo(Tabla tab_tipomotivo){
+       this.tab_tipomotivo = tab_tipomotivo;
+   }
 }
