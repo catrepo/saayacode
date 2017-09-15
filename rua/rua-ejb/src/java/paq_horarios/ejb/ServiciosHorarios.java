@@ -76,10 +76,11 @@ public class ServiciosHorarios {
      * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
      * @return sql del insert replica definicion hora
      */
-    public String getInsertReplicaDefinicionHora(String insertar) {
+    public String insertReplicaDefinicionHora(String ide_yhodeh,String ide_ystpea,String ide_yhothj,String ide_yhotih,String ide_ystjor,String ide_ystmod,String hora_inicio_yhodeh,String hora_final_yhodeh,String activo_yhodeh) {
         String sql="";
         sql="insert into yavirac_hora_definicion_hora (ide_yhodeh, ide_ystpea, ide_yhothj, ide_yhotih, ide_ystjor, ide_ystmod, hora_inicio_yhodeh, hora_final_yhodeh, activo_yhodeh)\n" +
-            "values () ";
+            "values ("+ide_yhodeh+","+ide_ystpea+", "+ide_yhothj+", "+ide_yhotih+", "+ide_ystjor+", "+ide_ystmod+", '"+hora_inicio_yhodeh+"', '"+hora_final_yhodeh+"', "+activo_yhodeh+") ";
         return sql;
     }
+    
 }
