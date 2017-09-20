@@ -21,6 +21,7 @@ public class ActividadEvaluacion extends Pantalla {
     public ActividadEvaluacion() {//constructor
         tab_actividad_evaluacion.setId("tab_actividad_evaluacion");// todo objeto instanciado poner id 
         tab_actividad_evaluacion.setTabla("yavirac_nota_actividad_evaluac", "ide_ynoace", 1);  // nombre de la base de datos ii la clave primaria
+        tab_actividad_evaluacion.setHeader("ACTIVIDAD DE EVALUACIÓN");
         tab_actividad_evaluacion.dibujar();//dibuja la tabla
 
         PanelTabla pa_actividad_evaluacion = new PanelTabla();//intanciamos el panel del framework

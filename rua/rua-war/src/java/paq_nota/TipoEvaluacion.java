@@ -11,7 +11,8 @@ public class TipoEvaluacion extends Pantalla{
  
     public TipoEvaluacion(){
         tab_tipo_evaluacion.setId("tab_tipo_evaluacion");
-        tab_tipo_evaluacion.setTabla("yavirac_nota_tipo_evaluacion", "ide_ynotie", 1);        
+        tab_tipo_evaluacion.setTabla("yavirac_nota_tipo_evaluacion", "ide_ynotie", 1);      
+        tab_tipo_evaluacion.setHeader("TIPO DE EVALUACIÓN");
         tab_tipo_evaluacion.dibujar();
         
         PanelTabla pat_tipo_evaluacion = new PanelTabla();
