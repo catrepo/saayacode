@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.swing.JOptionPane;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 
+
 import paq_horarios.ejb.ServiciosHorarios;
 import sistema.aplicacion.Pantalla;
 
