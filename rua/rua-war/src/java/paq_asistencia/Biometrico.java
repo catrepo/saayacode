@@ -5,6 +5,8 @@
  */
 package paq_asistencia;
 
+import framework.aplicacion.TablaGenerica;
+import framework.componentes.AutoCompletar;
 import framework.componentes.Barra;
 import framework.componentes.Boton;
 import framework.componentes.Dialogo;
@@ -13,13 +15,19 @@ import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
+import framework.componentes.SeleccionCalendario;
 import framework.componentes.Tabla;
 import framework.componentes.Upload;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import jxl.Sheet;
 import jxl.Workbook;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.SelectEvent;
+import paq_asistencia.ejb.ServicioAsistencia;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
 import sistema.aplicacion.Utilitario;
 
@@ -29,14 +37,46 @@ import sistema.aplicacion.Utilitario;
  */
 public class Biometrico extends Pantalla {
     
+    private AutoCompletar aut_opciones=new AutoCompletar();
+    private SeleccionCalendario sec_rango_fechas= new SeleccionCalendario();
     private Tabla tab_biometrico = new Tabla();
     private Upload upl_archivo=new Upload();
     private Dialogo dia_subir_archivo = new Dialogo();
     private List<String[]> lis_importa=null; //Guardo los empleados y el valor del rubro
 
-            
+    @EJB
+    private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
+     @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+     
+     @EJB
+    private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+  
+          
 
+       
    public Biometrico() {
+       
+       aut_opciones.setId("aut_opciones");
+       aut_opciones.setAutoCompletar(ser_personal.getDatopersonal());
+       aut_opciones.setMetodoChange("seleccionarAutocompletar");
+       bar_botones.agregarComponente(new Etiqueta("Seleccione una opcion :"));
+       bar_botones.agregarComponente(aut_opciones);
+       
+       
+       
+       
+       
+       Boton bot_abrir=new Boton();
+       bot_abrir.setValue("Seleccionar Fechas");
+       bot_abrir.setIcon("ui-calendario");
+       bot_abrir.setMetodo("abrirRango");
+       bar_botones.agregarBoton(bot_abrir);
+       
+       sec_rango_fechas.setId("sec_rango_fechas");
+       sec_rango_fechas.getBot_aceptar().setMetodo("aceptarRango");
+       sec_rango_fechas.setFechaActual();
+       agregarComponente(sec_rango_fechas);
        
        bar_botones.getBot_guardar().setRendered(false);
        bar_botones.getBot_eliminar().setRendered(false);
@@ -45,7 +85,7 @@ public class Biometrico extends Pantalla {
        Boton bot_abrir_upload = new Boton();
        bot_abrir_upload.setValue("Subir Marcaciones");
        bot_abrir_upload.setMetodo("abrirUpload");
-      // bar_botones.agregarBoton(bot_abrir_upload);
+        bar_botones.agregarBoton(bot_abrir_upload);
        
        dia_subir_archivo.setId("dia_subir_archivo");
        dia_subir_archivo.setTitle("Subir Marcaciones Biometrico");
@@ -56,9 +96,11 @@ public class Biometrico extends Pantalla {
        
        tab_biometrico.setId("tab_biometrico");
         tab_biometrico.setTabla("yavirac_asis_biometrico","ide_yasbio",1);
+        tab_biometrico.setCondicion("ide_yasbio=-1");
         tab_biometrico.setHeader("BIOMETRICO");
+        tab_biometrico.setLectura(true);
         tab_biometrico.dibujar();
-        
+        tab_biometrico.setRows(10);
         
         PanelTabla pat_biometrico = new PanelTabla();
         pat_biometrico.setId("pat_biometrico");
@@ -71,7 +113,7 @@ public class Biometrico extends Pantalla {
         agregarComponente(div_biometrico);
         
         upl_archivo.setId("upl_archivo");
-		upl_archivo.setMetodo("mensaje");
+		upl_archivo.setMetodo("validarArchivo");
 
 		//upl_archivo.setUpdate("gri_valida");	//	
 		upl_archivo.setAuto(false);
@@ -79,14 +121,41 @@ public class Biometrico extends Pantalla {
 		upl_archivo.setUploadLabel("Validar");
 		upl_archivo.setCancelLabel("Cancelar Seleccion");
                
-         bar_botones.agregarComponente(upl_archivo);
+         //bar_botones.agregarComponente(upl_archivo);
                 
                 Grid gri_valor=new Grid();
 		gri_valor.setColumns(2);
-		//gri_valor.getChildren().add(new Etiqueta("Seleccione Archivo: "));
-		//gri_valor.getChildren().add(upl_archivo);
-		//dia_subir_archivo.setDialogo(gri_valor);        
+		gri_valor.getChildren().add(new Etiqueta("Seleccione Archivo: "));
+		gri_valor.getChildren().add(upl_archivo);
+		dia_subir_archivo.setDialogo(gri_valor);    
+                
       } 
+   public void seleccionarAutocompletar(SelectEvent evt){
+       
+       
+           TablaGenerica tab_codigo_reloj = utilitario.consultar(ser_personal.getDatopersonalReloj(aut_opciones.getValor()));
+           tab_biometrico.setCondicion("num_yasbio = "+tab_codigo_reloj.getValor("codigo_reloj_ypedpe"));
+           tab_biometrico.ejecutarSql();
+           utilitario.addUpdate("tab_biometrico");
+           sec_rango_fechas.cerrar();  
+   }
+
+   public void abrirRango(){
+      sec_rango_fechas.dibujar();
+   }
+   public void aceptarRango(){
+       if (sec_rango_fechas.isFechasValidas()){
+           
+           tab_biometrico.setCondicion("fecha_yasbio between '"+sec_rango_fechas.getFecha1String()+"'  and '"+sec_rango_fechas.getFecha2String()+"'");
+           tab_biometrico.ejecutarSql();
+           utilitario.addUpdate("tab_biometrico");
+           sec_rango_fechas.cerrar();
+       }
+       else
+       {
+           utilitario.agregarMensajeError("Las fechas selccionadas no son validas", "");
+       }
+   }    
    public void mensaje(FileUploadEvent evt){
        System.out.println("rrrrrrrrr");
        utilitario.agregarMensaje("entre", "voi va");
@@ -122,13 +191,47 @@ public class Biometrico extends Pantalla {
 				
 				for (int i = 0; i < int_fin; i++) {
 					//codigo tercero remplaza a str_cedula permite leer el codigo de la factutra
-					String str_codigo_tercero = hoja.getCell(2, i).getContents();	
-					str_codigo_tercero=str_codigo_tercero.trim(); 
-					String str_cedula_cliente =hoja.getCell(3, i).getContents();
-					str_cedula_cliente = str_cedula_cliente.trim();
 					
-					System.out.println("imprimo valor celda factura "+str_codigo_tercero+"  numero d ecedula" +str_cedula_cliente);
-					/*
+            
+                    String str_indice = hoja.getCell(0, i).getContents();	
+		str_indice=str_indice.trim(); 
+                                
+					String str_hora =hoja.getCell(1, i).getContents();
+					str_hora = str_hora.trim();
+					
+					String str_fecha =hoja.getCell(2, i).getContents();
+					str_fecha = str_fecha.trim();
+                                        
+                                        
+                    String str_puerta =hoja.getCell(3, i).getContents();
+					str_puerta = str_puerta.trim();
+                                        
+                    String str_num =hoja.getCell(4, i).getContents();
+					str_num = str_num.trim();
+                                        
+										
+                    String str_nombre =hoja.getCell(5, i).getContents();
+					str_nombre = str_nombre.trim();
+                                        
+                    String str_departemento =hoja.getCell(6, i).getContents();
+					str_departemento = str_departemento.trim();
+					
+                    String str_fecha_registro =hoja.getCell(7, i).getContents();
+					str_fecha_registro = str_fecha_registro.trim();
+					
+		    String str_codigo_reloj =hoja.getCell(8, i).getContents();
+					str_codigo_reloj = str_codigo_reloj.trim();
+					
+					
+		System.out.println("imprimo el valor del Indice "+str_indice+"  hora marcacion" +str_hora+" imprime la fecha " +str_fecha+" Imprime el numero de puerta" +str_puerta+"  Imprime el numero de usuario" +str_num+"  Imprime el nombre del Usuario" +str_nombre+"  imprime en que departamento se encuentra el reloj" +str_departemento
+		+"Imprime la fecha de registro" +str_fecha_registro+"Imprime el codigo del reloj" +str_codigo_reloj );
+					
+					TablaGenerica tab_maximo= utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_asis_biometrico", "ide_yasbio"));
+                                        
+                                        String str_maximo= tab_maximo.getValor("maximo");
+                                        
+                                        utilitario.getConexion().ejecutarSql(ser_asistencia.insertBiometrico(str_maximo, str_indice, str_hora, str_fecha, str_puerta, str_num, str_nombre, str_departemento,str_fecha, str_codigo_reloj,utilitario.getVariable("NICK"),utilitario.getFechaActual(), utilitario.getHoraActual()));
+                                        /*
 					TablaGenerica tab_factura=ser_facturacion.getDatosClienteFactura(str_cedula_cliente, str_codigo_tercero);
 
 					if(tab_factura.isEmpty() ){
@@ -194,6 +297,22 @@ public class Biometrico extends Pantalla {
 
     public void setTab_biometrico(Tabla tab_biometrico) {
         this.tab_biometrico = tab_biometrico;
+    }
+
+    public SeleccionCalendario getSec_rango_fechas() {
+        return sec_rango_fechas;
+    }
+
+    public void setSec_rango_fechas(SeleccionCalendario sec_rango_fechas) {
+        this.sec_rango_fechas = sec_rango_fechas;
+    }
+
+    public AutoCompletar getAut_opciones() {
+        return aut_opciones;
+    }
+
+    public void setAut_opciones(AutoCompletar aut_opciones) {
+        this.aut_opciones = aut_opciones;
     }
 
 
