@@ -12,7 +12,7 @@ public class RegistroCredito extends Pantalla{
         private Tabla tab_registro_credito = new Tabla();//instanciar tabla del framework
         
      public RegistroCredito() {//constructor
-       tab_registro_credito.setId("tab_documento_entregado");// todo objeto instanciado poner id 
+       tab_registro_credito.setId("tab_registro_credito");// todo objeto instanciado poner id 
       //  tab_registro_credito.setTabla("yavirac_matri_docu_entre_matri", "ide_ymdem", 1);  // ponombre de la base de datos ii la clave primaria
         tab_registro_credito.setHeader("REGISTRO DE CREDITOS");
         tab_registro_credito.dibujar();//dibuja la tabla
