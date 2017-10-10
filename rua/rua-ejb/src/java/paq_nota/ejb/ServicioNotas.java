@@ -27,4 +27,16 @@ public class ServicioNotas {
         sql="select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in ("+activo+")";
         return sql;
     }
+    
+     /**
+     * Retorna la Actividad de Evaluacion
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getActividadEvaluacion(String activo) {
+        String sql="";
+        sql="select ide_ynoace,descripcion_ynoace from yavirac_nota_actividad_evaluac  where activo_ynoace in ("+activo+")";
+        return sql;
+    }
 }
