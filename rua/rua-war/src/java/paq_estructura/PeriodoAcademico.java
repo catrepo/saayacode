@@ -23,10 +23,9 @@ public class PeriodoAcademico extends Pantalla {
     Tabla tab_periodo_academic = new Tabla(); // importar tabla 
     Tabla tab_periodo_evaluacion = new Tabla();
     Tabla tab_actividad_evaluacion = new Tabla();
-    
-   @EJB
+
+    @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
-    
 
     public PeriodoAcademico() {
 
@@ -36,7 +35,7 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.setTabla("yavirac_stror_periodo_academic", "ide_ystpea", 1);    // nom bdd
         tab_periodo_academic.agregarRelacion(tab_periodo_evaluacion);
         tab_periodo_academic.agregarRelacion(tab_actividad_evaluacion);
-
+        tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
         tab_periodo_academic.dibujar();
 
         PanelTabla pa_periodoacademico = new PanelTabla();
@@ -45,7 +44,7 @@ public class PeriodoAcademico extends Pantalla {
 
         //tabla perioado de evaluacion
         tab_periodo_evaluacion.setId("tab_periodo_evaluacion");  // todo objeto instanciado poner id 
-        tab_periodo_evaluacion.setIdCompleto("tab_tabulador:tab_periodo_evaluacion");        
+        tab_periodo_evaluacion.setIdCompleto("tab_tabulador:tab_periodo_evaluacion");
         tab_periodo_evaluacion.setTabla("yavirac_nota_periodo_evaluacio", "ide_ynopee", 1);    // nom bdd
         tab_periodo_evaluacion.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         tab_periodo_evaluacion.dibujar();
@@ -56,7 +55,7 @@ public class PeriodoAcademico extends Pantalla {
 
         //tabala  periodo actividad de evaluacion
         tab_actividad_evaluacion.setId("tab_actividad_evaluacion");  // todo objeto instanciado poner id 
-        tab_actividad_evaluacion.setIdCompleto("tab_tabulador:tab_actividad_evaluacion");        
+        tab_actividad_evaluacion.setIdCompleto("tab_tabulador:tab_actividad_evaluacion");
         tab_actividad_evaluacion.setTabla("yavirac_nota_periodo_activ_eva", "ide_ynopae", 1);    // nom bdd
         tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         tab_actividad_evaluacion.dibujar();
