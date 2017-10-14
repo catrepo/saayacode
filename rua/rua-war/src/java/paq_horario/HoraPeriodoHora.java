@@ -11,6 +11,10 @@ import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 
 import paq_horarios.ejb.ServiciosHorarios;
 import sistema.aplicacion.Pantalla;
+import framework.componentes.Dialogo;
+import framework.componentes.Boton;
+import framework.componentes.Grupo;
+import framework.componentes.SeleccionTabla;
 /**
  *
  * @author Andres
@@ -19,6 +23,11 @@ public class HoraPeriodoHora extends Pantalla {
     
     private Tabla tab_hora_periodo_hora = new Tabla();
     private Combo com_periodo_academico = new Combo();
+    private Combo com_dia_modalidad = new Combo();
+     private Dialogo dia_modalidad = new Dialogo();
+     private Combo com_dia_jornada = new Combo();
+     private Dialogo dia_jornada = new Dialogo();
+     private SeleccionTabla set_tab_jornada = new SeleccionTabla();
     
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -35,6 +44,77 @@ public class HoraPeriodoHora extends Pantalla {
         bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
         bar_botones.agregarComponente(com_periodo_academico);
         
+        // creo dialogo para crear modalidad
+        dia_modalidad.setId("dia_modalidad");
+        dia_modalidad.setTitle("Seleccion de Modalidad");
+        dia_modalidad.setWidth("40%");
+        dia_modalidad.setHeight("18%");
+        dia_modalidad.getBot_aceptar().setMetodo("aceptarModalidad");
+        dia_modalidad.setResizable(false);
+        
+        com_dia_modalidad.setId("com_dia_modalidad");
+        com_dia_modalidad.setCombo(ser_estructura_organizacional.getModalidad("true"));
+        
+        Grupo gru_cuerpo = new Grupo();
+        Etiqueta eti_mensaje = new Etiqueta();
+        eti_mensaje.setValue("Seleccione Modalidad                                              ");
+        eti_mensaje.setStyle("font-size: 13px;border: none;text-shadow: 0px 2px 3px #ccc;background: none;");
+        
+        gru_cuerpo.getChildren().add(eti_mensaje);
+        gru_cuerpo.getChildren().add(com_dia_modalidad);
+
+        dia_modalidad.setDialogo(gru_cuerpo);
+        agregarComponente(dia_modalidad);
+        
+        // creo dialogo para crear jornada
+        /*dia_jornada.setId("dia_jornada");
+        dia_jornada.setTitle("Seleccion de Jornada");
+        dia_jornada.setWidth("40%");
+        dia_jornada.setHeight("18%");
+        //dia_jornada.getBot_aceptar().setMetodo("aceptarModalidad");
+        dia_jornada.setResizable(false);
+        
+        com_dia_jornada.setId("com_dia_jornada");
+        com_dia_jornada.setCombo(ser_estructura_organizacional.getJornada("true"));
+        
+        Grupo gru_cuerpo1 = new Grupo();
+        Etiqueta eti_mensaje1 = new Etiqueta();
+        eti_mensaje1.setValue("Seleccione la Jornada      ");
+        eti_mensaje1.setStyle("font-size: 13px;border: none;text-shadow: 0px 2px 3px #ccc;background: none;");
+        
+        gru_cuerpo1.getChildren().add(eti_mensaje1);
+        gru_cuerpo1.getChildren().add(com_dia_jornada);
+
+        dia_jornada.setDialogo(gru_cuerpo1);
+        agregarComponente(dia_jornada);*/
+        set_tab_jornada.setId("set_tab_jornada");
+        set_tab_jornada.setTitle("TABLA DEL PERIODO ACADEMICO");
+        set_tab_jornada.setSeleccionTabla(ser_horarios.getDefinicionJornada("-1"), "ide_ystjor");
+        //set_tab_jornada.getTab_seleccion().getColumna("ide_ystpea").setVisible(false);
+        //set_tab_jornada.getTab_seleccion().getColumna("ide_yhothj").setVisible(false);
+       // set_tab_duplicar_def_hora.getTab_seleccion().getColumna("ide_yhotih").setVisible(false);
+        set_tab_jornada.getTab_seleccion().getColumna("ide_ystjor").setVisible(false);
+        //set_tab_jornada.getTab_seleccion().getColumna("ide_ystmod").setVisible(false);
+       // set_tab_jornada.getTab_seleccion().getColumna("activo_yhodeh").setVisible(false);
+        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystpea").setNombreVisual("Periodo Academico");
+        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystmod").setNombreVisual("Modalidad");
+       // set_tab_duplicar_def_hora.getTab_seleccion().getColumna("descripcion_yhotih").setNombreVisual("Tipo Horario");
+        set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_yhothj").setNombreVisual("Tipo Horario Jornada");
+        //set_tab_jornada.getTab_seleccion().getColumna("hora_inicio_yhodeh").setNombreVisual("Hora Inicial");
+        //set_tab_jornada.getTab_seleccion().getColumna("hora_final_yhodeh").setNombreVisual("Hora Final");
+        
+        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystpea").setOrden(1);
+        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystmod").setOrden(2);
+        //set_tab_duplicar_def_hora.getTab_seleccion().getColumna("descripcion_yhotih").setOrden(3);
+        set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setOrden(1);
+        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_yhothj").setOrden(4);
+        //set_tab_jornada.getTab_seleccion().getColumna("hora_inicio_yhodeh").setOrden(5);
+        //set_tab_jornada.getTab_seleccion().getColumna("hora_final_yhodeh").setOrden(6);
+
+        set_tab_jornada.setWidth("80%");
+        set_tab_jornada.setHeight("70%");
+        agregarComponente(set_tab_jornada);
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
     tab_hora_periodo_hora.setTabla("yavirac_hora_periodo_hor", "ide_yhopeh", 1);
@@ -54,7 +134,12 @@ public class HoraPeriodoHora extends Pantalla {
         div_hora_periodo_hora.dividir1(pat_hora_periodo_hora);
         agregarComponente(div_hora_periodo_hora); 
         
-        
+        Boton bot_replicar = new Boton();
+        bot_replicar.setIcon("ui-icon-newwin");
+        bot_replicar.setValue("Generar");
+        bot_replicar.setTitle("Generar");
+        bar_botones.agregarBoton(bot_replicar);    
+        bot_replicar.setMetodo("generarPeriodoHora");
         
                 }
      public void filtroComboPeriodoAcademnico(){
@@ -80,6 +165,49 @@ public class HoraPeriodoHora extends Pantalla {
        utilitario.addUpdateTabla( tab_hora_periodo_hora, "ide_ystpea", "");
        }
        // tab_hora_periodo_hora.insertar();
+    }
+    public void aceptarModalidad(){
+    
+    if(com_dia_modalidad.getValue() == null){
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la modalidad");
+        return;
+        }
+        else {
+       dia_modalidad.cerrar();
+       set_tab_jornada.getTab_seleccion().setSql(ser_horarios.getDescripcionHora(com_periodo_academico.getValue().toString()));
+            set_tab_jornada.getTab_seleccion().ejecutarSql();
+                    
+            set_tab_jornada.dibujar();;
+            
+                }
+}
+    
+    public void generarPeriodoHora (){
+    
+    if(com_periodo_academico.getValue() == null){
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
+        return;
+        }
+        else {
+       dia_modalidad.dibujar();
+            
+                }
+}
+
+    public Combo getCom_dia_modalidad() {
+        return com_dia_modalidad;
+    }
+
+    public void setCom_dia_modalidad(Combo com_dia_modalidad) {
+        this.com_dia_modalidad = com_dia_modalidad;
+    }
+
+    public Dialogo getDia_modalidad() {
+        return dia_modalidad;
+    }
+
+    public void setDia_modalidad(Dialogo dia_modalidad) {
+        this.dia_modalidad = dia_modalidad;
     }
 
     @Override
@@ -110,6 +238,30 @@ public class HoraPeriodoHora extends Pantalla {
 
     public void setCom_periodo_academico(Combo com_periodo_academico) {
         this.com_periodo_academico = com_periodo_academico;
+    }
+
+    public Combo getCom_dia_jornada() {
+        return com_dia_jornada;
+    }
+
+    public void setCom_dia_jornada(Combo com_dia_jornada) {
+        this.com_dia_jornada = com_dia_jornada;
+    }
+
+    public Dialogo getDia_jornada() {
+        return dia_jornada;
+    }
+
+    public void setDia_jornada(Dialogo dia_jornada) {
+        this.dia_jornada = dia_jornada;
+    }
+
+    public SeleccionTabla getSet_tab_jornada() {
+        return set_tab_jornada;
+    }
+
+    public void setSet_tab_jornada(SeleccionTabla set_tab_jornada) {
+        this.set_tab_jornada = set_tab_jornada;
     }
     
 }
