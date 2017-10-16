@@ -6,11 +6,15 @@
 package paq_titulacion;
 
 import framework.componentes.Barra;
+import framework.componentes.Combo;
 import framework.componentes.Division;
+import framework.componentes.Etiqueta;
 import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import javax.ejb.EJB;
+import paq_titulacion.ejb.ServicioTitulacion;
 import sistema.aplicacion.Pantalla;
 import sistema.aplicacion.Utilitario;
 
@@ -22,11 +26,16 @@ public class Empresa extends Pantalla{
     private Tabla tab_empresa = new Tabla();
     private Tabla tab_representante = new Tabla();
     private Tabla tab_carrera = new Tabla();  
-    
+   // private Combo com_pantalla = new Combo();
+  @EJB
+    private final ServicioTitulacion ser_tiulacion = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
+       
     public Empresa(){
         
-           tab_empresa.setId("tab_empresa");
+           tab_empresa.setId("tab_empresa"); // id del la empresa 
            tab_empresa.setTabla("yavirac_titu_empresa", "ide_ytiemp",1);
+           tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEmpresa());
+           //tab_empresa.getColumna("ide_ytiace").setCombo(ser_tiulacion.getSql());
            tab_empresa.setHeader("Registro de datos de la Empresa");
            tab_empresa.agregarRelacion(tab_carrera);
            tab_empresa.agregarRelacion(tab_representante);
@@ -69,13 +78,15 @@ public class Empresa extends Pantalla{
             tab_tabulador.agregarTab("REPRESENTANTES", pat_representante);
             tab_tabulador.agregarTab("CARRERA", pat_carrera);
             
-             Division div_empresa = new Division();
+            Division div_empresa = new Division();
             div_empresa.setId("div_empresa");
             div_empresa.dividir2(pat_empresa, tab_tabulador, "40%", "H");
 
+        
             
             agregarComponente(div_empresa);
     }
+
     @Override
     public void insertar() {
         if(tab_empresa.isFocus()){
