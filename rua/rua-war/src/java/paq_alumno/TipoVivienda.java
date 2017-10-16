@@ -42,7 +42,7 @@ public class TipoVivienda extends Pantalla {
 
     @Override
     public void guardar() {
-        tab_tipo_vivienda.actualizar();
+        tab_tipo_vivienda.guardar();
         guardarPantalla();
     }
 
