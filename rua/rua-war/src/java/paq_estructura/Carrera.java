@@ -51,11 +51,14 @@ public class Carrera extends Pantalla{
         tab_carrera.eliminar();
         
     }
-    public Tabla getTabla_carrera(){
+
+    public Tabla getTab_carrera() {
         return tab_carrera;
     }
-    public void setTab_carrera(Tabla tab_carrera){
+
+    public void setTab_carrera(Tabla tab_carrera) {
         this.tab_carrera = tab_carrera;
     }
+
     
 }
