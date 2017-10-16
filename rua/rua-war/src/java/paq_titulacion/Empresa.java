@@ -36,7 +36,9 @@ public class Empresa extends Pantalla{
            tab_empresa.setTabla("yavirac_titu_empresa", "ide_ytiemp",1);
            tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEmpresa());
            tab_empresa.getColumna("ide_ytiace").setCombo(ser_tiulacion.getSqlActividadEconomica());
-           tab_empresa.setHeader("Registro de datos de la Empresa");
+           tab_empresa.getColumna("ide_ytitip").setCombo(ser_tiulacion.getSqlTipoProducto());
+           tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEntidad());
+           tab_empresa.setHeader("Registro de datos de la Empresa"); 
            tab_empresa.agregarRelacion(tab_carrera);
            tab_empresa.agregarRelacion(tab_representante);
            tab_empresa.setTipoFormulario(true);
@@ -44,8 +46,8 @@ public class Empresa extends Pantalla{
            tab_empresa.dibujar(); 
     
             
-            tab_representante.setId("tab_representante");
-            tab_representante.setIdCompleto("tab_tabulador:tab_representante");
+            tab_representante.setId("tab_representante");// id de la tabla de representantes
+            tab_representante.setIdCompleto("tab_tabulador:tab_representante");//tabulacion de la tabla representante
 
            tab_representante.setTabla("yavirac_titu_persona_empresa", "ide_ytipee",2);
            tab_representante.setHeader("Registro de los Representantes");
