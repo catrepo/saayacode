@@ -35,7 +35,7 @@ public class Empresa extends Pantalla{
            tab_empresa.setId("tab_empresa"); // id del la empresa 
            tab_empresa.setTabla("yavirac_titu_empresa", "ide_ytiemp",1);
            tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEmpresa());
-           //tab_empresa.getColumna("ide_ytiace").setCombo(ser_tiulacion.getSql());
+           tab_empresa.getColumna("ide_ytiace").setCombo(ser_tiulacion.getSqlActividadEconomica());
            tab_empresa.setHeader("Registro de datos de la Empresa");
            tab_empresa.agregarRelacion(tab_carrera);
            tab_empresa.agregarRelacion(tab_representante);
