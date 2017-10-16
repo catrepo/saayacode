@@ -40,7 +40,7 @@ public Gasto(){
 
     @Override
     public void guardar() {
-       tab_gasto.actualizar();
+       tab_gasto.guardar();
        guardarPantalla();
     }
 
