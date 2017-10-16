@@ -44,7 +44,7 @@ public TipoTratamiento(){
 
     @Override
     public void guardar() {
-       tab_tipo_tratamiento.actualizar();
+       tab_tipo_tratamiento.guardar();
        guardarPantalla();
     }
 
