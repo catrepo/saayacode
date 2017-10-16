@@ -25,7 +25,7 @@ public class TipoEmpresa extends Pantalla{
         
         tab_tipo_empresa.setId("tab_tipo_empresa");
         tab_tipo_empresa.setTabla("yavirac_titu_tipo_empresa", "ide_ytitie", 3);
-        tab_tipo_empresa.setHeader("Tabla Tipo Empresa");
+        tab_tipo_empresa.setHeader("Tipo de Empresa");
         tab_tipo_empresa.dibujar();
             
             PanelTabla pat_tipo_empresa = new PanelTabla();

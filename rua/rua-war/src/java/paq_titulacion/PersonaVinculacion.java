@@ -25,7 +25,7 @@ public class PersonaVinculacion extends Pantalla{
         
             tab_persona_vinculacion.setId("tab_persona_vinculacion");
             tab_persona_vinculacion.setTabla("yavirac_titu_persona_vinculacion", "ide_ytitpv", 5);
-            tab_persona_vinculacion.setHeader("Tabla Persona Vinculacion");
+            tab_persona_vinculacion.setHeader("Persona Encargada de la Vinculacion");
             tab_persona_vinculacion.dibujar();
             
             PanelTabla pat_persona_vinculacion = new PanelTabla();

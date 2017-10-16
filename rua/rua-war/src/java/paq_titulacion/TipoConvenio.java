@@ -24,7 +24,7 @@ public class TipoConvenio extends Pantalla{
         
             tab_tipo_convenio.setId("tab_tipo_convenio");
             tab_tipo_convenio.setTabla("yavirac_titu_tipo_ciclo_conven", "ide_ytitcc", 9);
-            tab_tipo_convenio.setHeader("Tabla Tipo Convenio");
+            tab_tipo_convenio.setHeader("Tipo de Convenio");
             tab_tipo_convenio.dibujar();
     
             

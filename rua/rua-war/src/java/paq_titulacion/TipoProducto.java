@@ -26,7 +26,7 @@ public class TipoProducto extends Pantalla{
         
             tab_tipo_producto.setId("tab_tipo_producto");
             tab_tipo_producto.setTabla("yavirac_titu_tipo_producto", "ide_ytitip", 4);
-            tab_tipo_producto.setHeader("Tabla Tipo Producto");
+            tab_tipo_producto.setHeader("Tipo de Producto");
             tab_tipo_producto.dibujar();
             
             PanelTabla pat_tipo_producto = new PanelTabla();

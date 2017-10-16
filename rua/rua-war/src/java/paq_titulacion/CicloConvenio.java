@@ -24,7 +24,7 @@ public class CicloConvenio extends Pantalla{
         
             tab_ciclo_convenio.setId("tab_ciclo_convenio");
             tab_ciclo_convenio.setTabla("yavirac_titu_carrera_afines", "ide_yticaa", 8);
-            tab_ciclo_convenio.setHeader("Tabla Ciclo Convenio");
+            tab_ciclo_convenio.setHeader("Ciclo de Convenio");
             tab_ciclo_convenio.dibujar(); 
             
             

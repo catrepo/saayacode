@@ -25,7 +25,7 @@ public class TipoEntidad extends Pantalla{
         
             tab_tipo_entidad.setId("tab_tipo_entidad");
             tab_tipo_entidad.setTabla("yavirac_titu_tipo_entidad", "ide_ytitie", 1);
-            tab_tipo_entidad.setHeader("Tabla Tipo Entidad");
+            tab_tipo_entidad.setHeader("Tipo de Entidad");
             tab_tipo_entidad.dibujar();
             
             PanelTabla pat_tipo_entidad = new PanelTabla();
