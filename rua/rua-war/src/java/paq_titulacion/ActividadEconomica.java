@@ -23,7 +23,7 @@ public class ActividadEconomica extends Pantalla{
      public ActividadEconomica(){
          
          tab_actividad_economica.setId("tab_actividad_economica");
-         tab_actividad_economica.setTabla("yavirac_titu_actividad_economic", "ide_ytiace", 2);
+         tab_actividad_economica.setTabla("yavirac_titu_actividad_economic", "ide_ytiace", 1);
          tab_actividad_economica.setHeader("Tabla Actividad Economica");
          tab_actividad_economica.dibujar();
          

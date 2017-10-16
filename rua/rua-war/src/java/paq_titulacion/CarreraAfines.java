@@ -23,7 +23,7 @@ public class CarreraAfines extends Pantalla{
     public CarreraAfines(){
         
             tab_carrera_afines.setId("tab_carrera_afines");
-            tab_carrera_afines.setTabla("yavirac_titu_carrera_afines", "ide_yticaa", 7);
+            tab_carrera_afines.setTabla("yavirac_titu_carrera_afines", "ide_yticaa", 1);
             tab_carrera_afines.setHeader("Tabla Carrera Afines");
             tab_carrera_afines.dibujar();
             

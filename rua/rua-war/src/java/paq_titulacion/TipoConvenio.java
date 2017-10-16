@@ -61,6 +61,7 @@ public class TipoConvenio extends Pantalla{
 
     public void setTab_tipo_convenio(Tabla tab_tipo_convenio) {
         this.tab_tipo_convenio = tab_tipo_convenio;
+        
     }
 
     public Utilitario getUtilitario() {

@@ -25,7 +25,7 @@ public class IntervaloTiempo extends Pantalla{
            tab_intervalo_tiempo.setId("tab_intervalo_tiempo");
            tab_intervalo_tiempo.setTabla("yavirac_titu_carrera_afines", "ide_yticaa",10);
            tab_intervalo_tiempo.setHeader("Tabla Intervalo de Tiempo");
-           tab_intervalo_tiempo.dibujar(); 
+            tab_intervalo_tiempo.dibujar(); 
             
             
             PanelTabla pat_intervalo_tiempo = new PanelTabla();
