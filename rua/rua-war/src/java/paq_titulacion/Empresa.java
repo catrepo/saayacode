@@ -37,7 +37,8 @@ public class Empresa extends Pantalla{
            tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEmpresa());
            tab_empresa.getColumna("ide_ytiace").setCombo(ser_tiulacion.getSqlActividadEconomica());
            tab_empresa.getColumna("ide_ytitip").setCombo(ser_tiulacion.getSqlTipoProducto());
-           tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEntidad());
+           tab_empresa.getColumna("yav_ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEntidad());
+           tab_empresa.getColumna("ide_ystdip").setCombo(ser_tiulacion.getSqlDistribucionPolitica());
            tab_empresa.setHeader("Registro de datos de la Empresa"); 
            tab_empresa.agregarRelacion(tab_carrera);
            tab_empresa.agregarRelacion(tab_representante);
@@ -82,7 +83,7 @@ public class Empresa extends Pantalla{
             
             Division div_empresa = new Division();
             div_empresa.setId("div_empresa");
-            div_empresa.dividir2(pat_empresa, tab_tabulador, "40%", "H");
+            div_empresa.dividir2(pat_empresa, tab_tabulador, "50%", "H");
 
         
             
