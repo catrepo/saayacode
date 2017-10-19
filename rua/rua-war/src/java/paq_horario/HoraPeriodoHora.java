@@ -88,33 +88,14 @@ public class HoraPeriodoHora extends Pantalla {
         dia_jornada.setDialogo(gru_cuerpo1);
         agregarComponente(dia_jornada);*/
         set_tab_jornada.setId("set_tab_jornada");
-        set_tab_jornada.setTitle("TABLA DEL PERIODO ACADEMICO");
-        set_tab_jornada.setSeleccionTabla(ser_horarios.getDefinicionJornada("-1"), "ide_ystjor");
-        //set_tab_jornada.getTab_seleccion().getColumna("ide_ystpea").setVisible(false);
-        //set_tab_jornada.getTab_seleccion().getColumna("ide_yhothj").setVisible(false);
-       // set_tab_duplicar_def_hora.getTab_seleccion().getColumna("ide_yhotih").setVisible(false);
-        set_tab_jornada.getTab_seleccion().getColumna("ide_ystjor").setVisible(false);
-        //set_tab_jornada.getTab_seleccion().getColumna("ide_ystmod").setVisible(false);
-       // set_tab_jornada.getTab_seleccion().getColumna("activo_yhodeh").setVisible(false);
-        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystpea").setNombreVisual("Periodo Academico");
-        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystmod").setNombreVisual("Modalidad");
-       // set_tab_duplicar_def_hora.getTab_seleccion().getColumna("descripcion_yhotih").setNombreVisual("Tipo Horario");
+        set_tab_jornada.setTitle("TABLA DE LA MODALIDAD");
+        set_tab_jornada.setSeleccionTabla(ser_horarios.getDefinicionJornada("-1","-1"), "ide_ystjor");
         set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
-        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_yhothj").setNombreVisual("Tipo Horario Jornada");
-        //set_tab_jornada.getTab_seleccion().getColumna("hora_inicio_yhodeh").setNombreVisual("Hora Inicial");
-        //set_tab_jornada.getTab_seleccion().getColumna("hora_final_yhodeh").setNombreVisual("Hora Final");
-        
-        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystpea").setOrden(1);
-        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystmod").setOrden(2);
-        //set_tab_duplicar_def_hora.getTab_seleccion().getColumna("descripcion_yhotih").setOrden(3);
-        set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setOrden(1);
-        //set_tab_jornada.getTab_seleccion().getColumna("descripcion_yhothj").setOrden(4);
-        //set_tab_jornada.getTab_seleccion().getColumna("hora_inicio_yhodeh").setOrden(5);
-        //set_tab_jornada.getTab_seleccion().getColumna("hora_final_yhodeh").setOrden(6);
 
         set_tab_jornada.setWidth("80%");
         set_tab_jornada.setHeight("70%");
         agregarComponente(set_tab_jornada);
+        
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
     tab_hora_periodo_hora.setTabla("yavirac_hora_periodo_hor", "ide_yhopeh", 1);
@@ -174,9 +155,8 @@ public class HoraPeriodoHora extends Pantalla {
         }
         else {
        dia_modalidad.cerrar();
-       set_tab_jornada.getTab_seleccion().setSql(ser_horarios.getDescripcionHora(com_periodo_academico.getValue().toString()));
-            set_tab_jornada.getTab_seleccion().ejecutarSql();
-                    
+       set_tab_jornada.getTab_seleccion().setSql(ser_horarios.getDefinicionJornada(com_dia_modalidad.getValue().toString(),com_periodo_academico.getValue().toString()));
+            set_tab_jornada.getTab_seleccion().ejecutarSql();              
             set_tab_jornada.dibujar();;
             
                 }
