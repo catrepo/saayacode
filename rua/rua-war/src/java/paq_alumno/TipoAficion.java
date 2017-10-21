@@ -12,7 +12,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author Kelly
+ * @author Kelly Sanaylan
  */
 public class TipoAficion extends Pantalla{
     
