@@ -1,10 +1,13 @@
 
 package paq_matricula;
 
+import framework.componentes.Barra;
 import framework.componentes.Division;
+import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
+import sistema.aplicacion.Utilitario;
 
 
 public class RegistroCredito extends Pantalla{
@@ -28,6 +31,30 @@ public class RegistroCredito extends Pantalla{
         
         agregarComponente(div_registro_credito);//agregar componente
     }
+
+    public Utilitario getUtilitario() {
+        return utilitario;
+    }
+
+    public void setUtilitario(Utilitario utilitario) {
+        this.utilitario = utilitario;
+    }
+
+    public Barra getBar_botones() {
+        return bar_botones;
+    }
+
+    public void setBar_botones(Barra bar_botones) {
+        this.bar_botones = bar_botones;
+    }
+
+    public Grupo getGru_pantalla() {
+        return gru_pantalla;
+    }
+
+    public void setGru_pantalla(Grupo gru_pantalla) {
+        this.gru_pantalla = gru_pantalla;
+    }
     @Override
     public void insertar() {
        tab_registro_credito.insertar();
@@ -45,7 +72,7 @@ public class RegistroCredito extends Pantalla{
     }
     
     //generar geter and seter
-    public Tabla getTab_actividad_evaluacion() {
+    public Tabla getTab_registro_credito() {
         return tab_registro_credito;
     }
 

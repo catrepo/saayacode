@@ -1,10 +1,13 @@
 
 package paq_matricula;
 
+import framework.componentes.Barra;
 import framework.componentes.Division;
+import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
+import sistema.aplicacion.Utilitario;
 
 
 public class TipoRegistro extends Pantalla {
@@ -43,12 +46,37 @@ public class TipoRegistro extends Pantalla {
     public void eliminar() {
        tab_tipo_registro.eliminar();
     }
-     //generar geter and seter
-    public Tabla getTab_actividad_evaluacion() {
+
+    public Tabla getTab_tipo_registro() {
         return tab_tipo_registro;
     }
 
-    public void setTab_actividad_evaluacion(Tabla tab_tipo_registro) {
+    public void setTab_tipo_registro(Tabla tab_tipo_registro) {
         this.tab_tipo_registro = tab_tipo_registro;
     }
+
+    public Utilitario getUtilitario() {
+        return utilitario;
+    }
+
+    public void setUtilitario(Utilitario utilitario) {
+        this.utilitario = utilitario;
+    }
+
+    public Barra getBar_botones() {
+        return bar_botones;
+    }
+
+    public void setBar_botones(Barra bar_botones) {
+        this.bar_botones = bar_botones;
+    }
+
+    public Grupo getGru_pantalla() {
+        return gru_pantalla;
+    }
+
+    public void setGru_pantalla(Grupo gru_pantalla) {
+        this.gru_pantalla = gru_pantalla;
+    }
+     
 }
