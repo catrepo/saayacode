@@ -12,9 +12,9 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author RICARDO
+ * @author RICARDO COLLAHUAZO
  */
-public class Alumnos extends Pantalla {
+ public class Alumnos extends Pantalla {
  private MenuPanel menup=new MenuPanel();
  private int int_opcion=0;
  private Tabla tab_alumno=new Tabla();
