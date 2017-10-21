@@ -10,7 +10,7 @@ import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
 /**
  *
- * @author RICARDO
+ * @author RICARDO COLLAHUAZO
  */
 public class Gasto extends Pantalla {
      Tabla tab_gasto=new Tabla();
