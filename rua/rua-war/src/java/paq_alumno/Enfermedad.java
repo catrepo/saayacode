@@ -12,7 +12,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author RICARDO
+ * @author RICARDO cCOLLAHUAZO
  */
 public class Enfermedad extends Pantalla{
     Tabla tab_enfermedad=new Tabla();
