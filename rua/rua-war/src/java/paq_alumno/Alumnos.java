@@ -5,9 +5,16 @@
  */
 package paq_alumno;
 
+import framework.aplicacion.Columna;
+import framework.componentes.AutoCompletar;
+import framework.componentes.Etiqueta;
 import framework.componentes.MenuPanel;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import javax.ejb.EJB;
+import org.primefaces.event.SelectEvent;
+import paq_alumno.ejb.ServicioAlumno;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import sistema.aplicacion.Pantalla;
 
 /**
@@ -15,18 +22,25 @@ import sistema.aplicacion.Pantalla;
  * @author RICARDO COLLAHUAZO
  */
  public class Alumnos extends Pantalla {
+ private AutoCompletar aut_alumno = new AutoCompletar();
  private MenuPanel menup=new MenuPanel();
  private int int_opcion=0;
  private Tabla tab_alumno=new Tabla();
+    @EJB
+    private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    public Alumnos() {
 
-    public Tabla getTab_alumno() {
-        return tab_alumno;
-    }
+                
+        aut_alumno.setId("aut_alumno");
+        aut_alumno.setAutoCompletar(ser_alumno.getDatosAlumnos("true,false"));
+        aut_alumno.setSize(75);
+        aut_alumno.setMetodoChange("selecionoAutocompletar");
+        bar_botones.agregarComponente(new Etiqueta("Alumno :"));
+        bar_botones.agregarComponente(aut_alumno);
+    
 
-    public void setTab_alumno(Tabla tab_alumno) {
-        this.tab_alumno = tab_alumno;
-    }
- public Alumnos(){
  menup.setMenuPanel("FICHA DEL ESTUDIANTE", "22%");
  menup.agregarItem ("DATOS PERSONALES", "dibujarTablaDatoPersonal", "ui-icon-contact");
  menup.agregarItem ("DATOS FAMILIARES", "dibujarTablaDatosFamiliares", "ui-icon-document");
@@ -37,19 +51,67 @@ import sistema.aplicacion.Pantalla;
  agregarComponente(menup);
  
  }
+public void selecionoAutocompletar(SelectEvent evt){
+    aut_alumno.onSelect(evt);
+utilitario.agregarMensaje("VALOR", aut_alumno.getValor()); 
+utilitario.agregarMensaje("NOMBRE", aut_alumno.getValorArreglo(1));     
+}
+   
+    public AutoCompletar getAut_alumno() {
+        return aut_alumno;
+    }
 
+    public void setAut_alumno(AutoCompletar aut_alumno) {
+        this.aut_alumno = aut_alumno;
+    }
+
+public void alumno(SelectEvent evt){
+    aut_alumno.onSelect(evt);
+    if(aut_alumno!=null){
+        switch(menup.getOpcion()){
+            case 1:
+                dibujarTablaDatoPersonal();
+            break;
+            case 2:
+                dibujarTablaDatosFamiliares();
+            break;
+            case 3:
+                dibujarTablaDatosAcademicos();
+            break;
+            case 4:
+                dibujarTablaDatosLaborales();
+            break;
+            case 5:
+                dibujarTablaDatosMedicos();
+            break;
+            case 6:
+                dibujarTablaAficiones();
+            break;        
+            default:
+                dibujarTablaDatoPersonal();   
+        }                
+    } 
+}
  public void dibujarTablaDatoPersonal(){
  int_opcion=1;
  tab_alumno =new Tabla();
  tab_alumno.setId("tab_alumno");
  tab_alumno.setTipoFormulario(true);
  tab_alumno.setTabla("yavirac_alum_dato_personal", "ide_yaldap", 1);
- tab_alumno.getColumna("Nombre").setUnico(true);
- tab_alumno.getColumna("fecha de nacimiento").setLectura(true);
- tab_alumno.setHeader("DATOS PERSONALES");
+ tab_alumno.setCondicion("ide_yaldap=-1");
+ tab_alumno.getColumna("ide_ystnac").setCombo(ser_estructura.getNacionalidad("true,false"));
+ tab_alumno.setMostrarNumeroRegistros(false);
+ tab_alumno.getGrid().setColumns(4);
  tab_alumno.dibujar();
+ tab_alumno.insertar();
+ tab_alumno.setHeader("DATOS PERSONALES");
      PanelTabla pat_panel1=new PanelTabla();
      pat_panel1.setPanelTabla(tab_alumno);
+     pat_panel1.getMenuTabla().getItem_buscar().setRendered(false);
+     pat_panel1.getMenuTabla().getItem_insertar().setRendered(false);
+     pat_panel1.getMenuTabla().getItem_eliminar().setRendered(false);
+     pat_panel1.getMenuTabla().getItem_actualizar().setRendered(false);
+
      menup.dibujar(1,"DATOS PERSONALES",pat_panel1);     
  }
  public void dibujarTablaDatosFamiliares(){
@@ -72,12 +134,21 @@ public void dibujarTablaAficiones(){
  int_opcion=6;
  menup.dibujar(6,"AFICIONES",null);
 }
+public void limpiar() {
+        aut_alumno.limpiar();
+        menup.limpiar();
+    }
 
     @Override
     public void insertar() {
-      if(int_opcion==1){
-          tab_alumno.insertar();
+      if(menup.getOpcion()==1){
+          
+          dibujarTablaDatoPersonal();
       }  
+      if (menup.getOpcion()==1){
+          aut_alumno.limpiar();
+          tab_alumno.dibujar();
+      }
     }
 
     @Override
@@ -93,6 +164,15 @@ public void dibujarTablaAficiones(){
       if(int_opcion==1){
           tab_alumno.eliminar();
       }
+    }
+    
+    
+    public Tabla getTab_alumno() {
+        return tab_alumno;
+    }
+
+    public void setTab_alumno(Tabla tab_alumno) {
+        this.tab_alumno = tab_alumno;
     }
    } 
 
