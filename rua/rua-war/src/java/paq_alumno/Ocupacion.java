@@ -12,7 +12,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author RICARDO
+ * @author RICARDO COLLAHUAZO
  */
 public class Ocupacion extends Pantalla{
     Tabla tab_ocupacion=new Tabla();
