@@ -57,4 +57,15 @@ public class ServicioEstructuraOrganizacional {
         sql="select 1 as codigo, (case when  max("+primario+") is null then 1 else max("+primario+") end) + 1 as maximo from "+tabla;
         return sql;
     }
+              /**
+     * Retorna la Nacionalidad
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getNacionalidad(String activo) {
+        String sql="";
+        sql="SELECT ide_ystnac, descripcion_ystnac FROM yavirac_stror_nacionalidad where activo_ystnac in ("+activo+")";
+        return sql;
+    }    
 }
