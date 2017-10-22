@@ -100,6 +100,11 @@ public void alumno(SelectEvent evt){
  tab_alumno.setTabla("yavirac_alum_dato_personal", "ide_yaldap", 1);
  tab_alumno.setCondicion("ide_yaldap=-1");
  tab_alumno.getColumna("ide_ystnac").setCombo(ser_estructura.getNacionalidad("true,false"));
+ tab_alumno.getColumna("ide_ysttis").setCombo(ser_estructura.getTipoSangre("true,false"));
+ tab_alumno.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
+ tab_alumno.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+ tab_alumno.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
+ 
  tab_alumno.setMostrarNumeroRegistros(false);
  tab_alumno.getGrid().setColumns(4);
  tab_alumno.dibujar();
