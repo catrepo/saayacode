@@ -67,5 +67,49 @@ public class ServicioEstructuraOrganizacional {
         String sql="";
         sql="SELECT ide_ystnac, descripcion_ystnac FROM yavirac_stror_nacionalidad where activo_ystnac in ("+activo+")";
         return sql;
+    } 
+      /**
+    * Retorna el Tipo de Sangre
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getTipoSangre(String activo) {
+        String sql="";
+        sql="SELECT ide_ysttis, descripcion_ysttis FROM yavirac_stror_tipo_sangre where activo_ysttis in ("+activo+")";
+        return sql;
+    }    
+/**
+    * Retorna el Documento de Identidad
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getDocumentoIdentidad(String activo) {
+        String sql="";
+        sql="SELECT ide_ystdoi, descripcion_ystdoi FROM yavirac_stror_docu__identidad where activo_ystdoi in ("+activo+")";
+        return sql;
+    }  
+    /**
+    * Retorna la Distribucion Politica
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getDistribucionPolitica(String activo) {
+        String sql="";
+        sql="SELECT ide_ystdip, ide_ysttdp, descripcion_ystdip FROM yavirac_stror_distribucion_pol where activo_ystdip in ("+activo+")";
+        return sql;
+    }    
+    /**
+    * Retorna el Estado Civil
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getEstadoCivil(String activo) {
+        String sql="";
+        sql="SELECT ide_ystesc, descripcion_ystesc FROM yavirac_stror_estado_civil where activo_ystesc in ("+activo+")";
+        return sql;
     }    
 }
