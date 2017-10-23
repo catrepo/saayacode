@@ -13,7 +13,7 @@ import javax.ejb.LocalBean;
 
 /**
  *
- * @author Janeth Pullotasig and  Nicolas Cajilema
+ * @author kelly collahuazo
  */
 @Stateless
 public class ServicioAlumno {
