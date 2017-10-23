@@ -104,7 +104,6 @@ public void alumno(SelectEvent evt){
  tab_alumno.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
  tab_alumno.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
  tab_alumno.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
- 
  tab_alumno.setMostrarNumeroRegistros(false);
  tab_alumno.getGrid().setColumns(4);
  tab_alumno.dibujar();
@@ -121,7 +120,24 @@ public void alumno(SelectEvent evt){
  }
  public void dibujarTablaDatosFamiliares(){
  int_opcion=2;
- menup.dibujar(2,"DATOS FAMILIARES",null);
+ tab_alumno =new Tabla();
+ tab_alumno.setId("tab_alumno");
+ tab_alumno.setTipoFormulario(true);
+ tab_alumno.setTabla("yavirac_alum_dato_fami_alumno", "ide_yaldfa", 1);
+ tab_alumno.setCondicion("ide_yaldfa=-1");
+ tab_alumno.setMostrarNumeroRegistros(false);
+ tab_alumno.getGrid().setColumns(4);
+ tab_alumno.dibujar();
+ tab_alumno.insertar();
+ tab_alumno.setHeader("DATOS FAMILIARES ALUMNO");
+     PanelTabla pat_panel2=new PanelTabla();
+     pat_panel2.setPanelTabla(tab_alumno);
+     pat_panel2.getMenuTabla().getItem_buscar().setRendered(false);
+     pat_panel2.getMenuTabla().getItem_insertar().setRendered(false);
+     pat_panel2.getMenuTabla().getItem_eliminar().setRendered(false);
+     pat_panel2.getMenuTabla().getItem_actualizar().setRendered(false);
+
+     menup.dibujar(2,"DATOS FAMILIARES ALUMNO",pat_panel2);  
 }
  public void dibujarTablaDatosAcademicos(){
  int_opcion=3;
