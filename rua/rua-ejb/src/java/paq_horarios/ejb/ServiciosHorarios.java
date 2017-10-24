@@ -87,5 +87,60 @@ public class ServiciosHorarios {
             "values ("+ide_yhodeh+","+ide_ystpea+", "+ide_yhothj+", "+ide_ystjor+", "+ide_ystmod+", '"+hora_inicio_yhodeh+"', '"+hora_final_yhodeh+"', "+activo_yhodeh+") ";
         return sql;
     }
-    
+ 
+       /**
+     * Retorna el Periodo de la Hora
+     *
+     * @param activo.- permite el calculo de periodo de la hora 
+     * @return sql del periodo de la hora 
+     */
+    public String getPeriodoHora(String ide_yhothj, String ide_ystpea) {
+        String sql="";
+        sql="SELECT   y.ide_yhodeh,y.ide_ystpea,y.ide_yhothj,y.ide_ystjor,y.ide_ystmod,y.descripcion_yhothj,y.descripcion_ystjor,y.descripcion_ystmod,y.hora_inicio_yhodeh,y.hora_final_yhodeh,y.resultado,x.descripcion_yhothj,x.descripcion_ystjor,x.descripcion_ystmod,\n" +
+"x.hora_inicio_yhodeh,x.hora_final_yhodeh,\n" +
+"(case when x.resultado is null then 0 else x.resultado end)as resultadoreceso,\n" +
+"(case when x.hora_clase_ystpea is null then 0 else x.hora_clase_ystpea end),\n" +
+"(case when (y.resultado - x.resultado) / y.hora_clase_ystpea is null then 0 else (y.resultado - x.resultado) / y.hora_clase_ystpea end) as resultadofinal\n" +
+"from (SELECT   ide_yhodeh,c.ide_ystpea, c.ide_yhothj, f.descripcion_yhothj,c.ide_ystjor,b.descripcion_ystjor,c.ide_ystmod,e.descripcion_ystmod,\n" +
+"date_part('hour', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp))) as hora1,\n" +
+" date_part('hour', cast('2001-02-16 '||hora_final_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-09-30 '||hora_final_yhodeh as timestamp))) as hora2,\n" +
+"hora_inicio_yhodeh,hora_final_yhodeh,\n" +
+"( date_part('hour', cast('2001-02-16 '||hora_final_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-09-30 '||hora_final_yhodeh as timestamp)))) - \n" +
+"(date_part('hour', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp)))) as resultado,\n" +
+" d.hora_clase_ystpea\n" +
+"from yavirac_hora_definicion_hora c , yavirac_stror_periodo_academic d, yavirac_stror_jornada b, yavirac_stror_modalidad e, yavirac_hora_tipo_horario_jorna f\n" +
+"where c.ide_ystpea = d.ide_ystpea\n" +
+"and c.ide_ystjor=b.ide_ystjor\n" +
+"and c.ide_ystmod=e.ide_ystmod\n" +
+"and c.ide_yhothj=f.ide_yhothj\n" +
+"and c.ide_yhothj= "+ide_yhothj+"\n" +
+"and c.ide_ystpea="+ide_ystpea+"\n" +
+") y\n" +
+"left join (\n" +
+"SELECT   ide_yhodeh,c.ide_ystpea, c.ide_yhothj, f.descripcion_yhothj,c.ide_ystjor,b.descripcion_ystjor,c.ide_ystmod,e.descripcion_ystmod,\n" +
+"date_part('hour', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp))) as hora1,\n" +
+" date_part('hour', cast('2001-02-16 '||hora_final_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-09-30 '||hora_final_yhodeh as timestamp))) as hora2,\n" +
+"hora_inicio_yhodeh,hora_final_yhodeh,\n" +
+"( date_part('hour', cast('2001-02-16 '||hora_final_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-09-30 '||hora_final_yhodeh as timestamp)))) - \n" +
+"(date_part('hour', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp) ) * 60\n" +
+"+ ( date_part('minute', cast('2017-05-01 '||hora_inicio_yhodeh as timestamp)))) as resultado,\n" +
+" d.hora_clase_ystpea\n" +
+"from yavirac_hora_definicion_hora c , yavirac_stror_periodo_academic d, yavirac_stror_jornada b, yavirac_stror_modalidad e, yavirac_hora_tipo_horario_jorna f\n" +
+"where c.ide_ystpea = d.ide_ystpea\n" +
+"and c.ide_ystjor=b.ide_ystjor\n" +
+"and c.ide_ystmod=e.ide_ystmod\n" +
+"and c.ide_yhothj=f.ide_yhothj\n" +
+"and c.ide_yhothj= "+ide_yhothj+"\n" +
+"and c.ide_ystpea="+ide_ystpea+"\n" +
+") x \n" +
+"on y.ide_ystjor= x.ide_ystjor  ";
+        return sql;
+    }  
 }
