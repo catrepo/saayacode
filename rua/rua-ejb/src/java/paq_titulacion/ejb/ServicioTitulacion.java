@@ -41,12 +41,18 @@ public class ServicioTitulacion {
     } 
        public String getSqlTipoEntidad() {
         String sql="";
-        sql="select ide_ytitie, descripcion_ytitie from yavirac_titu_tipo_entidad order by descripcion_ytitie";
+        sql="select ide_ytiten, descripcion_ytiten from yavirac_titu_tipo_entidad order by descripcion_ytiten";
         return sql;
-}
-       public String getSqlDistribucionPolitica() {
+}     /**
+     * Dervuelve el sql de tipo persona vinculacion
+     *
+     * 
+     * @return la Tabla tip_per
+     */
+    public String getSqlTipoPersonaVincula() {
         String sql="";
-        sql="select ide_ystdip, descripcion_ystdip from yavirac_stror_distribucion_pol order by descripcion_ystdip";
+        sql="select ide_ytitpv, descripcion_ytitpv from yavirac_titu_tipo_per_vinc order by descripcion_ytitpv";
         return sql;
-}
+    }
+
 }
