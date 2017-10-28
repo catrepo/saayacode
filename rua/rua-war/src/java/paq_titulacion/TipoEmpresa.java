@@ -30,8 +30,7 @@ public class TipoEmpresa extends Pantalla{
             
             PanelTabla pat_tipo_empresa = new PanelTabla();
             pat_tipo_empresa.setId("pat_tipo_empresa");
-            pat_tipo_empresa.setPanelTabla(tab_tipo_empresa);
-           
+            pat_tipo_empresa.setPanelTabla(tab_tipo_empresa);       
             Division div_tipo_empresa = new Division();
             div_tipo_empresa.setId("div_tipo_empresa");
             div_tipo_empresa.dividir1(pat_tipo_empresa);

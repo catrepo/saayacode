@@ -14,6 +14,7 @@ import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
 import javax.ejb.EJB;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_titulacion.ejb.ServicioTitulacion;
 import sistema.aplicacion.Pantalla;
 import sistema.aplicacion.Utilitario;
@@ -27,18 +28,21 @@ public class Empresa extends Pantalla{
     private Tabla tab_representante = new Tabla();
     private Tabla tab_carrera = new Tabla();  
    // private Combo com_pantalla = new Combo();
+
+   @EJB
+    private final ServicioTitulacion ser_titulacion = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
   @EJB
-    private final ServicioTitulacion ser_tiulacion = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
-       
-    public Empresa(){
-        
+    private final ServicioEstructuraOrganizacional ser_estructura= (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+   
+    public Empresa() {
+    
            tab_empresa.setId("tab_empresa"); // id del la empresa 
            tab_empresa.setTabla("yavirac_titu_empresa", "ide_ytiemp",1);
-           tab_empresa.getColumna("ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEmpresa());
-           tab_empresa.getColumna("ide_ytiace").setCombo(ser_tiulacion.getSqlActividadEconomica());
-           tab_empresa.getColumna("ide_ytitip").setCombo(ser_tiulacion.getSqlTipoProducto());
-           tab_empresa.getColumna("yav_ide_ytitie").setCombo(ser_tiulacion.getSqlTipoEntidad());
-           tab_empresa.getColumna("ide_ystdip").setCombo(ser_tiulacion.getSqlDistribucionPolitica());
+           tab_empresa.getColumna("ide_ytitie").setCombo(ser_titulacion.getSqlTipoEmpresa());
+           tab_empresa.getColumna("ide_ytiace").setCombo(ser_titulacion.getSqlActividadEconomica());
+           tab_empresa.getColumna("ide_ytitip").setCombo(ser_titulacion.getSqlTipoProducto());
+           //tab_empresa.getColumna("ide_ytiten").setCombo(ser_titulacion.getSqlTipoEntidad());
+           tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
            tab_empresa.setHeader("Registro de datos de la Empresa"); 
            tab_empresa.agregarRelacion(tab_carrera);
            tab_empresa.agregarRelacion(tab_representante);
@@ -52,6 +56,7 @@ public class Empresa extends Pantalla{
 
            tab_representante.setTabla("yavirac_titu_persona_empresa", "ide_ytipee",2);
            tab_representante.setHeader("Registro de los Representantes");
+           tab_representante.getColumna("ide_ytitpv").setCombo(ser_titulacion.getSqlTipoPersonaVincula());
           // tab_representante.setTipoFormulario(true);
             tab_representante.dibujar();
             
