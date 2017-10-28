@@ -9,7 +9,6 @@ import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
 import sistema.aplicacion.Utilitario;
 
-
 public class RegistroCredito extends Pantalla{
     
         private Tabla tab_registro_credito = new Tabla();//instanciar tabla del framework
@@ -47,11 +46,11 @@ public class RegistroCredito extends Pantalla{
         tab_registro_credito.eliminar();
     }
 
-    public Tabla getTab_documento_entregado() {
+    public Tabla getTab_registro_credito() {
         return tab_registro_credito;
     }
 
-    public void setTab_documento_entregado(Tabla tab_registro_credito) {
+    public void setTab_registro_credito(Tabla tab_registro_credito) {
         this.tab_registro_credito = tab_registro_credito;
     }
 
@@ -78,6 +77,8 @@ public class RegistroCredito extends Pantalla{
     public void setGru_pantalla(Grupo gru_pantalla) {
         this.gru_pantalla = gru_pantalla;
     }
+
+   
     
     
 }
