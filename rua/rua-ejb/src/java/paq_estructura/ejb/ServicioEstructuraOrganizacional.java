@@ -112,4 +112,14 @@ public class ServicioEstructuraOrganizacional {
         sql="SELECT ide_ystesc, descripcion_ystesc FROM yavirac_stror_estado_civil where activo_ystesc in ("+activo+")";
         return sql;
     }    
+        public String getMension() {
+        String sql="";
+        sql="SELECT ide_ystmen, descripcion_ystmen FROM yavirac_stror_mension ";
+        return sql;
+    } 
+        public String getNivelEducacion() {
+        String sql="";
+        sql="select ide_ystnie, descripcion_ystnie from yavirac_stror_nivel_educacion ";
+        return sql;
+    } 
 }
