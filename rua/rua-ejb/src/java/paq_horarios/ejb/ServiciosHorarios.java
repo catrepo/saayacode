@@ -143,4 +143,20 @@ public class ServiciosHorarios {
 "on y.ide_ystjor= x.ide_ystjor  ";
         return sql;
     }  
+        public String getGrupoAcademico() {
+        String sql="";
+        sql="SELECT ide_yhogra, detalle_yhogra FROM yavirac_hora_grupo_academic order by detalle_yhogra desc";
+        return sql;
+    }
+   
+        public String getTipoGeneracionHora() {
+        String sql="";
+        sql="SELECT ide_yhotgh, detalle_yhotgh FROM yavirac_hora_tipo_genera_hor ";
+        return sql;
+    }
+        public String getDia() {
+        String sql="";
+        sql="select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc ";
+        return sql;
+    }
 }
