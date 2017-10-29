@@ -8,7 +8,6 @@ import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
-
 import paq_horarios.ejb.ServiciosHorarios;
 import sistema.aplicacion.Pantalla;
 import framework.componentes.Dialogo;
