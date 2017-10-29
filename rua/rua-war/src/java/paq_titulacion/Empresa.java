@@ -29,9 +29,11 @@ public class Empresa extends Pantalla{
     private Tabla tab_carrera = new Tabla();  
    // private Combo com_pantalla = new Combo();
 
-   @EJB
+    @EJB
+
     private final ServicioTitulacion ser_titulacion = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
   @EJB
+
     private final ServicioEstructuraOrganizacional ser_estructura= (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
    
     public Empresa() {
