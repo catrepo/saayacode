@@ -20,7 +20,7 @@ public class DocumentoRequerido extends Pantalla{
      public DocumentoRequerido() {//constructor
         tab_documento_requerido.setId("tab_documento_requerido");// todo objeto instanciado poner id 
         tab_documento_requerido.setTabla("yavirac_matri_docum_req_matri", "ide_ymadrm", 1);  // nombre de la base de datos ii la clave primaria
-        tab_documento_requerido.setHeader("DOCUMENTOS ENTREGADOS");
+        tab_documento_requerido.setHeader("DOCUMENTOS REQUERIDOS");
         tab_documento_requerido.dibujar();//dibuja la tabla
 
         PanelTabla pa_documento_requerido = new PanelTabla();//intanciamos el panel del framework
