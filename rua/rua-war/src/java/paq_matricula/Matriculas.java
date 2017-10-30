@@ -35,13 +35,25 @@ public class Matriculas extends Pantalla{
         //**********************************************************//
         
           tab_matriculas.setId("tab_matriculas");// todo objeto instanciado poner id 
-       tab_matriculas.setTabla("yavirac_matriculas", "ide_yavmat", 1);  // nombre de la base de datos ii la clave primaria
-       tab_matriculas.setHeader("MATRICULAS");
-       tab_matriculas.dibujar();//dibuja la tabla
+          tab_matriculas.setTabla("yavirac_matriculas", "ide_yavmat", 1);  // nombre de la base de datos ii la clave primaria
+          tab_matriculas.setHeader("MATRICULAS");
+          tab_matriculas.dibujar();//dibuja la tabla
+          
+          //*** tabulacion del documento entregado
+          tab_documento_entregado.setId("tab_documento_entregado");// todo objeto instanciado poner id 
+          tab_documento_entregado.setTabla("yavirac_matri_docu_entre_matri", "ide_ymdem", 1);  // nombre de la base de datos ii la clave primaria
+          tab_documento_entregado.setHeader("DOCUMENTOS ENTREGADOS");
+          tab_documento_entregado.dibujar();//dibuja la tabla
+        
+          //*** tabulador de registro de credito
+          tab_registro_credito.setId("tab_registro_credito");// todo objeto instanciado poner id 
+          tab_registro_credito.setTabla("yavirac_matri_regis_cred", "ide_ymarec", 1);  // nombre de la base de datos ii la clave primaria
+          tab_registro_credito.setHeader("REGISTRO DE CREDITOS");
+          tab_registro_credito.dibujar();//dibuja la tabla
         //****************************************************************************//
-        tab_tabulador.agregarTab("USUARIOS",pa_matriculas);
-        tab_tabulador.agregarTab("PESTAÑA VACIA",null);
-        tab_tabulador.agregarTab("PESTAÑA CON ETIQUETA",new Etiqueta("ETIQUETA DENTRO DE UNA PESTAÑA"));
+        tab_tabulador.agregarTab("DOCUMENTOS ENTREGADOS",pa_matriculas);
+        tab_tabulador.agregarTab("REGISTRO DE CREDITOS",null);
+        tab_tabulador.agregarTab("MATRICULAS",new Etiqueta("ETIQUETA DENTRO DE UNA PESTAÑA"));
         
         //instanciar una division del framework
         Division div_matriculas =new Division ();//instanciamos

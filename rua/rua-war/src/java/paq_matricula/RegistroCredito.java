@@ -15,9 +15,9 @@ public class RegistroCredito extends Pantalla{
         
      public RegistroCredito() {//constructor
         tab_registro_credito.setId("tab_registro_credito");// todo objeto instanciado poner id 
-       tab_registro_credito.setTabla("yavirac_matri_tipo_reg_cred", "ide_ymatrc", 1);  // nombre de la base de datos ii la clave primaria
-       tab_registro_credito.setHeader("REGISTRO DE CREDITOS");
-       tab_registro_credito.dibujar();//dibuja la tabla
+        tab_registro_credito.setTabla("yavirac_matri_regis_cred", "ide_ymarec", 1); // nombre de la base de datos ii la clave primaria
+        tab_registro_credito.setHeader("REGISTRO DE CREDITOS");
+        tab_registro_credito.dibujar();//dibuja la tabla
 
         PanelTabla pa_registro_credito = new PanelTabla();//intanciamos el panel del framework
         pa_registro_credito.setId("pa_documento_entregado");//nombre id
