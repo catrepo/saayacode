@@ -70,14 +70,4 @@ public class DocumentoEntregado extends Pantalla{
     public void setBar_botones(Barra bar_botones) {
         this.bar_botones = bar_botones;
     }
-
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
-    
-    
 }
