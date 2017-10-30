@@ -54,14 +54,6 @@ public class RegistroCredito extends Pantalla{
         this.tab_registro_credito = tab_registro_credito;
     }
 
-    public Utilitario getUtilitario() {
-        return utilitario;
-    }
-
-    public void setUtilitario(Utilitario utilitario) {
-        this.utilitario = utilitario;
-    }
-
     public Barra getBar_botones() {
         return bar_botones;
     }
@@ -69,16 +61,5 @@ public class RegistroCredito extends Pantalla{
     public void setBar_botones(Barra bar_botones) {
         this.bar_botones = bar_botones;
     }
-
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
-
-   
-    
     
 }
