@@ -122,4 +122,9 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystnie, descripcion_ystnie from yavirac_stror_nivel_educacion ";
         return sql;
     } 
+        public String getParentezcoFamiliar(String activo) {
+        String sql="";
+        sql="SELECT ide_ystpaf, descripcion_ystpaf  FROM yavirac_stror_parentezco_fami where activo_ystpaf in ("+activo+") ";
+        return sql;
+    } 
 }
