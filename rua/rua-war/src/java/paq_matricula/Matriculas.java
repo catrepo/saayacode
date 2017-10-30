@@ -26,42 +26,46 @@ public class Matriculas extends Pantalla{
        tab_matriculas.setId("tab_matriculas");// todo objeto instanciado poner id 
        tab_matriculas.setTabla("yavirac_matriculas", "ide_yavmat", 1);  // nombre de la base de datos ii la clave primaria
        tab_matriculas.setHeader("MATRICULAS");
+       tab_matriculas.agregarRelacion(tab_documento_entregado);
+       tab_matriculas.agregarRelacion(tab_registro_credito);
+       tab_matriculas.setTipoFormulario(true);
+       tab_matriculas.getGrid().setColumns(4);
        tab_matriculas.dibujar();//dibuja la tabla
 
         PanelTabla pa_matriculas = new PanelTabla();//intanciamos el panel del framework
         pa_matriculas.setId("pa_matriculas");//nombre id
         pa_matriculas.setPanelTabla(tab_matriculas);//agregar a nuestra tabla el panel
         
-        //**********************************************************//
-        
-          tab_matriculas.setId("tab_matriculas");// todo objeto instanciado poner id 
-          tab_matriculas.setTabla("yavirac_matriculas", "ide_yavmat", 1);  // nombre de la base de datos ii la clave primaria
-          tab_matriculas.setHeader("MATRICULAS");
-          tab_matriculas.dibujar();//dibuja la tabla
+
           
           //*** tabulacion del documento entregado
           tab_documento_entregado.setId("tab_documento_entregado");// todo objeto instanciado poner id 
-          tab_documento_entregado.setTabla("yavirac_matri_docu_entre_matri", "ide_ymdem", 1);  // nombre de la base de datos ii la clave primaria
+          tab_documento_entregado.setTabla("yavirac_matri_docu_entre_matri", "ide_ymdem", 2);  // nombre de la base de datos ii la clave primaria
           tab_documento_entregado.setHeader("DOCUMENTOS ENTREGADOS");
           tab_documento_entregado.dibujar();//dibuja la tabla
-        
+          PanelTabla pa_documento_entregado = new PanelTabla();//intanciamos el panel del framework
+          pa_documento_entregado.setId("pa_documento_entregado");//nombre id
+          pa_documento_entregado.setPanelTabla(tab_documento_entregado);//agregar a nuestra tabla el panel
+          tab_documento_entregado.setIdCompleto("tab_tabulador:tab_documento_entregado");
           //*** tabulador de registro de credito
           tab_registro_credito.setId("tab_registro_credito");// todo objeto instanciado poner id 
-          tab_registro_credito.setTabla("yavirac_matri_regis_cred", "ide_ymarec", 1);  // nombre de la base de datos ii la clave primaria
+          tab_registro_credito.setTabla("yavirac_matri_regis_cred", "ide_ymarec", 3);  // nombre de la base de datos ii la clave primaria
           tab_registro_credito.setHeader("REGISTRO DE CREDITOS");
           tab_registro_credito.dibujar();//dibuja la tabla
+          PanelTabla pa_registro_credito = new PanelTabla();//intanciamos el panel del framework
+          pa_registro_credito.setId("pa_documento_entregado");//nombre id
+          pa_registro_credito.setPanelTabla(tab_registro_credito);//agregar a nuestra tabla el panel
+          tab_registro_credito.setIdCompleto("tab_tabulador:tab_registro_credito");
         //****************************************************************************//
-        tab_tabulador.agregarTab("DOCUMENTOS ENTREGADOS",pa_matriculas);
-        tab_tabulador.agregarTab("REGISTRO DE CREDITOS",null);
-        tab_tabulador.agregarTab("MATRICULAS",new Etiqueta("ETIQUETA DENTRO DE UNA PESTAÑA"));
+        tab_tabulador.agregarTab("DOCUMENTOS ENTREGADOS",pa_documento_entregado);
+        tab_tabulador.agregarTab("REGISTRO DE CREDITOS",pa_registro_credito);
         
         //instanciar una division del framework
         Division div_matriculas =new Division ();//instanciamos
         div_matriculas.setId("div_matriculas");//es un idientificador
-        div_matriculas.dividir1(tab_matriculas);
+        div_matriculas.dividir2(pa_matriculas,tab_tabulador,"50%", "H");
         
-        div_matriculas.dividir1(tab_tabulador);
-        
+       
         agregarComponente(div_matriculas);//agregar componente
     }
 
