@@ -10,10 +10,10 @@ public class OpcionAnulacionCredito extends Pantalla{
         private Tabla tab_opcion_anulacion_credito = new Tabla();//instanciar tabla del framework
         
      public OpcionAnulacionCredito() {//constructor
-       tab_opcion_anulacion_credito .setId("tab_opcion_anulacion_credit ");// todo objeto instanciado poner id 
-        tab_opcion_anulacion_credito .setTabla("yavirac_matri_opci_anul_cred", "ide_ymaoac", 1);  // nombre de la base de datos ii la clave primaria
-       tab_opcion_anulacion_credito .setHeader("OPCION ANULACION CREDITO");
-        tab_opcion_anulacion_credito .dibujar();//dibuja la tabla
+       tab_opcion_anulacion_credito.setId("tab_opcion_anulacion_credit ");// todo objeto instanciado poner id 
+        tab_opcion_anulacion_credito.setTabla("yavirac_matri_opci_anul_cred", "ide_ymaoac", 1);  // nombre de la base de datos ii la clave primaria
+       tab_opcion_anulacion_credito.setHeader("OPCION ANULACION CREDITO");
+        tab_opcion_anulacion_credito.dibujar();//dibuja la tabla
 
         PanelTabla pa_opcion_anulacion_credito = new PanelTabla();//intanciamos el panel del framework
         pa_opcion_anulacion_credito.setId("pa_opcion_anulacion_credito");//nombre id
@@ -52,5 +52,6 @@ public class OpcionAnulacionCredito extends Pantalla{
         this.tab_opcion_anulacion_credito = tab_opcion_anulacion_credito;
     }
 
+    
    
 }

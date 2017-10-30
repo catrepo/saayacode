@@ -1,14 +1,10 @@
 package paq_matricula;
 
-import framework.componentes.Barra;
 import framework.componentes.Division;
-import framework.componentes.Etiqueta;
-import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
 import sistema.aplicacion.Pantalla;
-import sistema.aplicacion.Utilitario;
 
 public class Matriculas extends Pantalla{
     
