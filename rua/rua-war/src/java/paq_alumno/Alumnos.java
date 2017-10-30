@@ -7,10 +7,12 @@ package paq_alumno;
 
 import framework.aplicacion.Columna;
 import framework.componentes.AutoCompletar;
+import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.MenuPanel;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import framework.componentes.Tabulador;
 import javax.ejb.EJB;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
@@ -44,6 +46,7 @@ import sistema.aplicacion.Pantalla;
  menup.setMenuPanel("FICHA DEL ESTUDIANTE", "22%");
  menup.agregarItem ("DATOS PERSONALES", "dibujarTablaDatoPersonal", "ui-icon-contact");
  menup.agregarItem ("DATOS FAMILIARES", "dibujarTablaDatosFamiliares", "ui-icon-document");
+ menup.agregarSubMenu("ESTUDIOS");
  menup.agregarItem ("DATOS ACADEMICOS", "dibujarTablaDatosAcademicos", "ui-icon-document");
  menup.agregarItem ("DATOS LABORALES", "dibujarTablaDatosLaborales", "ui-icon-document"); 
  menup.agregarItem ("DATOS MEDICOS", "dibujarTablaDatosMedicos", "ui-icon-document");
@@ -94,8 +97,11 @@ public void alumno(SelectEvent evt){
 }
  public void dibujarTablaDatoPersonal(){
  int_opcion=1;
+ Tabulador tab_tabulador = new Tabulador();
+ tab_tabulador.setId("tab_tabulador");
  tab_alumno =new Tabla();
  tab_alumno.setId("tab_alumno");
+ tab_alumno.setIdCompleto("tab_tabulador:tab_alumno");
  tab_alumno.setTipoFormulario(true);
  tab_alumno.setTabla("yavirac_alum_dato_personal", "ide_yaldap", 1);
  tab_alumno.setCondicion("ide_yaldap=-1");
@@ -111,12 +117,18 @@ public void alumno(SelectEvent evt){
  tab_alumno.setHeader("DATOS PERSONALES");
      PanelTabla pat_panel1=new PanelTabla();
      pat_panel1.setPanelTabla(tab_alumno);
+     tab_tabulador.agregarTab("DIRECCION", pat_panel1); //Agrega un Tab con el Formulario de Usuarios
+     tab_tabulador.agregarTab("TELEFONO", null); //Agrega un Tab sin ningun componente
+     tab_tabulador.agregarTab("CORREO",null);
      pat_panel1.getMenuTabla().getItem_buscar().setRendered(false);
      pat_panel1.getMenuTabla().getItem_insertar().setRendered(false);
      pat_panel1.getMenuTabla().getItem_eliminar().setRendered(false);
      pat_panel1.getMenuTabla().getItem_actualizar().setRendered(false);
-
-     menup.dibujar(1,"DATOS PERSONALES",pat_panel1);     
+     Division div_division= new Division();
+     div_division.dividir1(tab_tabulador);//Agrego el Tabulador a una Division
+     agregarComponente(div_division);//
+     menup.dibujar(1,"DATOS PERSONALES",pat_panel1);  
+     
  }
  public void dibujarTablaDatosFamiliares(){
  int_opcion=2;
@@ -125,6 +137,11 @@ public void alumno(SelectEvent evt){
  tab_alumno.setTipoFormulario(true);
  tab_alumno.setTabla("yavirac_alum_dato_fami_alumno", "ide_yaldfa", 1);
  tab_alumno.setCondicion("ide_yaldfa=-1");
+ tab_alumno.getColumna("ide_yalgas").setCombo(ser_alumno.getDatosVivienda("true,false"));
+ tab_alumno.getColumna("ide_yaltiv").setCombo(ser_alumno.getGasto("true,false"));
+ tab_alumno.getColumna("ide_yalocu").setCombo(ser_alumno.getOcupacion("true,false"));
+ tab_alumno.getColumna("ide_ystpaf").setCombo(ser_estructura.getParentezcoFamiliar("true,false"));
+ tab_alumno.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
  tab_alumno.setMostrarNumeroRegistros(false);
  tab_alumno.getGrid().setColumns(4);
  tab_alumno.dibujar();
@@ -141,6 +158,23 @@ public void alumno(SelectEvent evt){
 }
  public void dibujarTablaDatosAcademicos(){
  int_opcion=3;
+ tab_alumno =new Tabla();
+ tab_alumno.setId("tab_alumno");
+ tab_alumno.setTipoFormulario(true);
+ tab_alumno.setTabla("yavirac_alum_dato_academico", "ide_yaldaa", 1);
+ tab_alumno.setCondicion("ide_yaldaa=-1");
+ tab_alumno.setMostrarNumeroRegistros(false);
+ tab_alumno.getGrid().setColumns(4);
+ tab_alumno.dibujar();
+ tab_alumno.insertar();
+ tab_alumno.setHeader("DATOS ACADEMICOS");
+     PanelTabla pat_panel3=new PanelTabla();
+     pat_panel3.setPanelTabla(tab_alumno);
+     pat_panel3.getMenuTabla().getItem_buscar().setRendered(false);
+     pat_panel3.getMenuTabla().getItem_insertar().setRendered(false);
+     pat_panel3.getMenuTabla().getItem_eliminar().setRendered(false);
+     pat_panel3.getMenuTabla().getItem_actualizar().setRendered(false);
+ 
  menup.dibujar(3,"DATOS ACADEMICOS",null);
 }
 public void dibujarTablaDatosLaborales(){
