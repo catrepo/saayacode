@@ -159,4 +159,9 @@ public class ServiciosHorarios {
         sql="select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc ";
         return sql;
     }
+         public String getMod() {
+        String sql="";
+        sql="select ide_ystmod, descripcion_ystmod from yavirac_stror_modalidad  ";
+        return sql;
+    }
 }
