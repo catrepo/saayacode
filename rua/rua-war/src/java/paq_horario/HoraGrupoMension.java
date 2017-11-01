@@ -70,13 +70,12 @@ public class HoraGrupoMension extends Pantalla {
             utilitario.agregarMensajeError("ERROR", "Seleccione el Periodo Academico");
             return;
         }
-       else {
-       tab_grupo_mension.isFocus();
+       else if (tab_grupo_mension.isFocus()){
        tab_grupo_mension.insertar();
        tab_grupo_mension.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
        utilitario.addUpdateTabla(tab_grupo_mension, "ide_ystpea", "");
        }
-      if (tab_grupo_jornada.isFocus()){
+       else if (tab_grupo_jornada.isFocus()){
             tab_grupo_jornada.insertar();
         }
     }
