@@ -5,9 +5,12 @@
  */
 package paq_horario;
 
+import framework.componentes.Boton;
 import framework.componentes.Combo;
+import framework.componentes.Dialogo;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
+import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -21,6 +24,8 @@ import sistema.aplicacion.Pantalla;
 public class ModalidadDiaHora extends Pantalla{
      private Tabla tab_modalidad_dia_hora = new Tabla();
      private  Combo com_periodo_academico = new Combo();
+     private Dialogo dia_modalidad = new Dialogo();
+     private SeleccionTabla sel_tab_modalidad = new SeleccionTabla();
   
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -53,7 +58,35 @@ public class ModalidadDiaHora extends Pantalla{
         agregarComponente(com_periodo_academico);
         bar_botones.agregarComponente(com_periodo_academico);
         com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
-                }    
+        
+        Boton bot_generarhorario = new Boton();
+        bot_generarhorario.setIcon("ui-icon-newwin");
+        bot_generarhorario.setValue("Generar Matriz Horario");
+        bot_generarhorario.setTitle("Generar Matriz Horario");
+        bar_botones.agregarBoton(bot_generarhorario);    
+        bot_generarhorario.setMetodo("generarMatrizHorario");
+        
+        sel_tab_modalidad.setId("sel_tab_modalidad");
+        sel_tab_modalidad.setTitle("TABLA DE LA MODALIDAD");
+        sel_tab_modalidad.setSeleccionTabla(ser_estructura_organizacional.getModalidad("true,false"), "ide_ystmod");
+        sel_tab_modalidad.getTab_seleccion().getColumna("descripcion_ystmod").setNombreVisual("Modalidad");
+
+        sel_tab_modalidad.setWidth("80%");
+        sel_tab_modalidad.setHeight("70%");
+        agregarComponente(sel_tab_modalidad);
+        
+                }     
+     public void generarMatrizHorario (){
+    
+    if(com_periodo_academico.getValue() == null){
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
+        return;
+        }
+        else {
+       sel_tab_modalidad.dibujar();
+            
+                }
+}
     @Override
     public void insertar() {
         if(com_periodo_academico.getValue() == null){
@@ -95,6 +128,22 @@ public class ModalidadDiaHora extends Pantalla{
 
     public void setCom_periodo_academico(Combo com_periodo_academico) {
         this.com_periodo_academico = com_periodo_academico;
+    }
+
+    public Dialogo getDia_modalidad() {
+        return dia_modalidad;
+    }
+
+    public void setDia_modalidad(Dialogo dia_modalidad) {
+        this.dia_modalidad = dia_modalidad;
+    }
+
+    public SeleccionTabla getSel_tab_modalidad() {
+        return sel_tab_modalidad;
+    }
+
+    public void setSel_tab_modalidad(SeleccionTabla sel_tab_modalidad) {
+        this.sel_tab_modalidad = sel_tab_modalidad;
     }
     
 }
