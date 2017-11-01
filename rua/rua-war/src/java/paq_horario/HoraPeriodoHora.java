@@ -23,10 +23,10 @@ public class HoraPeriodoHora extends Pantalla {
     private Tabla tab_hora_periodo_hora = new Tabla();
     private Combo com_periodo_academico = new Combo();
     private Combo com_dia_modalidad = new Combo();
-     private Dialogo dia_modalidad = new Dialogo();
-     private Combo com_dia_jornada = new Combo();
-     private Dialogo dia_jornada = new Dialogo();
-     private SeleccionTabla set_tab_jornada = new SeleccionTabla();
+    private Dialogo dia_modalidad = new Dialogo();
+    private Combo com_dia_jornada = new Combo();
+    private Dialogo dia_jornada = new Dialogo();
+    private SeleccionTabla set_tab_jornada = new SeleccionTabla();
     
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -156,7 +156,7 @@ public class HoraPeriodoHora extends Pantalla {
        dia_modalidad.cerrar();
        set_tab_jornada.getTab_seleccion().setSql(ser_horarios.getDefinicionJornada(com_dia_modalidad.getValue().toString(),com_periodo_academico.getValue().toString()));
             set_tab_jornada.getTab_seleccion().ejecutarSql();              
-            set_tab_jornada.dibujar();;
+            set_tab_jornada.dibujar();
             
                 }
 }
