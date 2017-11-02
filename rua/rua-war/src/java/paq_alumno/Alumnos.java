@@ -48,8 +48,11 @@ import sistema.aplicacion.Pantalla;
  menup.agregarItem ("DATOS FAMILIARES", "dibujarTablaDatosFamiliares", "ui-icon-document");
  menup.agregarSubMenu("ESTUDIOS");
  menup.agregarItem ("DATOS ACADEMICOS", "dibujarTablaDatosAcademicos", "ui-icon-document");
+ menup.agregarSubMenu("DATOS LABORALES");
  menup.agregarItem ("DATOS LABORALES", "dibujarTablaDatosLaborales", "ui-icon-document"); 
+ menup.agregarSubMenu("DATOS MEDICOS");
  menup.agregarItem ("DATOS MEDICOS", "dibujarTablaDatosMedicos", "ui-icon-document");
+ menup.agregarSubMenu("AFICIONES");
  menup.agregarItem ("AFICIONES", "dibujarTablaAficiones", "ui-icon-document");
  agregarComponente(menup);
  
@@ -175,19 +178,68 @@ public void alumno(SelectEvent evt){
      pat_panel3.getMenuTabla().getItem_eliminar().setRendered(false);
      pat_panel3.getMenuTabla().getItem_actualizar().setRendered(false);
  
- menup.dibujar(3,"DATOS ACADEMICOS",null);
+ menup.dibujar(3,"DATOS ACADEMICOS",pat_panel3);
 }
 public void dibujarTablaDatosLaborales(){
  int_opcion=4;
- menup.dibujar(4,"DATOS LABORALES",null);
+ tab_alumno =new Tabla();
+ tab_alumno.setId("tab_alumno");
+ tab_alumno.setTipoFormulario(true);
+ tab_alumno.setTabla("yavirac_alum_dato_laboral", "ide_yaldal", 1);
+ tab_alumno.setCondicion("ide_yaldal=-1");
+ tab_alumno.setMostrarNumeroRegistros(false);
+ tab_alumno.getGrid().setColumns(4);
+ tab_alumno.dibujar();
+ tab_alumno.insertar();
+ tab_alumno.setHeader("DATOS LABORALES");
+     PanelTabla pat_panel=new PanelTabla();
+     pat_panel.setPanelTabla(tab_alumno);
+     pat_panel.getMenuTabla().getItem_buscar().setRendered(false);
+     pat_panel.getMenuTabla().getItem_insertar().setRendered(false);
+     pat_panel.getMenuTabla().getItem_eliminar().setRendered(false);
+     pat_panel.getMenuTabla().getItem_actualizar().setRendered(false);
+ 
+ menup.dibujar(4,"DATOS LABORALES",pat_panel);
 }
 public void dibujarTablaDatosMedicos(){
  int_opcion=5;
- menup.dibujar(5,"DATOS MEDICOS",null);
+ tab_alumno =new Tabla();
+ tab_alumno.setId("tab_alumno");
+ tab_alumno.setTipoFormulario(true);
+ tab_alumno.setTabla("yavirac_alum_dato_medico", "ide_yaldam", 1);
+ tab_alumno.setCondicion("ide_yaldam=-1");
+ tab_alumno.setMostrarNumeroRegistros(false);
+ tab_alumno.getGrid().setColumns(4);
+ tab_alumno.dibujar();
+ tab_alumno.insertar();
+ tab_alumno.setHeader("DATOS MEDICOS");
+     PanelTabla pat_panel4=new PanelTabla();
+     pat_panel4.setPanelTabla(tab_alumno);
+     pat_panel4.getMenuTabla().getItem_buscar().setRendered(false);
+     pat_panel4.getMenuTabla().getItem_insertar().setRendered(false);
+     pat_panel4.getMenuTabla().getItem_eliminar().setRendered(false);
+     pat_panel4.getMenuTabla().getItem_actualizar().setRendered(false);
+ menup.dibujar(5,"DATOS MEDICOS",pat_panel4);
 }
 public void dibujarTablaAficiones(){
  int_opcion=6;
- menup.dibujar(6,"AFICIONES",null);
+ tab_alumno =new Tabla();
+ tab_alumno.setId("tab_alumno");
+ tab_alumno.setTipoFormulario(true);
+ tab_alumno.setTabla("yavirac_alum_aficion", "ide_yalafi", 1);
+ tab_alumno.setCondicion("ide_yalafi=-1");
+ tab_alumno.setMostrarNumeroRegistros(false);
+ tab_alumno.getGrid().setColumns(4);
+ tab_alumno.dibujar();
+ tab_alumno.insertar();
+ tab_alumno.setHeader("AFICIONES");
+     PanelTabla pat_panel5=new PanelTabla();
+     pat_panel5.setPanelTabla(tab_alumno);
+     pat_panel5.getMenuTabla().getItem_buscar().setRendered(false);
+     pat_panel5.getMenuTabla().getItem_insertar().setRendered(false);
+     pat_panel5.getMenuTabla().getItem_eliminar().setRendered(false);
+     pat_panel5.getMenuTabla().getItem_actualizar().setRendered(false);
+ menup.dibujar(6,"AFICIONES",pat_panel5);
 }
 public void limpiar() {
         aut_alumno.limpiar();
