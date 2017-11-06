@@ -87,7 +87,7 @@ public class ServicioEstructuraOrganizacional {
      */
     public String getDocumentoIdentidad(String activo) {
         String sql="";
-        sql="SELECT ide_ystdoi, descripcion_ystdoi FROM yavirac_stror_docu__identidad where activo_ystdoi in ("+activo+")";
+        sql="SELECT ide_ystdoi, descripcion_ystdoi FROM yavirac_stror_docu_identidad where activo_ystdoi in ("+activo+")";
         return sql;
     }  
     /**
