@@ -29,6 +29,7 @@ import framework.componentes.Texto;
 import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.SelectEvent;
+import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
 import servicios.sistema.ServicioSeguridad;
 
@@ -54,13 +55,13 @@ public class pre_usuarios extends Pantalla {
     private final ListaSeleccion lis_estado_usuarios_2 = new ListaSeleccion();
     private final SeleccionCalendario sec_rango_reporte = new SeleccionCalendario();
     @EJB
-    private final ServicioSeguridad ser_seguridad = (ServicioSeguridad) utilitario
-            .instanciarEJB(ServicioSeguridad.class);
+    private final ServicioSeguridad ser_seguridad = (ServicioSeguridad) utilitario.instanciarEJB(ServicioSeguridad.class);
+    @EJB
+    private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
 
 
 
-    private final int int_longitud_minima_login = ser_seguridad
-            .getLongitudMinimaLogin();
+    private final int int_longitud_minima_login = ser_seguridad.getLongitudMinimaLogin();
     private final Texto tex_nick;
 
     private AutoCompletar aut_usuarios = new AutoCompletar();
@@ -120,9 +121,9 @@ public class pre_usuarios extends Pantalla {
         tab_tabla1.getColumna("CAMBIA_CLAVE_USUA").setLectura(true);
         tab_tabla1.getColumna("CAMBIA_CLAVE_USUA").setCheck();
 
-        //tab_tabla1.getColumna("ide_gtemp").setCombo(ser_nomina.servicioEmpleadosActivos("true,false"));
-        tab_tabla1.getColumna("ide_gtemp").setAutoCompletar();
-        tab_tabla1.getColumna("ide_gtemp").setMetodoChange("seleccionaEmpelado");
+        tab_tabla1.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
+        tab_tabla1.getColumna("ide_ypedpe").setAutoCompletar();
+        tab_tabla1.getColumna("ide_ypedpe").setMetodoChange("seleccionaEmpelado");
 
         tab_tabla1.agregarRelacion(tab_tabla2);
         tab_tabla1.agregarRelacion(tab_tabla3);
@@ -258,8 +259,8 @@ public class pre_usuarios extends Pantalla {
     }
 
     public void seleccionaEmpelado(SelectEvent evt) {
-        if (tab_tabla1.getValor("ide_gtemp") != null) {
-            tab_tabla1.setValor("nom_usua", tab_tabla1.getValorArreglo("ide_gtemp", 1) + tab_tabla1.getValorArreglo("ide_gtemp", 2) + tab_tabla1.getValorArreglo("ide_gtemp", 3) + tab_tabla1.getValorArreglo("ide_gtemp", 4));
+        if (tab_tabla1.getValor("ide_ypedpe") != null) {
+            tab_tabla1.setValor("nom_usua", tab_tabla1.getValorArreglo("ide_ypedpe", 1) + tab_tabla1.getValorArreglo("ide_ypedpe", 2) );
         }
     }
 

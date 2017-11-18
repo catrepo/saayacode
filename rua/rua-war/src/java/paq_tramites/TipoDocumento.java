@@ -23,7 +23,7 @@ public class TipoDocumento extends Pantalla{
     
     public TipoDocumento (){
         tab_tipodocumento.setId("tab_tipodocumento");
-        tab_tipodocumento.setTabla("yavirac_tra_tipo_documento", "ytrtido", 1);
+        tab_tipodocumento.setTabla("yavirac_tra_tipo_documento", "ide_ytrtid", 1);
         tab_tipodocumento.setHeader("Registro Tipo de Documento");
         tab_tipodocumento.dibujar();
         

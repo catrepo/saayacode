@@ -58,7 +58,7 @@ public class Biometrico extends Pantalla {
    public Biometrico() {
        
        aut_opciones.setId("aut_opciones");
-       aut_opciones.setAutoCompletar(ser_personal.getDatopersonal());
+       aut_opciones.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
        aut_opciones.setMetodoChange("seleccionarAutocompletar");
        bar_botones.agregarComponente(new Etiqueta("Seleccione una opcion :"));
        bar_botones.agregarComponente(aut_opciones);
@@ -133,7 +133,7 @@ public class Biometrico extends Pantalla {
    public void seleccionarAutocompletar(SelectEvent evt){
        
        
-           TablaGenerica tab_codigo_reloj = utilitario.consultar(ser_personal.getDatopersonalReloj(aut_opciones.getValor()));
+           TablaGenerica tab_codigo_reloj = utilitario.consultar(ser_personal.getDatoPersonalCodigo(aut_opciones.getValor()));
            tab_biometrico.setCondicion("num_yasbio = "+tab_codigo_reloj.getValor("codigo_reloj_ypedpe"));
            tab_biometrico.ejecutarSql();
            utilitario.addUpdate("tab_biometrico");

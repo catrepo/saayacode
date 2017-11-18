@@ -37,7 +37,7 @@ public class HoraPersonalPeriodo extends Pantalla {
         tab_hora_personal_periodo.setId("tab_hora_personal_periodo");   //identificador
         tab_hora_personal_periodo.setTabla("yavirac_hora_personal_perio", "ide_yhopep", 1);
         tab_hora_personal_periodo.agregarRelacion(tab_hora_horario_docente);
-        tab_hora_personal_periodo.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal());
+        tab_hora_personal_periodo.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_hora_personal_periodo.getColumna("ide_yhotgh").setCombo(ser_horarios.getTipoGeneracionHora());
         tab_hora_personal_periodo.getColumna("ide_ystpea").setVisible(false);
         tab_hora_personal_periodo.dibujar();

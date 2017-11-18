@@ -23,7 +23,7 @@ public class TipoEntidad extends Pantalla{
     
     public TipoEntidad (){
         tab_tipoentidad.setId("tab_tipoentidad");
-        tab_tipoentidad.setTabla("yavirac_tra_tipo_entidad", "ytrtien", 1);
+        tab_tipoentidad.setTabla("yavirac_tra_tipo_entidad", "ide_ytrtie", 1);
         tab_tipoentidad.setHeader("Registro Tipo de Entidad");
         tab_tipoentidad.dibujar();
         
