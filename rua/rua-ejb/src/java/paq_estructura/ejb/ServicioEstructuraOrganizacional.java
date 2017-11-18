@@ -127,4 +127,34 @@ public class ServicioEstructuraOrganizacional {
         sql="SELECT ide_ystpaf, descripcion_ystpaf  FROM yavirac_stror_parentezco_fami where activo_ystpaf in ("+activo+") ";
         return sql;
     } 
+        public String getTipoFormacionEducativa() {
+        String sql="";
+        sql="SELECT ide_ysttfe, detalle_ysttfe,abreviatura_ysttfe  FROM yavirac_stror_tipo_for_educaci order by detalle_ysttfe";
+        return sql;
+    } 
+        
+        public String getMaterias() {
+        String sql="";
+        sql="SELECT ide_ystmat, detalle_ystmat,abreviatura_ystmat  FROM yavirac_stror_materia order by detalle_ystmat";
+        return sql;
+    } 
+        public String getTipoFormacion() {
+        String sql="";
+        sql="SELECT ide_ysttif, detalle_ysttif,abreviatura_ysttif  FROM yavirac_stror_tipo_formacion order by detalle_ysttif";
+        return sql;
+    }       
+        public String getUsuarioSistema(String ide_usua,String condicion) {
+        String sql="";
+        sql="select ide_usua,nom_usua,nick_usua,ide_ypedpe from sis_usuario where ide_usua in("+ide_usua+") "+condicion;
+        return sql;
+    }    
+       public String getMalla() {
+        String sql="";
+        sql="select a.ide_ystmal,descripcion_ystnie,detalle_ystmat,descripcion_ystmen " +
+            " from yavirac_stror_malla a, yavirac_stror_nivel_educacion b,yavirac_stror_mension c,yavirac_stror_materia d" +
+            " where a.ide_ystnie = b.ide_ystnie" +
+            " and a.ide_ystmen = c.ide_ystmen" +
+            " and a.ide_ystmat = d.ide_ystmat";
+        return sql;
+    }            
 }

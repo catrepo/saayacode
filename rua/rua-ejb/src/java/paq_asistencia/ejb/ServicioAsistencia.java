@@ -29,6 +29,18 @@ public class ServicioAsistencia {
                 " values ("+ide+",'"+indice+"','"+hora+"','"+fecha+"','"+puerta+"','"+num+"','"+nombre+"','"+departamento+"','"+fecha_registro+"','"+codigo_reloj+"','"+usuario_ingre+"','"+fecha_ingre+"','"+hora_ingre+"')";
         return sql;
     }
-    
+       /**
+     * Insertar en la tabla Biometrico
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getSemana() {
+        String sql="";
+        sql=" SELECT ide_yassem, detalle_yassem FROM yavirac_asis_semana order by detalle_yassem;";
+              
+        return sql;
+    }   
+       
     
 }
