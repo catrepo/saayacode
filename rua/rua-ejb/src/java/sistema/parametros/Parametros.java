@@ -34,7 +34,18 @@ public class Parametros {
          */
         lis_parametros.add(new Parametro("1", "p_tipo_horario_jornada", "Indica la entrad salida y receso ", "4", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
 
- 
+       /*
+         * ESTRUCTURA MODULO =2
+         */
+        lis_parametros.add(new Parametro("2", "p_gth_tipo_documento_cedula", "Indica el tipo de documento cedula", "1", "yavirac_stror_docu_identidad", "ide_ystdoi", "descripcion_ystdoi"));
+        lis_parametros.add(new Parametro("2", "p_gth_tipo_documento_ruc", "Indica la el tipo documento de ruc", "2", "yavirac_stror_docu_identidad", "ide_ystdoi", "descripcion_ystdoi"));
+
+       /*
+         * INSCRIPCION MODULO =3
+         */
+        lis_parametros.add(new Parametro("3", "p_documento_inscripcion", "Indica que los documentos son para inscripciones", "2", "yavirac_stror_requerido_para", "ide_ystrep", "descripcion_ystrep"));
+
+        
 //////////////////////////////////////////////////////////////////////
         return lis_parametros;
     }
