@@ -1078,5 +1078,30 @@ public class Utilitario extends Framework {
         }
         return super.getFormatoNumero(dou_num); //To change body of generated methods, choose Tools | Templates.
     }
+	/**
+	 * @param ide_gttdi
+	 * @param documento_identidad_gttdi
+	 * @return
+	 * 
+	 * metodo booleano para validar el tipo de documento de identidad cedula y ruc
+	 */
+	public boolean validarDocumentoIdentidad(String ide_gttdi,String documento_identidad){
+		if (ide_gttdi!=null && !ide_gttdi.isEmpty()){
+			if (documento_identidad!=null && !documento_identidad.isEmpty()){
+				if (ide_gttdi.equals(getVariable("p_gth_tipo_documento_cedula"))){
+					if (!validarCedula(documento_identidad)){
+						agregarMensajeInfo("Atencion", "El numero de cedula ingresado no es valido");
+						return false;
+					}
+				}else if (ide_gttdi.equals(getVariable("p_gth_tipo_documento_ruc"))){
+					if (!validarRUC(documento_identidad)){
+						agregarMensajeInfo("Atencion", "El numero de RUC ingresado no es valido");
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 
 }
