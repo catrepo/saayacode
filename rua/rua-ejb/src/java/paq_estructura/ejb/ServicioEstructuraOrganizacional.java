@@ -114,7 +114,7 @@ public class ServicioEstructuraOrganizacional {
     }    
         public String getMension() {
         String sql="";
-        sql="SELECT ide_ystmen, descripcion_ystmen FROM yavirac_stror_mension ";
+        sql="SELECT ide_ystmen, descripcion_ystmen ,detalle_ysttfe FROM yavirac_stror_mension  a, yavirac_stror_tipo_for_educaci b where a.ide_ysttfe = b.ide_ysttfe";
         return sql;
     } 
         public String getNivelEducacion() {
@@ -132,7 +132,35 @@ public class ServicioEstructuraOrganizacional {
         sql="SELECT ide_ysttfe, detalle_ysttfe,abreviatura_ysttfe  FROM yavirac_stror_tipo_for_educaci order by detalle_ysttfe";
         return sql;
     } 
-        
+        public String getGenero(String activo) {
+        String sql="";
+        sql="select ide_ystgen,descripcion_ystgen,activo_ystgen from yavirac_stror_genero where activo_ystgen in ("+activo+")";
+        return sql;
+    } 
+        public String getDocumentoRequerido(String activo) {
+        String sql="";
+        sql="select ide_ystdor,descripcion_ystdor,abreviatura_ystdor from yavirac_stror_documento_reque where activo_ystdor in ("+activo+") order by descripcion_ystdor";
+        return sql;
+    }  
+        public String getRequeridoPara() {
+        String sql="";
+        sql="select ide_ystrep,descripcion_ystrep,abreviatura_ystrep from yavirac_stror_requerido_para order by descripcion_ystrep";
+        return sql;
+    }  
+        public String getDocumentoRequeridoPeriodo(String periodo,String req_para) {
+        String sql="";
+        sql="select ide_ystdop,a.ide_ystdor,descripcion_ystdor,ide_ystrep from yavirac_stror_documento_periodo a,yavirac_stror_documento_reque b\n" +
+            " where a.ide_ystdor = b.ide_ystdor" +
+            " and a.ide_ystpea ="+periodo +
+            " and ide_ystrep = " +req_para+
+            " order by a.ide_ystdor ";
+        return sql;
+    }   
+    public String deleteBloqueos(String ide_usua) {
+        String sql="";
+        sql="delete from sis_bloqueo where ide_usua ="+ide_usua;
+        return sql;
+    }  
         public String getMaterias() {
         String sql="";
         sql="SELECT ide_ystmat, detalle_ystmat,abreviatura_ystmat  FROM yavirac_stror_materia order by detalle_ystmat";
