@@ -24,6 +24,7 @@ public class HoraPersonalPeriodo extends Pantalla {
     private Tabla tab_hora_horario_docente = new Tabla();
     private Combo com_periodo_academico = new Combo();
     
+    
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     
