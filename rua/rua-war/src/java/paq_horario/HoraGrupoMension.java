@@ -64,6 +64,14 @@ public class HoraGrupoMension extends Pantalla {
       //
         
     }
+          public void filtroComboPeriodoAcademnico(){
+        
+        tab_grupo_mension.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
+        tab_grupo_mension.ejecutarSql();
+        utilitario.addUpdate("tab_grupo_mension");
+        
+    }
+     
     @Override
     public void insertar() {
        if(com_periodo_academico.getValue() == null){
