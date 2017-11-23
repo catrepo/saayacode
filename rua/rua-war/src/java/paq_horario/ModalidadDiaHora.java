@@ -86,7 +86,18 @@ public class ModalidadDiaHora extends Pantalla{
        sel_tab_modalidad.dibujar();
             
                 }
+    
+    
 }
+     
+          public void filtroComboPeriodoAcademnico(){
+        
+        tab_modalidad_dia_hora.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
+        tab_modalidad_dia_hora.ejecutarSql();
+        utilitario.addUpdate("tab_hora_definicion");
+        
+    }
+          
     @Override
     public void insertar() {
         if(com_periodo_academico.getValue() == null){
