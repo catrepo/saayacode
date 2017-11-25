@@ -98,11 +98,13 @@ public class HoraPeriodoHora extends Pantalla {
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
     tab_hora_periodo_hora.setTabla("yavirac_hora_periodo_hor", "ide_yhopeh", 1);
-     tab_hora_periodo_hora.setCondicion("ide_ystpea=-1");
-     tab_hora_periodo_hora.getColumna("ide_ystmod").setCombo(ser_estructura_organizacional.getModalidad("true,false"));
-     tab_hora_periodo_hora.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true,false"));
-     tab_hora_periodo_hora.getColumna("ide_yhohor").setCombo(ser_horarios.getHora("true,false"));
-     tab_hora_periodo_hora.getColumna("ide_ystpea").setVisible(false);
+    tab_hora_periodo_hora.setCondicion("ide_ystpea=-1");
+    tab_hora_periodo_hora.getColumna("ide_ystmod").setCombo(ser_estructura_organizacional.getModalidad("true,false"));
+    tab_hora_periodo_hora.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true,false"));
+    tab_hora_periodo_hora.getColumna("ide_yhohor").setCombo(ser_horarios.getHora("true,false"));
+    tab_hora_periodo_hora.getColumna("ide_yhodia").setCombo(ser_horarios.getDia());
+    tab_hora_periodo_hora.getColumna("ide_yhothj").setCombo(ser_horarios.getHorarios("true,false"));
+    tab_hora_periodo_hora.getColumna("ide_ystpea").setVisible(false);
     tab_hora_periodo_hora.dibujar();
         /*agregarComponente(tab_hora_hora);*/ 
         
