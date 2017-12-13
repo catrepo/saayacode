@@ -35,5 +35,33 @@ public class ServicioMatriculas {
         return sql;
     }
 
-    
+         public String getTipoPeriodoMatricula() {
+        String sql="";
+        sql="SELECT ide_ymatip, descripcion_ymatip   FROM yavirac_matri_tipo_periodo order by descripcion_ymatip";
+        return sql;
+    } 
+         public String getTipoMatricula() {
+        String sql="";
+        sql="SELECT ide_ymatma, detalle_ymatma  FROM yavirac_matri_tipo_matricula order by detalle_ymatma";
+        return sql;
+    } 
+         public String getPeriodoMatricula(String activo) {
+        String sql="";
+        sql="select ide_ymaper,descripcion_ystpea,descripcion_ymatip,fecha_inicio_ymaper,fecha_final_ymaper " +
+            "from yavirac_matri_periodo_matric a,yavirac_matri_tipo_periodo b,yavirac_stror_periodo_academic c " +
+            "where a.ide_ymatip = b.ide_ymatip " +
+            "and a.ide_ystpea=c.ide_ystpea " +
+            "and activo_ymaper in ("+activo+")";
+        return sql;
+    }     
+         public String getTipoRegitroCredito() {
+        String sql="";
+        sql="SELECT ide_ymatrc, detalle_ymatrc FROM yavirac_matri_tipo_reg_credito order by detalle_ymatrc;";
+        return sql;
+    }
+         public String getNumeroMatricula() {
+        String sql="";
+        sql="SELECT ide_ymanum, descripcion_ymanum, abreviatura_ymanum FROM yavirac_matri_numero_matricula order by descripcion_ymanum;";
+        return sql;
+    }          
 }
