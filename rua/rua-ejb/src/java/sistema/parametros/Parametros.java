@@ -44,6 +44,10 @@ public class Parametros {
          * INSCRIPCION MODULO =3
          */
         lis_parametros.add(new Parametro("3", "p_documento_inscripcion", "Indica que los documentos son para inscripciones", "2", "yavirac_stror_requerido_para", "ide_ystrep", "descripcion_ystrep"));
+       /*
+         * MATRICULAS MODULO =4
+         */
+        lis_parametros.add(new Parametro("4", "p_documento_matricula", "Indica que los documentos son para matriculas", "2", "yavirac_stror_requerido_para", "ide_ystrep", "descripcion_ystrep"));
 
         
 //////////////////////////////////////////////////////////////////////
