@@ -117,6 +117,11 @@ public class ServicioEstructuraOrganizacional {
         sql="SELECT ide_ystmen, descripcion_ystmen ,detalle_ysttfe FROM yavirac_stror_mension  a, yavirac_stror_tipo_for_educaci b where a.ide_ysttfe = b.ide_ysttfe";
         return sql;
     } 
+        public String getTipoInstitucion(String activo) {
+        String sql="";
+        sql="SELECT ide_ysttii, descripcion_ysttii FROM yavirac_stror_tipo_institucion where activo_ysttii in ("+activo+")order by descripcion_ysttii";
+        return sql;
+    }         
         public String getNivelEducacion() {
         String sql="";
         sql="select ide_ystnie, descripcion_ystnie from yavirac_stror_nivel_educacion ";
@@ -134,7 +139,7 @@ public class ServicioEstructuraOrganizacional {
     } 
         public String getGenero(String activo) {
         String sql="";
-        sql="select ide_ystgen,descripcion_ystgen,activo_ystgen from yavirac_stror_genero where activo_ystgen in ("+activo+")";
+        sql="select ide_ystgen,descripcion_ystgen from yavirac_stror_genero where activo_ystgen in ("+activo+")";
         return sql;
     } 
         public String getDocumentoRequerido(String activo) {
