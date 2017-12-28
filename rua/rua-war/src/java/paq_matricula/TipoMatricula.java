@@ -14,7 +14,7 @@ public class TipoMatricula extends Pantalla {
 
     public TipoMatricula() {//constructor
         tab_tipo_matricula.setId("tab_tipo_matricula");// todo objeto instanciado poner id 
-        tab_tipo_matricula.setTabla("yavirac_matri_tipo_matric", "ide_ymatma", 1);  // nombre de la base de datos ii la clave primaria
+        tab_tipo_matricula.setTabla("yavirac_matri_tipo_matricula", "ide_ymatma", 1);  // nombre de la base de datos ii la clave primaria
         tab_tipo_matricula.setHeader("TIPO DE MATRICULA");
         tab_tipo_matricula.dibujar();//dibuja la tabla
 
@@ -25,7 +25,7 @@ public class TipoMatricula extends Pantalla {
         //instanciar una division del framework
         Division div_tipo_matricula  =new Division ();//instanciamos
         div_tipo_matricula .setId("div_tipo_matricula");//es un idientificador
-        div_tipo_matricula .dividir1(tab_tipo_matricula);
+        div_tipo_matricula .dividir1(pa_tipo_matricula);
         
         agregarComponente(div_tipo_matricula);//agregar componente
     }

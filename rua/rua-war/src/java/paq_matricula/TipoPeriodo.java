@@ -13,8 +13,8 @@ public class TipoPeriodo extends Pantalla{
         
      public TipoPeriodo () {//constructor
        tab_tipo_periodo.setId("tab_tipo_periodo");// todo objeto instanciado poner id 
-        tab_tipo_periodo.setTabla(" yavirac_matri_tipo_periodo", "ide_ymatip", 1);  // nombre de la base de datos ii la clave primaria
-        tab_tipo_periodo.setHeader("TIPO PERIODO");
+        tab_tipo_periodo.setTabla("yavirac_matri_tipo_periodo", "ide_ymatip", 1);  // nombre de la base de datos ii la clave primaria
+        tab_tipo_periodo.setHeader("TIPO PERIODO DE MATRICULA");
         tab_tipo_periodo.dibujar();//dibuja la tabla
 
         PanelTabla pa_tipo_periodo = new PanelTabla();//intanciamos el panel del framework
@@ -24,7 +24,7 @@ public class TipoPeriodo extends Pantalla{
         //instanciar una division del framework
         Division div_tipo_periodo =new Division ();//instanciamos
         div_tipo_periodo.setId("div_tipo_periodo");//es un idientificador
-        div_tipo_periodo.dividir1(tab_tipo_periodo);
+        div_tipo_periodo.dividir1(pa_tipo_periodo);
         
         agregarComponente(div_tipo_periodo);//agregar componente
     }
@@ -46,12 +46,14 @@ public class TipoPeriodo extends Pantalla{
     
     //generar geter and seter
 
-    public Tabla getTab_documento_entregado() {
+    public Tabla getTab_tipo_periodo() {
         return tab_tipo_periodo;
     }
 
     public void setTab_tipo_periodo(Tabla tab_tipo_periodo) {
         this.tab_tipo_periodo = tab_tipo_periodo;
     }
+
+
     
 }
