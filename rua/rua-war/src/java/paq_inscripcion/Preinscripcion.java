@@ -70,6 +70,11 @@ public class Preinscripcion extends Pantalla {
             tab_pre_inscrip.getColumna("ide_ypedpe").setLectura(true);
             tab_pre_inscrip.getColumna("fecha_incripcion_yinpin").setValorDefecto(utilitario.getFechaActual());
             tab_pre_inscrip.getColumna("ide_ystmen").setCombo(ser_EstructuraOrganizacional.getMension());
+            tab_pre_inscrip.getColumna("ide_ystmen").setLongitud(50);
+            tab_pre_inscrip.getColumna("ide_ystmen").setRequerida(true);
+            tab_pre_inscrip.getColumna("recibido_yinpin").setValorDefecto("false");
+            tab_pre_inscrip.getColumna("recibido_yinpin").setLectura(true);
+
             tab_pre_inscrip.agregarRelacion(tab_requ_entregado);
             tab_pre_inscrip.setTipoFormulario(true);
             tab_pre_inscrip.getGrid().setColumns(4);
@@ -112,6 +117,7 @@ public class Preinscripcion extends Pantalla {
             tab_alumno.setTabla("yavirac_alum_dato_personal", "ide_yaldap", 3);
             tab_alumno.setTipoFormulario(true);
             tab_alumno.setCondicion("ide_yaldap=-1");//para que aparesca vacia
+            tab_alumno.getColumna("ide_yaldap").setVisible(false);
             tab_alumno.getColumna("firma_yaldap").setVisible(false);
             tab_alumno.getColumna("fotografia_yaldap").setVisible(false);
             tab_alumno.getColumna("edad_yaldap").setVisible(false);
@@ -136,6 +142,7 @@ public class Preinscripcion extends Pantalla {
             tab_alumno.getColumna("fecha_nac_yaldap").setNombreVisual("FEC. NACIMIENTO");
             tab_alumno.getColumna("ide_ystgen").setNombreVisual("SEXO");
             tab_alumno.getColumna("doc_identidad_yaldap").setNombreVisual("DOC. IDENTIDAD");
+            tab_alumno.getColumna("ide_ystgen").setAncho(50);
 
             tab_alumno.setMostrarNumeroRegistros(false);
             tab_alumno.getGrid().setColumns(4);
@@ -292,6 +299,7 @@ public class Preinscripcion extends Pantalla {
     }
 
     public void recibeDocumento() {
+        if(tab_pre_inscrip.getValor("recibido_yinpin").equals("false")){
         TablaGenerica tab_documento = utilitario.consultar(ser_EstructuraOrganizacional.getDocumentoRequeridoPeriodo(com_periodo_academico.getValue().toString(), par_modulo_inscripcion));
         utilitario.getConexion().ejecutarSql(ser_EstructuraOrganizacional.deleteBloqueos(utilitario.getVariable("IDE_USUA")));
 
@@ -301,16 +309,22 @@ public class Preinscripcion extends Pantalla {
                 tab_requ_entregado.setValor("ide_yinpin", tab_pre_inscrip.getValor("ide_yinpin"));
                 tab_requ_entregado.setValor("ide_ystdor", tab_documento.getValor(i, "ide_ystdor"));
                 tab_requ_entregado.setValor("entregado_yinree", "true");
-
+               
             }
-            utilitario.addUpdate("tab_requ_entregado");
+            tab_pre_inscrip.setValor("recibido_yinpin", "true");
+            tab_pre_inscrip.modificar(tab_pre_inscrip.getFilaActual());//para que haga el update
+            utilitario.addUpdate("tab_requ_entregado,tab_pre_inscrip");
+            tab_pre_inscrip.guardar();
             tab_requ_entregado.guardar();
             guardarPantalla();
 
         } else {
             utilitario.agregarMensajeInfo("No existe registros configurados", "Favor configurar documentos parea el Periodo Academico Seleccionado");
         }
-
+        }
+        else{
+            utilitario.agregarMensajeError("No puede recibir Documentos", "Usted ya ejecuto la opcion recibir documentos, y no puede volver a ejecutarle pues recibirlo individualmente si lo deses");
+        }
     }
 
     public void aceptarDialogoAlumno() {
@@ -324,7 +338,8 @@ public class Preinscripcion extends Pantalla {
         TablaGenerica tab_cedula = utilitario.consultar("SELECT * from yavirac_alum_dato_personal where doc_identidad_yaldap ='" + tab_alumno.getValor("doc_identidad_yaldap") + "' ");
         if (tab_cedula.getTotalFilas() > 0) {
             utilitario.agregarMensajeError("Documento de Identidad Registrado", "El registro que desea guardar ya existe consulte en el registro de alumnos");
-        } else if (tab_alumno.guardar()) { //si guarda el slumno cierra el dialogo
+        } 
+        //else if (tab_alumno.guardar()) { //si guarda el slumno cierra el dialogo
 
             if (guardarPantalla().isEmpty()) {
 
@@ -340,7 +355,7 @@ public class Preinscripcion extends Pantalla {
 
             }
 
-        }
+       // }
     }
 
     public void crearAlumno() {
