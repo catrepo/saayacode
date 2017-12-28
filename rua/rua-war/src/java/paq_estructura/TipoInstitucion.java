@@ -27,7 +27,7 @@ public class TipoInstitucion extends Pantalla {
         
         Division div_tipoinstitucion = new Division();
         div_tipoinstitucion.setId("div_tipoinstitucion");
-        div_tipoinstitucion.dividir1(tab_tipoinstitucion);
+        div_tipoinstitucion.dividir1(pa_tipoinstitucion);
         
         agregarComponente(div_tipoinstitucion);
     }
