@@ -27,6 +27,8 @@ public class HoraPeriodoHora extends Pantalla {
     private Combo com_dia_jornada = new Combo();
     private Dialogo dia_jornada = new Dialogo();
     private SeleccionTabla set_tab_jornada = new SeleccionTabla();
+    private SeleccionTabla set_tab_dias = new SeleccionTabla();
+    private SeleccionTabla set_tab_mension = new SeleccionTabla();
     
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -90,11 +92,30 @@ public class HoraPeriodoHora extends Pantalla {
         set_tab_jornada.setTitle("TABLA DE LA MODALIDAD");
         set_tab_jornada.setSeleccionTabla(ser_horarios.getDefinicionJornada("-1","-1"), "ide_ystjor");
         set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
-
         set_tab_jornada.setWidth("80%");
         set_tab_jornada.setHeight("70%");
+        set_tab_jornada.getBot_aceptar().setMetodo("aceptarJornada");
         agregarComponente(set_tab_jornada);
         
+        set_tab_dias.setId("set_tab_dias");
+        set_tab_dias.setTitle("DIAS DE LA SEMANA");
+        set_tab_dias.setSeleccionTabla(ser_horarios.getDia(), "ide_yhodia");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        set_tab_dias.setWidth("80%");
+        set_tab_dias.setHeight("70%");
+        set_tab_dias.getBot_aceptar().setMetodo("aceptarDiasSemana");
+        agregarComponente(set_tab_dias);
+        
+        set_tab_mension.setId("set_tab_mension");
+        set_tab_mension.setTitle("MENSION");
+        set_tab_mension.setSeleccionTabla(ser_estructura_organizacional.getMension(), "IDE_YSTMEN");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        set_tab_mension.setWidth("80%");
+        set_tab_mension.setHeight("70%");
+        set_tab_mension.getBot_aceptar().setMetodo("aceptarDiasSemana");
+        agregarComponente(set_tab_mension);
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
     tab_hora_periodo_hora.setTabla("yavirac_hora_periodo_hor", "ide_yhopeh", 1);
@@ -104,6 +125,7 @@ public class HoraPeriodoHora extends Pantalla {
     tab_hora_periodo_hora.getColumna("ide_yhohor").setCombo(ser_horarios.getHora("true,false"));
     tab_hora_periodo_hora.getColumna("ide_yhodia").setCombo(ser_horarios.getDia());
     tab_hora_periodo_hora.getColumna("ide_yhothj").setCombo(ser_horarios.getHorarios("true,false"));
+    tab_hora_periodo_hora.getColumna("ide_ystmen").setCombo(ser_estructura_organizacional.getMension());
     tab_hora_periodo_hora.getColumna("ide_ystpea").setVisible(false);
     tab_hora_periodo_hora.dibujar();
         /*agregarComponente(tab_hora_hora);*/ 
@@ -162,6 +184,32 @@ public class HoraPeriodoHora extends Pantalla {
             
                 }
 }
+        public void aceptarJornada(){   
+         if(set_tab_jornada.getSeleccionados()== null){
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la jornada");
+         return;
+          }
+         else {
+            set_tab_jornada.cerrar();
+            set_tab_dias.getTab_seleccion().setSql(ser_horarios.getDia());
+            set_tab_dias.getTab_seleccion().ejecutarSql();              
+            set_tab_dias.dibujar();
+            //aceptarDiasSemana
+                }
+}
+     public void aceptarDiasSemana(){
+        if(set_tab_dias.getSeleccionados()== null){
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione los dias");
+        return;
+        }
+        else {
+       set_tab_dias.cerrar();
+       set_tab_mension.getTab_seleccion().setSql(ser_estructura_organizacional.getMension());
+            set_tab_mension.getTab_seleccion().ejecutarSql();              
+            set_tab_mension.dibujar();
+            //aceptarDiasSemana
+                }
+}
     
     public void generarPeriodoHora (){
     
@@ -170,8 +218,7 @@ public class HoraPeriodoHora extends Pantalla {
         return;
         }
         else {
-       dia_modalidad.dibujar();
-            
+       dia_modalidad.dibujar();         
                 }
 }
 
@@ -244,5 +291,21 @@ public class HoraPeriodoHora extends Pantalla {
     public void setSet_tab_jornada(SeleccionTabla set_tab_jornada) {
         this.set_tab_jornada = set_tab_jornada;
     }
-    
+
+    public SeleccionTabla getSet_tab_dias() {
+        return set_tab_dias;
+    }
+
+    public void setSet_tab_dias(SeleccionTabla set_tab_dias) {
+        this.set_tab_dias = set_tab_dias;
+    }
+
+    public SeleccionTabla getSet_tab_mension() {
+        return set_tab_mension;
+    }
+
+    public void setSet_tab_mension(SeleccionTabla set_tab_mension) {
+        this.set_tab_mension = set_tab_mension;
+    }
+       
 }
