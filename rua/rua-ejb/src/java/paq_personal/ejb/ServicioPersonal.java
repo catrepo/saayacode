@@ -25,7 +25,7 @@ public class ServicioPersonal {
      */
     public String getDatopersonal (String activo) {
         String sql="";
-        sql=" select ide_ypedpe,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe from yavirac_perso_dato_personal where activo_ypedpe in ("+activo+") order by apellido_ypedpe";
+        sql=" select ide_ypedpe,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe from yavirac_perso_dato_personal where activo__ypedpe in ("+activo+") order by apellido_ypedpe";
               
         return sql;
     }
