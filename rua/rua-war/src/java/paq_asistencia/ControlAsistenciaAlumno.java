@@ -69,6 +69,10 @@ public class ControlAsistenciaAlumno extends Pantalla{
             tab_docente_mencion.getColumna("ide_ystmal").setLectura(true);
             tab_docente_mencion.getColumna("ide_ypedpe").setLectura(true);
             tab_docente_mencion.onSelect("filtraEstudiantes");
+            tab_docente_mencion.getColumna("ide_ypemad").setNombreVisual("IDE DOCENTE MENCION");
+            tab_docente_mencion.getColumna("ide_ystmal").setNombreVisual("CAMPO PRIMARIO");
+            tab_docente_mencion.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADEMICO");
+            tab_docente_mencion.getColumna("ide_ypedpe").setNombreVisual("DOCENTES");
             //tab_docente_mencion.setLectura(true);
         tab_docente_mencion.dibujar();
          tab_docente_mencion.setRows(5);
@@ -81,6 +85,15 @@ public class ControlAsistenciaAlumno extends Pantalla{
          tab_fecha_control.setCondicion("ide_yasfec=-1");
          tab_fecha_control.setLectura(true);
          tab_fecha_control.agregarRelacion(tab_asitencia);
+         tab_fecha_control.getColumna("ide_yasfec").setNombreVisual("IDE FECHA CONTROL");
+         tab_fecha_control.getColumna("ide_yassem").setNombreVisual("ASISTENCIA");
+         tab_fecha_control.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADEMICO");
+         tab_fecha_control.getColumna("fecha_yasfec").setNombreVisual("FECHA");
+         tab_fecha_control.getColumna("observacion_yasfec").setNombreVisual("OBSERVACIÓN");
+         tab_fecha_control.getColumna("bloqueado_yasfec").setNombreVisual("BLOQUEO");
+         tab_fecha_control.getColumna("activo_yasfec").setNombreVisual("ACTIVO INHABILITADO");
+         tab_fecha_control.getColumna("festivo_yasfec").setNombreVisual("FESTIVO");
+         
          tab_fecha_control.dibujar();
          tab_fecha_control.setRows(5);
          
@@ -90,6 +103,13 @@ public class ControlAsistenciaAlumno extends Pantalla{
          tab_asitencia.setId("tab_asitencia");
          tab_asitencia.setTabla("yavirac_asis_asistencia", "ide_yasasi", 3);
          tab_asitencia.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+         tab_asitencia.getColumna("ide_yasasi").setNombreVisual("IDE ASISTENCIA");
+         tab_asitencia.getColumna("ide_ystpep").setNombreVisual("TOMAR ASISTENCIA");
+         tab_asitencia.getColumna("ide_ypedpe").setNombreVisual("DOCENTES");
+         tab_asitencia.getColumna("ide_yaldap").setNombreVisual("DATO PERSONAL ALUMNO");
+         tab_asitencia.getColumna("ide_ystmal").setNombreVisual("CAMPO PRIMARIO");
+         tab_asitencia.getColumna("asistencia_yasasi").setNombreVisual("ASISTENCIA");
+         tab_asitencia.getColumna("justificado_yasasi").setNombreVisual("JUSTIFICACION");
          tab_asitencia.dibujar();
          
          PanelTabla pat_asistencia = new PanelTabla();
