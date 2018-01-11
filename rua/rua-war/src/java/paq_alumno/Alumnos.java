@@ -279,6 +279,10 @@ public void dibujarTablaAficiones(){
  tab_aficiones.setId("tab_aficiones");
  tab_aficiones.setTabla("yavirac_alum_aficion", "ide_yalafi", 11);
  tab_aficiones.setCondicion("ide_yalafi=-1");
+ tab_aficiones.getColumna("ide_yalafi").setNombreVisual("CODIGO");
+ tab_aficiones.getColumna("aficiones_yalafi").setNombreVisual("AFICIONES");
+ tab_aficiones.getColumna("extraescolar_yalafi").setNombreVisual("EXTRAESCOLAR");
+ tab_aficiones.getColumna("activo_yalafi").setNombreVisual("ACTIVO");
  tab_aficiones.dibujar();
  tab_aficiones.setHeader("AFICIONES");
      PanelTabla pat_panel5=new PanelTabla();
