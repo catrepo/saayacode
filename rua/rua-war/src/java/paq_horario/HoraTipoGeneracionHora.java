@@ -15,6 +15,8 @@ public class HoraTipoGeneracionHora extends Pantalla{
     public HoraTipoGeneracionHora(){
         tab_hora_generacion_hora.setId("tab_hora_generacion_hora");   //identificador
         tab_hora_generacion_hora.setTabla("yavirac_hora_tipo_genera_hor", "ide_yhotgh", 1);
+        tab_hora_generacion_hora.getColumna("ide_yhotgh").setNombreVisual("CODIGO");
+        tab_hora_generacion_hora.getColumna("detalle_yhotgh").setNombreVisual("DETALLE");
         tab_hora_generacion_hora.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         

@@ -41,6 +41,9 @@ public class HoraPersonalPeriodo extends Pantalla {
         tab_hora_personal_periodo.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_hora_personal_periodo.getColumna("ide_yhotgh").setCombo(ser_horarios.getTipoGeneracionHora());
         tab_hora_personal_periodo.getColumna("ide_ystpea").setVisible(false);
+        tab_hora_personal_periodo.getColumna("ide_yhopep").setNombreVisual("CODIGO");
+        tab_hora_personal_periodo.getColumna("ide_ypedpe").setNombreVisual("DATO PERSONAL");
+        tab_hora_personal_periodo.getColumna("ide_yhotgh").setNombreVisual("TIPO GENERACION HORARIO");
         tab_hora_personal_periodo.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         
@@ -51,6 +54,10 @@ public class HoraPersonalPeriodo extends Pantalla {
         tab_hora_horario_docente.setId("tab_hora_horario_docente");   //identificador
         tab_hora_horario_docente.setTabla("yavirac_hora_horario_docente", "ide_yhohod", 2);
         tab_hora_horario_docente.getColumna("ide_yhothj").setCombo(ser_horarios.getHorarios("true,false"));
+        tab_hora_horario_docente.getColumna("ide_yhohod").setNombreVisual("CODIGO");
+        tab_hora_horario_docente.getColumna("ide_yhothj").setNombreVisual("TIPO HORARIO");
+        tab_hora_horario_docente.getColumna("hora_inicial_yhohod").setNombreVisual("HORA INICIAL");
+        tab_hora_horario_docente.getColumna("hora_final_yhohod").setNombreVisual("HORA FINAL");
         tab_hora_horario_docente.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         

@@ -20,6 +20,9 @@ public class HoraGrupoAcademico extends Pantalla{
     public HoraGrupoAcademico(){
         tab_grupo_academico.setId("tab_grupo_academico");   //identificador
         tab_grupo_academico.setTabla("yavirac_hora_grupo_academic", "ide_yhogra", 1);
+        tab_grupo_academico.getColumna("ide_yhogra").setNombreVisual("CODIGO");
+        tab_grupo_academico.getColumna("detalle_yhogra").setNombreVisual("DETALLE");
+        tab_grupo_academico.getColumna("abreviatura_yhogra").setNombreVisual("ABREVIATURA");
         tab_grupo_academico.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         

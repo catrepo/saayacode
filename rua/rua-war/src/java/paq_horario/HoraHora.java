@@ -15,6 +15,11 @@ public class HoraHora extends Pantalla{
     public HoraHora(){
     tab_hora_hora.setId("tab_hora_hora");   //identificador
     tab_hora_hora.setTabla("yavirac_hora_hora", "ide_yhohor", 1);
+    tab_hora_hora.getColumna("ide_yhohor").setNombreVisual("CODIGO");
+    tab_hora_hora.getColumna("descripcion_yhohor").setNombreVisual("DESCRIPCION");
+    tab_hora_hora.getColumna("abreviatura_yhohor").setNombreVisual("ABREVIATURA");
+    tab_hora_hora.getColumna("orden_yhohor").setNombreVisual("ORDEN");
+    tab_hora_hora.getColumna("activo_yhohor").setNombreVisual("ACTIVO");
     tab_hora_hora.dibujar();
         /*agregarComponente(tab_hora_hora);*/ 
         

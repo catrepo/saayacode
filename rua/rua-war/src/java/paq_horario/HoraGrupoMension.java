@@ -36,6 +36,12 @@ public class HoraGrupoMension extends Pantalla {
         tab_grupo_mension.getColumna("ide_yhotgh").setCombo(ser_horarios.getTipoGeneracionHora());
         tab_grupo_mension.getColumna("ide_ystnie").setCombo(ser_estructura_organizacional.getNivelEducacion());
         tab_grupo_mension.getColumna("ide_ystpea").setVisible(false);
+        tab_grupo_mension.getColumna("ide_yhogrm").setNombreVisual("CODIGO");
+        tab_grupo_mension.getColumna("ide_ystmen").setNombreVisual("MENSION");
+        tab_grupo_mension.getColumna("ide_yhogra").setNombreVisual("GRUPO ACADEMICO");
+        tab_grupo_mension.getColumna("ide_yhotgh").setNombreVisual("TIPO GENERACION HORARIO");
+        tab_grupo_mension.getColumna("ide_ystnie").setNombreVisual("NIVEL EDUCACION");
+        tab_grupo_mension.getColumna("detalle_yhogrm").setNombreVisual("DETALLE");
         tab_grupo_mension.dibujar();
             
         PanelTabla pat_grupo_mension = new PanelTabla();
@@ -46,6 +52,8 @@ public class HoraGrupoMension extends Pantalla {
         tab_grupo_jornada.setId("tab_grupo_jornada");   //identificador
         tab_grupo_jornada.setTabla("yavirac_hora_grupo_jornada", "ide_yhogrj", 2);
         tab_grupo_jornada.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true,false"));
+        tab_grupo_jornada.getColumna("ide_yhogrj").setNombreVisual("CODIGO");
+        tab_grupo_jornada.getColumna("ide_ystjor").setNombreVisual("JORNADA");
         tab_grupo_jornada.dibujar();
         PanelTabla pat_grupo_jornada = new PanelTabla();
         pat_grupo_jornada.setId("pat_grupo_jornada");

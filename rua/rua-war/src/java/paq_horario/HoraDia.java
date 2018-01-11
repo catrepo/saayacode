@@ -15,6 +15,10 @@ public class HoraDia extends Pantalla {
     public HoraDia(){
     tab_hora_dia.setId("tab_hora_dia");   //identificador
     tab_hora_dia.setTabla("yavirac_hora_dia", "ide_yhodia", 1);
+    tab_hora_dia.getColumna("ide_yhodia").setNombreVisual("CODIGO");
+    tab_hora_dia.getColumna("descripcion_yhodia").setNombreVisual("DESCRIPCION");
+    tab_hora_dia.getColumna("abreviatura_yhodia").setNombreVisual("ABREVIATURA");
+    tab_hora_dia.getColumna("orden_yhodia").setNombreVisual("ORDEN");
     tab_hora_dia.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         
