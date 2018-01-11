@@ -25,6 +25,9 @@ public class TipoEntidad extends Pantalla{
         tab_tipoentidad.setId("tab_tipoentidad");
         tab_tipoentidad.setTabla("yavirac_tra_tipo_entidad", "ide_ytrtie", 1);
         tab_tipoentidad.setHeader("Registro Tipo de Entidad");
+        tab_tipoentidad.getColumna("ide_ytrtie").setNombreVisual("CODIGO");
+        tab_tipoentidad.getColumna("nombre_ytrtie").setNombreVisual("NOMBRE");
+        tab_tipoentidad.getColumna("codigo_abreviatura_ytrtie").setNombreVisual("CODIGO ABREVIATURA");
         tab_tipoentidad.dibujar();
         
         PanelTabla pat_tipoentidad = new PanelTabla();

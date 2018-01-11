@@ -25,6 +25,11 @@ public class TipoDocumento extends Pantalla{
         tab_tipodocumento.setId("tab_tipodocumento");
         tab_tipodocumento.setTabla("yavirac_tra_tipo_documento", "ide_ytrtid", 1);
         tab_tipodocumento.setHeader("Registro Tipo de Documento");
+        tab_tipodocumento.getColumna("ide_ytrtid").setNombreVisual("CODIGO");
+        tab_tipodocumento.getColumna("nombre_ytrtid").setNombreVisual("NOMBRE DOCUMENTO");
+        tab_tipodocumento.getColumna("texto_base_ytrtid").setNombreVisual("TEXTO BASE");
+        tab_tipodocumento.getColumna("dias_tramite_ytrtid").setNombreVisual("DIAS TRAMITE");
+        tab_tipodocumento.getColumna("codigo_abreviatura_ytrtid").setNombreVisual("CODIGO ABREVIATURA");
         tab_tipodocumento.dibujar();
         
         PanelTabla pat_tipodocumento = new PanelTabla();

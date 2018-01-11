@@ -22,6 +22,8 @@ public class Documento extends Pantalla{
         tab_documento.setId("tab_documento");
         tab_documento.setTabla("yavirac_tra_documento", "ide_ytrdoc", 1);
         tab_documento.setHeader("Registro de Documento");
+        tab_documento.getColumna("ide_ytrdoc").setNombreVisual("CODIGO");
+        tab_documento.getColumna("nombre_doc_ytrdoc").setNombreVisual("NOMBRE DOCUMENTO");
         tab_documento.dibujar();
         
         PanelTabla pat_documento=new PanelTabla();
