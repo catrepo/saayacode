@@ -19,6 +19,9 @@ private Tabla tab_tabla = new Tabla();
 public RequeridoPara(){
     tab_tabla.setId("tab_tabla");
     tab_tabla.setTabla("yavirac_stror_requerido_para", "ide_ystrep", 1);
+    tab_tabla.getColumna("ide_ystrep").setNombreVisual("CODIGO");
+    tab_tabla.getColumna("abreviatura_ystrep").setNombreVisual("ABREVIATURA");
+    tab_tabla.getColumna("descripcion_ystrep").setNombreVisual("DESCRIPCION");
     tab_tabla.dibujar();
     
     PanelTabla pat_panel = new PanelTabla();

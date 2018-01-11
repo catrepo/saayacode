@@ -30,6 +30,10 @@ public class Institucion extends Pantalla {
         tab_tabla1.setCampoNombre("descripcion_ystins");
         tab_tabla1.getColumna("ide_ysttii").setCombo(ser_estructura.getTipoInstitucion("true,false"));
         tab_tabla1.agregarArbol(arb_arbol);
+        tab_tabla1.getColumna("ide_ystins").setNombreVisual("CODIGO");
+        tab_tabla1.getColumna("ide_ysttii").setNombreVisual("TIPO INSTITUCION");
+        tab_tabla1.getColumna("descripcion_ystins").setNombreVisual("DESCRIPCION");
+        tab_tabla1.getColumna("activo_ystins").setNombreVisual("ACTIVO");
         tab_tabla1.dibujar();
         
         PanelTabla pa_cargo = new PanelTabla();

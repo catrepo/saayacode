@@ -18,7 +18,10 @@ public class TipoSangre extends Pantalla{
     public TipoSangre(){//constructor
     tab_tipo_sangre.setId("tab_tipo_sangre");// todo objeto instanciado poner id
     
-    tab_tipo_sangre.setTabla("yavirac_stror_tipo_sangre","ide_ystnac",1); // nom bdd
+    tab_tipo_sangre.setTabla("yavirac_stror_tipo_sangre","ide_ysttis",1); // nom bdd
+    tab_tipo_sangre.getColumna("ide_ysttis").setNombreVisual("CODIGO");
+    tab_tipo_sangre.getColumna("descripcion_ysttis").setNombreVisual("DESCRIPCION");
+    tab_tipo_sangre.getColumna("activo_ysttis").setNombreVisual("ACTIVO");
     tab_tipo_sangre.dibujar();
             
     PanelTabla pa_tipo_sangre = new PanelTabla();
@@ -26,24 +29,36 @@ public class TipoSangre extends Pantalla{
     pa_tipo_sangre.setPanelTabla(tab_tipo_sangre);
     
     Division div_tipo_sangre = new Division();
-    div_tipo_sangre.setId("tabla_tipo_sangre");
+    div_tipo_sangre.setId("div_tipo_sangre");
+    div_tipo_sangre.dividir1(pa_tipo_sangre);
     
     agregarComponente(div_tipo_sangre);   
     }
 
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipo_sangre.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_tipo_sangre.guardar();
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         tab_tipo_sangre.eliminar();
+                 
+    }
+
+
+    public Tabla getTab_tipo_sangre() {
+        return tab_tipo_sangre;
+    }
+
+    public void setTab_tipo_sangre(Tabla tab_tipo_sangre) {
+        this.tab_tipo_sangre = tab_tipo_sangre;
     }
   
 }

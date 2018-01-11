@@ -23,6 +23,9 @@ public class Nacionalidad extends Pantalla {
         tab_nacionalidad.setId("tab_nacionalidad");  // todo objeto instanciado poner id 
         
         tab_nacionalidad.setTabla("yavirac_stror_nacionalidad","ide_ystnac",1);    // nom bdd
+        tab_nacionalidad.getColumna("ide_ystnac").setNombreVisual("CODIGO");
+        tab_nacionalidad.getColumna("descripcion_ystnac").setNombreVisual("DESCRIPCION");
+        tab_nacionalidad.getColumna("activo_ystnac").setNombreVisual("ACTIVO");
         tab_nacionalidad.dibujar();
         
         PanelTabla pa_nacionalidad = new PanelTabla();

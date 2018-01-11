@@ -19,6 +19,9 @@ public class TipoInstitucion extends Pantalla {
          tab_tipoinstitucion.setId("tab_tipoinstitucion");  // todo objeto instanciado poner id 
         
         tab_tipoinstitucion.setTabla("yavirac_stror_tipo_institucion","ide_ysttii",1);    // nom bdd
+        tab_tipoinstitucion.getColumna("ide_ysttii").setNombreVisual("CODIGO");
+        tab_tipoinstitucion.getColumna("descripcion_ysttii").setNombreVisual("DESCRIPCION");
+        tab_tipoinstitucion.getColumna("activo_ysttii").setNombreVisual("ACTIVO");
         tab_tipoinstitucion.dibujar();
         
         PanelTabla pa_tipoinstitucion = new PanelTabla();

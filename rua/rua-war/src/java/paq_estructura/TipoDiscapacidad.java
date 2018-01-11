@@ -17,6 +17,9 @@ public class TipoDiscapacidad  extends Pantalla{
   public  TipoDiscapacidad(){
         tab_tipo_discapacidad.setId ("tab_tipo_discapacidad");
         tab_tipo_discapacidad.setTabla ("yavirac_stror_tipo_discapacid","ide_ysttid",1);
+        tab_tipo_discapacidad.getColumna("ide_ysttid").setNombreVisual("CODIGO");
+        tab_tipo_discapacidad.getColumna("descripcion_ysttid").setNombreVisual("DESCRIPCION");
+        tab_tipo_discapacidad.getColumna("activo_ysttid").setNombreVisual("ACTIVO");
         tab_tipo_discapacidad.dibujar();
         
         PanelTabla pa_tipo_discapacidad =new PanelTabla ();

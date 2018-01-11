@@ -15,7 +15,10 @@ public class Modalidad extends Pantalla {
         
     tab_stror_modalidad .setId("tab_stror_modalidad");   //identificador
     tab_stror_modalidad.setHeader("MODALIDADES DE ESTUDIO");
-   tab_stror_modalidad .setTabla("yavirac_stror_modalidad", "ide_ystmod", 1);
+    tab_stror_modalidad .setTabla("yavirac_stror_modalidad", "ide_ystmod", 1);
+    tab_stror_modalidad.getColumna("ide_ystmod").setNombreVisual("CODIGO");
+    tab_stror_modalidad.getColumna("descripcion_ystmod").setNombreVisual("DESCRIPCION");
+    tab_stror_modalidad.getColumna("activo_ystmod").setNombreVisual("ACTIVO");
     tab_stror_modalidad .dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
      

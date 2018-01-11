@@ -19,6 +19,9 @@ public class Genero extends Pantalla{
     public Genero (){
         tab_genero.setId ("tab_genero");
         tab_genero.setTabla ("yavirac_stror_genero","ide_ystgen",1);
+        tab_genero.getColumna("ide_ystgen").setNombreVisual("CODIGO");
+        tab_genero.getColumna("descripcion_ystgen").setNombreVisual("DESCRIPCION");
+        tab_genero.getColumna("activo_ystgen").setNombreVisual("ACTIVO");
         tab_genero.dibujar();
         
         PanelTabla pa_genero = new PanelTabla ();
