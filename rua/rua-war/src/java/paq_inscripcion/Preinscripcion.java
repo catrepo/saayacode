@@ -78,7 +78,14 @@ public class Preinscripcion extends Pantalla {
             tab_pre_inscrip.agregarRelacion(tab_requ_entregado);
             tab_pre_inscrip.setTipoFormulario(true);
             tab_pre_inscrip.getGrid().setColumns(4);
-
+            tab_pre_inscrip.getColumna("ide_yinpin").setNombreVisual("CODIGO");
+            tab_pre_inscrip.getColumna("ide_ypedpe").setNombreVisual("DATO PERSONAL");
+            tab_pre_inscrip.getColumna("ide_yaldap").setNombreVisual("DATO ALUMNO");
+            tab_pre_inscrip.getColumna("ide_ystmen").setNombreVisual("MENSION");
+            tab_pre_inscrip.getColumna("docum_senecyd_yinpin").setNombreVisual("DOCUMENTO SENESCYT");
+            tab_pre_inscrip.getColumna("fecha_incripcion_yinpin").setNombreVisual("FECHA INSCRIPCION");
+            tab_pre_inscrip.getColumna("observacion_yinpin").setNombreVisual("OBSERVACION");
+            tab_pre_inscrip.getColumna("recibido_yinpin").setNombreVisual("RECIBIDO");
             tab_pre_inscrip.dibujar();
 
             PanelTabla pat_pre_inscrip = new PanelTabla();
@@ -88,6 +95,10 @@ public class Preinscripcion extends Pantalla {
             tab_requ_entregado.setId("tab_requ_entregado");
             tab_requ_entregado.setTabla("yavirac_ins_registro_entregado", "ide_yinree", 2);
             tab_requ_entregado.getColumna("ide_ystdor").setCombo(ser_EstructuraOrganizacional.getDocumentoRequerido("true,false"));
+            tab_requ_entregado.getColumna("ide_yinree").setNombreVisual("CODIGO");
+            tab_requ_entregado.getColumna("ide_ystdor").setNombreVisual("DOCUMENTO REQUERIDO");
+            tab_requ_entregado.getColumna("observacion_yinree").setNombreVisual("OBSERVACION");
+            tab_requ_entregado.getColumna("entregado_yinree").setNombreVisual("ENTREGADO");
             tab_requ_entregado.dibujar();
 
             PanelTabla pat_requ_entregado = new PanelTabla();
