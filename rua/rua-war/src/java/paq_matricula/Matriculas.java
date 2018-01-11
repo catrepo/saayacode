@@ -90,7 +90,7 @@ public class Matriculas extends Pantalla {
             tab_matriculas.getColumna("ide_ymaper").setNombreVisual("PERIODO MATRICULA");
             tab_matriculas.getColumna("ide_yaldap").setNombreVisual("DATO ALUMNO");
             tab_matriculas.getColumna("ide_ystins").setNombreVisual("INSTITUCION");
-            tab_matriculas.getColumna("ide_ymamat").setNombreVisual("MATRICULA");
+            tab_matriculas.getColumna("ide_ymatma").setNombreVisual("MATRICULA");
             tab_matriculas.getColumna("fecha_ymamat").setNombreVisual("FECHA MATRICULA");
             tab_matriculas.getColumna("carrera_otro_lugar_ymamat").setNombreVisual("OTRA CARRERA");
             tab_matriculas.getColumna("trabaja_ymamat").setNombreVisual("TRABAJA");
