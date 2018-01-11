@@ -18,7 +18,10 @@ public class ParentescoFamiliar extends Pantalla {
     Tabla tab_parentesco_familiar = new Tabla ();
             public ParentescoFamiliar  (){
                tab_parentesco_familiar.setId ("tab_parentesco_familiar");
-               tab_parentesco_familiar.setTabla ("yavirac_stror_tab_parentesco_familiar","ide_ystgen",1);
+               tab_parentesco_familiar.setTabla ("yavirac_stror_parentezco_fami","ide_ystpaf",1);
+               tab_parentesco_familiar.getColumna("ide_ystpaf").setNombreVisual("CODIGO");
+               tab_parentesco_familiar.getColumna("descripcion_ystpaf").setNombreVisual("DESCRIPCION");
+               tab_parentesco_familiar.getColumna("activo_ystpaf").setNombreVisual("ACTIVO");
                tab_parentesco_familiar.dibujar();
                
                 PanelTabla pa_parentesco_familiar =new PanelTabla ();
@@ -35,17 +38,27 @@ public class ParentescoFamiliar extends Pantalla {
 
     @Override
     public void insertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_parentesco_familiar.insertar();
     }
 
     @Override
     public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tab_parentesco_familiar.guardar();
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         tab_parentesco_familiar.eliminar();
+                 
+    }
+
+    public Tabla getTab_parentesco_familiar() {
+        return tab_parentesco_familiar;
+    }
+
+    public void setTab_parentesco_familiar(Tabla tab_parentesco_familiar) {
+        this.tab_parentesco_familiar = tab_parentesco_familiar;
     }
     
 }
