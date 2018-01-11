@@ -43,6 +43,13 @@ public class FechaControl extends Pantalla{
         tab_tabla.setCondicion("ide_yasfec=-1");
         tab_tabla.getColumna("ide_yassem").setCombo(ser_asistencia.getSemana());
         tab_tabla.getColumna("ide_ystpea").setVisible(false);
+        tab_tabla.getColumna(" ide_yasfec").setNombreVisual("IDE");
+        tab_tabla.getColumna(" ide_yassem").setNombreVisual("ASISTENCIA");
+        tab_tabla.getColumna("fecha_yasfec").setNombreVisual("FECHA");
+        tab_tabla.getColumna("observacion_yasfec").setNombreVisual("OBSERVACION");
+        tab_tabla.getColumna("bloqueado_yasfec").setNombreVisual("BLOQUEADO");
+        tab_tabla.getColumna("activo_yasfec").setNombreVisual("ACTIVO INHABILITADO");
+        tab_tabla.getColumna(" festivo_yasfec").setNombreVisual("FESTIVO");
         tab_tabla.dibujar();
         
         PanelTabla pat_tabla = new PanelTabla();
