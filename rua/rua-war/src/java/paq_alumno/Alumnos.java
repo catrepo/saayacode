@@ -139,6 +139,12 @@ public void alumno(SelectEvent evt){
      tab_alumno_direccion.setId("tab_alumno_direccion");
      tab_alumno_direccion.setIdCompleto("tab_tabulador:tab_alumno_direccion");
      tab_alumno_direccion.setTabla("yavirac_alum_direccion_alumno", "ide_yaldia", 2);
+     tab_alumno_direccion.getColumna("ide_yaldia").setNombreVisual("IDE");
+     tab_alumno_direccion.getColumna("ide_ystdip").setNombreVisual("DISTRIBUCIÓN POLÍTICA");
+     tab_alumno_direccion.getColumna("descripcion_yaldia").setNombreVisual("LUGAR RESIDENCIA");
+     tab_alumno_direccion.getColumna("notificacion_yaldia").setNombreVisual("REGISTRO CAMBIOS EN LA DIRECCIÓN");
+     tab_alumno_direccion.getColumna("activo_yaldia").setNombreVisual("ACTIVO");
+     
      tab_alumno_direccion.dibujar();
      PanelTabla pat_panel2=new PanelTabla();
      pat_panel2.setPanelTabla(tab_alumno_direccion);
@@ -146,6 +152,12 @@ public void alumno(SelectEvent evt){
      tab_alumno_correo.setId("tab_alumno_correo");
      tab_alumno_correo.setIdCompleto("tab_tabulador:tab_alumno_correo");
      tab_alumno_correo.setTabla("yavirac_alum_correo", "ide_yalcor", 3);
+     tab_alumno_correo.getColumna("ide_yalcor").setNombreVisual("IDE");
+     tab_alumno_correo.getColumna("ide_ysttoc").setNombreVisual("TIPO CORREO");
+     tab_alumno_correo.getColumna("ide_yaldfe").setNombreVisual("DATO FAMILIAR");
+     tab_alumno_correo.getColumna("descripcion_yalcor").setNombreVisual("CLASE CORREO");
+     tab_alumno_correo.getColumna("notificacion_yalcor").setNombreVisual("DESCRIPCION CAMBIO DE CORREO");
+     tab_alumno_correo.getColumna("activo_yalcor ").setNombreVisual("ACTIVO");
      tab_alumno_correo.dibujar();
      PanelTabla pat_panel3=new PanelTabla();
      pat_panel3.setPanelTabla(tab_alumno_correo);
@@ -153,6 +165,13 @@ public void alumno(SelectEvent evt){
      tab_alumno_telefono.setId("tab_alumno_telefono");
      tab_alumno_telefono.setIdCompleto("tab_tabulador:tab_alumno_telefono");
      tab_alumno_telefono.setTabla("yavirac_alum_telefono", "ide_yaltel", 4);
+     tab_alumno_telefono.getColumna("ide_yaltel").setNombreVisual("IDE");
+     tab_alumno_telefono.getColumna("ide_ysttio").setNombreVisual("TIPO OPERADORA");
+     tab_alumno_telefono.getColumna("ide_ysttit").setNombreVisual("TIPO TELEFONO");
+     tab_alumno_telefono.getColumna("ide_yaldfe").setNombreVisual("DATO FAMILIAR");
+     tab_alumno_telefono.getColumna("numero_yaltel").setNombreVisual("NUMERO DE TELEFONO");
+     tab_alumno_telefono.getColumna("activo_yaltel").setNombreVisual("ACTIVO");
+     tab_alumno_telefono.getColumna("notificacion_yaltel").setNombreVisual("MODIFICACIÓN TELEFONO");
      tab_alumno_telefono.dibujar();
      PanelTabla pat_panel4=new PanelTabla();
      pat_panel4.setPanelTabla(tab_alumno_telefono);
@@ -160,6 +179,13 @@ public void alumno(SelectEvent evt){
      tab_alumno_discapacidad.setId("tab_alumno_discapacidad");
      tab_alumno_discapacidad.setIdCompleto("tab_tabulador:tab_alumno_discapacidad");
      tab_alumno_discapacidad.setTabla("yavirac_alum_discapacidad", "ide_yaldis", 5);
+     tab_alumno_discapacidad.getColumna("ide_yaldis").setNombreVisual("IDE");
+     tab_alumno_discapacidad.getColumna("ide_ystgrd").setNombreVisual("GRADO DISCAPACIDAD");
+     tab_alumno_discapacidad.getColumna("ide_ysttid").setNombreVisual("TIPO DISCAPACIDAD");
+     tab_alumno_discapacidad.getColumna("numero_conadis_yaldis").setNombreVisual("NÚMERO  DE CARNET CONADIS");
+     tab_alumno_discapacidad.getColumna("fecha_emision_yaldis").setNombreVisual("FECHA EMISION CARNET ");
+     tab_alumno_discapacidad.getColumna("porcentaje_disca_yaldis").setNombreVisual("PORCENTAJE");
+     tab_alumno_discapacidad.getColumna("activo_yaldis").setNombreVisual("ACTIVO");
      tab_alumno_discapacidad.dibujar();
      PanelTabla pat_panel5=new PanelTabla();
      pat_panel5.setPanelTabla(tab_alumno_discapacidad);
@@ -167,6 +193,11 @@ public void alumno(SelectEvent evt){
      tab_archivo_alumno.setId("tab_archivo_alumno");
      tab_archivo_alumno.setIdCompleto("tab_tabulador:tab_archivo_alumno");
      tab_archivo_alumno.setTabla("yavirac_alum_documento", "ide_yaldoc", 6);
+     tab_archivo_alumno.getColumna("ide_yaldoc").setNombreVisual("IDE");
+     tab_archivo_alumno.getColumna("ide_ysttia").setNombreVisual("TIPO ARCHIVO");
+     tab_archivo_alumno.getColumna("descripcion_yaldoc").setNombreVisual("DESCRIPCION");
+     tab_archivo_alumno.getColumna("fecha_yaldoc").setNombreVisual("FECHA");
+     tab_archivo_alumno.getColumna("archivo_anexo_yaldoc").setNombreVisual("ARCHIVO ANEXO");
      tab_archivo_alumno.dibujar();
      PanelTabla pat_panel6=new PanelTabla();
      pat_panel6.setPanelTabla(tab_archivo_alumno);
