@@ -44,6 +44,7 @@ public class PeriodoMatricula extends Pantalla{
          tab_periodo_matricula.getColumna("ide_ymatip").setCombo(ser_matricula.getTipoPeriodoMatricula());
          
         tab_periodo_matricula.setHeader("PERIODO MATRICULA");
+        
         tab_periodo_matricula .dibujar();//dibuja la tabla
 
         PanelTabla pa_periodo_matricula = new PanelTabla();//intanciamos el panel del framework

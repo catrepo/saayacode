@@ -16,6 +16,8 @@ public class TipoMatricula extends Pantalla {
         tab_tipo_matricula.setId("tab_tipo_matricula");// todo objeto instanciado poner id 
         tab_tipo_matricula.setTabla("yavirac_matri_tipo_matricula", "ide_ymatma", 1);  // nombre de la base de datos ii la clave primaria
         tab_tipo_matricula.setHeader("TIPO DE MATRICULA");
+        tab_tipo_matricula.getColumna("ide_ymatma").setNombreVisual("CODIGO");
+        tab_tipo_matricula.getColumna("detalle_ymatma").setNombreVisual("DETALLE");
         tab_tipo_matricula.dibujar();//dibuja la tabla
 
         PanelTabla pa_tipo_matricula = new PanelTabla();//intanciamos el panel del framework
