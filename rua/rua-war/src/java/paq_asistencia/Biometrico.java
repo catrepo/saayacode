@@ -99,6 +99,15 @@ public class Biometrico extends Pantalla {
         tab_biometrico.setCondicion("ide_yasbio=-1");
         tab_biometrico.setHeader("BIOMETRICO");
         tab_biometrico.setLectura(true);
+        tab_biometrico.getColumna("ide_yasbio").setNombreVisual("CODIGO");
+        tab_biometrico.getColumna("indice_yasbio").setNombreVisual("INDICE");
+        tab_biometrico.getColumna("hora_yasbio").setNombreVisual("HORA");
+        tab_biometrico.getColumna("fecha_yasbio").setNombreVisual("FECHA");
+        tab_biometrico.getColumna("puerta_yasbio").setNombreVisual("PUERTA");
+        tab_biometrico.getColumna("num_yasbio").setNombreVisual("NUMERO");
+        tab_biometrico.getColumna("nombre_yasbio").setNombreVisual("NOMBRE");
+        tab_biometrico.getColumna("departamento_yasbio").setNombreVisual("DEPARTAMENTO");
+        tab_biometrico.getColumna("fecha_registro_yasbio").setNombreVisual("FECHA REGISTRO");
         tab_biometrico.dibujar();
         tab_biometrico.setRows(10);
         
