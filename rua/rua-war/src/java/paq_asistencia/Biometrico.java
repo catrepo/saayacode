@@ -15,11 +15,15 @@ import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
+import framework.componentes.Reporte;
 import framework.componentes.SeleccionCalendario;
+import framework.componentes.SeleccionFormatoReporte;
 import framework.componentes.Tabla;
 import framework.componentes.Upload;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -36,13 +40,16 @@ import sistema.aplicacion.Utilitario;
  * @author Janeth Pullotasig and  Nicolas Cajilema
  */
 public class Biometrico extends Pantalla {
-    
+  
     private AutoCompletar aut_opciones=new AutoCompletar();
     private SeleccionCalendario sec_rango_fechas= new SeleccionCalendario();
     private Tabla tab_biometrico = new Tabla();
     private Upload upl_archivo=new Upload();
     private Dialogo dia_subir_archivo = new Dialogo();
     private List<String[]> lis_importa=null; //Guardo los empleados y el valor del rubro
+    private Reporte rep_reporte=new Reporte();
+    private SeleccionFormatoReporte sel_rep=new SeleccionFormatoReporte();
+    private Map map_parametros=new HashMap();
 
     @EJB
     private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
@@ -57,11 +64,24 @@ public class Biometrico extends Pantalla {
        
    public Biometrico() {
        
+       
+       
        aut_opciones.setId("aut_opciones");
        aut_opciones.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
        aut_opciones.setMetodoChange("seleccionarAutocompletar");
        bar_botones.agregarComponente(new Etiqueta("Seleccione una opcion :"));
        bar_botones.agregarComponente(aut_opciones);
+       
+       rep_reporte.setId("rep_reporte");
+       rep_reporte.getBot_aceptar().setMetodo("aceptarReporte");
+       agregarComponente(rep_reporte);
+       bar_botones.agregarReporte();
+       sel_rep.setId("sel_rep");
+       agregarComponente(sel_rep);
+
+    
+       
+       
        
        
        
@@ -99,15 +119,6 @@ public class Biometrico extends Pantalla {
         tab_biometrico.setCondicion("ide_yasbio=-1");
         tab_biometrico.setHeader("BIOMETRICO");
         tab_biometrico.setLectura(true);
-        tab_biometrico.getColumna("ide_yasbio").setNombreVisual("CODIGO");
-        tab_biometrico.getColumna("indice_yasbio").setNombreVisual("INDICE");
-        tab_biometrico.getColumna("hora_yasbio").setNombreVisual("HORA");
-        tab_biometrico.getColumna("fecha_yasbio").setNombreVisual("FECHA");
-        tab_biometrico.getColumna("puerta_yasbio").setNombreVisual("PUERTA");
-        tab_biometrico.getColumna("num_yasbio").setNombreVisual("NUMERO");
-        tab_biometrico.getColumna("nombre_yasbio").setNombreVisual("NOMBRE");
-        tab_biometrico.getColumna("departamento_yasbio").setNombreVisual("DEPARTAMENTO");
-        tab_biometrico.getColumna("fecha_registro_yasbio").setNombreVisual("FECHA REGISTRO");
         tab_biometrico.dibujar();
         tab_biometrico.setRows(10);
         
@@ -281,8 +292,30 @@ public class Biometrico extends Pantalla {
 		return "<div><font color='#ff0000'><strong>*&nbsp;</strong>"+mensaje+"</font></div>";	
 	}                        
    public void abrirUpload(){
+    
        dia_subir_archivo.dibujar();
    }
+
+    @Override
+public void abrirListaReportes() {
+// TODO Auto-generated method stub
+rep_reporte.dibujar();
+}
+@Override
+public void aceptarReporte() {
+if (rep_reporte.getReporteSelecionado().equals("Mi primer reporte")){
+    abrirperfilesSistemas();
+}
+}
+private void abrirperfilesSistemas(){
+    rep_reporte.cerrar();
+    map_parametros.clear();
+    map_parametros.put("titulo", "Definicion");
+    sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+    sel_rep.dibujar();
+}
+   
+   
     @Override
     public void insertar() {
         tab_biometrico.insertar();
@@ -294,11 +327,14 @@ public class Biometrico extends Pantalla {
         guardarPantalla();
         
     }
-
+    
     @Override
     public void eliminar() {
         tab_biometrico.eliminar();
     }
+
+    
+    
 
     public Tabla getTab_biometrico() {
         return tab_biometrico;
@@ -323,6 +359,27 @@ public class Biometrico extends Pantalla {
     public void setAut_opciones(AutoCompletar aut_opciones) {
         this.aut_opciones = aut_opciones;
     }
+
+    public Reporte getRep_reporte() {
+        return rep_reporte;
+    }
+
+    public void setRep_reporte(Reporte rep_reporte) {
+        this.rep_reporte = rep_reporte;
+    }
+
+    public SeleccionFormatoReporte getSel_rep() {
+        return sel_rep;
+    }
+
+    public void setSel_rep(SeleccionFormatoReporte sel_rep) {
+        this.sel_rep = sel_rep;
+    }
+
+    
+   
+
+  
 
 
 
