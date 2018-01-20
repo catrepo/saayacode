@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_biometrico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c689acd4-3e1f-4d6c-909d-e34a3ceee890">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from yavirac_asis_biometrico]]>
+	</queryString>
+	<field name="ide_yasbio" class="java.lang.Long"/>
+	<field name="indice_yasbio" class="java.lang.String">
+		<fieldDescription><![CDATA[Indica el indice del biometrico]]></fieldDescription>
+	</field>
+	<field name="hora_yasbio" class="java.sql.Time">
+		<fieldDescription><![CDATA[Indica la hora de registro del biometrico]]></fieldDescription>
+	</field>
+	<field name="puerta_yasbio" class="java.lang.String">
+		<fieldDescription><![CDATA[Indica la puereta de ingreso del biometrico]]></fieldDescription>
+	</field>
+	<field name="num_yasbio" class="java.lang.Long">
+		<fieldDescription><![CDATA[Indica el numero de registro en la base de datos del usuario en el biometrico]]></fieldDescription>
+	</field>
+	<field name="nombre_yasbio" class="java.lang.String">
+		<fieldDescription><![CDATA[Indica el nombre del Usuario registrado en el Biometrico]]></fieldDescription>
+	</field>
+	<field name="departamento_yasbio" class="java.lang.String">
+		<fieldDescription><![CDATA[Indica el departamento que va laborar el usuario en el biometrico]]></fieldDescription>
+	</field>
+	<field name="codigo_reloj_yasbio" class="java.lang.Integer"/>
+	<field name="usuario_ingre" class="java.lang.String"/>
+	<field name="fecha_ingre" class="java.sql.Date"/>
+	<field name="hora_ingre" class="java.sql.Time"/>
+	<field name="usuario_actua" class="java.lang.String"/>
+	<field name="fecha_actua" class="java.sql.Date"/>
+	<field name="hora_actua" class="java.sql.Time"/>
+	<field name="fecha_yasbio" class="java.sql.Date"/>
+	<field name="fecha_registro_yasbio" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="166" y="12" width="220" height="50" uuid="e144944e-5613-4a49-8a84-9525777726d3"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Mi primer reporte]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="0" width="100" height="20" uuid="35b55345-df9e-43a3-a42f-e9b5a4fb518f"/>
+				<text><![CDATA[Nombre cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="0" width="100" height="20" uuid="1e29fa17-8dbd-48d3-9d49-e2c9e574fe09"/>
+				<text><![CDATA[Hora timbrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="0" width="100" height="20" uuid="df0da553-38d4-4a6c-a42c-b0c6ede2a052"/>
+				<text><![CDATA[codigo reloj]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="0" width="100" height="20" uuid="ed8cf49c-61bd-41da-b5f1-7a0bd737d034"/>
+				<text><![CDATA[numero de puerta]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="0" width="100" height="20" uuid="afca004f-32df-4fd6-bf72-8680250262f4"/>
+				<textFieldExpression><![CDATA[$F{nombre_yasbio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="192" y="0" width="100" height="20" uuid="c8439aac-7c9c-4ec9-969b-f38823dd4399"/>
+				<textFieldExpression><![CDATA[$F{hora_yasbio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="0" width="123" height="20" uuid="4704b151-4c31-4797-a445-eb0bff3ff3b9"/>
+				<textFieldExpression><![CDATA[$F{codigo_reloj_yasbio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="0" width="100" height="20" uuid="23da148d-4231-4af0-aeb9-3b8ccef7281a"/>
+				<textFieldExpression><![CDATA[$F{num_yasbio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
