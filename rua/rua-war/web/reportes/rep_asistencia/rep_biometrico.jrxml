@@ -38,64 +38,115 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="92" splitType="Stretch">
 			<staticText>
-				<reportElement x="166" y="12" width="220" height="50" uuid="e144944e-5613-4a49-8a84-9525777726d3"/>
-				<textElement>
-					<font size="24"/>
+				<reportElement x="196" y="31" width="236" height="50" uuid="e144944e-5613-4a49-8a84-9525777726d3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="20" isBold="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Mi primer reporte]]></text>
+				<text><![CDATA[Reporte Biometrico]]></text>
 			</staticText>
+			<image>
+				<reportElement x="21" y="12" width="107" height="69" uuid="100497b3-0264-4fef-93ca-6079563b451e"/>
+				<imageExpression><![CDATA["C:\\Saayascodigo\\trunk\\rua\\rua-war\\web\\imagenes\\logoinstituto.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="40" splitType="Stretch"/>
+		<band height="33" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<staticText>
-				<reportElement x="40" y="0" width="100" height="20" uuid="35b55345-df9e-43a3-a42f-e9b5a4fb518f"/>
-				<text><![CDATA[Nombre cliente]]></text>
+				<reportElement x="402" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="ed8cf49c-61bd-41da-b5f1-7a0bd737d034"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Número de puerta]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="192" y="0" width="100" height="20" uuid="1e29fa17-8dbd-48d3-9d49-e2c9e574fe09"/>
-				<text><![CDATA[Hora timbrada]]></text>
+				<reportElement x="279" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="df0da553-38d4-4a6c-a42c-b0c6ede2a052"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Codigo Reloj]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="292" y="0" width="100" height="20" uuid="df0da553-38d4-4a6c-a42c-b0c6ede2a052"/>
-				<text><![CDATA[codigo reloj]]></text>
+				<reportElement x="148" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="1e29fa17-8dbd-48d3-9d49-e2c9e574fe09"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Hora Timbrada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="431" y="0" width="100" height="20" uuid="ed8cf49c-61bd-41da-b5f1-7a0bd737d034"/>
-				<text><![CDATA[numero de puerta]]></text>
+				<reportElement x="14" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="35b55345-df9e-43a3-a42f-e9b5a4fb518f"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nombre Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="512" y="0" width="43" height="20" backcolor="#FFFFFF" uuid="bc1368c8-2fa5-4cb3-bfd6-923d8c8ad20e"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ide]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
-			<textField>
-				<reportElement x="40" y="0" width="100" height="20" uuid="afca004f-32df-4fd6-bf72-8680250262f4"/>
-				<textFieldExpression><![CDATA[$F{nombre_yasbio}]]></textFieldExpression>
-			</textField>
 			<textField pattern="HH.mm">
-				<reportElement x="192" y="0" width="100" height="20" uuid="c8439aac-7c9c-4ec9-969b-f38823dd4399"/>
+				<reportElement x="148" y="10" width="100" height="20" uuid="c8439aac-7c9c-4ec9-969b-f38823dd4399"/>
 				<textFieldExpression><![CDATA[$F{hora_yasbio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="292" y="0" width="123" height="20" uuid="4704b151-4c31-4797-a445-eb0bff3ff3b9"/>
+				<reportElement x="279" y="10" width="100" height="20" uuid="4704b151-4c31-4797-a445-eb0bff3ff3b9"/>
 				<textFieldExpression><![CDATA[$F{codigo_reloj_yasbio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="431" y="0" width="100" height="20" uuid="23da148d-4231-4af0-aeb9-3b8ccef7281a"/>
+				<reportElement x="402" y="10" width="100" height="20" uuid="23da148d-4231-4af0-aeb9-3b8ccef7281a"/>
 				<textFieldExpression><![CDATA[$F{num_yasbio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="10" width="100" height="20" uuid="afca004f-32df-4fd6-bf72-8680250262f4"/>
+				<textFieldExpression><![CDATA[$F{nombre_yasbio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="10" width="43" height="20" uuid="98fc911c-532b-480d-ac65-9afb532f8c57"/>
+				<textFieldExpression><![CDATA[$F{ide_yasbio}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="21" width="100" height="20" backcolor="#FFFFFF" uuid="39070c1e-4b7e-4c55-9971-65a8fc3255d8"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="21" width="100" height="20" backcolor="#FFFFFF" uuid="b37d367f-9593-47bd-8a73-9195e2e92c27"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha ingreso]]></text>
+			</staticText>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="0" width="100" height="20" uuid="09d08bcf-ef58-43d8-a6be-e3614510c33e"/>
+				<textFieldExpression><![CDATA[$F{departamento_yasbio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="0" width="100" height="20" uuid="3c31d9db-0465-42c9-a60b-dab40dde67ac"/>
+				<textFieldExpression><![CDATA[$F{fecha_ingre}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
