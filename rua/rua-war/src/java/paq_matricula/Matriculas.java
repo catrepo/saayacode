@@ -77,7 +77,7 @@ public class Matriculas extends Pantalla {
             
             tab_matriculas.setTipoFormulario(true);//para que se haga un formulario
             tab_matriculas.getGrid().setColumns(4); //numero de columnas del formulario
-            //**************************************************************************************
+            //*********************************Etiquetas*****************************************************
             tab_matriculas.getColumna("ide_ymamat").setNombreVisual("CODIGO");
             tab_matriculas.getColumna("ide_ypedpe").setNombreVisual("DATO PERSONAL");
             tab_matriculas.getColumna("ide_ystnie").setNombreVisual("NIVEL");
