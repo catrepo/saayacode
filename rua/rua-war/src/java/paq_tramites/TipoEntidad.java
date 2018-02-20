@@ -31,13 +31,12 @@ public class TipoEntidad extends Pantalla{
         tab_tipoentidad.dibujar();
         
         PanelTabla pat_tipoentidad = new PanelTabla();
-        pat_tipoentidad.setId("pat_tipodocumento");
+        pat_tipoentidad.setId("pat_tipoentidad");
         pat_tipoentidad.setPanelTabla(tab_tipoentidad);
         
         Division div_tipoentidad = new Division();
         div_tipoentidad.setId("div_tipoentidad");
         div_tipoentidad.dividir1(pat_tipoentidad);
-        
         
         agregarComponente(div_tipoentidad);    
 }
