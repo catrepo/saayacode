@@ -303,7 +303,7 @@ rep_reporte.dibujar();
 }
 @Override
 public void aceptarReporte() {
-if (rep_reporte.getReporteSelecionado().equals("Mi primer reporte")){
+if (rep_reporte.getReporteSelecionado().equals("Reporte Biometrico")){
     abrirperfilesSistemas();
 }
 }
