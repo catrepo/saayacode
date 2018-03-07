@@ -24,6 +24,8 @@ public class TipoAsistencia extends Pantalla {
        tab_tipoasistencia.setHeader("TIPO ASISTENCIA");
        tab_tipoasistencia.dibujar();
         
+      
+       
         
         PanelTabla pat_tipoasistencia = new PanelTabla();
         pat_tipoasistencia.setId("pat_tipoasistencia");
