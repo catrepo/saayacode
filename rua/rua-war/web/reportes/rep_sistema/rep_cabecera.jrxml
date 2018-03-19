@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="280" pageHeight="85" whenNoDataType="BlankPage" columnWidth="240" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="fedf1459-643b-41cd-bb4f-3d5a5fea7e1d">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="106"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="ide_sucu" class="java.lang.Integer"/>
 	<parameter name="ide_empr" class="java.lang.Integer">
@@ -34,28 +34,28 @@ and s.ide_sucu=$P{ide_sucu}]]>
 	<title>
 		<band height="80" splitType="Stretch">
 			<textField>
-				<reportElement uuid="741c4b2f-55a2-4cca-be77-f91444d4c746" x="72" y="54" width="168" height="15"/>
+				<reportElement uuid="741c4b2f-55a2-4cca-be77-f91444d4c746" x="72" y="60" width="168" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["RUC: "+$F{identificacion_empr}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3cda33f8-844f-4c17-89ee-eb1edabb551d" x="72" y="12" width="168" height="15"/>
+				<reportElement uuid="3cda33f8-844f-4c17-89ee-eb1edabb551d" x="72" y="5" width="168" height="28"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_sucu}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1bfe65a1-d08f-480d-9b25-37c60e3ce08f" x="72" y="26" width="168" height="15"/>
+				<reportElement uuid="1bfe65a1-d08f-480d-9b25-37c60e3ce08f" x="72" y="32" width="168" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{direccion_sucu}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3e00382d-6f9a-48a0-a7ab-dfd300a228fb" x="72" y="40" width="168" height="15"/>
+				<reportElement uuid="3e00382d-6f9a-48a0-a7ab-dfd300a228fb" x="72" y="46" width="168" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
