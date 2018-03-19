@@ -8,6 +8,7 @@ package paq_asistencia;
 import framework.componentes.Combo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
+import framework.componentes.Grid;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
@@ -37,6 +38,8 @@ public class FechaControl extends Pantalla{
             bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
+            
+
             
         tab_tabla.setId("tab_tabla");
         tab_tabla.setTabla("yavirac_asis_fecha_control", "ide_yasfec", 1);

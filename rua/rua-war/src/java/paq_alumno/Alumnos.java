@@ -38,6 +38,7 @@ import sistema.aplicacion.Pantalla;
  private Tabla tab_dato_laboral = new Tabla();
  private Tabla tab_dato_medico= new Tabla();
  private Tabla tab_aficiones = new Tabla();
+
          
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
@@ -67,16 +68,36 @@ import sistema.aplicacion.Pantalla;
  menup.agregarItem ("AFICIONES", "dibujarTablaAficiones", "ui-icon-document");
  agregarComponente(menup);
  
+ dibujarTablaDatoPersonal();
  }
 public void selecionoAutocompletar(SelectEvent evt){
     aut_alumno.onSelect(evt);
+    //menup.limpiar();
     if (aut_alumno.getValor() != null) {
-            tab_alumno.setCondicion("ide_yaldap="+aut_alumno.getValor());
-            tab_alumno.ejecutarSql();
-
+        
+        if(menup.getOpcion()==1){
+            
+            dibujarTablaDatoPersonal();  
+            //utilitario.addUpdate("tab_alumno_direccion,tab_tabulador");
+        }
+        else if(menup.getOpcion()==2){
+            dibujarTablaDatosFamiliares();
+        }
+        else if(menup.getOpcion()==3){
+            dibujarTablaDatosAcademicos();
+        }
+        else if(menup.getOpcion()==4){
+            dibujarTablaDatosLaborales();
+        }
+        else if(menup.getOpcion()==5){
+            dibujarTablaDatosMedicos();
+        }
+        else if(menup.getOpcion()==6){
+            dibujarTablaAficiones();
+        }
+                
         } else {
-            tab_alumno.limpiar();
-            tab_alumno.limpiar();
+           utilitario.agregarMensajeInfo("Seleccionar un Empleado", "Debe seleccionar un Alumno");
         }    
 }
    
@@ -117,7 +138,7 @@ public void alumno(SelectEvent evt){
  tab_alumno.setId("tab_alumno");
  tab_alumno.setTipoFormulario(true);
  tab_alumno.setTabla("yavirac_alum_dato_personal", "ide_yaldap", 1);
- tab_alumno.setCondicion("ide_yaldap=-1");
+ tab_alumno.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_alumno.getColumna("ide_ystnac").setCombo(ser_estructura.getNacionalidad("true,false"));
  tab_alumno.getColumna("ide_ysttis").setCombo(ser_estructura.getTipoSangre("true,false"));
  tab_alumno.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
@@ -216,11 +237,13 @@ public void alumno(SelectEvent evt){
      agregarComponente(div_division);//
      menup.dibujar(1,"DATOS PERSONALES",div_division);  
      
+     
  }
  public void dibujarTablaDatosFamiliares(){
  int_opcion=2;
  tab_dato_familiar.setId("tab_dato_familiar");
  tab_dato_familiar.setTabla("yavirac_alum_dato_fami_alumno", "ide_yaldfa", 7);
+ tab_dato_familiar.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_dato_familiar.getColumna("ide_yalgas").setCombo(ser_alumno.getDatosVivienda("true,false"));
  tab_dato_familiar.getColumna("ide_yaltiv").setCombo(ser_alumno.getGasto("true,false"));
  tab_dato_familiar.getColumna("ide_yalocu").setCombo(ser_alumno.getOcupacion("true,false"));

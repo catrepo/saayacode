@@ -9,7 +9,10 @@ import framework.componentes.PanelTabla;
 import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import framework.componentes.VisualizarPDF;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -28,6 +31,7 @@ public class Matriculas extends Pantalla {
     private SeleccionTabla sel_actualiza_alumno = new SeleccionTabla();
     private Confirmar con_guardar_alumno = new Confirmar();
     public static String par_modulo_matricula;
+    private VisualizarPDF vipdf_comprobante = new VisualizarPDF();
 
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
@@ -53,6 +57,14 @@ public class Matriculas extends Pantalla {
             bot_clean.setTitle("Limpiar");
             bot_clean.setMetodo("limpiar");
             bar_botones.agregarComponente(bot_clean);
+            
+                        //bar_botones.agregarBoton(bot_anular);
+        Boton bot_imprimir = new Boton();
+        bot_imprimir.setIcon("ui-icon-print");
+        bot_imprimir.setValue("CERTIFICADO MATRICULA");
+        bot_imprimir.setMetodo("generarPDF");
+
+        bar_botones.agregarBoton(bot_imprimir);
 
             Tabulador tab_tabulador = new Tabulador();
             tab_tabulador.setId("tab_tabulador");
@@ -79,7 +91,7 @@ public class Matriculas extends Pantalla {
             tab_matriculas.getGrid().setColumns(4); //numero de columnas del formulario
             //*********************************Etiquetas*****************************************************
             tab_matriculas.getColumna("ide_ymamat").setNombreVisual("CODIGO");
-            tab_matriculas.getColumna("ide_ypedpe").setNombreVisual("DATO PERSONAL");
+            tab_matriculas.getColumna("ide_ypedpe").setNombreVisual("RESPONSABLE");
             tab_matriculas.getColumna("ide_ystnie").setNombreVisual("NIVEL");
             tab_matriculas.getColumna("ide_ystocu").setNombreVisual("OCUPACION");
             tab_matriculas.getColumna("ide_ystmen").setNombreVisual("MENSION");
@@ -193,11 +205,29 @@ public class Matriculas extends Pantalla {
 
             con_guardar_alumno.setId("con_guardar_alumno");
             agregarComponente(con_guardar_alumno);
+            
+             vipdf_comprobante.setId("vipdf_comprobante");
+            vipdf_comprobante.setTitle("CERTIFICADO DE MATRICULA");
+            agregarComponente(vipdf_comprobante);
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el registro de Matriculas. Consulte con el Administrador");
         }
     }
-
+public void generarPDF() {
+        if (tab_matriculas.getValorSeleccionado() != null) {
+            ///////////AQUI ABRE EL REPORTE
+            Map map_parametros = new HashMap();
+            map_parametros.put("pide_ins", Integer.parseInt(tab_matriculas.getValor("ide_ymamat")));
+            map_parametros.put("nombre", utilitario.getVariable("NICK"));
+            
+            System.out.println(" " + map_parametros);
+            vipdf_comprobante.setVisualizarPDF("rep_matricula/rep_certificado_matricula.jasper", map_parametros);
+            vipdf_comprobante.dibujar();
+            utilitario.addUpdate("vipdf_comprobante");
+        } else {
+            utilitario.agregarMensajeInfo("Seleccione una Matricula", "");
+        }
+    } 
     public void actualizaAlumno() {
         String str_clienteActualizado = sel_actualiza_alumno.getValorSeleccionado();
         if (str_clienteActualizado != null) {
@@ -419,6 +449,14 @@ public class Matriculas extends Pantalla {
 
     public void setCon_guardar_alumno(Confirmar con_guardar_alumno) {
         this.con_guardar_alumno = con_guardar_alumno;
+    }
+
+    public VisualizarPDF getVipdf_comprobante() {
+        return vipdf_comprobante;
+    }
+
+    public void setVipdf_comprobante(VisualizarPDF vipdf_comprobante) {
+        this.vipdf_comprobante = vipdf_comprobante;
     }
 
 }

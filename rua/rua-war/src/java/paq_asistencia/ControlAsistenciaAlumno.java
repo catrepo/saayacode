@@ -10,6 +10,8 @@ import framework.componentes.Boton;
 import framework.componentes.Combo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
+import framework.componentes.Grid;
+import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
@@ -30,6 +32,7 @@ public class ControlAsistenciaAlumno extends Pantalla{
      private Tabla tab_docente_mencion = new Tabla();
      private Tabla tab_fecha_control = new Tabla();
      private Tabla tab_asitencia= new Tabla();
+      Division div = new Division();
 
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -46,17 +49,28 @@ public class ControlAsistenciaAlumno extends Pantalla{
             bar_botones.getBot_insertar().setRendered(false);
             bar_botones.getBot_guardar().setRendered(false);
             bar_botones.getBot_eliminar().setRendered(false);
+            bar_botones.getBot_atras().setRendered(false);
+            bar_botones.getBot_fin().setRendered(false);
+            bar_botones.getBot_siguiente().setRendered(false);
+            bar_botones.getBot_inicio().setRendered(false);            
+            
+            bar_botones.agregarComponente(new Etiqueta("Docente *****"));
+            bar_botones.agregarComponente(new Etiqueta(docente));
+            bar_botones.agregarComponente(new Etiqueta("*****"));            
+            bar_botones.agregarComponente(new Etiqueta("      "));
             
             Boton bot_asistencia = new Boton();
             bot_asistencia.setValue("Registrar Asistencia");
             bot_asistencia.setMetodo("registrarAsistencia");
-            bar_botones.agregarBoton(bot_asistencia);
+            bar_botones.agregarBoton(bot_asistencia);  
             
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
             bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
+            
+          
 
             tab_docente_mencion.setId("tab_docente_mencion");
             tab_docente_mencion.setTabla("yavirac_perso_malla_docente", "ide_ypemad", 1);
@@ -99,7 +113,7 @@ public class ControlAsistenciaAlumno extends Pantalla{
          
          PanelTabla pat_fecha_control = new PanelTabla();
          pat_fecha_control.setPanelTabla(tab_fecha_control);
-         
+
          tab_asitencia.setId("tab_asitencia");
          tab_asitencia.setTabla("yavirac_asis_asistencia", "ide_yasasi", 3);
          tab_asitencia.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
@@ -114,11 +128,14 @@ public class ControlAsistenciaAlumno extends Pantalla{
          
          PanelTabla pat_asistencia = new PanelTabla();
          pat_asistencia.setPanelTabla(tab_asitencia);
-         
-            Division div_control = new Division();
-            div_control.dividir3(pat_docente, pat_fecha_control, pat_asistencia,"20%", "60%", "H");
-            agregarComponente(div_control);
-            
+          
+           
+            div.setId("div");
+            div.dividir3(pat_docente, pat_fecha_control, pat_asistencia,"20%", "60%", "H");
+           //agregarComponente(div_control);
+           agregarComponente(div);
+        //gru_pantalla.getChildren().add(div);
+          
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
@@ -213,6 +230,14 @@ public class ControlAsistenciaAlumno extends Pantalla{
 
     public void setTab_asitencia(Tabla tab_asitencia) {
         this.tab_asitencia = tab_asitencia;
+    }
+
+    public Grupo getGru_pantalla() {
+        return gru_pantalla;
+    }
+
+    public void setGru_pantalla(Grupo gru_pantalla) {
+        this.gru_pantalla = gru_pantalla;
     }
     
 }
