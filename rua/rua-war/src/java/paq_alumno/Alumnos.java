@@ -7,6 +7,7 @@ package paq_alumno;
 
 import framework.aplicacion.Columna;
 import framework.componentes.AutoCompletar;
+import framework.componentes.Boton;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.MenuPanel;
@@ -38,6 +39,8 @@ import sistema.aplicacion.Pantalla;
  private Tabla tab_dato_laboral = new Tabla();
  private Tabla tab_dato_medico= new Tabla();
  private Tabla tab_aficiones = new Tabla();
+ private Boton bot_clean = new Boton();
+
 
          
     @EJB
@@ -53,10 +56,18 @@ import sistema.aplicacion.Pantalla;
         aut_alumno.setMetodoChange("selecionoAutocompletar");
         bar_botones.agregarComponente(new Etiqueta("Alumno :"));
         bar_botones.agregarComponente(aut_alumno);
-    
+    bot_clean.setIcon("ui-icon-cancel");
+            bot_clean.setTitle("Limpiar");
+            bot_clean.setMetodo("limpiar");
+            bar_botones.agregarComponente(bot_clean);
 
  menup.setMenuPanel("FICHA DEL ESTUDIANTE", "22%");
  menup.agregarItem ("DATOS PERSONALES", "dibujarTablaDatoPersonal", "ui-icon-contact");
+ menup.agregarItem ("DIRECCION", "dibujarTablaDireccion", "ui-icon-contact");
+ menup.agregarItem ("TELEFONO", "dibujarTablaTelefono", "ui-icon-contact");
+ menup.agregarItem ("CORREO", "dibujarTablaCorreo", "ui-icon-contact");
+ menup.agregarItem ("DISCAPACIDAD", "dibujarTablaDiscapacidad", "ui-icon-contact");
+ menup.agregarItem ("DOCUMENTOS ADJUNTOS", "dibujarTablaDocumentos", "ui-icon-contact");
  menup.agregarItem ("DATOS FAMILIARES", "dibujarTablaDatosFamiliares", "ui-icon-document");
  menup.agregarSubMenu("ESTUDIOS");
  menup.agregarItem ("DATOS ACADEMICOS", "dibujarTablaDatosAcademicos", "ui-icon-document");
@@ -81,18 +92,33 @@ public void selecionoAutocompletar(SelectEvent evt){
             //utilitario.addUpdate("tab_alumno_direccion,tab_tabulador");
         }
         else if(menup.getOpcion()==2){
-            dibujarTablaDatosFamiliares();
+            dibujarTablaDireccion();
         }
         else if(menup.getOpcion()==3){
-            dibujarTablaDatosAcademicos();
+            dibujarTablaTelefono();
         }
         else if(menup.getOpcion()==4){
-            dibujarTablaDatosLaborales();
+            dibujarTablaCorreo();
         }
         else if(menup.getOpcion()==5){
-            dibujarTablaDatosMedicos();
+            dibujarTablaDiscapacidad();
         }
         else if(menup.getOpcion()==6){
+            dibujarTablaDocumentos();
+        }
+        else if(menup.getOpcion()==7){
+            dibujarTablaDatosFamiliares();
+        }
+        else if(menup.getOpcion()==8){
+            dibujarTablaDatosAcademicos();
+        }
+        else if(menup.getOpcion()==9){
+            dibujarTablaDatosLaborales();
+        }
+        else if(menup.getOpcion()==10){
+            dibujarTablaDatosMedicos();
+        }
+        else if(menup.getOpcion()==11){
             dibujarTablaAficiones();
         }
                 
@@ -111,18 +137,33 @@ public void alumno(SelectEvent evt){
                 dibujarTablaDatoPersonal();
             break;
             case 2:
-                dibujarTablaDatosFamiliares();
+                dibujarTablaDireccion();
             break;
             case 3:
-                dibujarTablaDatosAcademicos();
+                dibujarTablaTelefono();
             break;
             case 4:
-                dibujarTablaDatosLaborales();
+                dibujarTablaCorreo();
             break;
             case 5:
-                dibujarTablaDatosMedicos();
+                dibujarTablaDiscapacidad();
             break;
             case 6:
+                dibujarTablaDocumentos();
+            break;
+            case 7:
+                dibujarTablaDatosFamiliares();
+            break;
+            case 8:
+                dibujarTablaDatosAcademicos();
+            break;
+            case 9:
+                dibujarTablaDatosLaborales();
+            break;
+            case 10:
+                dibujarTablaDatosMedicos();
+            break;
+            case 11:
                 dibujarTablaAficiones();
             break;        
             default:
@@ -132,8 +173,7 @@ public void alumno(SelectEvent evt){
 }
  public void dibujarTablaDatoPersonal(){
  int_opcion=1;
- Tabulador tab_tabulador = new Tabulador();
- tab_tabulador.setId("tab_tabulador");
+
  tab_alumno =new Tabla();
  tab_alumno.setId("tab_alumno");
  tab_alumno.setTipoFormulario(true);
@@ -144,11 +184,7 @@ public void alumno(SelectEvent evt){
  tab_alumno.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
  tab_alumno.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
  tab_alumno.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
- tab_alumno.agregarRelacion(tab_alumno_correo);
- tab_alumno.agregarRelacion(tab_alumno_direccion);
- tab_alumno.agregarRelacion(tab_alumno_discapacidad);
- tab_alumno.agregarRelacion(tab_alumno_telefono);
- tab_alumno.agregarRelacion(tab_archivo_alumno);
+
  tab_alumno.setMostrarNumeroRegistros(false);
  tab_alumno.getGrid().setColumns(4);
  tab_alumno.dibujar();
@@ -156,10 +192,23 @@ public void alumno(SelectEvent evt){
  tab_alumno.setHeader("DATOS PERSONALES");
      PanelTabla pat_panel1=new PanelTabla();
      pat_panel1.setPanelTabla(tab_alumno);
+ 
+
+     pat_panel1.getMenuTabla().getItem_buscar().setRendered(false);
+
+     Division div_division= new Division();
+     div_division.dividir1(pat_panel1);//Agrego el Tabulador a una Division
+     agregarComponente(div_division);//
+     menup.dibujar(1,"DATOS PERSONALES",div_division);  
      
+     
+ }
+ public void dibujarTablaDireccion(){
+ int_opcion=2;   
      tab_alumno_direccion.setId("tab_alumno_direccion");
-     tab_alumno_direccion.setIdCompleto("tab_tabulador:tab_alumno_direccion");
      tab_alumno_direccion.setTabla("yavirac_alum_direccion_alumno", "ide_yaldia", 2);
+ tab_alumno_direccion.setCondicion("ide_yaldap="+aut_alumno.getValor());
+     
      tab_alumno_direccion.getColumna("ide_yaldia").setNombreVisual("IDE");
      tab_alumno_direccion.getColumna("ide_ystdip").setNombreVisual("DISTRIBUCIÓN POLÍTICA");
      tab_alumno_direccion.getColumna("descripcion_yaldia").setNombreVisual("LUGAR RESIDENCIA");
@@ -168,24 +217,21 @@ public void alumno(SelectEvent evt){
      
      tab_alumno_direccion.dibujar();
      PanelTabla pat_panel2=new PanelTabla();
-     pat_panel2.setPanelTabla(tab_alumno_direccion);
+     pat_panel2.setPanelTabla(tab_alumno_direccion); 
+     
+     pat_panel2.getMenuTabla().getItem_buscar().setRendered(false);
+     Division div_division= new Division();
+     div_division.dividir1(pat_panel2);//Agrego el Tabulador a una Division
+     agregarComponente(div_division);//
 
-     tab_alumno_correo.setId("tab_alumno_correo");
-     tab_alumno_correo.setIdCompleto("tab_tabulador:tab_alumno_correo");
-     tab_alumno_correo.setTabla("yavirac_alum_correo", "ide_yalcor", 3);
-     tab_alumno_correo.getColumna("ide_yalcor").setNombreVisual("IDE");
-     tab_alumno_correo.getColumna("ide_ysttoc").setNombreVisual("TIPO CORREO");
-     tab_alumno_correo.getColumna("ide_yaldfe").setNombreVisual("DATO FAMILIAR");
-     tab_alumno_correo.getColumna("descripcion_yalcor").setNombreVisual("CLASE CORREO");
-     tab_alumno_correo.getColumna("notificacion_yalcor").setNombreVisual("DESCRIPCION CAMBIO DE CORREO");
-     tab_alumno_correo.getColumna("activo_yalcor ").setNombreVisual("ACTIVO");
-     tab_alumno_correo.dibujar();
-     PanelTabla pat_panel3=new PanelTabla();
-     pat_panel3.setPanelTabla(tab_alumno_correo);
-
-     tab_alumno_telefono.setId("tab_alumno_telefono");
-     tab_alumno_telefono.setIdCompleto("tab_tabulador:tab_alumno_telefono");
+    menup.dibujar(2,"DIRECCION",div_division);     
+ }
+  public void dibujarTablaTelefono(){
+int_opcion=3;     
+tab_alumno_telefono.setId("tab_alumno_telefono");
      tab_alumno_telefono.setTabla("yavirac_alum_telefono", "ide_yaltel", 4);
+      tab_alumno_telefono.setCondicion("ide_yaldap="+aut_alumno.getValor());
+
      tab_alumno_telefono.getColumna("ide_yaltel").setNombreVisual("IDE");
      tab_alumno_telefono.getColumna("ide_ysttio").setNombreVisual("TIPO OPERADORA");
      tab_alumno_telefono.getColumna("ide_ysttit").setNombreVisual("TIPO TELEFONO");
@@ -196,10 +242,44 @@ public void alumno(SelectEvent evt){
      tab_alumno_telefono.dibujar();
      PanelTabla pat_panel4=new PanelTabla();
      pat_panel4.setPanelTabla(tab_alumno_telefono);
+     
+      pat_panel4.getMenuTabla().getItem_buscar().setRendered(false);
+     Division div_division= new Division();
+     div_division.dividir1(pat_panel4);//Agrego el Tabulador a una Division
+     agregarComponente(div_division);//
 
-     tab_alumno_discapacidad.setId("tab_alumno_discapacidad");
-     tab_alumno_discapacidad.setIdCompleto("tab_tabulador:tab_alumno_discapacidad");
+    menup.dibujar(3,"TELEFONO",div_division);
+
+ }
+ public void dibujarTablaCorreo(){
+  int_opcion=4;   
+   tab_alumno_correo.setId("tab_alumno_correo");
+     tab_alumno_correo.setTabla("yavirac_alum_correo", "ide_yalcor", 3);
+      tab_alumno_correo.setCondicion("ide_yaldap="+aut_alumno.getValor());
+     
+     tab_alumno_correo.getColumna("ide_yalcor").setNombreVisual("IDE");
+     tab_alumno_correo.getColumna("ide_ysttoc").setNombreVisual("TIPO CORREO");
+     tab_alumno_correo.getColumna("ide_yaldfe").setNombreVisual("DATO FAMILIAR");
+     tab_alumno_correo.getColumna("descripcion_yalcor").setNombreVisual("CLASE CORREO");
+     tab_alumno_correo.getColumna("notificacion_yalcor").setNombreVisual("DESCRIPCION CAMBIO DE CORREO");
+     tab_alumno_correo.getColumna("activo_yalcor ").setNombreVisual("ACTIVO");
+     tab_alumno_correo.dibujar();
+     PanelTabla pat_panel3=new PanelTabla();
+     pat_panel3.setPanelTabla(tab_alumno_correo);
+     
+      pat_panel3.getMenuTabla().getItem_buscar().setRendered(false);
+     Division div_division= new Division();
+     div_division.dividir1(pat_panel3);//Agrego el Tabulador a una Division
+     agregarComponente(div_division);//
+
+    menup.dibujar(4,"CORREO",div_division);
+ }
+ public void dibujarTablaDiscapacidad(){
+ int_opcion=5;    
+ tab_alumno_discapacidad.setId("tab_alumno_discapacidad");
      tab_alumno_discapacidad.setTabla("yavirac_alum_discapacidad", "ide_yaldis", 5);
+      tab_alumno_discapacidad.setCondicion("ide_yaldap="+aut_alumno.getValor());
+     
      tab_alumno_discapacidad.getColumna("ide_yaldis").setNombreVisual("IDE");
      tab_alumno_discapacidad.getColumna("ide_ystgrd").setNombreVisual("GRADO DISCAPACIDAD");
      tab_alumno_discapacidad.getColumna("ide_ysttid").setNombreVisual("TIPO DISCAPACIDAD");
@@ -210,10 +290,20 @@ public void alumno(SelectEvent evt){
      tab_alumno_discapacidad.dibujar();
      PanelTabla pat_panel5=new PanelTabla();
      pat_panel5.setPanelTabla(tab_alumno_discapacidad);
+     
+      pat_panel5.getMenuTabla().getItem_buscar().setRendered(false);
+     Division div_division= new Division();
+     div_division.dividir1(pat_panel5);//Agrego el Tabulador a una Division
+     agregarComponente(div_division);//
 
-     tab_archivo_alumno.setId("tab_archivo_alumno");
-     tab_archivo_alumno.setIdCompleto("tab_tabulador:tab_archivo_alumno");
-     tab_archivo_alumno.setTabla("yavirac_alum_documento", "ide_yaldoc", 6);
+    menup.dibujar(5,"DISCAPACIDAD",div_division);
+ }
+  public void dibujarTablaDocumentos(){
+  int_opcion=6;   
+   tab_archivo_alumno.setId("tab_archivo_alumno");
+    tab_archivo_alumno.setTabla("yavirac_alum_documento", "ide_yaldoc", 6);
+    tab_archivo_alumno.setCondicion("ide_yaldap="+aut_alumno.getValor());
+   
      tab_archivo_alumno.getColumna("ide_yaldoc").setNombreVisual("IDE");
      tab_archivo_alumno.getColumna("ide_ysttia").setNombreVisual("TIPO ARCHIVO");
      tab_archivo_alumno.getColumna("descripcion_yaldoc").setNombreVisual("DESCRIPCION");
@@ -222,25 +312,16 @@ public void alumno(SelectEvent evt){
      tab_archivo_alumno.dibujar();
      PanelTabla pat_panel6=new PanelTabla();
      pat_panel6.setPanelTabla(tab_archivo_alumno);
-
      
-     tab_tabulador.agregarTab("DIRECCION", pat_panel2); //Agrega un Tab con el Formulario de Usuarios
-     tab_tabulador.agregarTab("TELEFONO", pat_panel4); //Agrega un Tab sin ningun componente
-     tab_tabulador.agregarTab("CORREO",pat_panel3);
-     tab_tabulador.agregarTab("DISCAPCIDAD",pat_panel5);
-     tab_tabulador.agregarTab("DOCUMENTACION",pat_panel6);
-
-     pat_panel1.getMenuTabla().getItem_buscar().setRendered(false);
-
+      pat_panel6.getMenuTabla().getItem_buscar().setRendered(false);
      Division div_division= new Division();
-     div_division.dividir2(pat_panel1,tab_tabulador,"60%","H");//Agrego el Tabulador a una Division
+     div_division.dividir1(pat_panel6);//Agrego el Tabulador a una Division
      agregarComponente(div_division);//
-     menup.dibujar(1,"DATOS PERSONALES",div_division);  
-     
-     
+
+    menup.dibujar(6,"DOCUMENTOS ADJUNTOS",div_division);
  }
  public void dibujarTablaDatosFamiliares(){
- int_opcion=2;
+ int_opcion=7;
  tab_dato_familiar.setId("tab_dato_familiar");
  tab_dato_familiar.setTabla("yavirac_alum_dato_fami_alumno", "ide_yaldfa", 7);
  tab_dato_familiar.setCondicion("ide_yaldap="+aut_alumno.getValor());
@@ -255,26 +336,26 @@ public void alumno(SelectEvent evt){
      pat_panel2.setPanelTabla(tab_dato_familiar);
      pat_panel2.getMenuTabla().getItem_buscar().setRendered(false);
 
-     menup.dibujar(2,"DATOS FAMILIARES ALUMNO",pat_panel2);  
+     menup.dibujar(7,"DATOS FAMILIARES ALUMNO",pat_panel2);  
 }
  public void dibujarTablaDatosAcademicos(){
- int_opcion=3;
+ int_opcion=8;
  tab_dato_academico.setId("tab_alumno");
  tab_dato_academico.setTabla("yavirac_alum_dato_academico", "ide_yaldaa", 8);
- tab_dato_academico.setCondicion("ide_yaldaa=-1");
+      tab_dato_academico.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_dato_academico.dibujar();
  tab_dato_academico.setHeader("DATOS ACADEMICOS");
      PanelTabla pat_panel3=new PanelTabla();
      pat_panel3.setPanelTabla(tab_dato_academico);
      pat_panel3.getMenuTabla().getItem_buscar().setRendered(false);
   
- menup.dibujar(3,"DATOS ACADEMICOS",pat_panel3);
+ menup.dibujar(8,"DATOS ACADEMICOS",pat_panel3);
 }
 public void dibujarTablaDatosLaborales(){
- int_opcion=4;
+ int_opcion=9;
  tab_dato_laboral.setId("tab_dato_laboral");
  tab_dato_laboral.setTabla("yavirac_alum_dato_laboral", "ide_yaldal", 9);
- tab_dato_laboral.setCondicion("ide_yaldal=-1");
+ tab_dato_laboral.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_dato_laboral.dibujar();
  tab_dato_laboral.setHeader("DATOS LABORALES");
      PanelTabla pat_panel=new PanelTabla();
@@ -282,26 +363,26 @@ public void dibujarTablaDatosLaborales(){
      pat_panel.getMenuTabla().getItem_buscar().setRendered(false);
 
  
- menup.dibujar(4,"DATOS LABORALES",pat_panel);
+ menup.dibujar(9,"DATOS LABORALES",pat_panel);
 }
 public void dibujarTablaDatosMedicos(){
- int_opcion=5;
+ int_opcion=10;
  tab_dato_medico.setId("tab_dato_medico");
  tab_dato_medico.setTabla("yavirac_alum_dato_medico", "ide_yaldam", 10);
- tab_dato_medico.setCondicion("ide_yaldam=-1");
+ tab_dato_medico.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_dato_medico.dibujar();
  tab_dato_medico.setHeader("DATOS MEDICOS");
      PanelTabla pat_panel4=new PanelTabla();
      pat_panel4.setPanelTabla(tab_dato_medico);
      pat_panel4.getMenuTabla().getItem_buscar().setRendered(false);
 
- menup.dibujar(5,"DATOS MEDICOS",pat_panel4);
+ menup.dibujar(10,"DATOS MEDICOS",pat_panel4);
 }
 public void dibujarTablaAficiones(){
- int_opcion=6;
+ int_opcion=11;
  tab_aficiones.setId("tab_aficiones");
  tab_aficiones.setTabla("yavirac_alum_aficion", "ide_yalafi", 11);
- tab_aficiones.setCondicion("ide_yalafi=-1");
+ tab_aficiones.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_aficiones.getColumna("ide_yalafi").setNombreVisual("CODIGO");
  tab_aficiones.getColumna("aficiones_yalafi").setNombreVisual("AFICIONES");
  tab_aficiones.getColumna("extraescolar_yalafi").setNombreVisual("EXTRAESCOLAR");
@@ -312,7 +393,7 @@ public void dibujarTablaAficiones(){
      pat_panel5.setPanelTabla(tab_aficiones);
      pat_panel5.getMenuTabla().getItem_buscar().setRendered(false);
 
- menup.dibujar(6,"AFICIONES",pat_panel5);
+ menup.dibujar(11,"AFICIONES",pat_panel5);
 }
 public void limpiar() {
         aut_alumno.limpiar();
@@ -322,26 +403,95 @@ public void limpiar() {
     @Override
     public void insertar() {
       if(int_opcion==1){
-           if(tab_alumno.isFocus()){
             tab_alumno.insertar();
-            }
-           else if(tab_alumno_direccion.isFocus()){
-               tab_alumno_direccion.insertar();
+        }  
+        else if(int_opcion==2){
+            tab_alumno_direccion.insertar();
+            tab_alumno_direccion.setValor("ide_yaldap", aut_alumno.getValor());
+            
            }
-      }  
+        else if(int_opcion==3){
+            tab_alumno_telefono.insertar();
+            tab_alumno_telefono.setValor("ide_yaldap", aut_alumno.getValor());
 
+           }
+         else if(int_opcion==4){
+            tab_alumno_correo.insertar();
+                        tab_alumno_correo.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==5){
+            tab_alumno_discapacidad.insertar();
+                        tab_alumno_discapacidad.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==6){
+            tab_archivo_alumno.insertar();
+                        tab_archivo_alumno.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==7){
+            tab_dato_familiar.insertar();
+                        tab_dato_familiar.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==8){
+            tab_dato_academico.insertar();
+                        tab_dato_academico.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==9){
+            tab_dato_laboral.insertar();
+                        tab_dato_laboral.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==10){
+            tab_dato_medico.insertar();
+                        tab_dato_medico.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
+         else if(int_opcion==11){
+            tab_aficiones.insertar();
+                        tab_aficiones.setValor("ide_yaldap", aut_alumno.getValor());
+
+           }
     }
 
     @Override
     public void guardar() {
         if(int_opcion==1){
-            if(tab_alumno.isFocus()){
             tab_alumno.guardar();
-            }
-             else if(tab_alumno_direccion.isFocus()){
-               tab_alumno_direccion.guardar();
            }
-        }
+        else if(int_opcion==2){
+            tab_alumno_direccion.guardar();
+           }
+        else if(int_opcion==3){
+            tab_alumno_telefono.guardar();
+           }
+         else if(int_opcion==4){
+            tab_alumno_correo.guardar();
+           }
+         else if(int_opcion==5){
+            tab_alumno_discapacidad.guardar();
+           }
+         else if(int_opcion==6){
+            tab_archivo_alumno.guardar();
+           }
+         else if(int_opcion==7){
+            tab_dato_familiar.guardar();
+           }
+         else if(int_opcion==8){
+            tab_dato_academico.guardar();
+           }
+         else if(int_opcion==9){
+            tab_dato_laboral.guardar();
+           }
+         else if(int_opcion==10){
+            tab_dato_medico.guardar();
+           }
+         else if(int_opcion==11){
+            tab_aficiones.guardar();
+           }
         guardarPantalla();
     }
 
