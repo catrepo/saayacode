@@ -100,7 +100,20 @@ public class ServicioEstructuraOrganizacional {
         String sql="";
         sql="SELECT ide_ystdip, ide_ysttdp, descripcion_ystdip FROM yavirac_stror_distribucion_pol where activo_ystdip in ("+activo+")";
         return sql;
-    }    
+    }  
+    
+     /**
+    * Retorna la Tipo Division Politica
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql de modalidad
+     */
+    public String getTipoDivisionPolitica(String activo) {
+        String sql="";
+        sql="SELECT ide_ysttdp ,descripcion_ysttdp FROM yavirac_stror_tipo_divisio_po where activo_ysttdp in ("+activo+")";
+        return sql;
+    }  
+    
     /**
     * Retorna el Estado Civil
      *
