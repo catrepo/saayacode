@@ -330,6 +330,8 @@ tab_alumno_telefono.setId("tab_alumno_telefono");
  tab_dato_familiar.getColumna("ide_yalocu").setCombo(ser_alumno.getOcupacion("true,false"));
  tab_dato_familiar.getColumna("ide_ystpaf").setCombo(ser_estructura.getParentezcoFamiliar("true,false"));
  tab_dato_familiar.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
+ tab_dato_familiar.setTipoFormulario(true);
+ tab_dato_familiar.getGrid().setColumns(4);
  tab_dato_familiar.dibujar();
  tab_dato_familiar.setHeader("DATOS FAMILIARES ALUMNO");
      PanelTabla pat_panel2=new PanelTabla();
