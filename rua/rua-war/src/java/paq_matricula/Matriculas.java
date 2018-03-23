@@ -18,6 +18,7 @@ import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_matricula.ejb.ServicioMatriculas;
 import paq_personal.ejb.ServicioPersonal;
+import persistencia.Conexion;
 import sistema.aplicacion.Pantalla;
 
 public class Matriculas extends Pantalla {
@@ -32,6 +33,7 @@ public class Matriculas extends Pantalla {
     private Confirmar con_guardar_alumno = new Confirmar();
     public static String par_modulo_matricula;
     private VisualizarPDF vipdf_comprobante = new VisualizarPDF();
+    private Conexion conOracle = new Conexion();
 
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
@@ -221,6 +223,7 @@ public void generarPDF() {
             map_parametros.put("nombre", utilitario.getVariable("NICK"));
             
             System.out.println(" " + map_parametros);
+            //vipdf_comprobante.setVisualizarPDF(data, docente, map_parametros);
             vipdf_comprobante.setVisualizarPDF("rep_matricula/rep_certificado_matricula.jasper", map_parametros);
             vipdf_comprobante.dibujar();
             utilitario.addUpdate("vipdf_comprobante");
