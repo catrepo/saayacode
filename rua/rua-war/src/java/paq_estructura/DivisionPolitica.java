@@ -29,8 +29,8 @@ public class DivisionPolitica extends Pantalla {
 
         tab_division_politica.setId("tab_division_politica");
         tab_division_politica.setTabla("yavirac_stror_distribucion_pol", "ide_ystdip", 1);
-        tab_division_politica.getColumna("ide_ysttdp").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
-        tab_division_politica.setHeader("DIVISION POLITICA");
+        tab_division_politica.getColumna("ide_ysttdp").setCombo(ser_estructura.getTipoDivisionPolitica("true,false"));
+        tab_division_politica.setHeader("DIVISION POLITICA"); 
         tab_division_politica.getColumna("ide_ystdip").setNombreVisual("CÓDIGO");
         tab_division_politica.getColumna("ide_ysttdp").setNombreVisual("TIPO DIVISIÓN POLITICA");
         tab_division_politica.getColumna("descripcion_ystdip").setNombreVisual("DESCRIPCIÓN");
