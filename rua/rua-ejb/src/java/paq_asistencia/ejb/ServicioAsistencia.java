@@ -9,7 +9,6 @@ import paq_estructura.ejb.*;
 import framework.aplicacion.TablaGenerica;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-
 /**
  *
  * @author Janeth Pullotasig and  Nicolas Cajilema
@@ -42,5 +41,28 @@ public class ServicioAsistencia {
         return sql;
     }   
        
-    
+    /**
+     * SQL tipo motivo para asistencia
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getTipoMotivo() {
+        String sql="";
+        sql=" SELECT ide_yastmo, descripcion_yastmo FROM yavirac_asis_tipo_motivo order by descripcion_yastmo;";
+              
+        return sql;
+    }     
+  /**
+     * SQL motivo para asistencia
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getMotivoAusencia() {
+        String sql="";
+        sql=" SELECT ide_yasmpe, descripcion_yasmpe FROM yavirac_asis_motivo_permiso order by descripcion_yasmpe;";
+              
+        return sql;
+    }       
 }

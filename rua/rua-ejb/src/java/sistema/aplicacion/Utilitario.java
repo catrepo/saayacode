@@ -755,6 +755,20 @@ public class Utilitario extends Framework {
         return valor;
     }
 
+        /**
+     * Busca un campo de la base de datos de la tabla sis_usuario
+     *
+     * @param campo
+     * @return
+     */
+    public String getUsuario(String campo) {
+        String valor = null;
+        TablaGenerica tab_empresa = consultar("SELECT ide_usua," + campo + " FROM SIS_usuario WHERE ide_usua=" + getVariable("NICK"));
+        if (tab_empresa.getTotalFilas() > 0) {
+            valor = tab_empresa.getValor(0, campo);
+        }
+        return valor;
+    }
     /**
      * Permite instanciar a un EJB desde una clase
      *
