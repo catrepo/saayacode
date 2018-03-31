@@ -36,14 +36,17 @@ public class HoraPersonalPeriodo extends Pantalla {
     
      public HoraPersonalPeriodo(){
         tab_hora_personal_periodo.setId("tab_hora_personal_periodo");   //identificador
-        tab_hora_personal_periodo.setTabla("yavirac_hora_personal_perio", "ide_yhopep", 1);
+        tab_hora_personal_periodo.setTabla("yavirac_stror_personal_periodo", "ide_ystpep", 1);
         tab_hora_personal_periodo.agregarRelacion(tab_hora_horario_docente);
         tab_hora_personal_periodo.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_hora_personal_periodo.getColumna("ide_yhotgh").setCombo(ser_horarios.getTipoGeneracionHora());
         tab_hora_personal_periodo.getColumna("ide_ystpea").setVisible(false);
-        tab_hora_personal_periodo.getColumna("ide_yhopep").setNombreVisual("CODIGO");
+        tab_hora_personal_periodo.getColumna("ide_ystpep").setNombreVisual("CODIGO");
         tab_hora_personal_periodo.getColumna("ide_ypedpe").setNombreVisual("DATO PERSONAL");
         tab_hora_personal_periodo.getColumna("ide_yhotgh").setNombreVisual("TIPO GENERACION HORARIO");
+        tab_hora_personal_periodo.getColumna("fecha_fin_ystpep").setNombreVisual("FECHA FINAL");
+        tab_hora_personal_periodo.getColumna("observacion_ystpep").setNombreVisual("OBSERVAVION");
+        tab_hora_personal_periodo.getColumna("activo_ystpep").setNombreVisual("ACTIVO");
         tab_hora_personal_periodo.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         
