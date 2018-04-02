@@ -19,6 +19,7 @@
 	<parameter name="pide_solicitud" class="java.lang.Integer"/>
 	<parameter name="fecha_desde" class="java.lang.String"/>
 	<parameter name="fecha_hasta" class="java.lang.String"/>
+	<parameter name="tipo_soli" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ide_yasper,a.ide_ypedpe,apellido_ypedpe,nombre_ypedpe,b.doc_identidad_ypedpe,descripcion_yasmpe ,
 fecha_solicitud_yasper,fecha_desde_yasper,fecha_hasta_yasper,(case when tipo_yasper = 1 then 'PERMISO POR DIAS	' when tipo_yasper=2 then 'PERMISO POR HORAS' end) as tipo_permiso,
@@ -50,7 +51,7 @@ and ide_yasper =$P{pide_solicitud}]]>
 	<field name="responsable" class="java.lang.String"/>
 	<field name="aprobador" class="java.lang.String"/>
 	<title>
-		<band height="51" splitType="Stretch">
+		<band height="68" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="ef511e60-da9a-4cfc-9730-2830f3a37f66" x="0" y="1" width="261" height="32"/>
 				<subreportParameter name="SUBREPORT_DIR">
@@ -78,6 +79,13 @@ and ide_yasper =$P{pide_solicitud}]]>
 				</textElement>
 				<text><![CDATA[SOLICITUD DE PERMISO]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="ef3831e9-d82b-4246-b3a6-7519150c61d4" x="310" y="31" width="191" height="37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipo_soli}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>
