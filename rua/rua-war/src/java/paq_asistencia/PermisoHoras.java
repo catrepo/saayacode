@@ -14,6 +14,10 @@ import framework.componentes.Tabla;
 import framework.componentes.VisualizarPDF;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
@@ -23,6 +27,7 @@ import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_personal.ejb.ServicioPersonal;
 import java.util.HashMap;
 import java.util.Map;
+import javax.faces.event.AjaxBehaviorEvent;
 
 
 
@@ -30,7 +35,7 @@ import java.util.Map;
  *
  * @author Janeth Pullotasig
  */
-public class PermisoDias extends Pantalla {
+public class PermisoHoras extends Pantalla {
     private Tabla tab_tipomotivo =new  Tabla();
     private AutoCompletar aut_empleado = new AutoCompletar();    
     @EJB
@@ -40,7 +45,7 @@ public class PermisoDias extends Pantalla {
     @EJB
     private final ServicioEstructuraOrganizacional ser_EstructuraOrganizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     private VisualizarPDF vipdf_comprobante = new VisualizarPDF();    
-    public PermisoDias(){
+    public PermisoHoras(){
         if (tienePerfilSecretaria()) {
     // boton limpiar
 		Boton bot_limpiar = new Boton();
@@ -77,8 +82,8 @@ public class PermisoDias extends Pantalla {
         bar_botones.agregarBoton(bot_imprimir);
         
         tab_tipomotivo.setId("tab_tipomotivo");
+        tab_tipomotivo.setHeader("PERMISOS DE COLABORADORES POR HORAS");
         tab_tipomotivo.setTabla("yavirac_asis_permisos","ide_yasper",1);
-        tab_tipomotivo.setHeader("PERMISOS DE COLABORADORES POR DIAS");
         tab_tipomotivo.getColumna("yav_ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_tipomotivo.getColumna("yav_ide_ypedpe2").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_tipomotivo.getColumna("ide_yasmpe").setCombo(ser_asistencia.getMotivoAusencia());
@@ -103,15 +108,17 @@ public class PermisoDias extends Pantalla {
         tab_tipomotivo.getColumna("aprobado_repro_yasper").setLectura(true);
         tab_tipomotivo.getColumna("yav_ide_ypedpe").setValorDefecto(ide_docente);
         tab_tipomotivo.getColumna("yav_ide_ypedpe").setAutoCompletar();
-        tab_tipomotivo.getColumna("tipo_yasper").setValorDefecto("1");
+        tab_tipomotivo.getColumna("tipo_yasper").setValorDefecto("2");
         tab_tipomotivo.getColumna("tipo_yasper").setVisible(false);
         tab_tipomotivo.getColumna("yav_ide_ypedpe").setLectura(true);
         tab_tipomotivo.getColumna("fecha_desde_yasper").setRequerida(true);
         tab_tipomotivo.getColumna("fecha_hasta_yasper").setRequerida(true);
-        tab_tipomotivo.getColumna("fecha_desde_yasper").setMetodoChange("calcularDiasPermisos");
-        tab_tipomotivo.getColumna("fecha_hasta_yasper").setMetodoChange("calcularDiasPermisos");
-        tab_tipomotivo.getColumna("hora_inicio_yasper").setVisible(false);
-        tab_tipomotivo.getColumna("hora_fin_yasper").setVisible(false);
+        tab_tipomotivo.getColumna("fecha_desde_yasper").setMetodoChange("CargarFechaHasta");
+        tab_tipomotivo.getColumna("fecha_hasta_yasper").setLectura(true);
+        tab_tipomotivo.getColumna("hora_inicio_yasper").setMetodoChange("calaculahoras");
+        tab_tipomotivo.getColumna("hora_fin_yasper").setMetodoChange("calaculahoras");
+        tab_tipomotivo.getColumna("hora_inicio_yasper").setRequerida(true);
+        tab_tipomotivo.getColumna("hora_fin_yasper").setRequerida(true);        
         tab_tipomotivo.getColumna("ide_ypedpe").setVisible(false);
         tab_tipomotivo.getColumna("total_horas_yasper").setFormatoNumero(2);
 	tab_tipomotivo.getColumna("total_horas_yasper").setEtiqueta();
@@ -139,29 +146,99 @@ public class PermisoDias extends Pantalla {
         agregarComponente(div_tipomotivo);   
         
          vipdf_comprobante.setId("vipdf_comprobante");
-            vipdf_comprobante.setTitle("SOLICITUD DE PERMISOS POR DIAS");
+            vipdf_comprobante.setTitle("SOLICITUD DE PERMISOS POR HORAS");
             agregarComponente(vipdf_comprobante);
         
             } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el registro de SOLICITUDES. Consulte con el Administrador");
         }        
     }
-  
+    
+public  void calaculahoras(DateSelectEvent evt){
+		tab_tipomotivo.modificar(evt);		
+		if(tab_tipomotivo.getValor("hora_inicio_yasper")!=null && !tab_tipomotivo.getValor("hora_inicio_yasper").isEmpty()
+				&& tab_tipomotivo.getValor("hora_fin_yasper")!=null && !tab_tipomotivo.getValor("hora_fin_yasper").isEmpty()){
+			if (!isHoraMayor(tab_tipomotivo.getValor("hora_inicio_yasper"),tab_tipomotivo.getValor("hora_fin_yasper"))) {
+				calculoHoras(tab_tipomotivo.getValor("hora_inicio_yasper"), tab_tipomotivo.getValor("hora_fin_yasper"));
+			}else {
+				utilitario.agregarMensajeInfo("HORA INICIAL NO PUEDE SER  MENOR A HORA FINAL", "");
+			}	
+		}
+}   
+public void calculoHoras(String str_hora_inicial , String str_hora_final){
+		try {
+			//System.out.println("hora inicial"+str_hora_inicial);
+			//System.out.println("hora inicial"+str_hora_final);
+			Date hora_inicial= utilitario.getHora(utilitario.getFormatoHora(str_hora_inicial));
+			Date hora_final= utilitario.getHora(utilitario.getFormatoHora(str_hora_final));
+			int total_segundos_hora_inicial=(hora_inicial.getHours()*3600)+(hora_inicial.getMinutes()*60) + hora_inicial.getSeconds();
+			int total_segundos_hora_final=(hora_final.getHours()*3600)+(hora_final.getMinutes()*60)+hora_final.getSeconds();
+
+
+			int total_diferencia_segundo=total_segundos_hora_final-total_segundos_hora_inicial;
+
+
+			int total_horas=total_diferencia_segundo/3600;
+			int nuevo_valor=total_diferencia_segundo-(total_horas*3600);
+			int total_minutos=nuevo_valor/60;
+			int total_segundos=nuevo_valor-(total_minutos*60);
+
+			double total_diferencia_segundos=((total_horas*3600)+(total_minutos*60)+total_segundos);
+			double total_diferencia_horas=total_diferencia_segundos/3600;
+
+			tab_tipomotivo.setValor(tab_tipomotivo.getFilaActual(),"total_horas_yasper",total_diferencia_horas+"");
+			utilitario.addUpdateTabla(tab_tipomotivo,"total_horas_yasper", total_diferencia_horas+"");
+		} catch (Exception e) {
+			// TODO: handle exception
+			tab_tipomotivo.setValor(tab_tipomotivo.getFilaActual(),"total_horas_yasper","");
+			utilitario.addUpdateTabla(tab_tipomotivo,"total_horas_yasper", "");
+		}
+	}
+public boolean isHoraMayor(String hora_ini,String hora_fin){
+		try {
+			DateFormat dateFormat = new  SimpleDateFormat ("hh:mm:ss");
+
+			String hora1 = utilitario.getFormatoHora(hora_ini);
+			String hora2 = utilitario.getFormatoHora(hora_fin);
+
+			int int_hora1=Integer.parseInt(hora1.replaceAll(":", ""));
+			int int_hora2=Integer.parseInt(hora2.replaceAll(":", ""));
+
+
+			if(int_hora1>int_hora2){
+				return true;
+			}
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public void CargarFechaHasta(DateSelectEvent evt){
+		tab_tipomotivo.modificar(evt);		
+		if(tab_tipomotivo.getValor("fecha_desde_yasper")!=null && !tab_tipomotivo.getValor("fecha_desde_yasper").isEmpty()){
+			tab_tipomotivo.setValor("fecha_hasta_yasper", tab_tipomotivo.getValor("fecha_desde_yasper"));
+			tab_tipomotivo.setValor("num_dias_yasper", "1");	
+			utilitario.addUpdateTabla(tab_tipomotivo, "fecha_hasta_yasper,num_dias_yasper", "");
+		}
+	}
+    
 public void generarPDF() {
         if (tab_tipomotivo.getValorSeleccionado() != null) {
             ///////////AQUI ABRE EL REPORTE
             Map map_parametros = new HashMap();
             map_parametros.put("pide_solicitud", Integer.parseInt(tab_tipomotivo.getValor("ide_yasper")));
             map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            map_parametros.put("fecha_desde", tab_tipomotivo.getValor("fecha_desde_yasper"));
-            map_parametros.put("fecha_hasta", tab_tipomotivo.getValor("fecha_hasta_yasper"));
-            map_parametros.put("tipo_soli", "POR DIAS");
+            map_parametros.put("fecha_desde", tab_tipomotivo.getValor("fecha_desde_yasper")+" "+ tab_tipomotivo.getValor("hora_inicio_yasper"));
+            map_parametros.put("fecha_hasta", tab_tipomotivo.getValor("fecha_hasta_yasper")+" "+tab_tipomotivo.getValor("hora_fin_yasper"));
+            map_parametros.put("tipo_soli", "POR HORAS");
+            
             //System.out.println(" " + str_titulos);
             vipdf_comprobante.setVisualizarPDF("rep_asistencia/rep_permisos.jasper", map_parametros);
             vipdf_comprobante.dibujar();
             utilitario.addUpdate("vipdf_comprobante");
         } else {
-            utilitario.agregarMensajeInfo("Seleccione una Inscripcion", "");
+            utilitario.agregarMensajeInfo("Seleccione un Permiso", "");
         }
     }      
 public void aprobar(){
@@ -188,7 +265,7 @@ public void anular(){
 }
 public void filtrarEmpleado(SelectEvent evt){
 		aut_empleado.onSelect(evt);
-		tab_tipomotivo.setCondicion("tipo_yasper=1 AND ide_ypedpe="+aut_empleado.getValor());
+		tab_tipomotivo.setCondicion("tipo_yasper=2 AND ide_ypedpe="+aut_empleado.getValor());
 		tab_tipomotivo.ejecutarSql();
 
 	}   
