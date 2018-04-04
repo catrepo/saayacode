@@ -44,11 +44,11 @@ public class PeriodoMatricula extends Pantalla {
         tab_periodo_matricula.getColumna("ide_ystpea").setVisible(false);
         tab_periodo_matricula.getColumna("ide_ymatip").setCombo(ser_matricula.getTipoPeriodoMatricula());
         //*************************************************************************************************
-        tab_periodo_matricula.getColumna("ide_ymaper").setNombreVisual("CODIGO");
+        tab_periodo_matricula.getColumna("ide_ymaper").setNombreVisual("CÓDIGO");
         tab_periodo_matricula.getColumna("ide_ymatip").setNombreVisual("TIPO");
         tab_periodo_matricula.getColumna("fecha_inicio_ymaper").setNombreVisual("FECHA INICIO");
         tab_periodo_matricula.getColumna("fecha_final_ymaper").setNombreVisual("FECHA FINAL");
-        tab_periodo_matricula.getColumna("observaciones_ymaper").setNombreVisual("OBSERVACION");
+        tab_periodo_matricula.getColumna("observaciones_ymaper").setNombreVisual("OBSERVACIÓN");
         tab_periodo_matricula.getColumna("activo_ymaper").setNombreVisual("ACTIVO");
         tab_periodo_matricula.setHeader("PERIODO MATRICULA");
         tab_periodo_matricula.dibujar();//dibuja la tabla
