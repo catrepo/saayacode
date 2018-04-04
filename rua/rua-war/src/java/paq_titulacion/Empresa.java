@@ -44,7 +44,7 @@ public class Empresa extends Pantalla{
            tab_empresa.getColumna("ide_ytiace").setCombo(ser_titulacion.getSqlActividadEconomica());
            tab_empresa.getColumna("ide_ytitip").setCombo(ser_titulacion.getSqlTipoProducto());
            //tab_empresa.getColumna("ide_ytiten").setCombo(ser_titulacion.getSqlTipoEntidad());
-           tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+           //tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
            tab_empresa.setHeader("Registro de datos de la Empresa"); 
            tab_empresa.agregarRelacion(tab_carrera);
            tab_empresa.agregarRelacion(tab_representante);
