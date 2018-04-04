@@ -92,23 +92,23 @@ public class Matriculas extends Pantalla {
             tab_matriculas.setTipoFormulario(true);//para que se haga un formulario
             tab_matriculas.getGrid().setColumns(4); //numero de columnas del formulario
             //*********************************Etiquetas*****************************************************
-            tab_matriculas.getColumna("ide_ymamat").setNombreVisual("CODIGO");
+            tab_matriculas.getColumna("ide_ymamat").setNombreVisual("CÓDIGO");
             tab_matriculas.getColumna("ide_ypedpe").setNombreVisual("RESPONSABLE");
             tab_matriculas.getColumna("ide_ystnie").setNombreVisual("NIVEL");
-            tab_matriculas.getColumna("ide_ystocu").setNombreVisual("OCUPACION");
-            tab_matriculas.getColumna("ide_ystmen").setNombreVisual("MENSION");
+            tab_matriculas.getColumna("ide_ystocu").setNombreVisual("OCUPACIÓN");
+            tab_matriculas.getColumna("ide_ystmen").setNombreVisual("MENSIÓN");
             tab_matriculas.getColumna("estudia_otro_lugar_ymamat").setNombreVisual("ESTUDIA APARTE");
             tab_matriculas.getColumna("semestre_otro_lugar_ymamat").setNombreVisual("SEMESTRE");
             tab_matriculas.getColumna("donde_tabaja_ymamat").setNombreVisual("DONDE TRABAJA");
             tab_matriculas.getColumna("recibido_ymamat").setNombreVisual("RECIBIDO");
-            tab_matriculas.getColumna("ide_ymaper").setNombreVisual("PERIODO MATRICULA");
+            tab_matriculas.getColumna("ide_ymaper").setNombreVisual("PERIODO MATRÍCULA");
             tab_matriculas.getColumna("ide_yaldap").setNombreVisual("DATO ALUMNO");
-            tab_matriculas.getColumna("ide_ystins").setNombreVisual("INSTITUCION");
-            tab_matriculas.getColumna("ide_ymatma").setNombreVisual("MATRICULA");
-            tab_matriculas.getColumna("fecha_ymamat").setNombreVisual("FECHA MATRICULA");
+            tab_matriculas.getColumna("ide_ystins").setNombreVisual("INSTITUCIÓN");
+            tab_matriculas.getColumna("ide_ymatma").setNombreVisual("MATRÍCULA");
+            tab_matriculas.getColumna("fecha_ymamat").setNombreVisual("FECHA MATRÍCULA");
             tab_matriculas.getColumna("carrera_otro_lugar_ymamat").setNombreVisual("OTRA CARRERA");
             tab_matriculas.getColumna("trabaja_ymamat").setNombreVisual("TRABAJA");
-            tab_matriculas.getColumna("telefono_trabaja_ymamat").setNombreVisual("TELEFONO TRABAJO");
+            tab_matriculas.getColumna("telefono_trabaja_ymamat").setNombreVisual("TELÉFONO TRABAJO");
             tab_matriculas.dibujar();//dibuja la tabla
 
             PanelTabla pa_matriculas = new PanelTabla();//intanciamos el panel del framework
@@ -120,10 +120,10 @@ public class Matriculas extends Pantalla {
             tab_documento_entregado.setTabla("yavirac_matri_documento_entrega", "ide_ymaden", 2);  // nombre de la base de datos ii la clave primaria
             tab_documento_entregado.setHeader("DOCUMENTOS ENTREGADOS");
             //***************************************************************************************************
-            tab_documento_entregado.getColumna("ide_ymaden").setNombreVisual("CODIGO");
+            tab_documento_entregado.getColumna("ide_ymaden").setNombreVisual("CÓDIGO");
             tab_documento_entregado.getColumna("ide_ystdor").setNombreVisual("DOCUMENTO REQUERIDO");
             tab_documento_entregado.getColumna("fecha_ymden").setNombreVisual("FECHA");
-            tab_documento_entregado.getColumna("observacion_ymaden").setNombreVisual("OBSERVACION");
+            tab_documento_entregado.getColumna("observacion_ymaden").setNombreVisual("OBSERVACIÓN");
             tab_documento_entregado.getColumna("entregado_ymaden").setNombreVisual("ENTREGADO");
             tab_documento_entregado.dibujar();//dibuja la tabla
             PanelTabla pa_documento_entregado = new PanelTabla();//intanciamos el panel del framework
@@ -272,7 +272,7 @@ public void generarPDF() {
             sel_registra_alumno.cerrar();
             utilitario.addUpdate("tab_pre_inscrip");
         } else {
-            utilitario.agregarMensajeInfo("Debe seleccionar almenos un registro", "");
+            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
         }
     }
 
@@ -281,7 +281,7 @@ public void generarPDF() {
         //Hace aparecer el componente
         if (com_periodo_academico.getValue() == null) {
 
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico que desea generar");
             return;
         } else {
             sel_registra_alumno.getTab_seleccion().setSql(ser_alumno.getDatosAlumnos("true"));
