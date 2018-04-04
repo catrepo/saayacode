@@ -34,17 +34,18 @@ public class TipoEducacion extends Pantalla {
         tab_tipo_educacion.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false"));
         tab_tipo_educacion.getColumna("ide_ystnac").setCombo(ser_estructura.getNacionalidad("true,false"));
         tab_tipo_educacion.getColumna("ide_ystgen").setCombo(ser_estructura.getGenero("true,false"));
+        tab_tipo_educacion.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
         //crear formularios
         tab_tipo_educacion.setTipoFormulario(true);//para que se haga un formulario
         tab_tipo_educacion.getGrid().setColumns(4);//numero de columnas del formulario
         //*****************************************************************************
-        tab_tipo_educacion.getColumna("ide_ypedpe").setNombreVisual("CODIGO");
+        tab_tipo_educacion.getColumna("ide_ypedpe").setNombreVisual("CÓDIGO");
         tab_tipo_educacion.getColumna("ide_ysttis").setNombreVisual("TIPO SANGRE");
         tab_tipo_educacion.getColumna("ide_ystesc").setNombreVisual("ESTADO CIVIL");
         tab_tipo_educacion.getColumna("ide_yastpe").setNombreVisual("ESTADO CIVIL");
         tab_tipo_educacion.getColumna("ide_ystdoi").setNombreVisual("DOCUMENTO IDENTIDAD");
         tab_tipo_educacion.getColumna("ide_ystnac").setNombreVisual("NACIONALIDAD");
-        tab_tipo_educacion.getColumna("ide_ystgen").setNombreVisual("GENERO");
+        tab_tipo_educacion.getColumna("ide_ystgen").setNombreVisual("GÉNERO");
         tab_tipo_educacion.getColumna("apellido_ypedpe").setNombreVisual("APELLIDOS");
         tab_tipo_educacion.getColumna("nombre_ypedpe").setNombreVisual("NOMBRES");
         tab_tipo_educacion.getColumna("fecha_nacimiento_ypedpe").setNombreVisual("FECHA NACIMIENTO");
@@ -57,7 +58,7 @@ public class TipoEducacion extends Pantalla {
         tab_tipo_educacion.getColumna("firma_ypedpe").setImagen();
         tab_tipo_educacion.getColumna("doc_identidad_ypedpe").setNombreVisual("DOCUMENTO IDENTIDAD");
         tab_tipo_educacion.getColumna("edad_ypedpe").setNombreVisual("EDAD");
-        tab_tipo_educacion.getColumna("codigo_reloj_ypedpe").setNombreVisual("CODIGO RELOJ");     
+        tab_tipo_educacion.getColumna("codigo_reloj_ypedpe").setNombreVisual("CÓDIGO RELOJ");     
         tab_tipo_educacion.getColumna("discapacitado_ypedpe").setNombreVisual("DISCAPACIDAD");
         tab_tipo_educacion.getColumna("activo_ypedpe").setNombreVisual("ACTIVO");               
         //************************************************************************
