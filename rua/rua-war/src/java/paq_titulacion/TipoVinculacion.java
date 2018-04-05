@@ -24,7 +24,7 @@ public class TipoVinculacion extends Pantalla{
         
             tab_tipo_vinculacion.setId("tab_tipo_vinculacion");
             tab_tipo_vinculacion.setTabla("yavirac_tipos_vinculacion", "ide_ytitiv ", 6);
-            tab_tipo_vinculacion.setHeader("Tipo de Vinculacion");
+            tab_tipo_vinculacion.setHeader("TIPO VINCULACIÓN");
             tab_tipo_vinculacion.dibujar();
             
             

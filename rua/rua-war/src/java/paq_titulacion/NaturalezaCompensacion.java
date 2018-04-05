@@ -24,7 +24,7 @@ public class NaturalezaCompensacion extends Pantalla{
         
            tab_naturaleza_compensacion.setId("tab_naturaleza_compensacion");
            tab_naturaleza_compensacion.setTabla("yavirac_titu_carrera_afines", "ide_yticaa",11);
-           tab_naturaleza_compensacion.setHeader("Naturaleza de Compensacion");
+           tab_naturaleza_compensacion.setHeader("NATURALEZA DE COMPENSACIÓN");
            tab_naturaleza_compensacion.dibujar(); 
             
             

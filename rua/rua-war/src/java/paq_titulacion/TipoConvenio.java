@@ -17,37 +17,37 @@ import sistema.aplicacion.Utilitario;
  *
  * @author Martha
  */
-public class TipoConvenio extends Pantalla{
+public class TipoConvenio extends Pantalla {
+
     private Tabla tab_tipo_convenio = new Tabla();
-    
-    public TipoConvenio(){
-        
-            tab_tipo_convenio.setId("tab_tipo_convenio");
-            tab_tipo_convenio.setTabla("yavirac_titu_tipo_ciclo_conven", "ide_ytitcc", 9);
-            tab_tipo_convenio.setHeader("Tipo de Convenio");
-            tab_tipo_convenio.dibujar();
-    
-            
-            PanelTabla pat_tipo_convenio = new PanelTabla();
-            pat_tipo_convenio.setId("pat_tipo_convenio");
-            pat_tipo_convenio.setPanelTabla(tab_tipo_convenio);
-            
-            
-             Division div_tipo_convenio = new Division();
-            div_tipo_convenio.setId("div_tipo_convenio");
-            div_tipo_convenio.dividir1(pat_tipo_convenio);
-            
-            agregarComponente(div_tipo_convenio);
-}
+
+    public TipoConvenio() {
+
+        tab_tipo_convenio.setId("tab_tipo_convenio");
+        tab_tipo_convenio.setTabla("yavirac_titu_tipo_ciclo_conven", "ide_ytitcc", 9);
+        tab_tipo_convenio.setHeader("TIPO CONVENIO");
+        tab_tipo_convenio.dibujar();
+
+        PanelTabla pat_tipo_convenio = new PanelTabla();
+        pat_tipo_convenio.setId("pat_tipo_convenio");
+        pat_tipo_convenio.setPanelTabla(tab_tipo_convenio);
+
+        Division div_tipo_convenio = new Division();
+        div_tipo_convenio.setId("div_tipo_convenio");
+        div_tipo_convenio.dividir1(pat_tipo_convenio);
+
+        agregarComponente(div_tipo_convenio);
+    }
+
     @Override
     public void insertar() {
-      tab_tipo_convenio.insertar();
+        tab_tipo_convenio.insertar();
     }
 
     @Override
     public void guardar() {
-       tab_tipo_convenio.guardar();
-       guardarPantalla();
+        tab_tipo_convenio.guardar();
+        guardarPantalla();
     }
 
     @Override
@@ -55,36 +55,13 @@ public class TipoConvenio extends Pantalla{
         tab_tipo_convenio.eliminar();
     }
 
-    public Tabla getTab_tipo_vinculacion() {
+    public Tabla getTab_tipo_convenio() {
         return tab_tipo_convenio;
     }
 
     public void setTab_tipo_convenio(Tabla tab_tipo_convenio) {
         this.tab_tipo_convenio = tab_tipo_convenio;
-        
     }
 
-    public Utilitario getUtilitario() {
-        return utilitario;
-    }
-
-    public void setUtilitario(Utilitario utilitario) {
-        this.utilitario = utilitario;
-    }
-
-    public Barra getBar_botones() {
-        return bar_botones;
-    }
-
-    public void setBar_botones(Barra bar_botones) {
-        this.bar_botones = bar_botones;
-    }
-
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
+    
 }

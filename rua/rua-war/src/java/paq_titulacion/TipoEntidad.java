@@ -17,40 +17,38 @@ import sistema.aplicacion.Utilitario;
  *
  * @author Martha
  */
-public class TipoEntidad extends Pantalla{
-  
-        private Tabla tab_tipo_entidad = new Tabla();
-        
-        public TipoEntidad(){
-        
-            tab_tipo_entidad.setId("tab_tipo_entidad");
-            tab_tipo_entidad.setTabla("yavirac_titu_tipo_entidad", "ide_ytitie", 1);
-            tab_tipo_entidad.setHeader("Tipo de Entidad");
-            tab_tipo_entidad.dibujar();
-            
-            PanelTabla pat_tipo_entidad = new PanelTabla();
-            pat_tipo_entidad.setId("pat_tipo_entidad");
-            pat_tipo_entidad.setPanelTabla(tab_tipo_entidad);
-            
-            
-            Division div_tipo_entidad = new Division();
-            div_tipo_entidad.setId("div_tipo_entidad");
-            div_tipo_entidad.dividir1(pat_tipo_entidad);
-            
-            agregarComponente(div_tipo_entidad);
-            
-            
-        }
+public class TipoEntidad extends Pantalla {
+
+    private Tabla tab_tipo_entidad = new Tabla();
+
+    public TipoEntidad() {
+
+        tab_tipo_entidad.setId("tab_tipo_entidad");
+        tab_tipo_entidad.setTabla("yavirac_titu_tipo_entidad", "ide_ytiten", 1);
+        tab_tipo_entidad.setHeader("TIPO ENTIDAD");
+        tab_tipo_entidad.dibujar();
+
+        PanelTabla pat_tipo_entidad = new PanelTabla();
+        pat_tipo_entidad.setId("pat_tipo_entidad");
+        pat_tipo_entidad.setPanelTabla(tab_tipo_entidad);
+
+        Division div_tipo_entidad = new Division();
+        div_tipo_entidad.setId("div_tipo_entidad");
+        div_tipo_entidad.dividir1(pat_tipo_entidad);
+
+        agregarComponente(div_tipo_entidad);
+
+    }
 
     @Override
     public void insertar() {
-      tab_tipo_entidad.insertar();
+        tab_tipo_entidad.insertar();
     }
 
     @Override
     public void guardar() {
-       tab_tipo_entidad.guardar();
-       guardarPantalla();
+        tab_tipo_entidad.guardar();
+        guardarPantalla();
     }
 
     @Override
@@ -66,30 +64,6 @@ public class TipoEntidad extends Pantalla{
         this.tab_tipo_entidad = tab_tipo_entidad;
     }
 
-    public Utilitario getUtilitario() {
-        return utilitario;
-    }
+ 
 
-    public void setUtilitario(Utilitario utilitario) {
-        this.utilitario = utilitario;
-    }
-
-    public Barra getBar_botones() {
-        return bar_botones;
-    }
-
-    public void setBar_botones(Barra bar_botones) {
-        this.bar_botones = bar_botones;
-    }
-
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
-
-    
-    
-      }
+}
