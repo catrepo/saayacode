@@ -19,9 +19,9 @@ private Tabla tab_tabla = new Tabla();
 public DocumentoRequerido(){
     tab_tabla.setId("tab_tabla");
     tab_tabla.setTabla("yavirac_stror_documento_reque", "ide_ystdor", 1);
-    tab_tabla.getColumna("ide_ystdor").setNombreVisual("CODIGO");
+    tab_tabla.getColumna("ide_ystdor").setNombreVisual("CÓDIGO");
     tab_tabla.getColumna("abreviatura_ystdor").setNombreVisual("ABREVIATURA");
-    tab_tabla.getColumna("descripcion_ystdor").setNombreVisual("DESCRIPCION");
+    tab_tabla.getColumna("descripcion_ystdor").setNombreVisual("DESCRIPCIÓN");
     tab_tabla.getColumna("activo_ystdor").setNombreVisual("ACTIVO");
     tab_tabla.dibujar();
     
