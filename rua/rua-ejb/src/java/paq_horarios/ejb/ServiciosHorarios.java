@@ -29,7 +29,7 @@ public class ServiciosHorarios {
     
      public String getDefinicionJornada(String ide_modalidad, String ide_periodo) {
         String sql="";
-        sql= "select c.ide_ystjor, d.descripcion_ystjor from  yavirac_hora_definicion_hora c,  yavirac_stror_jornada d where c.ide_ystjor = d.ide_ystjor and d.descripcion_ystjor = d.descripcion_ystjor and ide_ystmod="+ide_modalidad+" and ide_ystpea="+ide_periodo+" order by c.ide_ystjor asc";
+        sql= "select distinct c.ide_ystjor, d.descripcion_ystjor from  yavirac_hora_definicion_hora c,  yavirac_stror_jornada d where c.ide_ystjor = d.ide_ystjor and d.descripcion_ystjor = d.descripcion_ystjor and c.ide_ystmod="+ide_modalidad+" and c.ide_ystpea="+ide_periodo+" order by c.ide_ystjor asc";
                 //"select ide_ystjor from yavirac_hora_definicion_hora  where activo_yhodeh in ("+activo+")"; //order by descripcion_yhothj desc";
         return sql;
     }
