@@ -14,6 +14,7 @@ import framework.componentes.Dialogo;
 import framework.componentes.Boton;
 import framework.componentes.Grupo;
 import framework.componentes.SeleccionTabla;
+import paq_personal.ejb.ServicioPersonal;
 /**
  *
  * @author Andres
@@ -21,6 +22,7 @@ import framework.componentes.SeleccionTabla;
 public class HoraPeriodoHora extends Pantalla {
     
     private Tabla tab_hora_periodo_hora = new Tabla();
+    private Tabla tab_hora_horario_materia = new Tabla();
     private Combo com_periodo_academico = new Combo();
     private Combo com_dia_modalidad = new Combo();
     private Dialogo dia_modalidad = new Dialogo();
@@ -36,6 +38,8 @@ public class HoraPeriodoHora extends Pantalla {
     @EJB
     private final  ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
      
+    @EJB
+    private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     public HoraPeriodoHora(){
         
         com_periodo_academico.setId("cmb_periodo_academico");
@@ -89,7 +93,7 @@ public class HoraPeriodoHora extends Pantalla {
         dia_jornada.setDialogo(gru_cuerpo1);
         agregarComponente(dia_jornada);*/
         set_tab_jornada.setId("set_tab_jornada");
-        set_tab_jornada.setTitle("TABLA DE LA MODALIDAD");
+        set_tab_jornada.setTitle("TABLA DE LA JORNADA");
         set_tab_jornada.setSeleccionTabla(ser_horarios.getDefinicionJornada("-1","-1"), "ide_ystjor");
         set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
         set_tab_jornada.setWidth("80%");
@@ -120,6 +124,7 @@ public class HoraPeriodoHora extends Pantalla {
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
     tab_hora_periodo_hora.setTabla("yavirac_hora_periodo_hor", "ide_yhopeh", 1);
     tab_hora_periodo_hora.setCondicion("ide_ystpea=-1");
+    tab_hora_periodo_hora.agregarRelacion(tab_hora_horario_materia);
     tab_hora_periodo_hora.getColumna("ide_ystmod").setCombo(ser_estructura_organizacional.getModalidad("true,false"));
     tab_hora_periodo_hora.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true,false"));
     tab_hora_periodo_hora.getColumna("ide_yhohor").setCombo(ser_horarios.getHora("true,false"));
@@ -139,14 +144,30 @@ public class HoraPeriodoHora extends Pantalla {
     tab_hora_periodo_hora.getColumna("activo_yhopeh").setNombreVisual("ACTIVO");
     tab_hora_periodo_hora.getColumna("ide_ystmen").setNombreVisual("MENSIÓN CARRERAS");    
     tab_hora_periodo_hora.dibujar();
+    PanelTabla pat_hora_periodo_hora = new PanelTabla();
+    pat_hora_periodo_hora.setId("pat_hora_periodo_hora");
+    pat_hora_periodo_hora.setPanelTabla(tab_hora_periodo_hora);
+    
+    tab_hora_horario_materia.setId("tab_hora_horario_materia");   //identificador
+    tab_hora_horario_materia.setTabla("yavirac_hora_horario_mate", "ide_yhohma", 1);
+    tab_hora_horario_materia.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
+    tab_hora_horario_materia.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
+    tab_hora_horario_materia.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());        
+    tab_hora_horario_materia.getColumna("ide_yhohma").setNombreVisual("CÓDIGO PRINCIPAL");
+    tab_hora_horario_materia.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTES");
+    tab_hora_horario_materia.getColumna("ide_ystmal").setNombreVisual("MALLA ACADÉMICA");
+    tab_hora_horario_materia.getColumna("ide_yhogra").setNombreVisual("GRUPO / PARALELO");
+    tab_hora_horario_materia.getColumna("ide_yhopeh").setNombreVisual("PERIODO DE HORARIO");
+    tab_hora_horario_materia.dibujar(); 
+    
+    PanelTabla pat_hora_horario_materia = new PanelTabla();
+    pat_hora_horario_materia.setId("pat_hora_horario_materia");
+    pat_hora_horario_materia.setPanelTabla(tab_hora_horario_materia);
         /*agregarComponente(tab_hora_hora);*/ 
-        
-        PanelTabla pat_hora_periodo_hora = new PanelTabla();
-        pat_hora_periodo_hora.setId("pat_hora_hora");
-        pat_hora_periodo_hora.setPanelTabla(tab_hora_periodo_hora);
+ 
         Division div_hora_periodo_hora = new Division();
         div_hora_periodo_hora.setId("div_hora_periodo_hora");
-        div_hora_periodo_hora.dividir1(pat_hora_periodo_hora);
+        div_hora_periodo_hora.dividir2(pat_hora_periodo_hora,pat_hora_horario_materia,  "50%","H");
         agregarComponente(div_hora_periodo_hora); 
         
         Boton bot_replicar = new Boton();
@@ -318,5 +339,13 @@ public class HoraPeriodoHora extends Pantalla {
     public void setSet_tab_mension(SeleccionTabla set_tab_mension) {
         this.set_tab_mension = set_tab_mension;
     }
-       
+
+    public Tabla getTab_hora_horario_materia() {
+        return tab_hora_horario_materia;
+    }
+
+    public void setTab_hora_horario_materia(Tabla tab_hora_horario_materia) {
+        this.tab_hora_horario_materia = tab_hora_horario_materia;
+    }
+    
 }
