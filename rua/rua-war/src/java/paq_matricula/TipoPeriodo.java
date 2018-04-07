@@ -14,7 +14,7 @@ public class TipoPeriodo extends Pantalla{
      public TipoPeriodo () {//constructor
        tab_tipo_periodo.setId("tab_tipo_periodo");// todo objeto instanciado poner id 
         tab_tipo_periodo.setTabla("yavirac_matri_tipo_periodo", "ide_ymatip", 1);  // nombre de la base de datos ii la clave primaria
-        tab_tipo_periodo.setHeader("TIPO PERIODO DE MATRICULA");
+        tab_tipo_periodo.setHeader("TIPO PERIODO DE MATRÍCULA");
         tab_tipo_periodo.getColumna("ide_ymatip").setNombreVisual("CÓDIGO");
         tab_tipo_periodo.getColumna("descripcion_ymatip").setNombreVisual("DESCRIPCIÓN");
         tab_tipo_periodo.dibujar();//dibuja la tabla
