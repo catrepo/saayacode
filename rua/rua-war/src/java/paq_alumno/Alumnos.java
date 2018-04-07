@@ -184,6 +184,7 @@ public void alumno(SelectEvent evt){
  tab_alumno.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
  tab_alumno.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
  tab_alumno.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
+ tab_alumno.getColumna("ide_ystgen").setCombo(ser_estructura.getGenero("true,false"));
  tab_alumno.getColumna("fotografia_yaldap").setNombreVisual("Foto");
  tab_alumno.getColumna("fotografia_yaldap").setUpload();
  tab_alumno.getColumna("fotografia_yaldap").setImagen(); 
