@@ -20,8 +20,8 @@ public class Cargo extends Pantalla {
     public Cargo (){// constructor
         tab_cargo.setId("tab_cargo");// todo objeto instanciado poner id 
         tab_cargo.setTabla("yavirac_stror_cargo","ide_ystcar",1);  // nom bdd
-        tab_cargo.getColumna("ide_ystcar").setNombreVisual("CODIGO");
-        tab_cargo.getColumna("descripcion_ystcar").setNombreVisual("DESCRIPCION");
+        tab_cargo.getColumna("ide_ystcar").setNombreVisual("CÓDIGO");
+        tab_cargo.getColumna("descripcion_ystcar").setNombreVisual("DESCRIPCIÓN");
         tab_cargo.getColumna("activo_ystcar").setNombreVisual("ACTIVO");
         tab_cargo.dibujar();
         
