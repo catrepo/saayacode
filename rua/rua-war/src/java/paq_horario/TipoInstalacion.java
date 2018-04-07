@@ -13,6 +13,8 @@ public class TipoInstalacion extends Pantalla {
     public TipoInstalacion(){
     tab_tipo_instalacion.setId("tab_tipo_instalacion");   //identificador
     tab_tipo_instalacion.setTabla("yavirac_stror_tipo_instalacion", "ide_ysttin", 1);
+    tab_tipo_instalacion.getColumna("ide_ysttin").setNombreVisual("CÓDIGO PRINCIPAL");
+    tab_tipo_instalacion.getColumna("descripcion_ysttin").setNombreVisual("DESCRIPCIÓN");
     tab_tipo_instalacion.dibujar();
        
         

@@ -3,6 +3,9 @@ package paq_horario;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import javax.ejb.EJB;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_horarios.ejb.ServiciosHorarios;
 import sistema.aplicacion.Pantalla;
 
 
@@ -10,17 +13,28 @@ import sistema.aplicacion.Pantalla;
 public class AdecuacionInstalacion extends Pantalla {
    private Tabla tab_adecu_instalacion = new Tabla();
    private Tabla tab_instalacion = new Tabla();
+   
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_instalacion = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+   
+    @EJB
+    private final ServiciosHorarios ser_instalacion_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
     
+       
     public AdecuacionInstalacion(){
 
     
     tab_instalacion.setId("tab_instalacion");   
     tab_instalacion.setTabla("yavirac_stror_instalacion", "ide_ystins", 1);
+    tab_instalacion.getColumna("ide_ysttin").setCombo(ser_instalacion.getInstalacion());
+    tab_instalacion.getColumna("ide_yhodin").setCombo(ser_instalacion_horarios.getInstalacion());
+   
     tab_instalacion.agregarRelacion(tab_adecu_instalacion);
     tab_instalacion.dibujar();
     
     tab_adecu_instalacion.setId("tab_adecu_instalacion");   
     tab_adecu_instalacion.setTabla("yavirac_hora_adecu_instalacion", "ide_yhoain", 2);
+    tab_adecu_instalacion.getColumna("ide_yhotad").setCombo(ser_instalacion_horarios.getTipoAdecuacion());
     tab_adecu_instalacion.dibujar();    
 
     PanelTabla pat_instalacion = new PanelTabla();

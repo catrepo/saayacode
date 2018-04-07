@@ -15,6 +15,8 @@ import sistema.aplicacion.Pantalla;
     public TipoAdecuacion(){
     tab_tipo_adecuacion.setId("tab_tipo_adecuacion");   //identificador
     tab_tipo_adecuacion.setTabla("yavirac_hora_tipo_adecuacion", "ide_yhotad", 1);
+    tab_tipo_adecuacion.getColumna("ide_yhotad").setNombreVisual("CÓDIGO PRINCIPAL");
+    tab_tipo_adecuacion.getColumna("descripcion_yhotad").setNombreVisual("DESCRIPCIÓN");
     tab_tipo_adecuacion.dibujar();
        
         
