@@ -11,8 +11,8 @@ public class Jornada extends Pantalla {
     public Jornada(){
     tab_stror_jornada.setId("tab_stror_jornada");   //identificador
     tab_stror_jornada.setTabla("yavirac_stror_jornada", "ide_ystjor", 1);
-    tab_stror_jornada.getColumna("ide_ystjor").setNombreVisual("CODIGO");
-    tab_stror_jornada.getColumna("descripcion_ystjor").setNombreVisual("DESCRIPCION");
+    tab_stror_jornada.getColumna("ide_ystjor").setNombreVisual("CÓDIGO");
+    tab_stror_jornada.getColumna("descripcion_ystjor").setNombreVisual("DESCRIPCIÓN");
     tab_stror_jornada.getColumna("activo_ystjor").setNombreVisual("ACTIVO");
     tab_stror_jornada.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
