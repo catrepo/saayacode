@@ -29,10 +29,10 @@ public class Carrera extends Pantalla{
         tab_carrera.setTabla("yavirac_stror_carrera", "ide_ystcrr",1 );
         tab_carrera.setHeader("REGISTRO DE CARRERAS");
         tab_carrera.agregarRelacion(tab_mension);
-        tab_carrera.getColumna("ide_ystcrr").setNombreVisual("CODIGO");
-        tab_carrera.getColumna("fechaaprob_ystcrr").setNombreVisual("FECHA APROBACION");
-        tab_carrera.getColumna("descripcion_ystcrr").setNombreVisual("DESCRICPION");
-        tab_carrera.getColumna("resolucion_ystcrr").setNombreVisual("RESOLUCION");
+        tab_carrera.getColumna("ide_ystcrr").setNombreVisual("CÓDIGO");
+        tab_carrera.getColumna("fechaaprob_ystcrr").setNombreVisual("FECHA APROBACIÓN");
+        tab_carrera.getColumna("descripcion_ystcrr").setNombreVisual("DESCRICPIÓN");
+        tab_carrera.getColumna("resolucion_ystcrr").setNombreVisual("RESOLUCIÓN");
         tab_carrera.dibujar();
         
         PanelTabla pat_carrera =new PanelTabla();
@@ -46,11 +46,11 @@ public class Carrera extends Pantalla{
         tab_mension.getColumna("ide_ysttfe").setCombo(ser_estructura.getTipoFormacionEducativa());
         tab_mension.setHeader("REGISTRO DE MENSIONES");
         tab_mension.agregarRelacion(tab_malla);
-        tab_mension.getColumna("ide_ystmen").setNombreVisual("CODIGO");
-        tab_mension.getColumna("ide_ysttfe").setNombreVisual("TIPO FORMACION EDUCATIVA");
-        tab_mension.getColumna("fechaapro_ystmen").setNombreVisual("FECHA APROBACION");
-        tab_mension.getColumna("descripcion_ystmen").setNombreVisual("DESCRIPCION");
-        tab_mension.getColumna("resolucion_ystmen").setNombreVisual("RESOLUCION");
+        tab_mension.getColumna("ide_ystmen").setNombreVisual("CÓDIGO");
+        tab_mension.getColumna("ide_ysttfe").setNombreVisual("TIPO FORMACIÓN EDUCATIVA");
+        tab_mension.getColumna("fechaapro_ystmen").setNombreVisual("FECHA APROBACIÓN");
+        tab_mension.getColumna("descripcion_ystmen").setNombreVisual("DESCRIPCIÓN");
+        tab_mension.getColumna("resolucion_ystmen").setNombreVisual("RESOLUCIÓN");
         tab_mension.getColumna("total_credito_ystmen").setNombreVisual("TOTAL CREDITOS");
         tab_mension.dibujar();
         
@@ -65,12 +65,12 @@ public class Carrera extends Pantalla{
         tab_malla.getColumna("ide_ystmat").setCombo(ser_estructura.getMaterias());
         tab_malla.getColumna("ide_ysttif").setCombo(ser_estructura.getTipoFormacion());
         tab_malla.setHeader("MALLA ACADEMICA");
-        tab_malla.getColumna("ide_ystmal").setNombreVisual("CODIGO");
-        tab_malla.getColumna("ide_ystnie").setNombreVisual("NIVEL EDUCACION");
+        tab_malla.getColumna("ide_ystmal").setNombreVisual("CÓDIGO");
+        tab_malla.getColumna("ide_ystnie").setNombreVisual("NIVEL EDUCACIÓN");
         tab_malla.getColumna("ide_ystmat").setNombreVisual("MATERIAS");
-        tab_malla.getColumna("ide_ysttif").setNombreVisual("TIPO FORMACION");
-        tab_malla.getColumna("codigo_ystmal").setNombreVisual("CODIGO MALLA");
-        tab_malla.getColumna("numero_credito_ystmal").setNombreVisual("NUMERO CREDITOS");
+        tab_malla.getColumna("ide_ysttif").setNombreVisual("TIPO FORMACIÓN");
+        tab_malla.getColumna("codigo_ystmal").setNombreVisual("CÓDIGO MALLA");
+        tab_malla.getColumna("numero_credito_ystmal").setNombreVisual("NÚMERO CREDITOS");
         tab_malla.getColumna("orden_ystmal").setNombreVisual("ORDEN");
         tab_malla.getColumna("aplica_requisitos_ystmal").setNombreVisual("APLICA REQUISITOS");
         tab_malla.dibujar();
