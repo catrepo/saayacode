@@ -16,7 +16,7 @@ public class NumeroMatricula extends Pantalla{
      public NumeroMatricula() {//constructor
         tab_numero_matricula.setId("tab_numero_matricula");// todo objeto instanciado poner id 
         tab_numero_matricula.setTabla("yavirac_matri_numer_matricu", "ide_ymanum", 1);  // nombre de la base de datos ii la clave primaria
-        tab_numero_matricula.setHeader("NUMERO DE MATRICULA");
+        tab_numero_matricula.setHeader("NUMERO DE MATRÍCULA");
         tab_numero_matricula.dibujar();//dibuja la tabla
 
         PanelTabla pa_numero_matricula = new PanelTabla();//intanciamos el panel del framework

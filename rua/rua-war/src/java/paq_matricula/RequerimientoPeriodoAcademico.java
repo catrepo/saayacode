@@ -15,7 +15,7 @@ public class RequerimientoPeriodoAcademico extends Pantalla{
      public RequerimientoPeriodoAcademico() {//constructor
        tab_requerimiento_periodo_academico.setId("tab_requerimiento_periodo_academico");// todo objeto instanciado poner id 
         tab_requerimiento_periodo_academico.setTabla("yavirac_matri_req_per_acade", "ide_ymarep", 1);  // nombre de la base de datos ii la clave primaria
-        tab_requerimiento_periodo_academico.setHeader("REQUERIMIENTO PERIODO ACADADEMICO");
+        tab_requerimiento_periodo_academico.setHeader("REQUERIMIENTO PERIODO ACADÉMICO");
         tab_requerimiento_periodo_academico.dibujar();//dibuja la tabla
 
         PanelTabla pa_requerimiento_periodo_academico= new PanelTabla();//intanciamos el panel del framework

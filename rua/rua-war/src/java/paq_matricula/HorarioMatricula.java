@@ -14,7 +14,7 @@ public class HorarioMatricula extends Pantalla{
      public HorarioMatricula () {//constructor
         tab_horario_matricula.setId("tab_horario_matricula");// todo objeto instanciado poner id 
         tab_horario_matricula.setTabla(" yavirac_matri_horar_matri", "ide_ymaper", 1);  // nombre de la base de datos ii la clave primaria
-        tab_horario_matricula.setHeader("HORARIO MATRICULA");
+        tab_horario_matricula.setHeader("HORARIO MATRÍCULA");
         tab_horario_matricula.dibujar();//dibuja la tabla
 
         PanelTabla pa_horario_matricula = new PanelTabla();//intanciamos el panel del framework

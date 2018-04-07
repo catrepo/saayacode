@@ -50,7 +50,7 @@ public class PeriodoMatricula extends Pantalla {
         tab_periodo_matricula.getColumna("fecha_final_ymaper").setNombreVisual("FECHA FINAL");
         tab_periodo_matricula.getColumna("observaciones_ymaper").setNombreVisual("OBSERVACIÓN");
         tab_periodo_matricula.getColumna("activo_ymaper").setNombreVisual("ACTIVO");
-        tab_periodo_matricula.setHeader("PERIODO MATRICULA");
+        tab_periodo_matricula.setHeader("PERIODO MATRÍCULA");
         tab_periodo_matricula.dibujar();//dibuja la tabla
 
         PanelTabla pa_periodo_matricula = new PanelTabla();//intanciamos el panel del framework

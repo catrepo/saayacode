@@ -16,7 +16,7 @@ public class RequerimientoMatricula extends Pantalla{
      public RequerimientoMatricula() {//constructor
        tab_requerimiento_matricula .setId("tab_requerimiento_matricula ");// todo objeto instanciado poner id 
         tab_requerimiento_matricula .setTabla(" yavirac_matri_requi_matric", "ide_ymarem ", 1);  // nombre de la base de datos ii la clave primaria
-       tab_requerimiento_matricula.setHeader("REQUERIMIENTO MATRICULA");
+       tab_requerimiento_matricula.setHeader("REQUERIMIENTO MATRÍCULA");
         tab_requerimiento_matricula .dibujar();//dibuja la tabla
 
         PanelTabla pa_requerimiento_matricula = new PanelTabla();//intanciamos el panel del framework
