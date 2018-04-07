@@ -20,8 +20,8 @@ public class EstadoCivil extends Pantalla{
         tab_estado_civil.setId("tab_estado_civil");
         
         tab_estado_civil.setTabla("yavirac_stror_estado_civil","ide_ystesc",1);
-        tab_estado_civil.getColumna("ide_ystesc").setNombreVisual("CODIGO");
-        tab_estado_civil.getColumna("descripcion_ystesc").setNombreVisual("DESCRIPCION");
+        tab_estado_civil.getColumna("ide_ystesc").setNombreVisual("CÓDIGO");
+        tab_estado_civil.getColumna("descripcion_ystesc").setNombreVisual("DESCRIPCIÓN");
         tab_estado_civil.getColumna("activo_ystesc").setNombreVisual("ACTIVO");
         tab_estado_civil.dibujar();
         
