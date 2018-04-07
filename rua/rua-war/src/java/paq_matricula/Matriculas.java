@@ -63,7 +63,7 @@ public class Matriculas extends Pantalla {
                         //bar_botones.agregarBoton(bot_anular);
         Boton bot_imprimir = new Boton();
         bot_imprimir.setIcon("ui-icon-print");
-        bot_imprimir.setValue("CERTIFICADO MATRICULA");
+        bot_imprimir.setValue("CERTIFICADO MATRÍCULA");
         bot_imprimir.setMetodo("generarPDF");
 
         bar_botones.agregarBoton(bot_imprimir);
@@ -73,7 +73,7 @@ public class Matriculas extends Pantalla {
 
             tab_matriculas.setId("tab_matriculas");// todo objeto instanciado poner id 
             tab_matriculas.setTabla("yavirac_matri_matricula", "ide_ymamat", 1);  // nombre de la base de datos ii la clave primaria
-            tab_matriculas.setHeader("REGISTRO DE MATRICULAS");
+            tab_matriculas.setHeader("REGISTRO DE MATRÍCULAS");
             tab_matriculas.setCondicion("ide_ymaper=-1");
             tab_matriculas.getColumna("recibido_ymamat").setValorDefecto("false");
             tab_matriculas.getColumna("recibido_ymamat").setLectura(true);
@@ -143,9 +143,9 @@ public class Matriculas extends Pantalla {
             tab_registro_credito.getColumna("ide_ymatrc").setNombreVisual("TIPO CREDITO");
             tab_registro_credito.getColumna("ide_ymanum").setNombreVisual("NUMERO MATRICULA");
             tab_registro_credito.getColumna("ide_ystmal").setNombreVisual("MALLA");
-            tab_registro_credito.getColumna("codigo_asignatura_ymarcm").setNombreVisual("CODIGO ASIGNATURA");
-            tab_registro_credito.getColumna("numero_de_creditos_ymarcm").setNombreVisual("NUMERO CREDITO");
-            tab_registro_credito.getColumna("observacion_ymarec").setNombreVisual("OBSERVACION");
+            tab_registro_credito.getColumna("codigo_asignatura_ymarcm").setNombreVisual("CÓDIGO ASIGNATURA");
+            tab_registro_credito.getColumna("numero_de_creditos_ymarcm").setNombreVisual("NUMERO CRÉDITO");
+            tab_registro_credito.getColumna("observacion_ymarec").setNombreVisual("OBSERVACIÓN");
             tab_registro_credito.dibujar();//dibuja la tabla
 
             PanelTabla pa_registro_credito = new PanelTabla();//intanciamos el panel del framework
@@ -154,7 +154,7 @@ public class Matriculas extends Pantalla {
             tab_registro_credito.setIdCompleto("tab_tabulador:tab_registro_credito");
 
             //*******************************AGREGA PESTAÑANAS*********************************************//
-            tab_tabulador.agregarTab("REGISTRO DE CREDITOS", pa_registro_credito);
+            tab_tabulador.agregarTab("REGISTRO DE CRÉDITOS", pa_registro_credito);
             tab_tabulador.agregarTab("DOCUMENTOS ENTREGADOS", pa_documento_entregado);
 
             //instanciar una division del framework
@@ -296,7 +296,7 @@ public void generarPDF() {
         //Hace aparecer el componente
         if (com_periodo_academico.getValue() == null) {
 
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico que desea generar");
             return;
         } else {
             sel_actualiza_alumno.getTab_seleccion().setSql(ser_alumno.getDatosAlumnos("true"));
