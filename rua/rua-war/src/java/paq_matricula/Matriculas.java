@@ -330,7 +330,7 @@ public void generarPDF() {
                 utilitario.agregarMensajeInfo("No existe registros configurados", "Favor configurar documentos parea el Periodo Academico Seleccionado");
             }
         } else {
-            utilitario.agregarMensajeError("No puede recibir Documentos", "Usted ya ejecuto la opcion recibir documentos, y no puede volver a ejecutarle pues recibirlo individualmente si lo deses");
+            utilitario.agregarMensajeError("No puede recibir Documentos", "Usted ya ejecuto la opción recibir documentos, y no puede volver a ejecutarle pues recibirlo individualmente si lo deses");
         }
     }
 
