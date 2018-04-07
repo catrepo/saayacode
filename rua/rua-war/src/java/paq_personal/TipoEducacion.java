@@ -27,7 +27,7 @@ public class TipoEducacion extends Pantalla {
     public TipoEducacion() {
         tab_tipo_educacion.setId("tab_tipo_educacion");
         tab_tipo_educacion.setTabla("yavirac_perso_dato_personal", "ide_ypedpe", 1);
-        tab_tipo_educacion.setHeader("TIPO DE EDUCACION");
+        tab_tipo_educacion.setHeader("TIPO DE EDUCACIÓN");
         tab_tipo_educacion.getColumna("ide_ysttis").setCombo(ser_estructura.getTipoSangre("true,false"));
         tab_tipo_educacion.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
         //tab_tipo_educacion.getColumna("ide_ysttdp").setCombo(ser_estructura.getEstadoCivil("true,false"));
@@ -42,7 +42,7 @@ public class TipoEducacion extends Pantalla {
         tab_tipo_educacion.getColumna("ide_ypedpe").setNombreVisual("CÓDIGO");
         tab_tipo_educacion.getColumna("ide_ysttis").setNombreVisual("TIPO SANGRE");
         tab_tipo_educacion.getColumna("ide_ystesc").setNombreVisual("ESTADO CIVIL");
-        tab_tipo_educacion.getColumna("ide_yastpe").setNombreVisual("ESTADO CIVIL");
+        //tab_tipo_educacion.getColumna("ide_yastpe").setNombreVisual("ESTADO CIVIL");
         tab_tipo_educacion.getColumna("ide_ystdoi").setNombreVisual("DOCUMENTO IDENTIDAD");
         tab_tipo_educacion.getColumna("ide_ystnac").setNombreVisual("NACIONALIDAD");
         tab_tipo_educacion.getColumna("ide_ystgen").setNombreVisual("GÉNERO");
