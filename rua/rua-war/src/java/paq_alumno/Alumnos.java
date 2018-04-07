@@ -14,6 +14,8 @@ import framework.componentes.MenuPanel;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
@@ -412,11 +414,7 @@ public void dibujarTablaAficiones(){
  int_opcion=11;
  tab_aficiones.setId("tab_aficiones");
  tab_aficiones.setTabla("yavirac_alum_aficion", "ide_yalafi", 11);
- tab_aficiones.setCondicion("ide_yaldap="+aut_alumno.getValor());
- //tab_aficiones.getColumna("ide_yalafi").setNombreVisual("CODIGO");
- //tab_aficiones.getColumna("aficiones_yalafi").setNombreVisual("AFICIONES");
- //tab_aficiones.getColumna("extraescolar_yalafi").setNombreVisual("EXTRAESCOLAR");
- //tab_aficiones.getColumna("activo_yalafi").setNombreVisual("ACTIVO");
+ tab_aficiones.setCondicion("ide_yaldap="+aut_alumno.getValor()); 
  tab_aficiones.setTipoFormulario(true);
  tab_aficiones.getGrid().setColumns(4);
  tab_aficiones.dibujar();
@@ -473,9 +471,13 @@ public void limpiar() {
 
            }
          else if(int_opcion==9){
+             if(aut_alumno.getValue() == null){
+                 utilitario.agregarMensajeError("Seleccione opción", "Seleccione un alumno para poder registra el dato laboral");
+             }
+             else {
             tab_dato_laboral.insertar();
                         tab_dato_laboral.setValor("ide_yaldap", aut_alumno.getValor());
-
+             }
            }
          else if(int_opcion==10){
             tab_dato_medico.insertar();
@@ -493,36 +495,51 @@ public void limpiar() {
     public void guardar() {
         if(int_opcion==1){
             tab_alumno.guardar();
+            guardarPantalla();
+            aut_alumno.actualizar();
+            aut_alumno.setValor(tab_alumno.getValor("ide_yaldap"));
+            utilitario.addUpdate("aut_alumno");
            }
         else if(int_opcion==2){
             tab_alumno_direccion.guardar();
+            guardarPantalla();
+            aut_alumno.actualizar();
            }
         else if(int_opcion==3){
             tab_alumno_telefono.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==4){
             tab_alumno_correo.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==5){
             tab_alumno_discapacidad.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==6){
             tab_archivo_alumno.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==7){
             tab_dato_familiar.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==8){
             tab_dato_academico.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==9){
             tab_dato_laboral.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==10){
             tab_dato_medico.guardar();
+            aut_alumno.actualizar();
            }
          else if(int_opcion==11){
             tab_aficiones.guardar();
+            aut_alumno.actualizar();
            }
         guardarPantalla();
     }
