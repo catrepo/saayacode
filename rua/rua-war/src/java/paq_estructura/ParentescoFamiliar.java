@@ -19,8 +19,8 @@ public class ParentescoFamiliar extends Pantalla {
             public ParentescoFamiliar  (){
                tab_parentesco_familiar.setId ("tab_parentesco_familiar");
                tab_parentesco_familiar.setTabla ("yavirac_stror_parentezco_fami","ide_ystpaf",1);
-               tab_parentesco_familiar.getColumna("ide_ystpaf").setNombreVisual("CODIGO");
-               tab_parentesco_familiar.getColumna("descripcion_ystpaf").setNombreVisual("DESCRIPCION");
+               tab_parentesco_familiar.getColumna("ide_ystpaf").setNombreVisual("CÓDIGO");
+               tab_parentesco_familiar.getColumna("descripcion_ystpaf").setNombreVisual("DESCRIPCIÓN");
                tab_parentesco_familiar.getColumna("activo_ystpaf").setNombreVisual("ACTIVO");
                tab_parentesco_familiar.dibujar();
                
