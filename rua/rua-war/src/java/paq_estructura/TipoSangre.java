@@ -19,8 +19,8 @@ public class TipoSangre extends Pantalla{
     tab_tipo_sangre.setId("tab_tipo_sangre");// todo objeto instanciado poner id
     
     tab_tipo_sangre.setTabla("yavirac_stror_tipo_sangre","ide_ysttis",1); // nom bdd
-    tab_tipo_sangre.getColumna("ide_ysttis").setNombreVisual("CODIGO");
-    tab_tipo_sangre.getColumna("descripcion_ysttis").setNombreVisual("DESCRIPCION");
+    tab_tipo_sangre.getColumna("ide_ysttis").setNombreVisual("CÓDIGO");
+    tab_tipo_sangre.getColumna("descripcion_ysttis").setNombreVisual("DESCRIPCIÓN");
     tab_tipo_sangre.getColumna("activo_ysttis").setNombreVisual("ACTIVO");
     tab_tipo_sangre.dibujar();
             
