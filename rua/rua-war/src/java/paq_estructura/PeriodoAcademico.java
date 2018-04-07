@@ -37,8 +37,8 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.agregarRelacion(tab_actividad_evaluacion);
         tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
         //renombra etiquetas de la tabla
-        tab_periodo_academic.getColumna("ide_ystpea").setNombreVisual("CODIGO");
-        tab_periodo_academic.getColumna("descripcion_ystpea").setNombreVisual("DESCRIPCION");
+        tab_periodo_academic.getColumna("ide_ystpea").setNombreVisual("CÓDIGO");
+        tab_periodo_academic.getColumna("descripcion_ystpea").setNombreVisual("DESCRIPCIÓN");
         tab_periodo_academic.getColumna("fecha_inicio_ystpea").setNombreVisual("FECHA INICIO");
         tab_periodo_academic.getColumna("fecha_fianal_ystpera").setNombreVisual("FECHA FINAL");
         tab_periodo_academic.getColumna("activo_ystpea").setNombreVisual("ACTIVO");
@@ -57,8 +57,8 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_evaluacion.setTabla("yavirac_nota_periodo_evaluacio", "ide_ynopee", 1);    // nom bdd
         tab_periodo_evaluacion.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         //renombrar etiquetas
-        tab_periodo_evaluacion.getColumna("ide_ynopee").setNombreVisual("CODIGO");
-        tab_periodo_evaluacion.getColumna("ide_ynotie").setNombreVisual("TIPO DE EVALUACION");
+        tab_periodo_evaluacion.getColumna("ide_ynopee").setNombreVisual("CÓDIGO");
+        tab_periodo_evaluacion.getColumna("ide_ynotie").setNombreVisual("TIPO DE EVALUACIÓN");
         //*****************
         tab_periodo_evaluacion.dibujar();
 
@@ -72,8 +72,8 @@ public class PeriodoAcademico extends Pantalla {
         tab_actividad_evaluacion.setTabla("yavirac_nota_periodo_activ_eva", "ide_ynopae", 1);    // nom bdd
         tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         //cambio etiketas
-        tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CODIGO");
-        tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD DEEVALUACION");
+        tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
+        tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD DE EVALUACIÓN");
         tab_actividad_evaluacion.getColumna("orden_ynopae").setNombreVisual("ORDEN");
         tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
         //*******************
@@ -87,8 +87,8 @@ public class PeriodoAcademico extends Pantalla {
         Tabulador tab_tabulador = new Tabulador();
         tab_tabulador.setId("tab_tabulador");
 
-        tab_tabulador.agregarTab("PERIODO EVALUACION", pa_periodoevaluacion);
-        tab_tabulador.agregarTab("PERIODO ACTIVIDAD EVALUACION", pa_actividadevaluacion);
+        tab_tabulador.agregarTab("PERIODO EVALUACIÓN", pa_periodoevaluacion);
+        tab_tabulador.agregarTab("PERIODO ACTIVIDAD EVALUACIÓN", pa_actividadevaluacion);
 
         Division div_periodo_academico = new Division();
         div_periodo_academico.dividir2(pa_periodoacademico, tab_tabulador, "30%", "h");
