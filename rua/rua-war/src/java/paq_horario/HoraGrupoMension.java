@@ -36,11 +36,11 @@ public class HoraGrupoMension extends Pantalla {
         tab_grupo_mension.getColumna("ide_yhotgh").setCombo(ser_horarios.getTipoGeneracionHora());
         tab_grupo_mension.getColumna("ide_ystnie").setCombo(ser_estructura_organizacional.getNivelEducacion());
         tab_grupo_mension.getColumna("ide_ystpea").setVisible(false);
-        tab_grupo_mension.getColumna("ide_yhogrm").setNombreVisual("CODIGO");
-        tab_grupo_mension.getColumna("ide_ystmen").setNombreVisual("MENSION");
-        tab_grupo_mension.getColumna("ide_yhogra").setNombreVisual("GRUPO ACADEMICO");
-        tab_grupo_mension.getColumna("ide_yhotgh").setNombreVisual("TIPO GENERACION HORARIO");
-        tab_grupo_mension.getColumna("ide_ystnie").setNombreVisual("NIVEL EDUCACION");
+        tab_grupo_mension.getColumna("ide_yhogrm").setNombreVisual("CÓDIGO PRINCIPAL");
+        tab_grupo_mension.getColumna("ide_ystmen").setNombreVisual("MENSIÓN CARRERAS");
+        tab_grupo_mension.getColumna("ide_yhogra").setNombreVisual("GRUPO ACADÉMICO");
+        tab_grupo_mension.getColumna("ide_yhotgh").setNombreVisual("TIPO GENERACIÓN DE HORARIO");
+        tab_grupo_mension.getColumna("ide_ystnie").setNombreVisual("NIVEL DE EDUCACIÓN");
         tab_grupo_mension.getColumna("detalle_yhogrm").setNombreVisual("DETALLE");
         tab_grupo_mension.dibujar();
             

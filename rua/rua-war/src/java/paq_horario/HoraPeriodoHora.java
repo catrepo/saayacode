@@ -127,17 +127,17 @@ public class HoraPeriodoHora extends Pantalla {
     tab_hora_periodo_hora.getColumna("ide_yhothj").setCombo(ser_horarios.getHorarios("true,false"));
     tab_hora_periodo_hora.getColumna("ide_ystmen").setCombo(ser_estructura_organizacional.getMension());
     tab_hora_periodo_hora.getColumna("ide_ystpea").setVisible(false);
-    tab_hora_periodo_hora.getColumna("ide_yhopeh").setNombreVisual("CODIGO");
+    tab_hora_periodo_hora.getColumna("ide_yhopeh").setNombreVisual("CÓDIGO PRINCIPAL");
     tab_hora_periodo_hora.getColumna("ide_ystmod").setNombreVisual("MODALIDAD");
     tab_hora_periodo_hora.getColumna("ide_ystjor").setNombreVisual("JORNADA");
     tab_hora_periodo_hora.getColumna("ide_yhohor").setNombreVisual("HORA");
-    tab_hora_periodo_hora.getColumna("ide_yhodia").setNombreVisual("DIA");
-    tab_hora_periodo_hora.getColumna("ide_yhopeh").setNombreVisual("CODIGO");
-    tab_hora_periodo_hora.getColumna("ide_yhothj").setNombreVisual("TIPO HORARIO");
+    tab_hora_periodo_hora.getColumna("ide_yhodia").setNombreVisual("DÍA");
+    /*tab_hora_periodo_hora.getColumna("ide_yhopeh").setNombreVisual("CODIGO");*/
+    tab_hora_periodo_hora.getColumna("ide_yhothj").setNombreVisual("TIPO DE HORARIO");
     tab_hora_periodo_hora.getColumna("horainicial_yhopeh").setNombreVisual("HORA INICIAL");
     tab_hora_periodo_hora.getColumna("horafinal_yhopeh").setNombreVisual("HORA FINAL");
     tab_hora_periodo_hora.getColumna("activo_yhopeh").setNombreVisual("ACTIVO");
-    tab_hora_periodo_hora.getColumna("ide_ystmen").setNombreVisual("MENSION");    
+    tab_hora_periodo_hora.getColumna("ide_ystmen").setNombreVisual("MENSIÓN CARRERAS");    
     tab_hora_periodo_hora.dibujar();
         /*agregarComponente(tab_hora_hora);*/ 
         

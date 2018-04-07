@@ -32,10 +32,10 @@ public class HoraDocenteMalla extends Pantalla{
         tab_docente_malla.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_docente_malla.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
         tab_docente_malla.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());        
-        tab_docente_malla.getColumna("ide_yhodom").setNombreVisual("CODIGO");
-        tab_docente_malla.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTE");
-        tab_docente_malla.getColumna("ide_ystmal").setNombreVisual("MALLA ACADEMICA");
-        tab_docente_malla.getColumna("ide_yhogra").setNombreVisual("GRUPOS");
+        tab_docente_malla.getColumna("ide_yhodom").setNombreVisual("CÓDIGO PRINCIPAL");
+        tab_docente_malla.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTES");
+        tab_docente_malla.getColumna("ide_ystmal").setNombreVisual("MALLA ACADÉMICA");
+        tab_docente_malla.getColumna("ide_yhogra").setNombreVisual("GRUPOS / PARALELOS");
         tab_docente_malla.dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
         

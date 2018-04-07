@@ -31,11 +31,11 @@ public class HoraHorarioMateria extends Pantalla{
         tab_hora_horario_materia.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_hora_horario_materia.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
         tab_hora_horario_materia.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());        
-        tab_hora_horario_materia.getColumna("ide_yhohma").setNombreVisual("CODIGO");
-        tab_hora_horario_materia.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTE");
-        tab_hora_horario_materia.getColumna("ide_ystmal").setNombreVisual("MALLA ACADEMICA");
-        tab_hora_horario_materia.getColumna("ide_yhogra").setNombreVisual("GRUPOS");
-        tab_hora_horario_materia.getColumna("ide_yhopeh").setNombreVisual("PERIODO HORARIO");
+        tab_hora_horario_materia.getColumna("ide_yhohma").setNombreVisual("CÓDIGO PRINCIPAL");
+        tab_hora_horario_materia.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTES");
+        tab_hora_horario_materia.getColumna("ide_ystmal").setNombreVisual("MALLA ACADÉMICA");
+        tab_hora_horario_materia.getColumna("ide_yhogra").setNombreVisual("GRUPO / PARALELO");
+        tab_hora_horario_materia.getColumna("ide_yhopeh").setNombreVisual("PERIODO DE HORARIO");
         tab_hora_horario_materia.dibujar();   
         
         PanelTabla pat_hora_horario_materia = new PanelTabla();

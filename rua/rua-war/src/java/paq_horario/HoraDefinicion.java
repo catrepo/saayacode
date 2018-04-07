@@ -72,8 +72,8 @@ public class HoraDefinicion extends Pantalla{
     tab_hora_definicion.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true,false"));
     tab_hora_definicion.getColumna("ide_ystmod").setCombo(ser_estructura_organizacional.getModalidad("true,false"));
     tab_hora_definicion.getColumna("ide_ystpea").setVisible(false);
-    tab_hora_definicion.getColumna("ide_yhodeh").setNombreVisual("CODIGO");
-    tab_hora_definicion.getColumna("ide_yhothj").setNombreVisual("TIPO HORARIO");
+    tab_hora_definicion.getColumna("ide_yhodeh").setNombreVisual("CÓDIGO PRINCIPAL");
+    tab_hora_definicion.getColumna("ide_yhothj").setNombreVisual("TIPO DE HORARIO");
     tab_hora_definicion.getColumna("ide_ystjor").setNombreVisual("JORNADA");
     tab_hora_definicion.getColumna("ide_ystmod").setNombreVisual("MODALIDAD");
     tab_hora_definicion.getColumna("hora_inicio_yhodeh").setNombreVisual("HORA INICIO");
