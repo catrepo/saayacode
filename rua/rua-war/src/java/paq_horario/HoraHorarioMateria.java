@@ -5,7 +5,9 @@ package paq_horario;
  *
  * @author ANDRES
  */
+import framework.componentes.Combo;
 import framework.componentes.Division;
+import framework.componentes.Etiqueta;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
@@ -16,6 +18,7 @@ import sistema.aplicacion.Pantalla;
 
 public class HoraHorarioMateria extends Pantalla{
    private Tabla tab_hora_horario_materia = new Tabla();
+   private Combo com_periodo_academico = new Combo();
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     
@@ -45,7 +48,23 @@ public class HoraHorarioMateria extends Pantalla{
         div_hora_horario_materia.setId("div_hora_horario_materia");
         div_hora_horario_materia.dividir1(pat_hora_horario_materia);
         agregarComponente(div_hora_horario_materia); 
+        
+        com_periodo_academico.setId("cmb_periodo_academico");
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
+        com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
+        bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
+        bar_botones.agregarComponente(com_periodo_academico);
     }
+    public void filtroComboPeriodoAcademnico(){
+        
+        tab_hora_horario_materia.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
+        tab_hora_horario_materia.ejecutarSql();
+        utilitario.addUpdate("tab_hora_definicion");
+        
+     
+    }
+   
+        
    @Override
     public void insertar() {
         tab_hora_horario_materia.insertar();
