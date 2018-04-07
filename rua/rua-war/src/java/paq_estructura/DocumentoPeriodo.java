@@ -38,7 +38,7 @@ public DocumentoPeriodo(){
     tab_tabla.getColumna("ide_ystdor").setCombo(ser_estructura.getDocumentoRequerido("true,false"));
     tab_tabla.getColumna("ide_ystrep").setCombo(ser_estructura.getRequeridoPara());
     tab_tabla.getColumna("ide_ystpea").setVisible(false);
-    tab_tabla.getColumna("ide_ystdop").setNombreVisual("CODIGO");
+    tab_tabla.getColumna("ide_ystdop").setNombreVisual("CÓDIGO");
     tab_tabla.getColumna("ide_ystdor").setNombreVisual("DOCUMENTO REQUERIDO");
     tab_tabla.getColumna("ide_ystrep").setNombreVisual("REQUERIDO PARA:");
     tab_tabla.dibujar();
