@@ -164,4 +164,14 @@ public class ServiciosHorarios {
         sql="select ide_ystmod, descripcion_ystmod from yavirac_stror_modalidad  ";
         return sql;
     }
+         public String getInstalacion() {
+        String sql="";
+        sql="select ide_yhodin, descripcion_yhodin from yavirac_hora_distribuc_instit";
+        return sql;
+         }
+         public String getTipoAdecuacion() {
+        String sql="";
+        sql="select ide_yhotad, descripcion_yhotad from yavirac_hora_tipo_adecuacion";
+        return sql;
+         }
 }
