@@ -44,6 +44,11 @@ public class Preinscripcion extends Pantalla {
     private Reporte rep_reporte =new Reporte();
     private SeleccionFormatoReporte sel_rep = new SeleccionFormatoReporte();
     private VisualizarPDF vipdf_comprobante = new VisualizarPDF();
+    private Tabla tab_direccion = new Tabla();
+    private Tabla tab_telefono = new Tabla();
+    private Tabla tab_correo = new Tabla();
+    private Tabla tab_familiar = new Tabla();
+    
     
 
     @EJB
@@ -538,6 +543,38 @@ public void generarPDF() {
 
     public void setVipdf_comprobante(VisualizarPDF vipdf_comprobante) {
         this.vipdf_comprobante = vipdf_comprobante;
+    }
+
+    public Tabla getTab_direccion() {
+        return tab_direccion;
+    }
+
+    public void setTab_direccion(Tabla tab_direccion) {
+        this.tab_direccion = tab_direccion;
+    }
+
+    public Tabla getTab_telefono() {
+        return tab_telefono;
+    }
+
+    public void setTab_telefono(Tabla tab_telefono) {
+        this.tab_telefono = tab_telefono;
+    }
+
+    public Tabla getTab_correo() {
+        return tab_correo;
+    }
+
+    public void setTab_correo(Tabla tab_correo) {
+        this.tab_correo = tab_correo;
+    }
+
+    public Tabla getTab_familiar() {
+        return tab_familiar;
+    }
+
+    public void setTab_familiar(Tabla tab_familiar) {
+        this.tab_familiar = tab_familiar;
     }
 
 }
