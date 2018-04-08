@@ -202,5 +202,11 @@ public class ServicioEstructuraOrganizacional {
             " and a.ide_ystmen = c.ide_ystmen" +
             " and a.ide_ystmat = d.ide_ystmat";
         return sql;
-    }            
+    } 
+        public String getInstalacion() {
+        String sql="";
+        sql="select ide_ysttin,descripcion_ysttin from yavirac_stror_tipo_instalacion";
+        return sql;
+    }  
+        
 }
