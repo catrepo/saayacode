@@ -25,6 +25,11 @@ public class NaturalezaCompensacion extends Pantalla{
            tab_naturaleza_compensacion.setId("tab_naturaleza_compensacion");
            tab_naturaleza_compensacion.setTabla("yavirac_titu_carrera_afines", "ide_yticaa",11);
            tab_naturaleza_compensacion.setHeader("NATURALEZA DE COMPENSACIÓN");
+           tab_naturaleza_compensacion.getColumna("ide_yticaa").setNombreVisual(" CÓDIGO DE CARRERA");
+           tab_naturaleza_compensacion.getColumna("ide_ytiemp").setNombreVisual(" CÓDIGO DE EMPRESA");
+           tab_naturaleza_compensacion.getColumna("observacion_yticaa").setNombreVisual(" OBSERVACIÓN ");
+           tab_naturaleza_compensacion.getColumna("activo_yticaa").setNombreVisual(" ACTIVO ");
+        
            tab_naturaleza_compensacion.dibujar(); 
             
             

@@ -23,6 +23,11 @@ public class CicloConvenio extends Pantalla {
         tab_ciclo_convenio.setId("tab_ciclo_convenio");
         tab_ciclo_convenio.setTabla("yavirac_titu_ciclo_convenio", "ide_yticic", 1);
         tab_ciclo_convenio.setHeader("CICLO DE CONVENIO");
+        tab_ciclo_convenio.getColumna("ide_yticic").setNombreVisual("CÓDIGO CONVENIO");
+        tab_ciclo_convenio.getColumna("ide_ytitcc").setNombreVisual("CÓDIGO CICLO CONVENIO");
+        tab_ciclo_convenio.getColumna("ide__ytifod ").setNombreVisual("CÓDIGO DE FORMACÓN DUAL");
+        tab_ciclo_convenio.getColumna("detalle_yticic ").setNombreVisual("DETALLE");
+        
         tab_ciclo_convenio.dibujar();
 
         PanelTabla pa_ciclo_convenio = new PanelTabla();

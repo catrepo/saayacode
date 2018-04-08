@@ -22,6 +22,10 @@ public class CarrreraAfines extends Pantalla {
         tab_carrera_afines.setId("tab_carrera_afines");
         tab_carrera_afines.setTabla("yavirac_titu_carrera_afines", "ide_yticaa", 1);  // nombre de la base de datos ii la clave primaria
         tab_carrera_afines.setHeader("CARRERA AFINES");
+        tab_carrera_afines.getColumna("ide_yticaa").setNombreVisual("CÓDIGO");
+        tab_carrera_afines.getColumna("ide_ytiemp").setNombreVisual("CÓDIGO EMPRESA");
+        tab_carrera_afines.getColumna("observacion_yticaa").setNombreVisual("OBSERVACIÓN");
+        tab_carrera_afines.getColumna("activo_yticaa").setNombreVisual("ACTIVO");
         tab_carrera_afines.dibujar();//dibuja la tabla
 
         PanelTabla pa_actividad_evaluacion = new PanelTabla();//intanciamos el panel del framework

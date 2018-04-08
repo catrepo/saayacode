@@ -23,117 +23,145 @@ import sistema.aplicacion.Utilitario;
  *
  * @author Martha
  */
-public class Empresa extends Pantalla{
+public class Empresa extends Pantalla {
+
     private Tabla tab_empresa = new Tabla();
     private Tabla tab_representante = new Tabla();
-    private Tabla tab_carrera = new Tabla();  
-   // private Combo com_pantalla = new Combo();
+    private Tabla tab_carrera = new Tabla();
+    // private Combo com_pantalla = new Combo();
 
     @EJB
 
     private final ServicioTitulacion ser_titulacion = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
-  @EJB
+    @EJB
 
-    private final ServicioEstructuraOrganizacional ser_estructura= (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
-   
+    private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+
     public Empresa() {
-    
-           tab_empresa.setId("tab_empresa"); // id del la empresa 
-           tab_empresa.setTabla("yavirac_titu_empresa", "ide_ytiemp",1);
-           tab_empresa.getColumna("ide_ytitie").setCombo(ser_titulacion.getSqlTipoEmpresa());
-           tab_empresa.getColumna("ide_ytiace").setCombo(ser_titulacion.getSqlActividadEconomica());
-           tab_empresa.getColumna("ide_ytitip").setCombo(ser_titulacion.getSqlTipoProducto());
-           //tab_empresa.getColumna("ide_ytiten").setCombo(ser_titulacion.getSqlTipoEntidad());
-           //tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
-           tab_empresa.setHeader("Registro de datos de la Empresa"); 
-           tab_empresa.agregarRelacion(tab_carrera);
-           tab_empresa.agregarRelacion(tab_representante);
-           tab_empresa.setTipoFormulario(true);
-           tab_empresa.getGrid().setColumns(4);
-           tab_empresa.dibujar(); 
-    
-            
-            tab_representante.setId("tab_representante");// id de la tabla de representantes
-            tab_representante.setIdCompleto("tab_tabulador:tab_representante");//tabulacion de la tabla representante
 
-           tab_representante.setTabla("yavirac_titu_persona_empresa", "ide_ytipee",2);
-           tab_representante.setHeader("Registro de los Representantes");
-           tab_representante.getColumna("ide_ytitpv").setCombo(ser_titulacion.getSqlTipoPersonaVincula());
-          // tab_representante.setTipoFormulario(true);
-            tab_representante.dibujar();
-            
-             tab_carrera.setId("tab_carrera");
-             tab_carrera.setIdCompleto("tab_tabulador:tab_carrera");
+        tab_empresa.setId("tab_empresa"); // id del la empresa 
+        tab_empresa.setTabla("yavirac_titu_empresa", "ide_ytiemp", 1);
+        tab_empresa.getColumna("ide_ytitie").setCombo(ser_titulacion.getSqlTipoEmpresa());
+        tab_empresa.getColumna("ide_ytiace").setCombo(ser_titulacion.getSqlActividadEconomica());
+        tab_empresa.getColumna("ide_ytitip").setCombo(ser_titulacion.getSqlTipoProducto());
+        //tab_carrera.getColumna("ide_ytiemp").setNombreVisual("CÓDIGO");
+        //tab_empresa.getColumna("ide_ytiten").setCombo(ser_titulacion.getSqlTipoEntidad());
+        //tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+        tab_empresa.setHeader("Registro de datos de la Empresa");
 
-           tab_carrera.setTabla("yavirac_titu_carrera_afines", "ide_yticaa",3);
-           tab_carrera.setHeader("Registro de datos la Carrera");
-          // tab_carrera.setTipoFormulario(true);
-            tab_carrera.dibujar();
-            
-            PanelTabla pat_empresa = new PanelTabla();
-            pat_empresa.setId("pat_empresa");
-            pat_empresa.setPanelTabla(tab_empresa);
-            
-            PanelTabla pat_representante = new PanelTabla();
-            pat_representante.setId("pat_representante");
-            pat_representante.setPanelTabla(tab_representante);
-            
-            PanelTabla pat_carrera = new PanelTabla();
-            pat_carrera.setId("pat_carrera");
-            pat_carrera.setPanelTabla(tab_carrera);
-            
-            
-            Tabulador tab_tabulador = new Tabulador();
-            tab_tabulador.setId("tab_tabulador");
-            tab_tabulador.agregarTab("REPRESENTANTES", pat_representante);
-            tab_tabulador.agregarTab("CARRERA", pat_carrera);
-            
-            Division div_empresa = new Division();
-            div_empresa.setId("div_empresa");
-            div_empresa.dividir2(pat_empresa, tab_tabulador, "50%", "H");
-
+        tab_empresa.agregarRelacion(tab_carrera);
+        tab_empresa.agregarRelacion(tab_representante);
+        tab_empresa.setTipoFormulario(true);
+        tab_empresa.getGrid().setColumns(4);
+        tab_empresa.getColumna("ide_ytiemp").setNombreVisual("CÓDIGO");
+        tab_empresa.getColumna(" ide_ytiace").setNombreVisual("CÓDIGO DE ACTIVIDAD ECONOMICA");
+        tab_empresa.getColumna("ide_ytitie").setNombreVisual("CÓDIGO DE TIPO EMPRESA ");
+        tab_empresa.getColumna("direccion_ytiemp").setNombreVisual("DIRECCIÓN ");
+        tab_empresa.getColumna("telefono_fijo_ytiemp").setNombreVisual("TELEFÓNO ");
+        tab_empresa.getColumna(" logo_tipo_ytiemp").setNombreVisual("LOGO ");
+        tab_empresa.getColumna(" ide_ytitip").setNombreVisual("CODIGÓ TIPO PERSONA ");
+        tab_empresa.getColumna(" ide_ytiten").setNombreVisual("CODIGÓ TIPO ENTIDAD ");
+        tab_empresa.getColumna("  ruc_ytiemp").setNombreVisual("RUC");
+        tab_empresa.getColumna("correo_ytiemp ").setNombreVisual("CORREO");
+        tab_empresa.getColumna("movil_ytiemp").setNombreVisual("TELEFÓNO");
+        tab_empresa.getColumna("nombre_comercial_ytiemp").setNombreVisual("NOMBRE COMERCIAL DE LA EMPRESA");
         
-            
-            agregarComponente(div_empresa);
+        
+        
+        
+        
+        tab_empresa.dibujar();
+
+        tab_representante.setId("tab_representante");// id de la tabla de representantes
+        tab_representante.setIdCompleto("tab_tabulador:tab_representante");//tabulacion de la tabla representante
+
+        tab_representante.setTabla("yavirac_titu_persona_empresa", "ide_ytipee", 2);
+        tab_representante.setHeader("Registro de los Representantes");
+        tab_representante.getColumna("ide_ytitpv").setCombo(ser_titulacion.getSqlTipoPersonaVincula());
+        // tab_representante.setTipoFormulario(true);
+        tab_representante.getColumna(" ide_ytipee "). setNombreVisual("CÓDIGO");
+        tab_representante.getColumna("  ide_ytitpv "). setNombreVisual("CÓDIGO  DE LA VINCULACIÓN");
+        tab_representante.getColumna("  nombre_ytipee "). setNombreVisual("NOMBRE");
+        tab_representante.getColumna(" docu_identida_ytipee  "). setNombreVisual("DOCUMENTO DE IDENTIDAD");
+        tab_representante.getColumna(" celular_ytipee  "). setNombreVisual("CELULAR");
+        tab_representante.getColumna("  telefono_ytipee "). setNombreVisual("TELEFÓNO");
+        tab_representante.getColumna(" correo_ytipee "). setNombreVisual("CORREO");
+        tab_representante.getColumna(" observacion_ytipee "). setNombreVisual("OBSERVACIÓN");
+        tab_representante.getColumna(" activo_ytipee "). setNombreVisual("ACTIVO");
+        tab_representante.getColumna(" autorizado_firma_convenio_ytipe ").setNombreVisual("AUTORIZADO");
+        
+        tab_representante.dibujar();
+
+        tab_carrera.setId("tab_carrera");
+        tab_carrera.setIdCompleto("tab_tabulador:tab_carrera");
+
+        tab_carrera.setTabla("yavirac_titu_carrera_afines", "ide_yticaa", 3);
+        tab_carrera.setHeader("Registro de datos la Carrera");
+        tab_carrera.getColumna(" ide_yticaa  "). setNombreVisual("CÓDIGO");
+        tab_carrera.getColumna(" observacion_yticaa "). setNombreVisual("OBSERVACIÓN");
+        tab_carrera.getColumna(" activo_yticaa "). setNombreVisual("ACTIVO");
+        
+       
+       
+        //tab_carrera.getColumna(" ide_ytitip").setNombreVisual(" ");
+        // tab_carrera.setTipoFormulario(true);
+        tab_carrera.dibujar();
+
+        PanelTabla pat_empresa = new PanelTabla();
+        pat_empresa.setId("pat_empresa");
+        pat_empresa.setPanelTabla(tab_empresa);
+
+        PanelTabla pat_representante = new PanelTabla();
+        pat_representante.setId("pat_representante");
+        pat_representante.setPanelTabla(tab_representante);
+
+        PanelTabla pat_carrera = new PanelTabla();
+        pat_carrera.setId("pat_carrera");
+        pat_carrera.setPanelTabla(tab_carrera);
+
+        Tabulador tab_tabulador = new Tabulador();
+        tab_tabulador.setId("tab_tabulador");
+        tab_tabulador.agregarTab("REPRESENTANTES", pat_representante);
+        tab_tabulador.agregarTab("CARRERA", pat_carrera);
+
+        Division div_empresa = new Division();
+        div_empresa.setId("div_empresa");
+        div_empresa.dividir2(pat_empresa, tab_tabulador, "50%", "H");
+
+        agregarComponente(div_empresa);
     }
 
     @Override
     public void insertar() {
-        if(tab_empresa.isFocus()){
-                  tab_empresa.insertar();
-        }
-        else if (tab_carrera.isFocus()){
+        if (tab_empresa.isFocus()) {
+            tab_empresa.insertar();
+        } else if (tab_carrera.isFocus()) {
             tab_carrera.insertar();
-        }
-        else if(tab_representante.isFocus()){
+        } else if (tab_representante.isFocus()) {
             tab_representante.insertar();
         }
-      
+
     }
 
     @Override
     public void guardar() {
-         if(tab_empresa.isFocus()){
-                  tab_empresa.guardar();
-        }
-        else if (tab_carrera.isFocus()){
+        if (tab_empresa.isFocus()) {
+            tab_empresa.guardar();
+        } else if (tab_carrera.isFocus()) {
             tab_carrera.guardar();
-        }
-        else if(tab_representante.isFocus()){
+        } else if (tab_representante.isFocus()) {
             tab_representante.guardar();
         }
-       guardarPantalla();
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-                 if(tab_empresa.isFocus()){
-                  tab_empresa.eliminar();
-        }
-        else if (tab_carrera.isFocus()){
+        if (tab_empresa.isFocus()) {
+            tab_empresa.eliminar();
+        } else if (tab_carrera.isFocus()) {
             tab_carrera.eliminar();
-        }
-        else if(tab_representante.isFocus()){
+        } else if (tab_representante.isFocus()) {
             tab_representante.eliminar();
         }
     }
@@ -185,5 +213,5 @@ public class Empresa extends Pantalla{
     public void setTab_carrera(Tabla tab_carrera) {
         this.tab_carrera = tab_carrera;
     }
-    
+
 }
