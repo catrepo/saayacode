@@ -31,6 +31,10 @@ public class HoraPeriodoHora extends Pantalla {
     private SeleccionTabla set_tab_jornada = new SeleccionTabla();
     private SeleccionTabla set_tab_dias = new SeleccionTabla();
     private SeleccionTabla set_tab_mension = new SeleccionTabla();
+    private String modalidad ="";
+    private String jornada ="";
+    private String dias ="";
+    private String mension ="";
     
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -46,7 +50,7 @@ public class HoraPeriodoHora extends Pantalla {
         com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
         com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
        
-        bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
+        bar_botones.agregarComponente(new Etiqueta("PERIODO ACADÉMICO"));
         bar_botones.agregarComponente(com_periodo_academico);
         
         // creo dialogo para crear modalidad
@@ -118,7 +122,7 @@ public class HoraPeriodoHora extends Pantalla {
         //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
         set_tab_mension.setWidth("80%");
         set_tab_mension.setHeight("70%");
-        set_tab_mension.getBot_aceptar().setMetodo("aceptarDiasSemana");
+        set_tab_mension.getBot_aceptar().setMetodo("generarSemanero");
         agregarComponente(set_tab_mension);
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
@@ -172,8 +176,8 @@ public class HoraPeriodoHora extends Pantalla {
         
         Boton bot_replicar = new Boton();
         bot_replicar.setIcon("ui-icon-newwin");
-        bot_replicar.setValue("Generar");
-        bot_replicar.setTitle("Generar");
+        bot_replicar.setValue("GENERAR HORARIO");
+        bot_replicar.setTitle("GENERAR HORARIO");
         bar_botones.agregarBoton(bot_replicar);    
         bot_replicar.setMetodo("generarPeriodoHora");
         
@@ -191,15 +195,18 @@ public class HoraPeriodoHora extends Pantalla {
     @Override
     public void insertar() {
         if(com_periodo_academico.getValue() == null){
-            utilitario.agregarMensajeError("ERROR", "Seleccione el Periodo Academico");
+            utilitario.agregarMensajeError("ERROR", "Seleccione el Periodo Académico");
             return;
         }
-        else {
-        
+        else if(tab_hora_periodo_hora.isFocus()){
         tab_hora_periodo_hora.insertar();
         tab_hora_periodo_hora.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
        utilitario.addUpdateTabla( tab_hora_periodo_hora, "ide_ystpea", "");
        }
+        
+        else if(tab_hora_horario_materia.isFocus()){
+            tab_hora_horario_materia.insertar();
+        }
        // tab_hora_periodo_hora.insertar();
     }
     public void aceptarModalidad(){
@@ -209,6 +216,7 @@ public class HoraPeriodoHora extends Pantalla {
         return;
         }
         else {
+        modalidad = com_dia_modalidad.getValue()+"";
        dia_modalidad.cerrar();
        set_tab_jornada.getTab_seleccion().setSql(ser_horarios.getDefinicionJornada(com_dia_modalidad.getValue().toString(),com_periodo_academico.getValue().toString()));
             set_tab_jornada.getTab_seleccion().ejecutarSql();              
@@ -222,6 +230,7 @@ public class HoraPeriodoHora extends Pantalla {
          return;
           }
          else {
+            jornada = set_tab_jornada.getSeleccionados();
             set_tab_jornada.cerrar();
             set_tab_dias.getTab_seleccion().setSql(ser_horarios.getDia());
             set_tab_dias.getTab_seleccion().ejecutarSql();              
@@ -231,14 +240,15 @@ public class HoraPeriodoHora extends Pantalla {
 }
      public void aceptarDiasSemana(){
         if(set_tab_dias.getSeleccionados()== null){
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione los dias");
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione los días");
         return;
         }
         else {
+       dias = set_tab_dias.getSeleccionados();
        set_tab_dias.cerrar();
        set_tab_mension.getTab_seleccion().setSql(ser_estructura_organizacional.getMension());
-            set_tab_mension.getTab_seleccion().ejecutarSql();              
-            set_tab_mension.dibujar();
+       set_tab_mension.getTab_seleccion().ejecutarSql();              
+       set_tab_mension.dibujar();
             //aceptarDiasSemana
                 }
 }
@@ -246,13 +256,22 @@ public class HoraPeriodoHora extends Pantalla {
     public void generarPeriodoHora (){
     
     if(com_periodo_academico.getValue() == null){
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico que desea generar");
         return;
         }
         else {
        dia_modalidad.dibujar();         
                 }
 }
+    public void generarSemanero(){
+        
+        utilitario.agregarMensajeInfo("ADVERTENCIA","modalidad "+modalidad);
+        utilitario.agregarMensajeInfo("ADVERTENCIA", "jornada "+jornada);
+        utilitario.agregarMensajeInfo("ADVERTENCIA", "dias "+dias);
+        mension = set_tab_mension.getSeleccionados();
+        utilitario.agregarMensajeInfo("ADVERTENCIA", "mension "+mension);
+        set_tab_mension.cerrar();
+    }
 
     public Combo getCom_dia_modalidad() {
         return com_dia_modalidad;
@@ -272,15 +291,24 @@ public class HoraPeriodoHora extends Pantalla {
 
     @Override
     public void guardar() {
-        
-    tab_hora_periodo_hora.guardar();
+     if (tab_hora_periodo_hora.isFocus()){
+       tab_hora_periodo_hora.guardar();  
+     }   
+     else if (tab_hora_horario_materia.isFocus()){
+       tab_hora_horario_materia.guardar();   
+     }
     guardarPantalla();
         
     }
 
     @Override
     public void eliminar() {
-     tab_hora_periodo_hora.eliminar();
+     if (tab_hora_periodo_hora.isFocus()){
+       tab_hora_periodo_hora.eliminar();  
+     }   
+     else if (tab_hora_horario_materia.isFocus()){
+       tab_hora_horario_materia.eliminar();   
+     }   
      
     }
 

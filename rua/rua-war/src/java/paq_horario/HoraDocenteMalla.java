@@ -6,6 +6,7 @@ package paq_horario;
  * @author ANDRES
  */
 
+import framework.componentes.AutoCompletar;
 import framework.componentes.Combo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
@@ -18,7 +19,8 @@ import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
 public class HoraDocenteMalla extends Pantalla{
     private Tabla tab_docente_malla = new Tabla();
-    private Combo com_periodo_academico = new Combo();
+    /*private Combo com_periodo_academico = new Combo();*/
+    private AutoCompletar aut_alumno = new AutoCompletar();
     
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -32,11 +34,13 @@ public class HoraDocenteMalla extends Pantalla{
     public HoraDocenteMalla(){
         tab_docente_malla.setId("tab_docente_malla");   //identificador
         tab_docente_malla.setTabla("yavirac_hora_docente_malla", "ide_yhodom", 1);
+        tab_docente_malla.setCondicion("ide_yhodom=-1"); // no dibuja nada de entrada
         tab_docente_malla.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_docente_malla.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
         tab_docente_malla.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());        
         tab_docente_malla.getColumna("ide_yhodom").setNombreVisual("CÓDIGO PRINCIPAL");
         tab_docente_malla.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTES");
+        tab_docente_malla.getColumna("ide_ypedpe").setVisible(false);
         tab_docente_malla.getColumna("ide_ystmal").setNombreVisual("MALLA ACADÉMICA");
         tab_docente_malla.getColumna("ide_yhogra").setNombreVisual("GRUPOS / PARALELOS");
         tab_docente_malla.dibujar();
@@ -50,25 +54,31 @@ public class HoraDocenteMalla extends Pantalla{
         div_hora_docente_malla.dividir1(pat_hora_docente_malla);
         agregarComponente(div_hora_docente_malla); 
         
-        com_periodo_academico.setId("cmb_periodo_academico");
-        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
-        com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
-        bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
-        bar_botones.agregarComponente(com_periodo_academico);
+        aut_alumno.setId("aut_alumno");
+        aut_alumno.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
+        aut_alumno.setSize(75);
+        aut_alumno.setMetodoChange("selecionoAutocompletar");
+        bar_botones.agregarComponente(new Etiqueta("Docente"));
+        bar_botones.agregarComponente(aut_alumno);
 
     }
-        public void filtroComboPeriodoAcademnico(){
+        public void selecionoAutocompletar(){
         
-        tab_docente_malla.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
+        tab_docente_malla.setCondicion("ide_ypedpe="+aut_alumno.getValor());
         tab_docente_malla.ejecutarSql();
-        utilitario.addUpdate("tab_hora_definicion");
+        utilitario.addUpdate("tab_docente_malla");
         
      
     }
     
      @Override
     public void insertar() {
+
+        
         tab_docente_malla.insertar();
+       // tab_docente_malla.setValor("ide_ypedpe", aut_alumno.getValue().);
+       //utilitario.addUpdateTabla( tab_docente_malla, "ide_ypedpe", "");
+
     }
 
     @Override
@@ -88,6 +98,14 @@ public class HoraDocenteMalla extends Pantalla{
 
     public void setTab_docente_malla(Tabla tab_docente_malla) {
         this.tab_docente_malla = tab_docente_malla;
+    }
+
+    public AutoCompletar getAut_alumno() {
+        return aut_alumno;
+    }
+
+    public void setAut_alumno(AutoCompletar aut_alumno) {
+        this.aut_alumno = aut_alumno;
     }
     
 }
