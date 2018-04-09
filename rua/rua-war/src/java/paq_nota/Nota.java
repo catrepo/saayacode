@@ -50,17 +50,17 @@ public class Nota extends Pantalla {
             bar_botones.agregarComponente(new Etiqueta("*****"));
             bar_botones.agregarComponente(new Etiqueta("      "));
 
-            Boton bot_asistencia = new Boton();
+            /*Boton bot_asistencia = new Boton();
             bot_asistencia.setValue("Registrar Asistencia");
             bot_asistencia.setMetodo("registrarAsistencia");
-            bar_botones.agregarBoton(bot_asistencia);
+            bar_botones.agregarBoton(bot_asistencia);*/
 
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
             bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
-            tab_tipo_evaluacion.setId("tab_tipo_evaluacion");
+            /*tab_tipo_evaluacion.setId("tab_tipo_evaluacion");
             tab_tipo_evaluacion.setTabla("yavirac_nota_tipo_evaluacion", "ide_ynotie", 1);
             tab_tipo_evaluacion.setHeader("TIPO DE EVALUACIÓN");
             tab_tipo_evaluacion.getColumna("ide_ynotie").setNombreVisual("CODIGO");
@@ -76,7 +76,7 @@ public class Nota extends Pantalla {
             div_tipo_evaluacion.setId("div_tipo_evaluacion");
             div_tipo_evaluacion.dividir1(pat_tipo_evaluacion);
 
-            agregarComponente(div_tipo_evaluacion);
+            agregarComponente(div_tipo_evaluacion);*/
 
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
@@ -184,6 +184,14 @@ public class Nota extends Pantalla {
 
     public void setTab_docente_mencion(Tabla tab_docente_mencion) {
         this.tab_docente_mencion = tab_docente_mencion;
+    }
+
+    public Tabla getTab_tipo_evaluacion() {
+        return tab_tipo_evaluacion;
+    }
+
+    public void setTab_tipo_evaluacion(Tabla tab_tipo_evaluacion) {
+        this.tab_tipo_evaluacion = tab_tipo_evaluacion;
     }
 
 }
