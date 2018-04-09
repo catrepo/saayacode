@@ -150,8 +150,5 @@ public class Tutorias extends Pantalla {
     }
 
     
-    
-    
-    
 }
 
