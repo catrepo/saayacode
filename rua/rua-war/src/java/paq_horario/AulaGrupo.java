@@ -33,13 +33,14 @@ public class AulaGrupo extends Pantalla {
     tab_aula_grupo.getColumna("ide_ystins").setCombo(ser_instalacion.getInstalacion());
     tab_aula_grupo.dibujar();    
 
+    PanelTabla pat_cupo_alumno = new PanelTabla();
+        pat_cupo_alumno.setId("pat_cupo_alumno");
+        pat_cupo_alumno.setPanelTabla(tab_cupo_alumno);
+        
     PanelTabla pat_aula_grupo = new PanelTabla();
         pat_aula_grupo.setId("pat_aula_grupo");
         pat_aula_grupo.setPanelTabla(tab_aula_grupo);
         
-        PanelTabla pat_cupo_alumno = new PanelTabla();
-        pat_cupo_alumno.setId("pat_cupo_alumno");
-        pat_cupo_alumno.setPanelTabla(tab_cupo_alumno);
         
         Division div_cupo_alumno = new Division();
         div_cupo_alumno.setId("div_cupo_alumno");
