@@ -275,7 +275,15 @@ public class HoraPeriodoHora extends Pantalla {
     }
     public void insertarReceso(){
         TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(utilitario.getVariable("p_tipo_receso"), "jornada", "modalidad", com_periodo_academico.getValue().toString()));
-      //  utilitario.getConexion("");
+        String maximo = "";
+        
+        for (int i=0;i<receso.getTotalFilas();i++){
+            TablaGenerica codigo_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_periodo_hor", "ide_yhopeh"));
+            maximo = codigo_maximo.getValor("maximo");
+            utilitario.getConexion().ejecutarSql("insert into yavirac_hora_periodo_hor (ide_yhodeh, ide_ystpea, ide_yhothj, ide_ystjor, ide_ystmod, hora_inicio_yhodeh, hora_final_yhodeh, activo_yhodeh)\n" +
+                                             "values (ide_yhodeh, ide_ystpea, ide_yhothj, ide_ystjor, ide_ystmod, hora_inicio, hora_final, activo)");
+        }
+        
   
     }
     public Combo getCom_dia_modalidad() {
