@@ -51,31 +51,23 @@ public class AulaGrupo extends Pantalla {
 
     @Override
     public void insertar() {
-        if(tab_aula_grupo.isFocus()){
-        tab_aula_grupo.insertar();
+        if(tab_cupo_alumno.isFocus()){
+        tab_cupo_alumno.insertar();
         }
-        else if (tab_cupo_alumno.isFocus()){
-            tab_cupo_alumno.insertar();
+        else if (tab_aula_grupo.isFocus()){
+            tab_aula_grupo.insertar();
         }
     }
 
     @Override
     public void guardar() {
-        tab_cupo_alumno.guardar();
+        tab_aula_grupo.guardar();
         guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        tab_cupo_alumno.eliminar();
-    }
-
-    public Tabla getTab_cupo_alumno() {
-        return tab_cupo_alumno;
-    }
-
-    public void setTab_cupo_alumno(Tabla tab_cupo_alumno) {
-        this.tab_cupo_alumno = tab_cupo_alumno;
+        tab_aula_grupo.eliminar();
     }
 
     public Tabla getTab_aula_grupo() {
@@ -84,6 +76,14 @@ public class AulaGrupo extends Pantalla {
 
     public void setTab_aula_grupo(Tabla tab_aula_grupo) {
         this.tab_aula_grupo = tab_aula_grupo;
+    }
+
+    public Tabla getTab_cupo_alumno() {
+        return tab_cupo_alumno;
+    }
+
+    public void setTab_cupo_alumno(Tabla tab_cupo_alumno) {
+        this.tab_cupo_alumno = tab_cupo_alumno;
     }
 
     
