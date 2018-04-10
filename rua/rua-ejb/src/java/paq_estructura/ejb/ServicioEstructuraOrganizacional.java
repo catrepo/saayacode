@@ -261,7 +261,7 @@ public class ServicioEstructuraOrganizacional {
    public String getInstalacion() {
           
         String sql="";
-        sql="select ide_ystins,descripcion_ysttin,from yavirac_stror_tipo_instalacion";
+        sql="select ide_ystins,descripcion_ysttin,from yavirac_stror_instalacion";
         return sql;
  }
     
