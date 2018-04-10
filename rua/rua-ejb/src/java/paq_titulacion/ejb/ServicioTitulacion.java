@@ -72,5 +72,10 @@ public class ServicioTitulacion {
         sql="select ide_ytiace,descripcion_ytiace from yavirac_titu_actividad_economic";
         return sql;
  }
-
+public String getDatoEmpresa() {
+          
+        String sql="";
+        sql="select ide_ytiemp,ruc_ytiemp";
+        return sql;
+}
 }
