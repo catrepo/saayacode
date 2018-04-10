@@ -52,7 +52,7 @@ public class Parametros {
          * HORARIOS MODULO =5
          */
         lis_parametros.add(new Parametro("5", "p_tipo_receso", "Indica el receso para generacion de horarios", "2", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
-        lis_parametros.add(new Parametro("6", "p_tipo_hora", "Indica las horas para generacion de horarios", "2", "yavirac_hora_hora", "ide_yhohor", "descripcion_yhohor"));
+        lis_parametros.add(new Parametro("5", "p_tipo_hora", "Indica las horas para generacion de horarios", "2", "yavirac_hora_hora", "ide_yhohor", "descripcion_yhohor"));
 
         
 //////////////////////////////////////////////////////////////////////
