@@ -48,6 +48,10 @@ public class Parametros {
          * MATRICULAS MODULO =4
          */
         lis_parametros.add(new Parametro("4", "p_documento_matricula", "Indica que los documentos son para matriculas", "2", "yavirac_stror_requerido_para", "ide_ystrep", "descripcion_ystrep"));
+        /*
+         * HORARIOS MODULO =5
+         */
+        lis_parametros.add(new Parametro("5", "p_tipo_receso", "Indica el receso para generacion de horarios", "2", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
 
         
 //////////////////////////////////////////////////////////////////////
