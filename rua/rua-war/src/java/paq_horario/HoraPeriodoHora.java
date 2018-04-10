@@ -1,6 +1,7 @@
 
 package paq_horario;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.Combo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
@@ -272,7 +273,11 @@ public class HoraPeriodoHora extends Pantalla {
         utilitario.agregarMensajeInfo("ADVERTENCIA", "mension "+mension);
         set_tab_mension.cerrar();
     }
-
+    public void insertarReceso(){
+        TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(utilitario.getVariable("p_tipo_receso"), "jornada", "modalidad", com_periodo_academico.getValue().toString()));
+      //  utilitario.getConexion("");
+  
+    }
     public Combo getCom_dia_modalidad() {
         return com_dia_modalidad;
     }
