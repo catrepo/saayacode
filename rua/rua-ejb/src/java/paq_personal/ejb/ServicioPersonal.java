@@ -7,6 +7,7 @@ package paq_personal.ejb;
 
 import paq_estructura.ejb.*;
 import framework.aplicacion.TablaGenerica;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 /**
@@ -46,7 +47,6 @@ public class ServicioPersonal {
         sql="select ide_ypetip,descripcion_ypetip from yavirac_perso_titu_profesional";
         return sql;
  }
- 
- 
+
     
 }
