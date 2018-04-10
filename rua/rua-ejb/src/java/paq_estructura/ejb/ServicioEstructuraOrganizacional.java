@@ -234,20 +234,20 @@ public class ServicioEstructuraOrganizacional {
  public String getTipoColegio() {
           
         String sql="";
-        sql="select ide_ysttco,descripcion_ysttco,from yavirac_stror_tipo_colegio";
+        sql="select ide_ysttco,descripcion_ysttco from yavirac_stror_tipo_colegio";
         return sql;
  }
  public String getTipoBachillerato() {
           
         String sql="";
-        sql="select ide_ysttba,descripcion_ysttba,from yavirac_stror_tipo_bachillerato";
+        sql="select ide_ysttba,descripcion_ysttba from yavirac_stror_tipo_bachillerato";
         return sql;
  }
 
  public String getTipoInstalacion() {
           
         String sql="";
-        sql="select ide_ysttin,descripcion_ysttin,from yavirac_stror_tipo_instalacion";
+        sql="select ide_ysttin,descripcion_ysttin from yavirac_stror_tipo_instalacion";
         return sql;
  }
 
@@ -261,7 +261,7 @@ public class ServicioEstructuraOrganizacional {
    public String getInstalacion() {
           
         String sql="";
-        sql="select ide_ystins,nombre_ystins,from yavirac_stror_instalacion";
+        sql="select ide_ystins,nombre_ystins from yavirac_stror_instalacion";
         return sql;
  }
     

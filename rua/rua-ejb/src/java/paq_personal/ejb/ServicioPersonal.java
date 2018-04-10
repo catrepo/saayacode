@@ -43,7 +43,7 @@ public class ServicioPersonal {
     public String getTipoProfesional() {
           
         String sql="";
-        sql="select ide_ypetip,descripcion_ypetip,from yavirac_perso_titu_profesional";
+        sql="select ide_ypetip,descripcion_ypetip from yavirac_perso_titu_profesional";
         return sql;
  }
  

@@ -53,10 +53,10 @@ public class ServicioTitulacion {
         sql="select ide_ytitpv, descripcion_ytitpv from yavirac_titu_tipo_per_vinc order by descripcion_ytitpv";
         return sql;
     }
-   public String getempresa() {
+   public String getEmpresa() {
           
         String sql="";
-        sql="select ide_ytiemp,ruc_ytiemp,direccion_ytiemp,correo_ytiemp,telefono_ytiemp,movil_ytiemp,logo tipo_ytiemp,nombre comercial_ytiemp,from yavirac_titu_empresa";
+        sql="select ide_ytiemp,ruc_ytiemp,direccion_ytiemp,correo_ytiemp,telefono_ytiemp,movil_ytiemp,logo tipo_ytiemp,nombre comercial_ytiemp from yavirac_titu_empresa";
         return sql;
  }
 
