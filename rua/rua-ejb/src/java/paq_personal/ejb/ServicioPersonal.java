@@ -40,5 +40,13 @@ public class ServicioPersonal {
         sql=" select ide_ypedpe,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,codigo_reloj_ypedpe from yavirac_perso_dato_personal where ide_ypedpe in ("+ide_personal+")";
         return sql;
     }   
+    public String getTipoProfesional() {
+          
+        String sql="";
+        sql="select ide_ypetip,descripcion_ypetip,from yavirac_perso_titu_profesional";
+        return sql;
+ }
+ 
+ 
     
 }
