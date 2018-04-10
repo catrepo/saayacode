@@ -2,6 +2,7 @@ package paq_horario;
 
 import framework.componentes.Combo;
 import framework.componentes.Division;
+import framework.componentes.Etiqueta;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
@@ -13,7 +14,7 @@ import sistema.aplicacion.Pantalla;
 public class AulaGrupo extends Pantalla {
    private Tabla tab_aula_grupo = new Tabla();
    private Tabla tab_cupo_alumno = new Tabla();
-    private Combo com_periodo_academico = new Combo();
+   private Combo com_periodo_academico = new Combo();
    
 @EJB
     private final ServicioEstructuraOrganizacional ser_instalacion = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);   
@@ -25,6 +26,9 @@ public class AulaGrupo extends Pantalla {
      com_periodo_academico.setId("cmb_periodo_academico");
      com_periodo_academico.setCombo(ser_instalacion.getPeriodoAcademico("true,false"));
      com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
+     
+     bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
+        bar_botones.agregarComponente(com_periodo_academico);
 
     
     tab_cupo_alumno.setId("tab_cupo_alumno");   
