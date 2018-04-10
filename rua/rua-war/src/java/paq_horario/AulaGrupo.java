@@ -23,7 +23,7 @@ public class AulaGrupo extends Pantalla {
     
     tab_cupo_alumno.setId("tab_aula_grupo");   
     tab_cupo_alumno.setTabla("yavirac_matri_cupo_alumno", "ide_ymacal", 1);   
-   
+    tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
     tab_cupo_alumno.agregarRelacion(tab_aula_grupo);
     tab_cupo_alumno.dibujar();
       
@@ -43,7 +43,7 @@ public class AulaGrupo extends Pantalla {
         
         Division div_cupo_alumno = new Division();
         div_cupo_alumno.setId("div_cupo_alumno");
-        div_cupo_alumno.dividir2(pat_aula_grupo, pat_cupo_alumno, "50%", "H");
+        div_cupo_alumno.dividir2(pat_cupo_alumno, pat_aula_grupo, "50%", "H");
         agregarComponente(div_cupo_alumno); 
         
     }
