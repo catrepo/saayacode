@@ -244,7 +244,7 @@ public class ServicioEstructuraOrganizacional {
         return sql;
  }
 
- public String getInstalacion() {
+ public String getTipoInstalacion() {
           
         String sql="";
         sql="select ide_ysttin,descripcion_ysttin,from yavirac_stror_tipo_instalacion";
@@ -258,8 +258,13 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystvis,descripcion_ystvis,from yavirac_stror_vinculacion_sociedad";
         return sql;
  }
-  
-  
+   public String getInstalacion() {
+          
+        String sql="";
+        sql="select ide_ystins,descripcion_ysttin,from yavirac_stror_tipo_instalacion";
+        return sql;
+ }
+    
  
  
 }
