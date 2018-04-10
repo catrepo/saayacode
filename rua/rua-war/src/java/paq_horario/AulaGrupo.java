@@ -34,6 +34,7 @@ public class AulaGrupo extends Pantalla {
     tab_cupo_alumno.setId("tab_cupo_alumno");   
     tab_cupo_alumno.setTabla("yavirac_matri_cupo_alumno", "ide_ymacal", 1);   
     tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
+    tab_cupo_alumno.setCondicion("ide_ystpea=-1");
     
     tab_cupo_alumno.agregarRelacion(tab_aula_grupo);
     tab_cupo_alumno.dibujar();
@@ -58,6 +59,13 @@ public class AulaGrupo extends Pantalla {
         div_aula_grupo.dividir2(pat_cupo_alumno, pat_aula_grupo, "50%", "H");
         agregarComponente(div_aula_grupo); 
         
+    }
+    public void filtroComboPeriodoAcademnico(){
+        tab_cupo_alumno.setCondicion("ide_ystpea="+com_periodo_academico.getValue());
+        tab_cupo_alumno.ejecutarSql();
+        tab_aula_grupo.ejecutarValorForanea(tab_cupo_alumno.getValorSeleccionado());
+        
+        utilitario.addUpdate("tab_cupo_alumno,tab_aula_grupo");
     }
 
     @Override
