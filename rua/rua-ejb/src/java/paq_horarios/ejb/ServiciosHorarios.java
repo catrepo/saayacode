@@ -194,7 +194,7 @@ public class ServiciosHorarios {
             "where a.ide_ystpea in ("+ide_ystpea+")  and a.ide_yhothj in ("+ide_yhothj+")  and a.ide_ystmod in ("+ide_ystmod+") and a.ide_ystjor in ("+ide_ystjor+")" ;
         return sql;
          }
-        public String getNumHoras(String ide_yhodia) {
+        public String getNumDias(String ide_yhodia) {
         String sql="";
         sql="select ide_yhodia, descripcion_yhodia from yavirac_hora_dia where ide_yhodia in ("+ide_yhodia+") order by descripcion_yhodia" ;
         return sql;
