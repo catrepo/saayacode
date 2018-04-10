@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_personal.ejb.ServicioPersonal;
+import paq_titulacion.ejb.ServicioTitulacion;
 import sistema.aplicacion.Pantalla;
 import framework.componentes.PanelTabla;
 import sistema.aplicacion.Utilitario;
@@ -34,7 +35,10 @@ public class LibretaPractica extends Pantalla{
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
     private final ServicioPersonal ser_responsable = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
-
+    @EJB
+    private final ServicioTitulacion ser_empresa = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
+    
+    
     public LibretaPractica(){
         
         tab_libreta_practica.setId("tab_libreta_practica");
@@ -42,6 +46,7 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.getColumna("ide_ystmen").setCombo(ser_libreta.getMension());
         tab_libreta_practica.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos());
         tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal()); 
+        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getEmpresa()); 
         tab_libreta_practica.setHeader("LIBRETA DE PRACTICA");
         tab_libreta_practica.getColumna("ide_ytilpr"). setNombreVisual("CÓDIGO");
         tab_libreta_practica.getColumna("ide_yaldap"). setNombreVisual("ALUMNO");
@@ -74,7 +79,6 @@ public class LibretaPractica extends Pantalla{
         tab_horario_practica.setHeader("HORARIO DE PRACTICAS");
         tab_horario_practica.getColumna(" ide_ytihpr "). setNombreVisual("CÓDIGO");
         tab_horario_practica.getColumna("ide_ytilpr "). setNombreVisual("CÓDIGO SOLICITADO");
-        tab_horario_practica.getColumna("ide_yhodia "). setNombreVisual("HORA DIA");
         tab_horario_practica.getColumna("hora_inicio_ytihpr "). setNombreVisual("FECHA ANEXO");
         tab_horario_practica.getColumna("hora_fin_ytihpr "). setNombreVisual("ARCHIVO ANEXO");
         tab_horario_practica.getColumna("numero_horas_ytihpr "). setNombreVisual("OBSERVACION");
