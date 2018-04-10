@@ -8,6 +8,7 @@ package paq_alumno.ejb;
 import paq_asistencia.ejb.*;
 import paq_estructura.ejb.*;
 import framework.aplicacion.TablaGenerica;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 
@@ -53,5 +54,13 @@ public class ServicioAlumno {
         sql="SELECT ide_yalocu, descripcion_yalocu FROM yavirac_alum_ocupacion where activo_yalocu in ("+activo+")";
         return sql;
     } 
+
+    public List getDatosAlumnos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List getDatosAlumnos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
