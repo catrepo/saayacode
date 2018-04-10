@@ -75,7 +75,7 @@ public class ServicioTitulacion {
 public String getDatoEmpresa() {
           
         String sql="";
-        sql="select ide_ytiemp,ruc_ytiemp";
+        sql="select ide_ytiemp,ruc_ytiemp from yavirac_titu_empresa";
         return sql;
 }
 }
