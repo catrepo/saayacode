@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_personal.ejb.ServicioPersonal;
+import paq_personal.ejb.ServicioPersonal;
 import paq_titulacion.ejb.ServicioTitulacion;
 import sistema.aplicacion.Pantalla;
 import framework.componentes.PanelTabla;
@@ -35,6 +36,10 @@ public class LibretaPractica extends Pantalla{
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
     private final ServicioPersonal ser_responsable = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+       @EJB
+    private final ServicioPersonal ser_revisor1 = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+    @EJB
+    private final ServicioPersonal ser_revisor2 = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     @EJB
     private final ServicioTitulacion ser_empresa = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
     
@@ -45,8 +50,10 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.setTabla("yavirac_titu_libreta_practica", "ide_ytilpr",1);
         tab_libreta_practica.getColumna("ide_ystmen").setCombo(ser_libreta.getMension());
         tab_libreta_practica.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
-        tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal("true,false")); 
-        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getDatoEmpresa());
+        tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal("true,false"));
+        tab_libreta_practica.getColumna("yav_ide_ypedpe").setCombo(ser_revisor1.getDatopersonal("true,false"));
+        tab_libreta_practica.getColumna("yav_ide_ypedpe2").setCombo(ser_revisor2.getDatopersonal("true,false"));
+        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getEmpresa());
         
         tab_libreta_practica.setHeader("LIBRETA DE PRACTICA");
         tab_libreta_practica.getColumna("ide_ytilpr"). setNombreVisual("CÓDIGO");
