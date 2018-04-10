@@ -186,12 +186,17 @@ public class ServiciosHorarios {
          }
         public String getDefinicionReceso(String ide_ystjor, String ide_ystpea, String ide_ystmod, String ide_yhothj) {
         String sql="";
-        sql="select a.ide_yhodeh, b.descripcion_yhothj, c.descripcion_ystjor, d.descripcion_ystmod, a.hora_inicio_yhodeh, a.hora_final_yhodeh\n" +
+        sql="select a.ide_yhodeh, a.ide_ystpea, a.ide_yhothj, b.descripcion_yhothj, a.ide_ystjor, c.descripcion_ystjor, a.ide_ystmod, d.descripcion_ystmod, a.hora_inicio_yhodeh, a.hora_final_yhodeh, a.activo_yhodeh\n" +
             "from yavirac_hora_definicion_hora a\n" +
             "inner join yavirac_hora_tipo_horario_jorna b on a.ide_yhothj = b.ide_yhothj\n" +
             "inner join yavirac_stror_jornada c on a.ide_ystjor = c.ide_ystjor\n" +
             "inner join yavirac_stror_modalidad d on a.ide_ystmod = d.ide_ystmod\n" +
-            "where a.ide_ystpea ="+ide_ystpea+"  and a.ide_yhothj ="+ide_yhothj+"  and a.ide_ystmod ="+ide_ystmod+" and a.ide_ystjor ="+ide_ystjor+"" ;
+            "where a.ide_ystpea in ("+ide_ystpea+")  and a.ide_yhothj in ("+ide_yhothj+")  and a.ide_ystmod in ("+ide_ystmod+") and a.ide_ystjor in ("+ide_ystjor+")" ;
+        return sql;
+         }
+        public String getNumHoras(String ide_yhodia) {
+        String sql="";
+        sql="select ide_yhodia, descripcion_yhodia from yavirac_hora_dia where ide_yhodia in ("+ide_yhodia+") order by descripcion_yhodia" ;
         return sql;
          }
 }
