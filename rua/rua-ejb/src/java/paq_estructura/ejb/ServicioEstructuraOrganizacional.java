@@ -255,7 +255,7 @@ public class ServicioEstructuraOrganizacional {
   public String getVinculaSociedad() {
           
         String sql="";
-        sql="select ide_ystvis,descripcion_ystvis from yavirac_stror_vinculacion_sociedad";
+        sql="select ide_ystvis,descripcion_ystvis from yavirac_stror_vinculacion_socie";
         return sql;
  }
    public String getInstalacion() {
@@ -264,7 +264,29 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystins,nombre_ystins from yavirac_stror_instalacion";
         return sql;
  }
-    
- 
+    public String getFormacionEducativa() {
+          
+        String sql="";
+        sql="select ide_ystfoe,descripcion_ystfoe from yavirac_stror_formacion_educati";
+        return sql;
+ }
+      public String getCategoriaMigratoria() {
+          
+        String sql="";
+        sql="select ide_ystcam,descripcion_ystcam from yavirac_stror_categoria_migrato";
+        return sql;
+ }
+          public String getAnioPeriodoCarrera() {
+          
+        String sql="";
+        sql="select ide_ystani,descripcion_ystani from yavirac_stror_anio";
+        return sql;
+ }
+            public String getDistribucionPolitica() {
+          
+        String sql="";
+        sql="select ide_ystdip,yav_ide_ystdip,descripcion_ystdip,activo_ystdip from yavirac_stror_distribucion_pol";
+        return sql;
+ }
  
 }
