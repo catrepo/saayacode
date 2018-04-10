@@ -44,9 +44,10 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.setId("tab_libreta_practica");
         tab_libreta_practica.setTabla("yavirac_titu_libreta_practica", "ide_ytilpr",1);
         tab_libreta_practica.getColumna("ide_ystmen").setCombo(ser_libreta.getMension());
-        tab_libreta_practica.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos());
-        tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal()); 
-        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getEmpresa()); 
+        tab_libreta_practica.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+        tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal("true,false")); 
+        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getDatoEmpresa());
+        
         tab_libreta_practica.setHeader("LIBRETA DE PRACTICA");
         tab_libreta_practica.getColumna("ide_ytilpr"). setNombreVisual("CÓDIGO");
         tab_libreta_practica.getColumna("ide_yaldap"). setNombreVisual("ALUMNO");
