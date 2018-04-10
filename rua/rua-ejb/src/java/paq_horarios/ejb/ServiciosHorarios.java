@@ -174,7 +174,7 @@ public class ServiciosHorarios {
         sql="select ide_yhotad, descripcion_yhotad from yavirac_hora_tipo_adecuacion";
         return sql;
          }
-         public String getDefinicionHoras(String ide_ystjor, String ide_ystpea, String ide_ystmod) {
+        public String getDefinicionHoras(String ide_ystjor, String ide_ystpea, String ide_ystmod) {
         String sql="";
         sql="select a.ide_yhodeh, b.descripcion_yhothj, c.descripcion_ystjor, d.descripcion_ystmod, a.hora_inicio_yhodeh, a.hora_final_yhodeh\n" +
             "from yavirac_hora_definicion_hora a\n" +
@@ -182,6 +182,16 @@ public class ServiciosHorarios {
             "inner join yavirac_stror_jornada c on a.ide_ystjor = c.ide_ystjor\n" +
             "inner join yavirac_stror_modalidad d on a.ide_ystmod = d.ide_ystmod\n" +
             "where a.ide_ystpea ="+ide_ystpea+" and a.ide_ystmod ="+ide_ystmod+" and a.ide_ystjor = "+ide_ystjor+"" ;
+        return sql;
+         }
+        public String getDefinicionReceso(String ide_ystjor, String ide_ystpea, String ide_ystmod, String ide_yhothj) {
+        String sql="";
+        sql="select a.ide_yhodeh, b.descripcion_yhothj, c.descripcion_ystjor, d.descripcion_ystmod, a.hora_inicio_yhodeh, a.hora_final_yhodeh\n" +
+            "from yavirac_hora_definicion_hora a\n" +
+            "inner join yavirac_hora_tipo_horario_jorna b on a.ide_yhothj = b.ide_yhothj\n" +
+            "inner join yavirac_stror_jornada c on a.ide_ystjor = c.ide_ystjor\n" +
+            "inner join yavirac_stror_modalidad d on a.ide_ystmod = d.ide_ystmod\n" +
+            "where a.ide_ystpea ="+ide_ystpea+"  and a.ide_yhothj ="+ide_yhothj+"  and a.ide_ystmod ="+ide_ystmod+" and a.ide_ystjor ="+ide_ystjor+"" ;
         return sql;
          }
 }
