@@ -255,13 +255,13 @@ public class ServicioEstructuraOrganizacional {
   public String getVinculaSociedad() {
           
         String sql="";
-        sql="select ide_ystvis,descripcion_ystvis,from yavirac_stror_vinculacion_sociedad";
+        sql="select ide_ystvis,descripcion_ystvis from yavirac_stror_vinculacion_sociedad";
         return sql;
  }
    public String getInstalacion() {
           
         String sql="";
-        sql="select ide_ystins,descripcion_ysttin,from yavirac_stror_instalacion";
+        sql="select ide_ystins,nombre_ystins,from yavirac_stror_instalacion";
         return sql;
  }
     
