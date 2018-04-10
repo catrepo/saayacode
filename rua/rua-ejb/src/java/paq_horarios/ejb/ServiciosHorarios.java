@@ -199,4 +199,9 @@ public class ServiciosHorarios {
         sql="select ide_yhodia, descripcion_yhodia from yavirac_hora_dia where ide_yhodia in ("+ide_yhodia+") order by descripcion_yhodia" ;
         return sql;
          }
+        public String getNumMension(String ide_ystmen) {
+        String sql="";
+        sql="select ide_ystmen, descripcion_ystmen from yavirac_stror_mension where ide_ystmen in ("+ide_ystmen+") order by descripcion_ystmen" ;
+        return sql;
+         }
 }
