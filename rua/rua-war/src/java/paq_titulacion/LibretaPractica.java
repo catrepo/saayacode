@@ -9,10 +9,15 @@ import framework.componentes.Barra;
 import framework.componentes.Division;
 import framework.componentes.Grupo;
 import framework.componentes.Tabla;
+import javax.ejb.EJB;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_alumno.ejb.ServicioAlumno;
+import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
 import framework.componentes.PanelTabla;
 import sistema.aplicacion.Utilitario;
 import framework.componentes.Tabulador;
+import framework.componentes.Combo;
 
 /**
  *
@@ -22,19 +27,29 @@ public class LibretaPractica extends Pantalla{
    private  Tabla tab_libreta_practica = new Tabla();
    private  Tabla tab_anexo_libreta = new Tabla();
    private  Tabla tab_horario_practica = new Tabla();
-    
+   
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_libreta = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    @EJB
+    private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
+    @EJB
+    private final ServicioPersonal ser_responsable = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+
     public LibretaPractica(){
         
         tab_libreta_practica.setId("tab_libreta_practica");
         tab_libreta_practica.setTabla("yavirac_titu_libreta_practica", "ide_ytilpr",1);
+        tab_libreta_practica.getColumna("ide_ystmen").setCombo(ser_libreta.getMension());
+        tab_libreta_practica.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos());
+        tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal()); 
         tab_libreta_practica.setHeader("LIBRETA DE PRACTICA");
         tab_libreta_practica.getColumna("ide_ytilpr"). setNombreVisual("CÓDIGO");
-        tab_libreta_practica.getColumna("ide_yaldap"). setNombreVisual("CÓDIGO");
-        tab_libreta_practica.getColumna("ide_ystmen"). setNombreVisual("CÓDIGO");
-        tab_libreta_practica.getColumna("ide_ypedpe"). setNombreVisual("CÓDIGO");
-        tab_libreta_practica.getColumna("yav_ide_ypedpe"). setNombreVisual("CÓDIGO");
-        tab_libreta_practica.getColumna("yav_ide_ypedpe2"). setNombreVisual("CÓDIGO");
-        tab_libreta_practica.getColumna("ide_ytiemp"). setNombreVisual("CÓDIGO");
+        tab_libreta_practica.getColumna("ide_yaldap"). setNombreVisual("ALUMNO");
+        tab_libreta_practica.getColumna("ide_ystmen"). setNombreVisual("MENSION");
+        tab_libreta_practica.getColumna("ide_ypedpe"). setNombreVisual("RESPONSABLE");
+        tab_libreta_practica.getColumna("yav_ide_ypedpe"). setNombreVisual("REVISOR 1");
+        tab_libreta_practica.getColumna("yav_ide_ypedpe2"). setNombreVisual("REVISOR 2");
+        tab_libreta_practica.getColumna("ide_ytiemp"). setNombreVisual("EMPRESA");
         tab_libreta_practica.getColumna("fecha_desde_ytilpr"). setNombreVisual("FECHA DESDE");
         tab_libreta_practica.getColumna("fecha_hasta_ytilpr"). setNombreVisual("FECHA HASTA");
         tab_libreta_practica.getColumna("resumen_trabajo_ytilpr"). setNombreVisual("RESUEMN DEL TRABAJO");
@@ -47,7 +62,7 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.agregarRelacion(tab_horario_practica);
             
         tab_libreta_practica.setTipoFormulario(true);//para que se haga un formulario
-        tab_libreta_practica.getGrid().setColumns(2); //numero de columnas del formulario
+        tab_libreta_practica.getGrid().setColumns(4); //numero de columnas del formulario
         tab_libreta_practica.dibujar();
         
          PanelTabla pat_libreta_practica = new PanelTabla();
@@ -59,7 +74,7 @@ public class LibretaPractica extends Pantalla{
         tab_horario_practica.setHeader("HORARIO DE PRACTICAS");
         tab_horario_practica.getColumna(" ide_ytihpr "). setNombreVisual("CÓDIGO");
         tab_horario_practica.getColumna("ide_ytilpr "). setNombreVisual("CÓDIGO SOLICITADO");
-        tab_horario_practica.getColumna("ide_yhodia "). setNombreVisual("CÓDIGO");
+        tab_horario_practica.getColumna("ide_yhodia "). setNombreVisual("HORA DIA");
         tab_horario_practica.getColumna("hora_inicio_ytihpr "). setNombreVisual("FECHA ANEXO");
         tab_horario_practica.getColumna("hora_fin_ytihpr "). setNombreVisual("ARCHIVO ANEXO");
         tab_horario_practica.getColumna("numero_horas_ytihpr "). setNombreVisual("OBSERVACION");
