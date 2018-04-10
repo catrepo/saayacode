@@ -21,14 +21,14 @@ public class AulaGrupo extends Pantalla {
     public AulaGrupo(){
 
     
-    tab_cupo_alumno.setId("tab_aula_grupo");   
+    tab_cupo_alumno.setId("tab_cupo_alumno");   
     tab_cupo_alumno.setTabla("yavirac_matri_cupo_alumno", "ide_ymacal", 1);   
     tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
     tab_cupo_alumno.agregarRelacion(tab_aula_grupo);
     tab_cupo_alumno.dibujar();
       
     
-    tab_aula_grupo.setId("tab_cupo_alumno");   
+    tab_aula_grupo.setId("tab_aula_grupo");   
     tab_aula_grupo.setTabla("yavirac_hora_aula_grupo", "ide_yhoagr", 2);
     tab_aula_grupo.getColumna("ide_ystins").setCombo(ser_instalacion.getInstalacion());
     tab_aula_grupo.dibujar();    
@@ -42,10 +42,10 @@ public class AulaGrupo extends Pantalla {
         pat_aula_grupo.setPanelTabla(tab_aula_grupo);
         
         
-        Division div_cupo_alumno = new Division();
-        div_cupo_alumno.setId("div_cupo_alumno");
-        div_cupo_alumno.dividir2(pat_cupo_alumno, pat_aula_grupo, "50%", "H");
-        agregarComponente(div_cupo_alumno); 
+        Division div_aula_grupo = new Division();
+        div_aula_grupo.setId("div_aula_grupo");
+        div_aula_grupo.dividir2(pat_cupo_alumno, pat_aula_grupo, "50%", "H");
+        agregarComponente(div_aula_grupo); 
         
     }
 
