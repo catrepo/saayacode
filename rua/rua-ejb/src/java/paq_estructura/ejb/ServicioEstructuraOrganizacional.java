@@ -204,76 +204,62 @@ public class ServicioEstructuraOrganizacional {
         return sql;
     }  
        
-      public String getsexo() {
+      public String getSexo() {
         String sql="";
         sql="select ide_ysttin,descripcion_ysttin from yavirac_stror_tipo_instalacion ";
         return sql;
         
 }
-            public String getdiscapacidad() {
+            public String getDiscapacidad() {
         String sql="";
         sql="select ide_ysttid,descripcion_ysttid,activo_ysttid from yavirac_stror_tipo_discapacid";
         return sql;
             }
-            public String getparentezco() {
-          
-        String sql="";
-        sql="select ide_ystpaf,descripcion_ystpaf,activo_ystpaf from yavirac_stror_parentezco_fami";
-        return sql;
-            }
-            public String getetnia() {
+      
+            public String getEtnia() {
           
         String sql="";
         sql="select ide_ystetn,detalle_ystetn from yavirac_stror_etnia";
         return sql;
             }
-             public String getnacionalidad() {
-          
-        String sql="";
-        sql="select ide_ystnac,descripcion_ystnac,activo_ystnac from yavirac_stror_nacionalidad";
-        return sql;
-            
-             }
-             public String getsangre() {
-          
-        String sql="";
-        sql="select ide_ysttis,descripcion_ysttis,activo_ysttis from yavirac_stror_tipo_sangre";
-        return sql;
-            
-             }
+                        
              
-             public String getestado() {
-          
-        String sql="";
-        sql="select ide_ystesc,descripcion_ystesc,activo_ystesc from yavirac_stror_estado_civil";
-        return sql;
-            
-             }
-              public String getgdiscapacidad() {
+    public String getGradoDiscapacidad() {
           
         String sql="";
         sql="select ide_ystgrd,descripcion_ystgrd,activo_ystgrd from yavirac_stror_grado_discapaci";
         return sql;
             
              }
- public String gettcolegio() {
+ public String getTipoColegio() {
           
         String sql="";
         sql="select ide_ysttco,descripcion_ysttco,from yavirac_stror_tipo_colegio";
         return sql;
  }
- public String gettbachillerato() {
+ public String getTipoBachillerato() {
           
         String sql="";
         sql="select ide_ysttba,descripcion_ysttba,from yavirac_stror_tipo_bachillerato";
         return sql;
  }
- public String getpacademico() {
+
+ public String getInstalacion() {
           
         String sql="";
-        sql="select ide_ystpea,descripcion_ystpea,fecha_inicio_ystpea,fecha_fianal_ystpera,activo_ystpea,hora_clase_ystpea,aplica_jornada_completa_ystpea,from yavirac_stror_periodo_academic";
+        sql="select ide_ysttin,descripcion_ysttin,from yavirac_stror_tipo_instalacion";
         return sql;
  }
+
+ 
+  public String getVinculaSociedad() {
+          
+        String sql="";
+        sql="select ide_ystvis,descripcion_ystvis,from yavirac_stror_vinculacion_sociedad";
+        return sql;
+ }
+  
+  
  
  
 }
