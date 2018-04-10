@@ -36,6 +36,7 @@ public class HoraPeriodoHora extends Pantalla {
     private String jornada ="";
     private String dias ="";
     private String mension ="";
+    private String horas ="";
     
      @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -123,7 +124,7 @@ public class HoraPeriodoHora extends Pantalla {
         //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
         set_tab_mension.setWidth("80%");
         set_tab_mension.setHeight("70%");
-        set_tab_mension.getBot_aceptar().setMetodo("generarSemanero");
+        set_tab_mension.getBot_aceptar().setMetodo("insertarReceso");
         agregarComponente(set_tab_mension);
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
@@ -274,14 +275,27 @@ public class HoraPeriodoHora extends Pantalla {
         set_tab_mension.cerrar();
     }
     public void insertarReceso(){
-        TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(utilitario.getVariable("p_tipo_receso"), "jornada", "modalidad", com_periodo_academico.getValue().toString()));
+        mension = set_tab_mension.getSeleccionados();
+        TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_receso") ));
         String maximo = "";
-        
+        receso.imprimirSql();
+        TablaGenerica tab_dias = utilitario.consultar(ser_horarios.getNumDias(dias));
+        TablaGenerica tab_mension = utilitario.consultar(ser_horarios.getNumMension(mension));
         for (int i=0;i<receso.getTotalFilas();i++){
-            TablaGenerica codigo_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_periodo_hor", "ide_yhopeh"));
-            maximo = codigo_maximo.getValor("maximo");
-            utilitario.getConexion().ejecutarSql("insert into yavirac_hora_periodo_hor (ide_yhodeh, ide_ystpea, ide_yhothj, ide_ystjor, ide_ystmod, hora_inicio_yhodeh, hora_final_yhodeh, activo_yhodeh)\n" +
-                                             "values (ide_yhodeh, ide_ystpea, ide_yhothj, ide_ystjor, ide_ystmod, hora_inicio, hora_final, activo)");
+            for(int j=0; j<tab_dias.getTotalFilas();j++){ 
+                for (int k=0; k<tab_mension.getTotalFilas();k++){
+                  TablaGenerica codigo_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_periodo_hor", "ide_yhopeh"));
+                  maximo = codigo_maximo.getValor("maximo");
+                  String sql = "insert into yavirac_hora_periodo_hor (ide_yhopeh, ide_ystmod, ide_ystjor, ide_yhohor, ide_ystpea, ide_yhodia, ide_yhothj, horainicial_yhopeh, horafinal_yhopeh, activo_yhopeh, ide_ystmen)\n" +
+                               "values ("+maximo+", "+receso.getValor(i, "ide_ystmod")+", "+receso.getValor(i, "ide_ystjor")+", "+utilitario.getVariable("p_tipo_hora")+", "+com_periodo_academico.getValue()+", "+tab_dias.getValor(j, "ide_yhodia")+", "+utilitario.getVariable("p_tipo_receso")+", '"+receso.getValor(i, "hora_inicio_yhodeh")+"', '"+receso.getValor(i, "hora_final_yhodeh")+"', "+receso.getValor(i, "activo_yhodeh")+", "+tab_mension.getValor(k, "ide_ystmen")+")";
+                               System.out.print(sql);
+                  utilitario.getConexion().ejecutarSql(sql);
+                  set_tab_mension.cerrar();
+                  tab_hora_periodo_hora.actualizar();
+                  //utilitario.addUpdateTabla(tab_hora_periodo_hora, "ide_ystpea", "");
+                                // tab_hora_periodo_hora
+            }
+          }
         }
         
   
