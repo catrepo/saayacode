@@ -7,6 +7,7 @@ import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_horarios.ejb.ServiciosHorarios;
 import sistema.aplicacion.Pantalla;
 
 
@@ -19,7 +20,9 @@ public class AulaGrupo extends Pantalla {
 @EJB
     private final ServicioEstructuraOrganizacional ser_instalacion = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);   
    
-  
+@EJB
+    private final ServiciosHorarios ser_instalacion1 = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);   
+     
        
     public AulaGrupo(){
        
@@ -34,6 +37,7 @@ public class AulaGrupo extends Pantalla {
     tab_cupo_alumno.setId("tab_cupo_alumno");   
     tab_cupo_alumno.setTabla("yavirac_matri_cupo_alumno", "ide_ymacal", 1);   
     tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
+    tab_cupo_alumno.getColumna("ide_yhogra").setCombo(ser_instalacion1.getGrupoAcademico());
     tab_cupo_alumno.setCondicion("ide_ystpea=-1");
     
     tab_cupo_alumno.agregarRelacion(tab_aula_grupo);
