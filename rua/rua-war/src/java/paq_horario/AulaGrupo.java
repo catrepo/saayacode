@@ -10,8 +10,8 @@ import sistema.aplicacion.Pantalla;
 
 
 public class AulaGrupo extends Pantalla {
-   private Tabla tab_cupo_alumno = new Tabla();
    private Tabla tab_aula_grupo = new Tabla();
+   private Tabla tab_cupo_alumno = new Tabla();
    
 @EJB
     private final ServicioEstructuraOrganizacional ser_instalacion = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);   
