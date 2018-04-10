@@ -202,11 +202,78 @@ public class ServicioEstructuraOrganizacional {
             " and a.ide_ystmen = c.ide_ystmen" +
             " and a.ide_ystmat = d.ide_ystmat";
         return sql;
-    } 
-        public String getInstalacion() {
-        String sql="";
-        sql="select ide_ysttin,descripcion_ysttin from yavirac_stror_tipo_instalacion";
-        return sql;
     }  
+       
+      public String getsexo() {
+        String sql="";
+        sql="select ide_ystsex,descripcion_ystsex from yavirac_stror_sexo";
+        return sql;
         
+}
+            public String getdiscapacidad() {
+        String sql="";
+        sql="select ide_ysttid,descripcion_ysttid,activo_ysttid from yavirac_stror_tipo_discapacid";
+        return sql;
+            }
+            public String getparentezco() {
+          
+        String sql="";
+        sql="select ide_ystpaf,descripcion_ystpaf,activo_ystpaf from yavirac_stror_parentezco_fami";
+        return sql;
+            }
+            public String getetnia() {
+          
+        String sql="";
+        sql="select ide_ystetn,detalle_ystetn from yavirac_stror_etnia";
+        return sql;
+            }
+             public String getnacionalidad() {
+          
+        String sql="";
+        sql="select ide_ystnac,descripcion_ystnac,activo_ystnac from yavirac_stror_nacionalidad";
+        return sql;
+            
+             }
+             public String getsangre() {
+          
+        String sql="";
+        sql="select ide_ysttis,descripcion_ysttis,activo_ysttis from yavirac_stror_tipo_sangre";
+        return sql;
+            
+             }
+             
+             public String getestado() {
+          
+        String sql="";
+        sql="select ide_ystesc,descripcion_ystesc,activo_ystesc from yavirac_stror_estado_civil";
+        return sql;
+            
+             }
+              public String getgdiscapacidad() {
+          
+        String sql="";
+        sql="select ide_ystgrd,descripcion_ystgrd,activo_ystgrd from yavirac_stror_grado_discapaci";
+        return sql;
+            
+             }
+ public String gettcolegio() {
+          
+        String sql="";
+        sql="select ide_ysttco,descripcion_ysttco,from yavirac_stror_tipo_colegio";
+        return sql;
+ }
+ public String gettbachillerato() {
+          
+        String sql="";
+        sql="select ide_ysttba,descripcion_ysttba,from yavirac_stror_tipo_bachillerato";
+        return sql;
+ }
+ public String getpacademico() {
+          
+        String sql="";
+        sql="select ide_ystpea,descripcion_ystpea,fecha_inicio_ystpea,fecha_fianal_ystpera,activo_ystpea,hora_clase_ystpea,aplica_jornada_completa_ystpea,from yavirac_stror_periodo_academic";
+        return sql;
+ }
+ 
+ 
 }
