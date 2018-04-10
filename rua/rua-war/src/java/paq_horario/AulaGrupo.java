@@ -37,6 +37,7 @@ public class AulaGrupo extends Pantalla {
     tab_cupo_alumno.setId("tab_cupo_alumno");   
     tab_cupo_alumno.setTabla("yavirac_matri_cupo_alumno", "ide_ymacal", 1);   
     tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
+    tab_cupo_alumno.getColumna("ide_ystnie").setCombo(ser_instalacion.getNivelEducacion());
     tab_cupo_alumno.getColumna("ide_yhogra").setCombo(ser_instalacion1.getGrupoAcademico());
     tab_cupo_alumno.setCondicion("ide_ystpea=-1");
     
