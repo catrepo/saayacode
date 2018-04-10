@@ -206,7 +206,7 @@ public class ServicioEstructuraOrganizacional {
        
       public String getsexo() {
         String sql="";
-        sql="select ide_ystsex,descripcion_ystsex from yavirac_stror_sexo";
+        sql="select ide_ysttin,descripcion_ysttin from yavirac_stror_tipo_instalacion ";
         return sql;
         
 }
