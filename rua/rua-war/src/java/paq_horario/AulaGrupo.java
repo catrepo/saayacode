@@ -1,5 +1,6 @@
 package paq_horario;
 
+import framework.componentes.Combo;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
@@ -12,18 +13,24 @@ import sistema.aplicacion.Pantalla;
 public class AulaGrupo extends Pantalla {
    private Tabla tab_aula_grupo = new Tabla();
    private Tabla tab_cupo_alumno = new Tabla();
+    private Combo com_periodo_academico = new Combo();
    
 @EJB
     private final ServicioEstructuraOrganizacional ser_instalacion = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);   
    
-    
+  
        
     public AulaGrupo(){
+       
+     com_periodo_academico.setId("cmb_periodo_academico");
+     com_periodo_academico.setCombo(ser_instalacion.getPeriodoAcademico("true,false"));
+     com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
 
     
     tab_cupo_alumno.setId("tab_cupo_alumno");   
     tab_cupo_alumno.setTabla("yavirac_matri_cupo_alumno", "ide_ymacal", 1);   
     tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
+    
     tab_cupo_alumno.agregarRelacion(tab_aula_grupo);
     tab_cupo_alumno.dibujar();
       
