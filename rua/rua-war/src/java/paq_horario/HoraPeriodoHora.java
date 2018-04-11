@@ -288,12 +288,10 @@ public class HoraPeriodoHora extends Pantalla {
                   maximo = codigo_maximo.getValor("maximo");
                   String sql = "insert into yavirac_hora_periodo_hor (ide_yhopeh, ide_ystmod, ide_ystjor, ide_yhohor, ide_ystpea, ide_yhodia, ide_yhothj, horainicial_yhopeh, horafinal_yhopeh, activo_yhopeh, ide_ystmen)\n" +
                                "values ("+maximo+", "+receso.getValor(i, "ide_ystmod")+", "+receso.getValor(i, "ide_ystjor")+", "+utilitario.getVariable("p_tipo_hora")+", "+com_periodo_academico.getValue()+", "+tab_dias.getValor(j, "ide_yhodia")+", "+utilitario.getVariable("p_tipo_receso")+", '"+receso.getValor(i, "hora_inicio_yhodeh")+"', '"+receso.getValor(i, "hora_final_yhodeh")+"', "+receso.getValor(i, "activo_yhodeh")+", "+tab_mension.getValor(k, "ide_ystmen")+")";
-                               System.out.print(sql);
+                              // System.out.print(sql);
                   utilitario.getConexion().ejecutarSql(sql);
                   set_tab_mension.cerrar();
                   tab_hora_periodo_hora.actualizar();
-                  //utilitario.addUpdateTabla(tab_hora_periodo_hora, "ide_ystpea", "");
-                                // tab_hora_periodo_hora
             }
           }
         }
