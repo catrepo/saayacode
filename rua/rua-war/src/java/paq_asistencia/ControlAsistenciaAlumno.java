@@ -18,6 +18,7 @@ import sistema.aplicacion.Pantalla;
 import java.util.List;
 import javax.ejb.EJB;
 import paq_alumno.ejb.ServicioAlumno;
+import paq_asistencia.ejb.ServicioAsistencia;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_matricula.ejb.ServicioMatriculas;
 import paq_personal.ejb.ServicioPersonal;
@@ -32,6 +33,8 @@ public class ControlAsistenciaAlumno extends Pantalla{
      private Tabla tab_docente_mencion = new Tabla();
      private Tabla tab_fecha_control = new Tabla();
      private Tabla tab_asitencia= new Tabla();
+     private Combo com_materia_docente = new Combo();
+     private Etiqueta eti_docente = new Etiqueta();
       Division div = new Division();
 
     @EJB
@@ -42,6 +45,8 @@ public class ControlAsistenciaAlumno extends Pantalla{
     private final ServicioMatriculas ser_matricula = (ServicioMatriculas) utilitario.instanciarEJB(ServicioMatriculas.class);
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
+    @EJB
+    private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
   
     public ControlAsistenciaAlumno(){
         if (tienePerfilAsistencia()) {
@@ -70,43 +75,27 @@ public class ControlAsistenciaAlumno extends Pantalla{
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
             
-          
-
-            tab_docente_mencion.setId("tab_docente_mencion");
-            tab_docente_mencion.setTabla("yavirac_perso_malla_docente", "ide_ypemad", 1);
-            tab_docente_mencion.setCondicion("ide_ypemad=-1");
-            tab_docente_mencion.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());
-            //tab_docente_mencion.getColumna("ide_ystmal").setAutoCompletar();
-            tab_docente_mencion.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
-            //tab_docente_mencion.getColumna("ide_ypedpe").setAutoCompletar();
-            tab_docente_mencion.getColumna("ide_ystpea").setVisible(false);
-            tab_docente_mencion.getColumna("ide_ystmal").setLectura(true);
-            tab_docente_mencion.getColumna("ide_ypedpe").setLectura(true);
-            tab_docente_mencion.onSelect("filtraEstudiantes");
-            tab_docente_mencion.getColumna("ide_ypemad").setNombreVisual("IDE DOCENTE MENCION");
-            tab_docente_mencion.getColumna("ide_ystmal").setNombreVisual("CAMPO PRIMARIO");
-            tab_docente_mencion.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADEMICO");
-            tab_docente_mencion.getColumna("ide_ypedpe").setNombreVisual("DOCENTES");
-            //tab_docente_mencion.setLectura(true);
-        tab_docente_mencion.dibujar();
-         tab_docente_mencion.setRows(5);
-         
-         PanelTabla pat_docente = new PanelTabla();
-         pat_docente.setPanelTabla(tab_docente_mencion);
-         
+            com_materia_docente.setId("com_materia_docente");
+            com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente("-1", "2"));
+            bar_botones.agregarComponente(new Etiqueta("Cursos:"));
+            bar_botones.agregarComponente(com_materia_docente);    
+            com_materia_docente.setMetodo("filtroHorarios");
+            
+                    eti_docente.setStyle("font-size: 16px;font-weight: bold");
+                    eti_docente.setValue("Docente: "+docente);
+            
+                    Grid grup_titulo = new Grid();
+                    grup_titulo.setColumns(2);
+                    grup_titulo.setWidth("100%");
+                    grup_titulo.setId("grup_titulo");
+                    grup_titulo.getChildren().add(eti_docente);
+;
          tab_fecha_control.setId("tab_fecha_control");
          tab_fecha_control.setTabla("yavirac_asis_fecha_control","ide_yasfec", 2);
          tab_fecha_control.setCondicion("ide_yasfec=-1");
          tab_fecha_control.setLectura(true);
          tab_fecha_control.agregarRelacion(tab_asitencia);
-         tab_fecha_control.getColumna("ide_yasfec").setNombreVisual("IDE FECHA CONTROL");
-         tab_fecha_control.getColumna("ide_yassem").setNombreVisual("ASISTENCIA");
-         tab_fecha_control.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADEMICO");
-         tab_fecha_control.getColumna("fecha_yasfec").setNombreVisual("FECHA");
-         tab_fecha_control.getColumna("observacion_yasfec").setNombreVisual("OBSERVACIÓN");
-         tab_fecha_control.getColumna("bloqueado_yasfec").setNombreVisual("BLOQUEO");
-         tab_fecha_control.getColumna("activo_yasfec").setNombreVisual("ACTIVO INHABILITADO");
-         tab_fecha_control.getColumna("festivo_yasfec").setNombreVisual("FESTIVO");
+
          
          tab_fecha_control.dibujar();
          tab_fecha_control.setRows(5);
@@ -117,13 +106,6 @@ public class ControlAsistenciaAlumno extends Pantalla{
          tab_asitencia.setId("tab_asitencia");
          tab_asitencia.setTabla("yavirac_asis_asistencia", "ide_yasasi", 3);
          tab_asitencia.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
-         tab_asitencia.getColumna("ide_yasasi").setNombreVisual("IDE ASISTENCIA");
-         tab_asitencia.getColumna("ide_ystpep").setNombreVisual("TOMAR ASISTENCIA");
-         tab_asitencia.getColumna("ide_ypedpe").setNombreVisual("DOCENTES");
-         tab_asitencia.getColumna("ide_yaldap").setNombreVisual("DATO PERSONAL ALUMNO");
-         tab_asitencia.getColumna("ide_ystmal").setNombreVisual("CAMPO PRIMARIO");
-         tab_asitencia.getColumna("asistencia_yasasi").setNombreVisual("ASISTENCIA");
-         tab_asitencia.getColumna("justificado_yasasi").setNombreVisual("JUSTIFICACION");
          tab_asitencia.dibujar();
          
          PanelTabla pat_asistencia = new PanelTabla();
@@ -131,9 +113,12 @@ public class ControlAsistenciaAlumno extends Pantalla{
           
            
             div.setId("div");
-            div.dividir3(pat_docente, pat_fecha_control, pat_asistencia,"20%", "60%", "H");
+            div.dividir2(pat_fecha_control, pat_asistencia,"20%", "H");
            //agregarComponente(div_control);
-           agregarComponente(div);
+           
+           Division div_padre = new Division();
+           div_padre.setFooter(eti_docente, div, "20");
+           agregarComponente(div_padre);
         //gru_pantalla.getChildren().add(div);
           
         } else {
@@ -165,6 +150,15 @@ public class ControlAsistenciaAlumno extends Pantalla{
             return false;
         }
     }
+    public void filtroHorarios(){
+        tab_fecha_control.setCondicion("ide_ystpea="+com_periodo_academico.getValue());
+        tab_fecha_control.ejecutarSql();
+         if(tab_fecha_control.getValor("bloqueado_yasfec").equals("true")){
+             tab_asitencia.setLectura(true);
+         }
+         
+        utilitario.addUpdate("tab_fecha_control,tab_asitencia");
+    }    
     public void filtraEstudiantes(){
         String malla = tab_docente_mencion.getValorSeleccionado();
         TablaGenerica tab_malla = utilitario.consultar("select ide_ypemad,ide_ystmal,ide_ypedpe from yavirac_perso_malla_docente where ide_ypemad="+malla);
@@ -184,14 +178,8 @@ public class ControlAsistenciaAlumno extends Pantalla{
      
     }    
     public void filtroComboPeriodoAcademico(){
-        
-        tab_docente_mencion.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString()+" and ide_ypedpe ="+ide_docente);
-        tab_docente_mencion.ejecutarSql();
-        tab_fecha_control.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
-        tab_fecha_control.ejecutarSql();
-        utilitario.addUpdate("tab_docente_mencion,tab_fecha_control");
-        
-     
+      com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), ide_docente));
+      utilitario.addUpdate("com_materia_docente");
     }       
     @Override
     public void insertar() {
