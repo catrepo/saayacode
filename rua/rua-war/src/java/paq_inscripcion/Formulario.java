@@ -55,6 +55,7 @@ public class Formulario extends Pantalla{
         tab_formulario_alumno.getColumna("ide_ystani").setCombo(ser_formulario.getAnioPeriodoCarrera());
         tab_formulario_alumno.getColumna("yav_ide_ystdip").setCombo(ser_formulario.getDistribucionPolitica());
         tab_formulario_alumno.getColumna("yav_ide_ytiace").setCombo(ser_formulario1.getActividadEconomica());
+        tab_formulario_alumno.getColumna("yav_ide_ystfoe").setCombo(ser_formulario.getFormacionEducativa());
         tab_formulario_alumno.setTipoFormulario(true);
         tab_formulario_alumno.getGrid().setColumns(6);
         tab_formulario_alumno.dibujar();
