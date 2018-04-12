@@ -53,8 +53,10 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal("true,false"));
         tab_libreta_practica.getColumna("yav_ide_ypedpe").setCombo(ser_revisor1.getDatopersonal("true,false"));
         tab_libreta_practica.getColumna("yav_ide_ypedpe2").setCombo(ser_revisor2.getDatopersonal("true,false"));
-        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getEmpresa());
-        
+        tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getDatoEmpresa());
+        tab_libreta_practica.getColumna("ide_ytiemp").setAutoCompletar();
+        tab_libreta_practica.getColumna("ide_yaldap").setAutoCompletar();
+        tab_libreta_practica.getColumna("ide_ypedpe").setAutoCompletar();
         tab_libreta_practica.setHeader("LIBRETA DE PRACTICA");
         tab_libreta_practica.getColumna("ide_ytilpr"). setNombreVisual("CÓDIGO");
         tab_libreta_practica.getColumna("ide_yaldap"). setNombreVisual("ALUMNO");
@@ -65,7 +67,7 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.getColumna("ide_ytiemp"). setNombreVisual("EMPRESA");
         tab_libreta_practica.getColumna("fecha_desde_ytilpr"). setNombreVisual("FECHA DESDE");
         tab_libreta_practica.getColumna("fecha_hasta_ytilpr"). setNombreVisual("FECHA HASTA");
-        tab_libreta_practica.getColumna("resumen_trabajo_ytilpr"). setNombreVisual("RESUEMN DEL TRABAJO");
+        tab_libreta_practica.getColumna("resumen_trabajo_ytilpr"). setNombreVisual("RESUMEN DEL TRABAJO");
         tab_libreta_practica.getColumna("nombre_ytilpr"). setNombreVisual("NOMBRE");
         tab_libreta_practica.getColumna("direccion_ytilpr"). setNombreVisual("DIRECCION");
         tab_libreta_practica.getColumna("telefono_ytilpr"). setNombreVisual("TELEFONO");
@@ -73,6 +75,10 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.getColumna("observaciones_ytilpr"). setNombreVisual("OBSERVACION");
         tab_libreta_practica.agregarRelacion(tab_anexo_libreta);
         tab_libreta_practica.agregarRelacion(tab_horario_practica);
+        //tab_libreta_practica.getColumna("ide_ystmen").setEstilo("width:20");
+        tab_libreta_practica.getColumna("ide_ystmen").setLongitud(500);        
+        tab_libreta_practica.getColumna("yav_ide_ypedpe").setLongitud(10);
+
             
         tab_libreta_practica.setTipoFormulario(true);//para que se haga un formulario
         tab_libreta_practica.getGrid().setColumns(4); //numero de columnas del formulario
