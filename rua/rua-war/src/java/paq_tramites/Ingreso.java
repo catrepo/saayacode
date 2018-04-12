@@ -11,6 +11,9 @@ import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import javax.ejb.EJB;
+import paq_personal.ejb.ServicioPersonal;
+import paq_tramites.ejb.ServicioTramite;
 import sistema.aplicacion.Pantalla;
 import sistema.aplicacion.Utilitario;
 
@@ -23,13 +26,24 @@ public class Ingreso extends Pantalla{
     private Tabla tab_ingreso = new Tabla();
     private Tabla tab_anexo = new Tabla();
     private Tabla tab_asignacion = new Tabla();
+    @EJB
+    private final ServicioTramite ser_tramite = (ServicioTramite) utilitario.instanciarEJB(ServicioTramite.class);
+    @EJB
+    private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+
     
     public Ingreso (){
         tab_ingreso.setId("tab_ingreso");
         tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
+        tab_ingreso.getColumna("ide_ytrdoc").setCombo(ser_tramite.getSqlDocumento());
+        tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad());
+        tab_ingreso.getColumna("ide_ytrtid").setCombo(ser_tramite.getSqlTipoEntidad());
+            tab_ingreso.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
+            tab_ingreso.getColumna("ide_ypedpe").setAutoCompletar();
+            tab_ingreso.getColumna("ide_ypedpe").setLectura(true);        
         tab_ingreso.setHeader("Registro Ingreso");
         tab_ingreso.setTipoFormulario(true);
-        tab_ingreso.getGrid().setColumns(4);
+        tab_ingreso.getGrid().setColumns(6);
         tab_ingreso.dibujar();
         
         PanelTabla pat_ingreso = new PanelTabla();
