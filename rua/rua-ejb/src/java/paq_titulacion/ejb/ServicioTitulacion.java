@@ -30,7 +30,7 @@ public class ServicioTitulacion {
     }
     public String getSqlActividadEconomica() {
         String sql="";
-        sql="select ide_ytiace, decripcion_ytiace from yavirac_titu_actividad_economic order by decripcion_ytiace";
+        sql="select ide_ytiace, descripcion_ytiace from yavirac_titu_actividad_economic order by descripcion_ytiace";
         return sql;
     }
    public String getSqlTipoProducto() {
@@ -78,4 +78,5 @@ public String getDatoEmpresa() {
         sql="select ide_ytiemp,ruc_ytiemp from yavirac_titu_empresa";
         return sql;
 }
+
 }
