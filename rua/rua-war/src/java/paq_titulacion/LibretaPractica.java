@@ -6,6 +6,7 @@
 package paq_titulacion;
 
 import framework.componentes.Barra;
+import framework.componentes.Boton;
 import framework.componentes.Division;
 import framework.componentes.Grupo;
 import framework.componentes.Tabla;
@@ -20,6 +21,7 @@ import framework.componentes.PanelTabla;
 import sistema.aplicacion.Utilitario;
 import framework.componentes.Tabulador;
 import framework.componentes.Combo;
+import framework.componentes.Etiqueta;
 
 /**
  *
@@ -29,6 +31,7 @@ public class LibretaPractica extends Pantalla{
    private  Tabla tab_libreta_practica = new Tabla();
    private  Tabla tab_anexo_libreta = new Tabla();
    private  Tabla tab_horario_practica = new Tabla();
+   private Combo com_periodo_academico = new Combo();
    
     @EJB
     private final ServicioEstructuraOrganizacional ser_libreta = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -42,22 +45,39 @@ public class LibretaPractica extends Pantalla{
     private final ServicioPersonal ser_revisor2 = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     @EJB
     private final ServicioTitulacion ser_empresa = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_periodoacademico = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     
     
     public LibretaPractica(){
+        com_periodo_academico.setId("com_periodo_academico");
+        com_periodo_academico.setCombo(ser_periodoacademico.getPeriodoAcademico("true"));
+        com_periodo_academico.setMetodo("filtroComboPeriodOAcademico");
+        
+        
+        bar_botones.agregarComponente(new Etiqueta("PERIODO ACADEMICO"));
+        bar_botones.agregarComponente(com_periodo_academico);
+
+       Boton bot_clean = new Boton();
+       bot_clean.setIcon("ui-icon-cancel");
+            bot_clean.setTitle("Limpiar");
+            bot_clean.setMetodo("limpiar");
+            bar_botones.agregarComponente(bot_clean);        
         
         tab_libreta_practica.setId("tab_libreta_practica");
         tab_libreta_practica.setTabla("yavirac_titu_libreta_practica", "ide_ytilpr",1);
+        tab_libreta_practica.setCondicion("ide_ytilpr=-1");
         tab_libreta_practica.getColumna("ide_ystmen").setCombo(ser_libreta.getMension());
         tab_libreta_practica.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
         tab_libreta_practica.getColumna("ide_ypedpe").setCombo(ser_responsable.getDatopersonal("true,false"));
         tab_libreta_practica.getColumna("yav_ide_ypedpe").setCombo(ser_revisor1.getDatopersonal("true,false"));
         tab_libreta_practica.getColumna("yav_ide_ypedpe2").setCombo(ser_revisor2.getDatopersonal("true,false"));
         tab_libreta_practica.getColumna("ide_ytiemp").setCombo(ser_empresa.getDatoEmpresa());
+        tab_libreta_practica.getColumna("ide_ystpea").setCombo(ser_periodoacademico.getPeriodoAcademico("true,false"));
         tab_libreta_practica.getColumna("ide_ytiemp").setAutoCompletar();
         tab_libreta_practica.getColumna("ide_yaldap").setAutoCompletar();
         tab_libreta_practica.getColumna("ide_ypedpe").setAutoCompletar();
-        tab_libreta_practica.setHeader("LIBRETA DE PRACTICA");
+        tab_libreta_practica.setHeader("REGISTRO DE LA LIBRETA DE PRACTICA");
         tab_libreta_practica.getColumna("ide_ytilpr"). setNombreVisual("CÓDIGO");
         tab_libreta_practica.getColumna("ide_yaldap"). setNombreVisual("ALUMNO");
         tab_libreta_practica.getColumna("ide_ystmen"). setNombreVisual("MENSION");
@@ -73,6 +93,7 @@ public class LibretaPractica extends Pantalla{
         tab_libreta_practica.getColumna("telefono_ytilpr"). setNombreVisual("TELEFONO");
         tab_libreta_practica.getColumna("actividades_ytilpr"). setNombreVisual("ACTIVIDAD");
         tab_libreta_practica.getColumna("observaciones_ytilpr"). setNombreVisual("OBSERVACION");
+        tab_libreta_practica.getColumna("ide_ystpea ").setVisible(false);//hace visible al campo periodo academico//
         tab_libreta_practica.agregarRelacion(tab_anexo_libreta);
         tab_libreta_practica.agregarRelacion(tab_horario_practica);
         //tab_libreta_practica.getColumna("ide_ystmen").setEstilo("width:20");
@@ -94,8 +115,8 @@ public class LibretaPractica extends Pantalla{
         tab_horario_practica.setHeader("HORARIO DE PRACTICAS");
         tab_horario_practica.getColumna(" ide_ytihpr "). setNombreVisual("CÓDIGO");
         tab_horario_practica.getColumna("ide_ytilpr "). setNombreVisual("CÓDIGO SOLICITADO");
-        tab_horario_practica.getColumna("hora_inicio_ytihpr "). setNombreVisual("FECHA ANEXO");
-        tab_horario_practica.getColumna("hora_fin_ytihpr "). setNombreVisual("ARCHIVO ANEXO");
+        tab_horario_practica.getColumna("hora_inicio_ytihpr "). setNombreVisual("HORA INICIO");
+        tab_horario_practica.getColumna("hora_fin_ytihpr "). setNombreVisual("HORA FIN");
         tab_horario_practica.getColumna("numero_horas_ytihpr "). setNombreVisual("NUMERO DE HORAS");
         tab_horario_practica.dibujar();
         
@@ -110,7 +131,7 @@ public class LibretaPractica extends Pantalla{
         tab_anexo_libreta.getColumna(" ide_ytiali"). setNombreVisual("CÓDIGO DEL ANEXO DE LA LIBRETA");
         tab_anexo_libreta.getColumna("fecha_ytiali"). setNombreVisual("FECHA DE ANEXO DE LA LIBRETA");
         tab_anexo_libreta.getColumna("archivo_ytiali"). setNombreVisual("ARCHIVO DEL ANEXO");
-        tab_anexo_libreta.getColumna("archivo_ytiali").setUpload();
+        tab_anexo_libreta.getColumna("archivo_ytiali").setUpload();//subir los archivos al sistema//
         tab_anexo_libreta.getColumna("observaciones_ytiali"). setNombreVisual("OBSERVACION DEL ANEXO");
         tab_anexo_libreta.setTipoFormulario(true);
         tab_anexo_libreta.getGrid().setColumns(4);
@@ -133,11 +154,27 @@ public class LibretaPractica extends Pantalla{
             div_libreta_practica.dividir2(pat_libreta_practica, tab_tabulador, "50%", "H");
             agregarComponente(div_libreta_practica);
     }
-
+        public void filtroComboPeriodoAcademico(){
+         tab_libreta_practica.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
+         tab_libreta_practica.ejecutarSql();
+         tab_anexo_libreta.ejecutarValorForanea(tab_libreta_practica.getValorSeleccionado());
+         tab_horario_practica.ejecutarValorForanea(tab_libreta_practica.getValorSeleccionado());
+         utilitario.addUpdate("tab_libreta_practica, tab_anexo_libreta, tab_horario_practica");
+        }
+        public void limpiar(){
+            com_periodo_academico.limpiar();
+            tab_libreta_practica.limpiar();
+        }
     @Override
     public void insertar() {
+        if(com_periodo_academico.getValue()== null){
+        utilitario.agregarMensajeError("ERROR","Seleccione el Periodo Academico");
+        return;
+        }
+        else{
         if(tab_libreta_practica.isFocus()){
             tab_libreta_practica.insertar();
+            tab_libreta_practica.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
         }
         else if (tab_anexo_libreta.isFocus()){
             tab_anexo_libreta.insertar();
@@ -147,6 +184,7 @@ public class LibretaPractica extends Pantalla{
         }
     }
 
+    }
     @Override
     public void guardar() {
         if(tab_libreta_practica.guardar()){
@@ -199,6 +237,7 @@ public class LibretaPractica extends Pantalla{
     public Tabla getTab_anexo_libreta() {
         return tab_anexo_libreta;
     }
+    
 
     public void setTab_anexo_libreta(Tabla tab_anexo_libreta) {
         this.tab_anexo_libreta = tab_anexo_libreta;
