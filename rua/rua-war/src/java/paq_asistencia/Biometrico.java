@@ -69,8 +69,15 @@ public class Biometrico extends Pantalla {
        aut_opciones.setId("aut_opciones");
        aut_opciones.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
        aut_opciones.setMetodoChange("seleccionarAutocompletar");
-       bar_botones.agregarComponente(new Etiqueta("Seleccione una opcion :"));
+       bar_botones.agregarComponente(new Etiqueta("EMPLEADO:"));
        bar_botones.agregarComponente(aut_opciones);
+       
+       Boton bot_clean = new Boton();
+       bot_clean.setIcon("ui-icon-cancel");
+            bot_clean.setTitle("Limpiar");
+            bot_clean.setMetodo("limpiar");
+            bar_botones.agregarComponente(bot_clean);
+
        
        rep_reporte.setId("rep_reporte");
        rep_reporte.getBot_aceptar().setMetodo("aceptarReporte");
@@ -79,14 +86,6 @@ public class Biometrico extends Pantalla {
        sel_rep.setId("sel_rep");
        agregarComponente(sel_rep);
 
-    
-       
-       
-       
-       
-       
-       
-       
        Boton bot_abrir=new Boton();
        bot_abrir.setValue("Seleccionar Fechas");
        bot_abrir.setIcon("ui-calendario");
@@ -117,10 +116,20 @@ public class Biometrico extends Pantalla {
        tab_biometrico.setId("tab_biometrico");
         tab_biometrico.setTabla("yavirac_asis_biometrico","ide_yasbio",1);
         tab_biometrico.setCondicion("ide_yasbio=-1");
-        tab_biometrico.setHeader("BIOMETRICO");
-        tab_biometrico.setLectura(true);
+        tab_biometrico.setHeader("REGISTRO DE MARCACIONES DEL RELOJ BIOMETRICO");
+        //tab_biometrico.setLectura(true);
+        tab_biometrico.getColumna("indice_yasbio").setLectura(true);
+        tab_biometrico.getColumna("hora_yasbio").setLectura(true);
+        tab_biometrico.getColumna("fecha_yasbio").setLectura(true);
+        tab_biometrico.getColumna("puerta_yasbio").setLectura(true);
+        tab_biometrico.getColumna("num_yasbio").setLectura(true);
+        tab_biometrico.getColumna("nombre_yasbio").setLectura(true);
+        tab_biometrico.getColumna("departamento_yasbio").setLectura(true);
+        tab_biometrico.getColumna("fecha_registro_yasbio").setLectura(true);
+        tab_biometrico.getColumna("codigo_reloj_yasbio").setLectura(true);
+        
         tab_biometrico.dibujar();
-        tab_biometrico.setRows(10);
+        //tab_biometrico.setRows(10);
         
         PanelTabla pat_biometrico = new PanelTabla();
         pat_biometrico.setId("pat_biometrico");
@@ -150,6 +159,12 @@ public class Biometrico extends Pantalla {
 		dia_subir_archivo.setDialogo(gri_valor);    
                 
       } 
+   public void limpiar(){
+       aut_opciones.limpiar();
+       tab_biometrico.setCondicion("ide_yasbio=-1");
+       tab_biometrico.ejecutarSql();
+       utilitario.addUpdate("tab_biometrico");
+   }
    public void seleccionarAutocompletar(SelectEvent evt){
        
        
@@ -182,7 +197,7 @@ public class Biometrico extends Pantalla {
        return;
    }
    public void validarArchivo(FileUploadEvent evt){	
-                                       System.out.println("entre a metodo dubir ");
+                                       //System.out.println("entre a metodo dubir ");
 
 			//Leer el archivo
 			String str_msg_info="";
@@ -200,12 +215,8 @@ public class Biometrico extends Pantalla {
 				}
 				int int_fin = hoja.getRows();
 				upl_archivo.setNombreReal(evt.getFile().getFileName());
-                                System.out.println("entre a int_fin "+int_fin);
-
-
-
 				str_msg_info+=getFormatoInformacion("El archivo "+upl_archivo.getNombreReal()+" contiene "+int_fin+" filas");
-                                System.out.println("entre a str_msg_info "+str_msg_info);
+                                //System.out.println("entre a str_msg_info "+str_msg_info);
 				lis_importa=new ArrayList<String[]>();
 	
 				
@@ -243,8 +254,8 @@ public class Biometrico extends Pantalla {
 					str_codigo_reloj = str_codigo_reloj.trim();
 					
 					
-		System.out.println("imprimo el valor del Indice "+str_indice+"  hora marcacion" +str_hora+" imprime la fecha " +str_fecha+" Imprime el numero de puerta" +str_puerta+"  Imprime el numero de usuario" +str_num+"  Imprime el nombre del Usuario" +str_nombre+"  imprime en que departamento se encuentra el reloj" +str_departemento
-		+"Imprime la fecha de registro" +str_fecha_registro+"Imprime el codigo del reloj" +str_codigo_reloj );
+		//System.out.println("imprimo el valor del Indice "+str_indice+"  hora marcacion" +str_hora+" imprime la fecha " +str_fecha+" Imprime el numero de puerta" +str_puerta+"  Imprime el numero de usuario" +str_num+"  Imprime el nombre del Usuario" +str_nombre+"  imprime en que departamento se encuentra el reloj" +str_departemento
+		//+"Imprime la fecha de registro" +str_fecha_registro+"Imprime el codigo del reloj" +str_codigo_reloj );
 					
 					TablaGenerica tab_maximo= utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_asis_biometrico", "ide_yasbio"));
                                         
@@ -268,8 +279,9 @@ public class Biometrico extends Pantalla {
                                             */
 				}
 				
-				
+				utilitario.agregarMensaje("Subido con exito", "para consultar ingrese las fechas en las que desea consultar");
 				utilitario.addUpdate("tab_tabla");;
+                                //upl_archivo.
 
 			} catch (Exception e) {
 				// TODO: handle exception
