@@ -89,13 +89,14 @@ public class LibretaPractica extends Pantalla{
          pat_libreta_practica.setPanelTabla(tab_libreta_practica);
                
         tab_horario_practica.setId("tab_horario_practica");
+        tab_horario_practica.setIdCompleto("tab_tabulador:tab_horario_practica");
         tab_horario_practica.setTabla("yavirac_titu_horario_practica", "ide_ytihpr",3);
         tab_horario_practica.setHeader("HORARIO DE PRACTICAS");
         tab_horario_practica.getColumna(" ide_ytihpr "). setNombreVisual("CÓDIGO");
         tab_horario_practica.getColumna("ide_ytilpr "). setNombreVisual("CÓDIGO SOLICITADO");
         tab_horario_practica.getColumna("hora_inicio_ytihpr "). setNombreVisual("FECHA ANEXO");
         tab_horario_practica.getColumna("hora_fin_ytihpr "). setNombreVisual("ARCHIVO ANEXO");
-        tab_horario_practica.getColumna("numero_horas_ytihpr "). setNombreVisual("OBSERVACION");
+        tab_horario_practica.getColumna("numero_horas_ytihpr "). setNombreVisual("NUMERO DE HORAS");
         tab_horario_practica.dibujar();
         
         PanelTabla pat_horario_practica = new PanelTabla();
@@ -103,6 +104,7 @@ public class LibretaPractica extends Pantalla{
         pat_horario_practica.setPanelTabla(tab_horario_practica);
         
         tab_anexo_libreta.setId("tab_anexo_libreta");
+        tab_anexo_libreta.setIdCompleto("tab_tabulador:tab_anexo_libreta");
         tab_anexo_libreta.setTabla("yavirac_titu_anexo_libreta", "ide_ytiali",2);
         tab_anexo_libreta.setHeader("ANEXO DE LA LIBRETA");
         tab_anexo_libreta.getColumna(" ide_ytiali"). setNombreVisual("CÓDIGO DEL ANEXO DE LA LIBRETA");
@@ -131,19 +133,32 @@ public class LibretaPractica extends Pantalla{
 
     @Override
     public void insertar() {
-        tab_libreta_practica.insertar();
-    
+        if(tab_libreta_practica.isFocus()){
+            tab_libreta_practica.insertar();
+        }
+        else if (tab_anexo_libreta.isFocus()){
+            tab_anexo_libreta.insertar();
+        }
+        else if (tab_horario_practica.isFocus()){
+            tab_horario_practica.insertar();
+        }
     }
 
     @Override
     public void guardar() {
-        tab_libreta_practica.guardar();
-        guardarPantalla();
+        if(tab_libreta_practica.guardar()){
+            if(tab_anexo_libreta.guardar()){
+                if(tab_horario_practica.guardar())
+                    guardarPantalla();
+            }
+        }
+        
+        
     }
 
     @Override
     public void eliminar() {
-       tab_libreta_practica.eliminar(); 
+        utilitario.getTablaisFocus().eliminar();
     }
 
     public Utilitario getUtilitario() {
