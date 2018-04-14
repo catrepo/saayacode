@@ -9,7 +9,7 @@ import framework.aplicacion.TablaGenerica;
 import framework.componentes.AutoCompletar;
 import framework.componentes.Barra;
 import framework.componentes.Boton;
-import framework.componentes.Dialogo;
+import framework.componentes.Dialogo; 
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
@@ -126,7 +126,7 @@ public class Biometrico extends Pantalla {
         tab_biometrico.getColumna("nombre_yasbio").setLectura(true);
         tab_biometrico.getColumna("departamento_yasbio").setLectura(true);
         tab_biometrico.getColumna("fecha_registro_yasbio").setLectura(true);
-        tab_biometrico.getColumna("codigo_reloj_yasbio").setLectura(true);
+        tab_biometrico.getColumna("codigo_reloj_yasbio").setLectura(false);
         
         tab_biometrico.dibujar();
         //tab_biometrico.setRows(10);
