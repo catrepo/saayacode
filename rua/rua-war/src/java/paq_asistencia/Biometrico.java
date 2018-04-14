@@ -126,7 +126,7 @@ public class Biometrico extends Pantalla {
         tab_biometrico.getColumna("nombre_yasbio").setLectura(true);
         tab_biometrico.getColumna("departamento_yasbio").setLectura(true);
         tab_biometrico.getColumna("fecha_registro_yasbio").setLectura(true);
-        tab_biometrico.getColumna("codigo_reloj_yasbio").setLectura(false);
+        tab_biometrico.getColumna("codigo_reloj_yasbio").setLectura(true);
         
         tab_biometrico.dibujar();
         //tab_biometrico.setRows(10);
