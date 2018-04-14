@@ -110,7 +110,10 @@ public class LibretaPractica extends Pantalla{
         tab_anexo_libreta.getColumna(" ide_ytiali"). setNombreVisual("CÓDIGO DEL ANEXO DE LA LIBRETA");
         tab_anexo_libreta.getColumna("fecha_ytiali"). setNombreVisual("FECHA DE ANEXO DE LA LIBRETA");
         tab_anexo_libreta.getColumna("archivo_ytiali"). setNombreVisual("ARCHIVO DEL ANEXO");
+        tab_anexo_libreta.getColumna("archivo_ytiali").setUpload();
         tab_anexo_libreta.getColumna("observaciones_ytiali"). setNombreVisual("OBSERVACION DEL ANEXO");
+        tab_anexo_libreta.setTipoFormulario(true);
+        tab_anexo_libreta.getGrid().setColumns(4);
         tab_anexo_libreta.dibujar();
         
         PanelTabla pat_anexo_libreta = new PanelTabla();
