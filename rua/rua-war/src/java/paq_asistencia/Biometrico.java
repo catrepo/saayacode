@@ -49,7 +49,6 @@ public class Biometrico extends Pantalla {
     private List<String[]> lis_importa=null; //Guardo los empleados y el valor del rubro
     private Reporte rep_reporte=new Reporte();
     private SeleccionFormatoReporte sel_rep=new SeleccionFormatoReporte();
-    private Map map_parametros=new HashMap();
 
     @EJB
     private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
@@ -308,24 +307,27 @@ public class Biometrico extends Pantalla {
        dia_subir_archivo.dibujar();
    }
 
-    @Override
 public void abrirListaReportes() {
 // TODO Auto-generated method stub
 rep_reporte.dibujar();
 }
-@Override
+
 public void aceptarReporte() {
-if (rep_reporte.getReporteSelecionado().equals("Reporte Biometrico")){
-    abrirperfilesSistemas();
+    if (rep_reporte.getReporteSelecionado().equals("Marcaciones Biometrico")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+               Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_rep.dibujar();
+        }
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    }
 }
-}
-private void abrirperfilesSistemas(){
-    rep_reporte.cerrar();
-    map_parametros.clear();
-    map_parametros.put("titulo", "Definicion");
-    sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
-    sel_rep.dibujar();
-}
+
    
    
     @Override
@@ -387,11 +389,6 @@ private void abrirperfilesSistemas(){
     public void setSel_rep(SeleccionFormatoReporte sel_rep) {
         this.sel_rep = sel_rep;
     }
-
-    
-   
-
-  
 
 
 
