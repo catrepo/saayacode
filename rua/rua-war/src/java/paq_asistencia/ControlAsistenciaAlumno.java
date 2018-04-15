@@ -7,13 +7,18 @@ package paq_asistencia;
 
 import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
+import framework.componentes.Calendario;
 import framework.componentes.Combo;
+import framework.componentes.Dialogo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
+import framework.componentes.SeleccionCalendario;
+import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
+import framework.componentes.Texto;
 import sistema.aplicacion.Pantalla;
 import java.util.List;
 import javax.ejb.EJB;
@@ -35,8 +40,14 @@ public class ControlAsistenciaAlumno extends Pantalla{
      private Tabla tab_asitencia= new Tabla();
      private Combo com_materia_docente = new Combo();
      private Etiqueta eti_docente = new Etiqueta();
-      Division div = new Division();
-
+     private Etiqueta eti_fecha_asistencia = new Etiqueta();
+     private Etiqueta eti_materia = new Etiqueta();
+     private  Division div = new Division();
+     private Dialogo dia_fecha = new Dialogo();
+     private Texto txt_fecha = new Texto();
+     private Calendario cal_docente = new Calendario();
+     private SeleccionTabla sel_fecha_asistencia = new SeleccionTabla();
+     String fecha="";
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     @EJB
@@ -59,15 +70,7 @@ public class ControlAsistenciaAlumno extends Pantalla{
             bar_botones.getBot_siguiente().setRendered(false);
             bar_botones.getBot_inicio().setRendered(false);            
             
-            bar_botones.agregarComponente(new Etiqueta("Docente *****"));
-            bar_botones.agregarComponente(new Etiqueta(docente));
-            bar_botones.agregarComponente(new Etiqueta("*****"));            
-            bar_botones.agregarComponente(new Etiqueta("      "));
-            
-            Boton bot_asistencia = new Boton();
-            bot_asistencia.setValue("Registrar Asistencia");
-            bot_asistencia.setMetodo("registrarAsistencia");
-            bar_botones.agregarBoton(bot_asistencia);  
+       
             
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
@@ -77,34 +80,46 @@ public class ControlAsistenciaAlumno extends Pantalla{
             
             com_materia_docente.setId("com_materia_docente");
             com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente("-1", "2"));
+            //com_periodo_academico.setMetodo("abrirCalendario");
+            
             bar_botones.agregarComponente(new Etiqueta("Cursos:"));
             bar_botones.agregarComponente(com_materia_docente);    
-            com_materia_docente.setMetodo("filtroHorarios");
+            //com_materia_docente.setMetodo("filtroHorarios");
+           
+           bar_botones.agregarComponente(new Etiqueta("Fecha Consulta:"));          
+           cal_docente.setId("cal_docente");
+           bar_botones.agregarComponente(cal_docente);
+           
+           Boton bot_consultar = new Boton();
+           bot_consultar.setValue("Consultar");
+           bot_consultar.setMetodo("filtraAlumno");
+           bar_botones.agregarComponente(bot_consultar);
+           
+            Boton bot_asistencia = new Boton();
+            bot_asistencia.setValue("Registrar Asistencia");
+            bot_asistencia.setMetodo("abrirCalendario");
+            bar_botones.agregarBoton(bot_asistencia);  
             
                     eti_docente.setStyle("font-size: 16px;font-weight: bold");
                     eti_docente.setValue("Docente: "+docente);
+                    
+                    eti_fecha_asistencia.setId("eti_fecha_asistencia");
+                    eti_fecha_asistencia.setStyle("font-size: 16px;font-weight: bold");
+                    eti_fecha_asistencia.setValue("Fecha Asistencia: ");
             
                     Grid grup_titulo = new Grid();
-                    grup_titulo.setColumns(2);
+                    grup_titulo.setColumns(1);
                     grup_titulo.setWidth("100%");
                     grup_titulo.setId("grup_titulo");
                     grup_titulo.getChildren().add(eti_docente);
+                    grup_titulo.getChildren().add(new Etiqueta(""));
+                    grup_titulo.getChildren().add(eti_fecha_asistencia);
 ;
-         tab_fecha_control.setId("tab_fecha_control");
-         tab_fecha_control.setTabla("yavirac_asis_fecha_control","ide_yasfec", 2);
-         tab_fecha_control.setCondicion("ide_yasfec=-1");
-         tab_fecha_control.setLectura(true);
-         tab_fecha_control.agregarRelacion(tab_asitencia);
-
          
-         tab_fecha_control.dibujar();
-         tab_fecha_control.setRows(5);
-         
-         PanelTabla pat_fecha_control = new PanelTabla();
-         pat_fecha_control.setPanelTabla(tab_fecha_control);
 
          tab_asitencia.setId("tab_asitencia");
-         tab_asitencia.setTabla("yavirac_asis_asistencia", "ide_yasasi", 3);
+         tab_asitencia.setTabla("yavirac_asis_asistencia", "ide_yasasi", 1);
+         tab_asitencia.setCondicion("ide_yasasi=-1");
          tab_asitencia.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
          tab_asitencia.dibujar();
          
@@ -113,20 +128,55 @@ public class ControlAsistenciaAlumno extends Pantalla{
           
            
             div.setId("div");
-            div.dividir2(pat_fecha_control, pat_asistencia,"20%", "H");
+            div.dividir1(pat_asistencia);
            //agregarComponente(div_control);
            
            Division div_padre = new Division();
-           div_padre.setFooter(eti_docente, div, "20");
+           div_padre.setFooter(grup_titulo, div, "16%");
            agregarComponente(div_padre);
         //gru_pantalla.getChildren().add(div);
+
+                    //PANTALLA INGRESA ALUMNO
+            sel_fecha_asistencia.setId("sel_fecha_asistencia");
+            sel_fecha_asistencia.setTitle("SELECCIONE LA FECHA PARA EL REGISTRO O CUNSULTA DE ASISTENCIA");
+            sel_fecha_asistencia.getBot_aceptar().setMetodo("cargarFecha");
+            sel_fecha_asistencia.setSeleccionTabla(ser_asistencia.getFechaAsistencia("-1", "false", "false", "false"), "ide_yasfec");
+            sel_fecha_asistencia.setRadio();
+            agregarComponente(sel_fecha_asistencia);
+
           
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
         
     }
+    public void filtraAlumno(){
+        if(com_periodo_academico.getValue() == null){
+            utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione el Periodo Académico");
+            return;
+        }
+        if(com_materia_docente.getValue() == null){
+            utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione la materia que desea consultar la asistencia");
+            return;
+        }
+        if(cal_docente.getValue()==null){
+             utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione la fecha a la que desea consultar la asistencia");
+            return;           
+        }
+    }
+    public void abrirCalendario(){
+        sel_fecha_asistencia.getTab_seleccion().setSql(ser_asistencia.getFechaAsistencia(com_periodo_academico.getValue().toString(), "true", "false", "false"));
+        sel_fecha_asistencia.getTab_seleccion().ejecutarSql();
+        sel_fecha_asistencia.dibujar();
+    }
+public void cargarFecha(){
+    //System.out.println("jgjgjhghj"+sel_fecha_asistencia.getTab_seleccion().getValor("fecha_yasfec"));
+    fecha=sel_fecha_asistencia.getTab_seleccion().getValor("fecha_yasfec");
+    eti_fecha_asistencia.setValue("Fecha Asistencia: "+fecha);
 
+    sel_fecha_asistencia.cerrar();
+    utilitario.addUpdate("eti_fecha_asistencia");
+}
     String docente = "";
     String documento="";
     String ide_docente="";
@@ -226,6 +276,14 @@ public class ControlAsistenciaAlumno extends Pantalla{
 
     public void setGru_pantalla(Grupo gru_pantalla) {
         this.gru_pantalla = gru_pantalla;
+    }
+
+    public SeleccionTabla getSel_fecha_asistencia() {
+        return sel_fecha_asistencia;
+    }
+
+    public void setSel_fecha_asistencia(SeleccionTabla sel_fecha_asistencia) {
+        this.sel_fecha_asistencia = sel_fecha_asistencia;
     }
     
 }
