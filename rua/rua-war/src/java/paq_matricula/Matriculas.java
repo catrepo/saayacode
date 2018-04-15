@@ -401,14 +401,14 @@ public void generarPDF() {
 
     @Override
     public void guardar() {
-        if (tab_matriculas.isFocus()) {
-            tab_matriculas.guardar();
-        } else if (tab_documento_entregado.isFocus()) {
-            tab_documento_entregado.guardar();
-        } else if (tab_registro_credito.isFocus()) {
-            tab_registro_credito.guardar();
+        if (tab_matriculas.guardar()){
+            if (tab_documento_entregado.guardar())
+            {
+                if (tab_registro_credito.guardar())
+        
+            guardarPantalla();
+            }
         }
-        guardarPantalla();
     }
 
     @Override
