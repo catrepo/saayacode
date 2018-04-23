@@ -47,6 +47,7 @@ public class ControlAsistenciaAlumno extends Pantalla{
      private Texto txt_fecha = new Texto();
      private Calendario cal_docente = new Calendario();
      private SeleccionTabla sel_fecha_asistencia = new SeleccionTabla();
+    private SeleccionTabla sel_fecha_asistencia_consulta = new SeleccionTabla();     
      String fecha="";
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -58,12 +59,11 @@ public class ControlAsistenciaAlumno extends Pantalla{
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
     private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
-  
+   
     public ControlAsistenciaAlumno(){
         if (tienePerfilAsistencia()) {
             
             bar_botones.getBot_insertar().setRendered(false);
-            bar_botones.getBot_guardar().setRendered(false);
             bar_botones.getBot_eliminar().setRendered(false);
             bar_botones.getBot_atras().setRendered(false);
             bar_botones.getBot_fin().setRendered(false);
@@ -85,13 +85,15 @@ public class ControlAsistenciaAlumno extends Pantalla{
             bar_botones.agregarComponente(new Etiqueta("Cursos:"));
             bar_botones.agregarComponente(com_materia_docente);    
             //com_materia_docente.setMetodo("filtroHorarios");
-           
-           bar_botones.agregarComponente(new Etiqueta("Fecha Consulta:"));          
-           cal_docente.setId("cal_docente");
-           bar_botones.agregarComponente(cal_docente);
+// boton limpiar
+		Boton bot_limpiar = new Boton();
+		bot_limpiar.setIcon("ui-icon-cancel");
+		bot_limpiar.setMetodo("limpiar");
+		bar_botones.agregarBoton(bot_limpiar);
+                
            
            Boton bot_consultar = new Boton();
-           bot_consultar.setValue("Consultar");
+           bot_consultar.setValue("Consultar Asistencia");
            bot_consultar.setMetodo("filtraAlumno");
            bar_botones.agregarComponente(bot_consultar);
            
@@ -121,6 +123,13 @@ public class ControlAsistenciaAlumno extends Pantalla{
          tab_asitencia.setTabla("yavirac_asis_asistencia", "ide_yasasi", 1);
          tab_asitencia.setCondicion("ide_yasasi=-1");
          tab_asitencia.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+         tab_asitencia.getColumna("ide_yaldap").setAutoCompletar();
+         tab_asitencia.getColumna("ide_yaldap").setLectura(true);
+         tab_asitencia.getColumna("justificado_yasasi").setLectura(true);
+         tab_asitencia.getColumna("ide_yasfec").setVisible(false);
+         tab_asitencia.getColumna("ide_ypedpe").setVisible(false);
+         tab_asitencia.getColumna("ide_ypemad").setVisible(false);         
+         tab_asitencia.getColumna("ide_yasjus").setVisible(false);
          tab_asitencia.dibujar();
          
          PanelTabla pat_asistencia = new PanelTabla();
@@ -136,20 +145,33 @@ public class ControlAsistenciaAlumno extends Pantalla{
            agregarComponente(div_padre);
         //gru_pantalla.getChildren().add(div);
 
-                    //PANTALLA INGRESA ALUMNO
+                    //PANTALLA REGISTRA LA ASISTENCIA
             sel_fecha_asistencia.setId("sel_fecha_asistencia");
-            sel_fecha_asistencia.setTitle("SELECCIONE LA FECHA PARA EL REGISTRO O CUNSULTA DE ASISTENCIA");
+            sel_fecha_asistencia.setTitle("SELECCIONE LA FECHA PARA EL REGISTRO DE ASISTENCIA");
             sel_fecha_asistencia.getBot_aceptar().setMetodo("cargarFecha");
             sel_fecha_asistencia.setSeleccionTabla(ser_asistencia.getFechaAsistencia("-1", "false", "false", "false"), "ide_yasfec");
             sel_fecha_asistencia.setRadio();
             agregarComponente(sel_fecha_asistencia);
 
-          
+                    //PANTALLA CONSULTA LA ASISTENCIA
+            sel_fecha_asistencia_consulta.setId("sel_fecha_asistencia_consulta");
+            sel_fecha_asistencia_consulta.setTitle("SELECCIONE LA FECHA PARA CONSULTAR LA ASISTENCIA");
+            sel_fecha_asistencia_consulta.getBot_aceptar().setMetodo("cargarFechaConsulta");
+            sel_fecha_asistencia_consulta.setSeleccionTabla(ser_asistencia.getFechaAsistencia("-1", "false", "false", "false"), "ide_yasfec");
+            sel_fecha_asistencia_consulta.setRadio();
+            agregarComponente(sel_fecha_asistencia_consulta);          
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
         
     }
+    public void limpiar() {
+        tab_asitencia.limpiar();
+        com_materia_docente.setValue("");
+        com_periodo_academico.setValue("");
+        eti_fecha_asistencia.setValue("Fecha Asistencia: ");
+        utilitario.addUpdate("tab_asitencia,com_materia_docente,com_periodo_academico,eti_fecha_asistencia");
+    }    
     public void filtraAlumno(){
         if(com_periodo_academico.getValue() == null){
             utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione el Periodo Académico");
@@ -159,23 +181,77 @@ public class ControlAsistenciaAlumno extends Pantalla{
             utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione la materia que desea consultar la asistencia");
             return;
         }
-        if(cal_docente.getValue()==null){
-             utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione la fecha a la que desea consultar la asistencia");
-            return;           
-        }
+        sel_fecha_asistencia_consulta.getTab_seleccion().setSql(ser_asistencia.getFechaAsistencia(com_periodo_academico.getValue().toString(), "true", "false,true", "false"));
+        sel_fecha_asistencia_consulta.getTab_seleccion().ejecutarSql();
+        sel_fecha_asistencia_consulta.dibujar();
     }
     public void abrirCalendario(){
         sel_fecha_asistencia.getTab_seleccion().setSql(ser_asistencia.getFechaAsistencia(com_periodo_academico.getValue().toString(), "true", "false", "false"));
         sel_fecha_asistencia.getTab_seleccion().ejecutarSql();
         sel_fecha_asistencia.dibujar();
     }
+    public void cargarFechaConsulta(){
+         String str_seleccionado = sel_fecha_asistencia_consulta.getValorSeleccionado();
+        if (str_seleccionado != null) {
+             TablaGenerica tab_fecha= utilitario.consultar("select ide_yasfec,fecha_yasfec,bloqueado_yasfec from yavirac_asis_fecha_control where ide_yasfec="+str_seleccionado);
+             fecha=tab_fecha.getValor("fecha_yasfec");
+             String bloqueado=tab_fecha.getValor("bloqueado_yasfec");
+            eti_fecha_asistencia.setValue("Fecha Asistencia: "+fecha);
+            tab_asitencia.setCondicion("ide_ypemad="+com_materia_docente.getValue()+" and ide_yasfec="+str_seleccionado);
+            tab_asitencia.ejecutarSql();
+            if(bloqueado.equals("true"))
+            {
+                for (int j = 0; j < tab_asitencia.getTotalFilas(); j++) {
+                        tab_asitencia.getFilas().get(j).setLectura(true);
+			break;
+		}
+            }
+            sel_fecha_asistencia_consulta.cerrar();
+            utilitario.addUpdate("eti_fecha_asistencia,tab_asitencia");            
+        } else {
+            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
+        }
+    }
 public void cargarFecha(){
-    //System.out.println("jgjgjhghj"+sel_fecha_asistencia.getTab_seleccion().getValor("fecha_yasfec"));
-    fecha=sel_fecha_asistencia.getTab_seleccion().getValor("fecha_yasfec");
-    eti_fecha_asistencia.setValue("Fecha Asistencia: "+fecha);
+        String str_seleccionado = sel_fecha_asistencia.getValorSeleccionado();
+        if (str_seleccionado != null) {
+            
+            TablaGenerica tab_valida = utilitario.consultar(ser_asistencia.getControlAsistencia(com_materia_docente.getValue().toString(), str_seleccionado));
+            if(tab_valida.getTotalFilas()>0){
+                utilitario.agregarMensajeInfo("Asistencia Ejecutado", "El control de asistencia seleccionado ya se encuentra ejecutado, para consultar el registro de asistencia de clic en Consultar");
+                sel_fecha_asistencia.cerrar();
+            }
+            else {
+            fecha=sel_fecha_asistencia.getTab_seleccion().getValor("fecha_yasfec");
+            eti_fecha_asistencia.setValue("Fecha Asistencia: "+fecha);
+            TablaGenerica tab_malla_docente=utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
+            String malla =tab_malla_docente.getValor("ide_ystmal");
+            String grupo =tab_malla_docente.getValor("ide_yhogra");
+            
+            TablaGenerica tab_alumnos_asistencia = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(malla, grupo, com_periodo_academico.getValue().toString()));
+            String maximo="";
+            for(int i=0;i< tab_alumnos_asistencia.getTotalFilas();i++){
+                TablaGenerica tab_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_asis_asistencia", "ide_yasasi"));
+                maximo=tab_maximo.getValor("maximo");
+                utilitario.getConexion().ejecutarSql("insert into yavirac_asis_asistencia (ide_yasasi,ide_yasfec,ide_ypedpe,ide_yaldap,ide_ypemad,asistencia_yasasi,justificado_yasasi)" +
+                                                    "values ("+maximo+","+str_seleccionado+","+ide_docente+","+tab_alumnos_asistencia.getValor(i, "ide_yaldap")+","+com_materia_docente.getValue()+",true,false)");
+            }
+            
+            TablaGenerica tab_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_asis_control_asistencia", "ide_yascas"));
+            maximo=tab_maximo.getValor("maximo");
+            utilitario.getConexion().ejecutarSql("insert into yavirac_asis_control_asistencia (ide_yascas,ide_ypemad,ide_yasfec,fecha_ejecuto_yscas)" +
+                                                "values ("+maximo+","+com_materia_docente.getValue()+","+str_seleccionado+",'"+utilitario.getFechaActual()+"')");
 
-    sel_fecha_asistencia.cerrar();
-    utilitario.addUpdate("eti_fecha_asistencia");
+            sel_fecha_asistencia.cerrar();
+            utilitario.agregarMensaje("Control de Asistencia", "Se registro de manera correcta la asistencia");
+            tab_asitencia.setCondicion("ide_ypemad="+com_materia_docente.getValue()+" and ide_yasfec="+str_seleccionado);
+            tab_asitencia.ejecutarSql();
+            utilitario.addUpdate("eti_fecha_asistencia,tab_asitencia");
+            }
+            
+        } else {
+            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
+        }
 }
     String docente = "";
     String documento="";
@@ -238,7 +314,8 @@ public void cargarFecha(){
 
     @Override
     public void guardar() {
-        
+        tab_asitencia.guardar();
+        guardarPantalla();
     }
 
     @Override
@@ -284,6 +361,14 @@ public void cargarFecha(){
 
     public void setSel_fecha_asistencia(SeleccionTabla sel_fecha_asistencia) {
         this.sel_fecha_asistencia = sel_fecha_asistencia;
+    }
+
+    public SeleccionTabla getSel_fecha_asistencia_consulta() {
+        return sel_fecha_asistencia_consulta;
+    }
+
+    public void setSel_fecha_asistencia_consulta(SeleccionTabla sel_fecha_asistencia_consulta) {
+        this.sel_fecha_asistencia_consulta = sel_fecha_asistencia_consulta;
     }
     
 }
