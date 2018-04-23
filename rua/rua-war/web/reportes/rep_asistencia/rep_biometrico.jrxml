@@ -1,154 +1,351 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_biometrico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c689acd4-3e1f-4d6c-909d-e34a3ceee890">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<queryString>
-		<![CDATA[select * from yavirac_asis_biometrico]]>
-	</queryString>
-	<field name="ide_yasbio" class="java.lang.Long"/>
-	<field name="indice_yasbio" class="java.lang.String">
-		<fieldDescription><![CDATA[Indica el indice del biometrico]]></fieldDescription>
-	</field>
-	<field name="hora_yasbio" class="java.sql.Time">
-		<fieldDescription><![CDATA[Indica la hora de registro del biometrico]]></fieldDescription>
-	</field>
-	<field name="puerta_yasbio" class="java.lang.String">
-		<fieldDescription><![CDATA[Indica la puereta de ingreso del biometrico]]></fieldDescription>
-	</field>
-	<field name="num_yasbio" class="java.lang.Long">
-		<fieldDescription><![CDATA[Indica el numero de registro en la base de datos del usuario en el biometrico]]></fieldDescription>
-	</field>
-	<field name="nombre_yasbio" class="java.lang.String">
-		<fieldDescription><![CDATA[Indica el nombre del Usuario registrado en el Biometrico]]></fieldDescription>
-	</field>
-	<field name="departamento_yasbio" class="java.lang.String">
-		<fieldDescription><![CDATA[Indica el departamento que va laborar el usuario en el biometrico]]></fieldDescription>
-	</field>
-	<field name="codigo_reloj_yasbio" class="java.lang.Integer"/>
-	<field name="usuario_ingre" class="java.lang.String"/>
-	<field name="fecha_ingre" class="java.sql.Date"/>
-	<field name="hora_ingre" class="java.sql.Time"/>
-	<field name="usuario_actua" class="java.lang.String"/>
-	<field name="fecha_actua" class="java.sql.Date"/>
-	<field name="hora_actua" class="java.sql.Time"/>
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="rep_biometrico"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usuario" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="nombre" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="ide_sucu" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="ide_empr" isForPrompting="true" class="java.lang.Integer"/>
+	<queryString><![CDATA[select num_yasbio,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,fecha_yasbio,hora_yasbio from
+yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_reloj_ypedpe]]></queryString>
+
+	<field name="num_yasbio" class="java.lang.Long"/>
+	<field name="apellido_ypedpe" class="java.lang.String"/>
+	<field name="nombre_ypedpe" class="java.lang.String"/>
+	<field name="doc_identidad_ypedpe" class="java.lang.String"/>
 	<field name="fecha_yasbio" class="java.sql.Date"/>
-	<field name="fecha_registro_yasbio" class="java.sql.Date"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band height="92" splitType="Stretch">
-			<staticText>
-				<reportElement x="196" y="31" width="236" height="50" uuid="e144944e-5613-4a49-8a84-9525777726d3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="20" isBold="true" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[Reporte Biometrico]]></text>
-			</staticText>
-			<image>
-				<reportElement x="21" y="12" width="107" height="69" uuid="100497b3-0264-4fef-93ca-6079563b451e"/>
-				<imageExpression><![CDATA["C:\\Saayascodigo\\trunk\\rua\\rua-war\\web\\imagenes\\logoinstituto.png"]]></imageExpression>
-			</image>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="33" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="24" splitType="Stretch">
-			<staticText>
-				<reportElement x="402" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="ed8cf49c-61bd-41da-b5f1-7a0bd737d034"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Número de puerta]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="279" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="df0da553-38d4-4a6c-a42c-b0c6ede2a052"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Codigo Reloj]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="148" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="1e29fa17-8dbd-48d3-9d49-e2c9e574fe09"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Hora Timbrada]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="14" y="0" width="100" height="20" backcolor="#FFFFFF" uuid="35b55345-df9e-43a3-a42f-e9b5a4fb518f"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Nombre Usuario]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="512" y="0" width="43" height="20" backcolor="#FFFFFF" uuid="bc1368c8-2fa5-4cb3-bfd6-923d8c8ad20e"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Ide]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="30" splitType="Stretch">
-			<textField pattern="HH.mm">
-				<reportElement x="148" y="10" width="100" height="20" uuid="c8439aac-7c9c-4ec9-969b-f38823dd4399"/>
-				<textFieldExpression><![CDATA[$F{hora_yasbio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="279" y="10" width="100" height="20" uuid="4704b151-4c31-4797-a445-eb0bff3ff3b9"/>
-				<textFieldExpression><![CDATA[$F{codigo_reloj_yasbio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="402" y="10" width="100" height="20" uuid="23da148d-4231-4af0-aeb9-3b8ccef7281a"/>
-				<textFieldExpression><![CDATA[$F{num_yasbio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="14" y="10" width="100" height="20" uuid="afca004f-32df-4fd6-bf72-8680250262f4"/>
-				<textFieldExpression><![CDATA[$F{nombre_yasbio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="512" y="10" width="43" height="20" uuid="98fc911c-532b-480d-ac65-9afb532f8c57"/>
-				<textFieldExpression><![CDATA[$F{ide_yasbio}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<columnFooter>
-		<band height="41" splitType="Stretch">
-			<staticText>
-				<reportElement x="21" y="21" width="100" height="20" backcolor="#FFFFFF" uuid="39070c1e-4b7e-4c55-9971-65a8fc3255d8"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Departamento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="148" y="21" width="100" height="20" backcolor="#FFFFFF" uuid="b37d367f-9593-47bd-8a73-9195e2e92c27"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Fecha ingreso]]></text>
-			</staticText>
-		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="39" splitType="Stretch">
-			<textField>
-				<reportElement x="21" y="0" width="100" height="20" uuid="09d08bcf-ef58-43d8-a6be-e3614510c33e"/>
-				<textFieldExpression><![CDATA[$F{departamento_yasbio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="148" y="0" width="100" height="20" uuid="3c31d9db-0465-42c9-a60b-dab40dde67ac"/>
-				<textFieldExpression><![CDATA[$F{fecha_ingre}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
+	<field name="hora_yasbio" class="java.sql.Time"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="60"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="280"
+						y="10"
+						width="255"
+						height="50"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="18" isBold="true"/>
+					</textElement>
+				<text><![CDATA[REPORTES MARCACIONES BIOMETRICO]]></text>
+				</staticText>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="10"
+						y="10"
+						width="110"
+						height="40"
+						key="subreport-1"/>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ide_sucu">
+						<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ide_empr">
+						<subreportParameterExpression><![CDATA[$P{ide_empr}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="22"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="10"
+						y="5"
+						width="60"
+						height="15"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Cod.Usua]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="72"
+						y="5"
+						width="60"
+						height="15"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Cedula]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="150"
+						y="5"
+						width="90"
+						height="15"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Apellidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="250"
+						y="5"
+						width="100"
+						height="15"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Nombres]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="365"
+						y="5"
+						width="70"
+						height="15"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="436"
+						y="5"
+						width="70"
+						height="15"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Hora]]></text>
+				</staticText>
+				<rectangle radius="6" >
+					<reportElement
+						mode="Transparent"
+						x="10"
+						y="5"
+						width="490"
+						height="13"
+						key="rectangle-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="12"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="10"
+						y="2"
+						width="60"
+						height="10"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$F{num_yasbio}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="2"
+						width="70"
+						height="10"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{doc_identidad_ypedpe}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="150"
+						y="2"
+						width="90"
+						height="10"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{apellido_ypedpe}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="250"
+						y="2"
+						width="100"
+						height="10"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nombre_ypedpe}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="350"
+						y="2"
+						width="70"
+						height="10"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{fecha_yasbio}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="h.mm.ss a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="420"
+						y="2"
+						width="70"
+						height="10"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.sql.Time"><![CDATA[$F{hora_yasbio}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="1"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="15"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="0"
+						width="100"
+						height="15"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Usuario Impresión:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="269"
+						y="0"
+						width="100"
+						height="15"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="415"
+						y="0"
+						width="80"
+						height="15"
+						key="textField-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="495"
+						y="0"
+						width="40"
+						height="15"
+						key="textField-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="101"
+						y="0"
+						width="100"
+						height="15"
+						key="textField-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nombre}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="210"
+						y="0"
+						width="56"
+						height="15"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Fecha:]]></text>
+				</staticText>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="2"  isSplitAllowed="true" >
+			</band>
+		</summary>
 </jasperReport>
