@@ -101,7 +101,7 @@ public class JustificacionAlumno extends Pantalla {
             sel_fecha_ausencia.setId("sel_fecha_ausencia");
             sel_fecha_ausencia.setTitle("SELECCIONE LAS FECHAS DE AUSENCIA");
             sel_fecha_ausencia.getBot_aceptar().setMetodo("actualizaAsistencia");
-            sel_fecha_ausencia.setSeleccionTabla(ser_asistencia.getAusenciaAlumno("1900-01-01", "1900-01-01", "true"), "ide_yasasi");
+            sel_fecha_ausencia.setSeleccionTabla(ser_asistencia.getAusenciaAlumno("1900-01-01", "1900-01-01", "true","true"), "ide_yasasi");
             agregarComponente(sel_fecha_ausencia);
         
         
@@ -111,7 +111,7 @@ public class JustificacionAlumno extends Pantalla {
     }
 public void selActualizaJustificacion(){
         if (aut_alumno.getValor()!=null){
-            sel_fecha_ausencia.getTab_seleccion().setSql(ser_asistencia.getAusenciaAlumno(tab_tipomotivo.getValor("fecha_ausento_yasjus"), tab_tipomotivo.getValor("fecha_ausento_yasjus"), "false"));
+            sel_fecha_ausencia.getTab_seleccion().setSql(ser_asistencia.getAusenciaAlumno(tab_tipomotivo.getValor("fecha_ausento_yasjus"), tab_tipomotivo.getValor("fecha_ausento_yasjus"), "false","false"));
             sel_fecha_ausencia.getTab_seleccion().ejecutarSql();
             sel_fecha_ausencia.dibujar();
 
@@ -130,7 +130,7 @@ public void actualizaAsistencia(){
         if (str_seleccionado != null) {
             //Inserto los cleintes seleccionados en la tabla  
             utilitario.getConexion().ejecutarSql("update yavirac_asis_asistencia set justificado_yasasi = true,ide_yasjus="+tab_tipomotivo.getValor("ide_yasjus")+" where ide_yasasi in ( "+str_seleccionado+" )");
-
+            utilitario.agregarMensaje("Justificado", "Se realizo la justificacion exitosamente");
             sel_fecha_ausencia.cerrar();
         } else {
             utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
