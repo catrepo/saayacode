@@ -203,7 +203,7 @@ public class ControlAsistenciaAlumno extends Pantalla{
             {
                 for (int j = 0; j < tab_asitencia.getTotalFilas(); j++) {
                         tab_asitencia.getFilas().get(j).setLectura(true);
-			break;
+			//break;
 		}
             }
             sel_fecha_asistencia_consulta.cerrar();
