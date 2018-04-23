@@ -103,7 +103,7 @@ public class ServicioAsistencia {
      * @param todos.- Ingresar todos  los campos requeridos en la tabla
      * @return la Tabla insertada
      */
-    public String getAusenciaAlumno(String fecha_inicial,String fecha_final,String justificado) {
+    public String getAusenciaAlumno(String fecha_inicial,String fecha_final,String justificado,String asistencia) {
         String sql="";
         sql="select ide_yasasi,fecha_yasfec,justificado_yasasi,detalle_ystmat,apellido_ypedpe,nombre_ypedpe" +
         " from yavirac_asis_asistencia a, yavirac_asis_fecha_control b, (  select a.ide_ypemad,detalle_ystmat,apellido_ypedpe,nombre_ypedpe" +
@@ -115,8 +115,9 @@ public class ServicioAsistencia {
         " and a.ide_ypedpe = c.ide_ypedpe ) c" +
         " where a.ide_yasfec =b.ide_yasfec" +
         " and a.ide_ypemad = c.ide_ypemad" +
-        " and fecha_yasfec between '2017-01-01' and '2017-01-02'" +
-        " and justificado_yasasi in (true,false)" +
+        " and fecha_yasfec between '"+fecha_inicial+"' and '"+fecha_final+"'" +
+        " and justificado_yasasi in ("+justificado+")" +
+        " and asistencia_yasasi in ("+asistencia+")" +
         " order by apellido_ypedpe";
               
         return sql;
@@ -126,5 +127,24 @@ public class ServicioAsistencia {
         String sql="";
         sql="select ide_yascas,ide_ypemad from yavirac_asis_control_asistencia   where ide_ypemad ="+docente_malla+"  and ide_yasfec="+fecha;
         return sql;
- }    
+ } 
+    public String getDocenteMensionParalelo(String tipo,String codigo) {
+          
+        String sql="";
+        sql="select a.ide_ypemad,ide_ystmen,ide_ystmat,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,descripcion_ystpea,descripcion_ystnie,orden_ystnie,detalle_ystmat,descripcion_ystmen,a.ide_yhogra,detalle_yhogra,descripcion_ystani " +
+            " from (" +
+            " select a.ide_ystmal,a.ide_ystpea,a.ide_ypedpe,a.ide_ypemad,a.ide_yhogra,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,descripcion_ystpea,detalle_yhogra,abreviatura_yhogra,descripcion_ystani" +
+            " from  yavirac_perso_malla_docente a,yavirac_perso_dato_personal b,yavirac_stror_periodo_academic c,yavirac_hora_grupo_academic d,yavirac_stror_anio e" +
+            " where a.ide_ypedpe=b.ide_ypedpe and a.ide_ystpea=c.ide_ystpea and a.ide_yhogra=d.ide_yhogra" +
+            " and c.ide_ystani = e.ide_ystani" +
+            " ) a,(" +
+            " select a.ide_ystnie,a.ide_ystmat,a.ide_ystmen,a.ide_ystmal,descripcion_ystnie,abreviatura_ystnie,orden_ystnie,detalle_ystmat,abreviatura_ystmat,descripcion_ystmen" +
+            " from yavirac_stror_malla a,yavirac_stror_nivel_educacion b,yavirac_stror_materia c,yavirac_stror_mension d where a.ide_ystnie=b.ide_ystnie and a.ide_ystmat=c.ide_ystmat and a.ide_ystmen= d.ide_ystmen " +
+            " ) b " +
+            " where a.ide_ystmal =b.ide_ystmal ";
+        if(tipo.equals("1")){
+            sql +=" and ide_ypemad in ("+codigo+") ";
+        }
+        return sql;
+ }        
 }
