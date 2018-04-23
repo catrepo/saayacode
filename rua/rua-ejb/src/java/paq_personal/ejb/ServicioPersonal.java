@@ -47,6 +47,11 @@ public class ServicioPersonal {
         sql="select ide_ypetip,descripcion_ypetip from yavirac_perso_titu_profesional";
         return sql;
  }
-
+    public String getPersonalMalla(String codigo) {
+          
+        String sql="";
+        sql="select ide_ypemad,ide_ystmal,ide_ystpea,ide_ypedpe,ide_yhogra from yavirac_perso_malla_docente   where ide_ypemad ="+codigo;
+        return sql;
+ }
     
 }

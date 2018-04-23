@@ -73,14 +73,58 @@ public class ServicioAsistencia {
      */
     public String getMateriaNivelDocente(String periodo,String docente) {
         String sql="";
-        sql="select a.ide_ypemad,detalle_ystmat,descripcion_ystnie " +
+        sql="select a.ide_ypemad,detalle_ystmat,descripcion_ystnie,detalle_yhogra " +
             " from yavirac_perso_malla_docente a, (" +
             " select ide_ystmal, detalle_ystmat, descripcion_ystnie " +
             " from yavirac_stror_malla a,yavirac_stror_nivel_educacion b,yavirac_stror_materia c " +
             " where a.ide_ystnie = b.ide_ystnie and a.ide_ystmat = c.ide_ystmat " +
-            " ) b where a.ide_ystmal = b.ide_ystmal and ide_ystpea ="+periodo+" and ide_ypedpe =" +docente+
+            " ) b, yavirac_hora_grupo_academic c where a.ide_ystmal = b.ide_ystmal and a.ide_yhogra= c.ide_yhogra and ide_ystpea ="+periodo+" and ide_ypedpe =" +docente+
             " order by descripcion_ystnie,detalle_ystmat";
               
         return sql;
-    }      
+    }   
+/**
+     * SQL fechas para el registro de asistencia de los estudiante spor periodo academico
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getFechaAsistencia(String periodo,String activo,String bloqueado,String festivo) {
+        String sql="";
+        sql="select ide_yasfec,fecha_yasfec,bloqueado_yasfec,activo_yasfec,festivo_yasfec" +
+        " from yavirac_asis_fecha_control where ide_ystpea  ="+periodo+" and activo_yasfec in ("+activo+") and festivo_yasfec in (" +festivo+") and bloqueado_yasfec in ("+bloqueado+")"+
+        " order by fecha_yasfec desc";
+              //System.out.println("sqldd "+sql);
+        return sql;
+    }     
+    /**
+     * SQL alumnos con sus ausencias
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getAusenciaAlumno(String fecha_inicial,String fecha_final,String justificado) {
+        String sql="";
+        sql="select ide_yasasi,fecha_yasfec,justificado_yasasi,detalle_ystmat,apellido_ypedpe,nombre_ypedpe" +
+        " from yavirac_asis_asistencia a, yavirac_asis_fecha_control b, (  select a.ide_ypemad,detalle_ystmat,apellido_ypedpe,nombre_ypedpe" +
+        " from yavirac_perso_malla_docente a, (" +
+        " select  ide_ystmal,detalle_ystmat" +
+        " from yavirac_stror_malla a, yavirac_stror_materia b" +
+        " where a.ide_ystmat = b.ide_ystmat ) b,yavirac_perso_dato_personal c" +
+        " where a.ide_ystmal = b.ide_ystmal" +
+        " and a.ide_ypedpe = c.ide_ypedpe ) c" +
+        " where a.ide_yasfec =b.ide_yasfec" +
+        " and a.ide_ypemad = c.ide_ypemad" +
+        " and fecha_yasfec between '2017-01-01' and '2017-01-02'" +
+        " and justificado_yasasi in (true,false)" +
+        " order by apellido_ypedpe";
+              
+        return sql;
+    }   
+    public String getControlAsistencia(String docente_malla,String fecha) {
+          
+        String sql="";
+        sql="select ide_yascas,ide_ypemad from yavirac_asis_control_asistencia   where ide_ypemad ="+docente_malla+"  and ide_yasfec="+fecha;
+        return sql;
+ }    
 }

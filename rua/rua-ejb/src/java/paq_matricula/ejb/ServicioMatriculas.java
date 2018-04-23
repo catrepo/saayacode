@@ -63,5 +63,24 @@ public class ServicioMatriculas {
         String sql="";
         sql="SELECT ide_ymanum, descripcion_ymanum, abreviatura_ymanum FROM yavirac_matri_numero_matricula order by descripcion_ymanum;";
         return sql;
-    }          
+    }       
+/**
+     * Sql, de alumnos matriculados cons us distintas materias y paralelos
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getAlumnosMallaGrupo (String malla,String grupo,String periodo) {
+        String sql="";
+        sql="select a.ide_ymamat,ide_ystmal,ide_yhogra,a.ide_yaldap,apellido_yaldap,nombre_yaldap" +
+            " from yavirac_matri_matricula a, yavirac_matri_registro_credito b,yavirac_alum_dato_personal c,yavirac_matri_periodo_matric d" +
+            " where a.ide_ymamat = b.ide_ymamat" +
+            " and a.ide_yaldap = c.ide_yaldap" +
+            " and a.ide_ymaper = d.ide_ymaper" +
+            " and ide_ystmal ="+malla +
+            " and ide_yhogra ="+grupo +
+            " and d.ide_ystpea="+periodo +
+            " order by apellido_yaldap";
+        return sql;
+    }         
 }
