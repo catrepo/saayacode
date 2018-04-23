@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_biometrico" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="1301f09e-0153-4d49-91f4-9d27db6d6a44">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usuario" class="java.lang.String"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="ide_sucu" class="java.lang.Integer"/>
+	<parameter name="ide_empr" class="java.lang.Integer"/>
+	<parameter name="pfechai" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pfechaf" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ptipo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.ide_yasasi,ide_ystmen,ide_ystmat,b.ide_yhogra,asistencia_yasasi,justificado_yasasi,nombre_yaldap,apellido_yaldap,doc_identidad_yaldap,fecha_yasfec,apellido_ypedpe,
+nombre_ypedpe,doc_identidad_ypedpe,descripcion_ystpea,descripcion_ystnie,abreviatura_ystnie,orden_ystnie,detalle_ystmat,abreviatura_ystmat,
+descripcion_ystmen,detalle_yhogra,abreviatura_yhogra,(case when asistencia_yasasi = true then 'SI' else 'NO' end) as asistencia, (case when justificado_yasasi = true then 'SI' else 'NO' end) as justificado
+from (
+
+select  a.ide_ypemad,a.ide_yasasi,a.ide_yaldap,a.ide_yasfec,asistencia_yasasi,justificado_yasasi,nombre_yaldap,apellido_yaldap,doc_identidad_yaldap,fecha_yasfec
+from yavirac_asis_asistencia a,yavirac_alum_dato_personal b,yavirac_asis_fecha_control c where  a.ide_yaldap=b.ide_yaldap and a.ide_yasfec=c.ide_yasfec
+) a, (
+
+select a.ide_ypemad,ide_ystmen,ide_ystmat,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,descripcion_ystpea,descripcion_ystnie,abreviatura_ystnie,orden_ystnie,detalle_ystmat,abreviatura_ystmat,descripcion_ystmen,a.ide_yhogra,detalle_yhogra,abreviatura_yhogra
+from (
+
+select a.ide_ystmal,a.ide_ystpea,a.ide_ypedpe,a.ide_ypemad,a.ide_yhogra,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,descripcion_ystpea,detalle_yhogra,abreviatura_yhogra
+from  yavirac_perso_malla_docente a,yavirac_perso_dato_personal b,yavirac_stror_periodo_academic c,yavirac_hora_grupo_academic d
+where a.ide_ypedpe=b.ide_ypedpe and a.ide_ystpea=c.ide_ystpea and a.ide_yhogra=d.ide_yhogra
+) a,(
+
+select a.ide_ystnie,a.ide_ystmat,a.ide_ystmen,a.ide_ystmal,descripcion_ystnie,abreviatura_ystnie,orden_ystnie,detalle_ystmat,abreviatura_ystmat,descripcion_ystmen
+from yavirac_stror_malla a,yavirac_stror_nivel_educacion b,yavirac_stror_materia c,yavirac_stror_mension d where a.ide_ystnie=b.ide_ystnie and a.ide_ystmat=c.ide_ystmat and a.ide_ystmen= d.ide_ystmen
+) b
+where a.ide_ystmal =b.ide_ystmal
+
+) b
+ where a.ide_ypemad = b.ide_ypemad
+ and fecha_yasfec between cast($P{pfechai} as date) and cast($P{pfechaf} as date)
+ and a.ide_ypemad in ($P!{ptipo})
+ order by descripcion_ystmen,detalle_ystmat,detalle_yhogra,nombre_yaldap,fecha_yasfec]]>
+	</queryString>
+	<field name="ide_yasasi" class="java.lang.Long"/>
+	<field name="ide_ystmen" class="java.lang.Long"/>
+	<field name="ide_ystmat" class="java.lang.Long"/>
+	<field name="ide_yhogra" class="java.lang.Integer"/>
+	<field name="asistencia_yasasi" class="java.lang.Boolean"/>
+	<field name="justificado_yasasi" class="java.lang.Boolean"/>
+	<field name="nombre_yaldap" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicara el nombre del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="apellido_yaldap" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicara el apellido del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="doc_identidad_yaldap" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicara el documento de identidad del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="fecha_yasfec" class="java.sql.Date"/>
+	<field name="apellido_ypedpe" class="java.lang.String"/>
+	<field name="nombre_ypedpe" class="java.lang.String"/>
+	<field name="doc_identidad_ypedpe" class="java.lang.String"/>
+	<field name="descripcion_ystpea" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo permite gusrdar informacion del periodo de inico y final del año lectivo]]></fieldDescription>
+	</field>
+	<field name="descripcion_ystnie" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo identidica la descripcion de la tabla  nivel educacion]]></fieldDescription>
+	</field>
+	<field name="abreviatura_ystnie" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo identidica la abreviaura de la tabla nivel educacion]]></fieldDescription>
+	</field>
+	<field name="orden_ystnie" class="java.lang.Long">
+		<fieldDescription><![CDATA[Define el orden del nivel educativo, ejemplo primer nivel orden 1, etc]]></fieldDescription>
+	</field>
+	<field name="detalle_ystmat" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo identifica el nombre de la  materia de la carrera respectiva]]></fieldDescription>
+	</field>
+	<field name="abreviatura_ystmat" class="java.lang.String">
+		<fieldDescription><![CDATA[identifica la abreviatura de la tabla materia]]></fieldDescription>
+	</field>
+	<field name="descripcion_ystmen" class="java.lang.String"/>
+	<field name="detalle_yhogra" class="java.lang.String"/>
+	<field name="abreviatura_yhogra" class="java.lang.String"/>
+	<field name="asistencia" class="java.lang.String"/>
+	<field name="justificado" class="java.lang.String"/>
+	<group name="mension">
+		<groupExpression><![CDATA[$F{ide_ystmen}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<staticText>
+					<reportElement uuid="9ff93a61-3ec1-4671-aba5-ce2b3b0e61c0" x="0" y="0" width="54" height="15"/>
+					<textElement/>
+					<text><![CDATA[Carrera:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="ebff4b67-c145-4982-9001-7fcc45ad04ad" x="54" y="0" width="353" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{descripcion_ystmen}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="materia">
+		<groupExpression><![CDATA[$F{ide_ystmat}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<staticText>
+					<reportElement uuid="b68feb38-bbb1-4163-acd5-4fae29ab6ab8" x="1" y="0" width="53" height="15"/>
+					<textElement/>
+					<text><![CDATA[Materia:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="6882cea5-6a34-4809-bbcc-bcd3c0498a58" x="54" y="0" width="353" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{detalle_ystmat}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="paralelo">
+		<groupExpression><![CDATA[$F{ide_yhogra}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<staticText>
+					<reportElement uuid="5cb2f4e5-d16f-4d50-a6a5-56463c14dd3d" x="1" y="0" width="53" height="15"/>
+					<textElement/>
+					<text><![CDATA[Docente:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="ff7b8c2d-ce80-47da-a54c-76b2f2217232" x="54" y="0" width="229" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{apellido_ypedpe}+" "+$F{nombre_ypedpe}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="8c72343c-114d-4fbe-81ee-35f4dbd553ae" x="283" y="0" width="86" height="15"/>
+					<textElement/>
+					<text><![CDATA[Paralelo/Grupo:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="0f884a63-c5c5-47d8-99d0-01d49e9451c0" x="369" y="0" width="100" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{detalle_yhogra}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="77" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement uuid="13f4a4d4-0f55-466b-862f-37296ca23eb2" key="subreport-1" x="10" y="10" width="110" height="40"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ide_sucu">
+					<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ide_empr">
+					<subreportParameterExpression><![CDATA[$P{ide_empr}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="990b387b-d147-4f00-9ab0-33c87705355d" x="280" y="11" width="255" height="40"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REGISTRO ASISTENCIA DE ALUMNOS "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ba06df8f-401e-41c8-8423-2bc2f2312b7b" x="280" y="51" width="255" height="26"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DEL "+$P{pfechai}+" AL "+$P{pfechaf}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="14e27ba3-c3bf-4b35-985b-dc6ddfddc65d" key="staticText-3" x="101" y="5" width="44" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cedula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4e7ec9d-b879-4f95-ada6-38103b36a2f9" key="staticText-4" x="180" y="5" width="157" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Apellidos / Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="20acc8ec-3029-4706-a594-3c558afa9a2d" key="staticText-6" x="357" y="5" width="44" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c0305326-baef-41b5-b305-d89bbc6678e6" key="staticText-7" x="419" y="5" width="38" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Asis.]]></text>
+			</staticText>
+			<rectangle radius="6">
+				<reportElement uuid="f7734b97-de0c-4919-b540-43983e270894" key="rectangle-1" mode="Transparent" x="0" y="5" width="535" height="13"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="f3bff6ea-1d5f-4203-8566-bf77bfc7ab7d" key="staticText-7" x="457" y="5" width="30" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Just.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="0181f535-396d-439e-b96b-d549294e6d6c" key="textField-2" x="103" y="2" width="64" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc_identidad_yaldap}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="70cc3ed1-74eb-45cd-9801-34856c0d973d" key="textField-4" x="167" y="2" width="190" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido_yaldap}+" "+$F{nombre_yaldap}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement uuid="d9953ce5-8e99-4062-b972-5f6368c2642f" key="textField-5" x="357" y="1" width="54" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_yasfec}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm.ss a" isBlankWhenNull="false">
+				<reportElement uuid="c990089d-5072-454c-983c-02464de1b953" key="textField-6" x="422" y="2" width="38" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{asistencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="17c67a3c-1b77-43f1-8f1e-3bc5959910ca" key="textField-4" x="457" y="2" width="30" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{justificado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="f3ed9987-8023-4a31-a262-915a90afc51f" key="staticText-8" x="1" y="0" width="100" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Usuario Impresión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="false">
+				<reportElement uuid="6fe647eb-574c-4012-a1ce-da0461ef6ac8" key="textField-7" x="269" y="0" width="100" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="3f4f4234-6313-4a72-b001-80ee19c4ba34" key="textField-8" x="415" y="0" width="80" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement uuid="216ae269-009f-4739-84a7-d3a764a55b7f" key="textField-9" x="495" y="0" width="40" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="365707d7-f596-49bb-8fb9-d91ea5ff468b" key="textField-10" x="101" y="0" width="100" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="944717f3-95ad-43df-bdbd-a491152a5f4c" key="staticText-9" x="210" y="0" width="56" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>
