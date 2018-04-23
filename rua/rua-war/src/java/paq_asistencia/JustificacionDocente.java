@@ -102,7 +102,7 @@ public class JustificacionDocente extends Pantalla {
     }    
 public void selActualizaJustificacion(){
         if (aut_alumno.getValor()!=null){
-            sel_fecha_ausencia.getTab_seleccion().setSql(ser_asistencia.getAusenciaAlumno(tab_tipomotivo.getValor("fecha_ausento_yasjus"), tab_tipomotivo.getValor("fecha_ausento_yasjus"), "false"));
+            //sel_fecha_ausencia.getTab_seleccion().setSql(ser_asistencia.getAusenciaAlumno(tab_tipomotivo.getValor("fecha_ausento_yasjus"), tab_tipomotivo.getValor("fecha_ausento_yasjus"), "false"));
             sel_fecha_ausencia.getTab_seleccion().ejecutarSql();
             sel_fecha_ausencia.dibujar();
 
