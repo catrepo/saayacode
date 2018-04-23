@@ -49,6 +49,7 @@ public class Biometrico extends Pantalla {
     private List<String[]> lis_importa=null; //Guardo los empleados y el valor del rubro
     private Reporte rep_reporte=new Reporte();
     private SeleccionFormatoReporte sel_rep=new SeleccionFormatoReporte();
+    private SeleccionCalendario sel_fechas = new SeleccionCalendario();
 
     @EJB
     private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
@@ -155,6 +156,11 @@ public class Biometrico extends Pantalla {
 		gri_valor.getChildren().add(new Etiqueta("Seleccione Archivo: "));
 		gri_valor.getChildren().add(upl_archivo);
 		dia_subir_archivo.setDialogo(gri_valor);    
+          sel_fechas.setId("sel_fechas");
+          sel_fechas.setFechaActual();
+          sel_fechas.getBot_aceptar().setMetodo("aceptarReporte");
+          
+          agregarComponente(sel_fechas);
                 
       } 
    public void limpiar(){
@@ -316,10 +322,17 @@ public void aceptarReporte() {
                 
         if(rep_reporte.isVisible()){
                 rep_reporte.cerrar();
-               Map map_parametros = new HashMap();
+                sel_fechas.dibujar();
+        }
+        else if (sel_fechas.isVisible()){
+                
+                Map map_parametros = new HashMap();
                 map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pfechai", sel_fechas.getFecha1String());
+                map_parametros.put("pfechaf", sel_fechas.getFecha2String());
                 sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
-                sel_rep.dibujar();
+                sel_fechas.cerrar();
+                sel_rep.dibujar();            
         }
         else{
             utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
@@ -387,6 +400,14 @@ public void aceptarReporte() {
 
     public void setSel_rep(SeleccionFormatoReporte sel_rep) {
         this.sel_rep = sel_rep;
+    }
+
+    public SeleccionCalendario getSel_fechas() {
+        return sel_fechas;
+    }
+
+    public void setSel_fechas(SeleccionCalendario sel_fechas) {
+        this.sel_fechas = sel_fechas;
     }
 
 
