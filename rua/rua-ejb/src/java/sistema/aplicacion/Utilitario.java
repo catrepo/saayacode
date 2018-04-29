@@ -1118,4 +1118,8 @@ public class Utilitario extends Framework {
 		return true;
 	}
 
+    public void getConexion(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
