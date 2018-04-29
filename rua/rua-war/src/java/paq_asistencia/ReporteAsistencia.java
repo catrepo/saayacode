@@ -6,9 +6,12 @@
 package paq_asistencia;
 
 import framework.aplicacion.TablaGenerica;
+import framework.componentes.Boton;
 import framework.componentes.Dialogo;
 import framework.componentes.Division;
+import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
+import framework.componentes.Imagen;
 import framework.componentes.PanelTabla;
 import framework.componentes.Radio;
 import framework.componentes.Reporte;
@@ -23,10 +26,12 @@ import java.util.Map;
 import javax.ejb.EJB;
 import paq_asistencia.ejb.ServicioAsistencia;
 import sistema.aplicacion.Pantalla;
+import framework.componentes.Panel;
 
 /**
- *
+ *@author Nicolas Cajilema
  * @author Janeth Pullotasig
+ * 
  */
 public class ReporteAsistencia extends Pantalla {
     private Reporte rep_reporte=new Reporte();
@@ -35,6 +40,7 @@ public class ReporteAsistencia extends Pantalla {
     private Dialogo dia_tipo = new Dialogo();
     private Radio rad_tipo_justificacion = new Radio();
     private SeleccionTabla sel_tab_carrera = new SeleccionTabla();
+    private Panel panOpcion = new Panel();
     String fechai="";
     String fechaf="";
     @EJB
@@ -85,6 +91,32 @@ public class ReporteAsistencia extends Pantalla {
         dia_tipo.setDialogo(gri_tipo);
         
         agregarComponente(dia_tipo);
+        //Diseño de fondo reporte asistencia//
+        Imagen ImaReportes = new Imagen();
+        ImaReportes.setValue("imagenes/ModAsistencia/Asistencia.png");
+        
+        panOpcion.setId("pan_opcion");
+        panOpcion.setTransient(true);
+        panOpcion.setHeader("REPORTES ASISTENCIA");
+        panOpcion.setStyle("font-size:10px;color:black;text-align:center;");
+        
+         Grid grid_pant = new Grid();
+        grid_pant.setColumns(1);
+        grid_pant.setStyle("text-align:center;position:absolute;top:210px;left:575px;");
+        Etiqueta eti_encab = new Etiqueta();
+        grid_pant.getChildren().add(ImaReportes);
+        Boton bot_imprimir = new Boton();
+        bot_imprimir.setValue("IMPRIMIR REPORTE");
+        bot_imprimir.setIcon("ui-icon-document-b");
+        bot_imprimir.setMetodo("abrirListaReportes");
+        bar_botones.agregarBoton(bot_imprimir);
+        grid_pant.getChildren().add(bot_imprimir);
+        agregarComponente(grid_pant);
+        panOpcion.getChildren().add(grid_pant);
+        agregarComponente(panOpcion);
+        
+        
+        
         
          //PANTALLA CONSULTA LA ASISTENCIA
             sel_tab_carrera.setId("sel_tab_carrera");
