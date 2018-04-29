@@ -276,7 +276,7 @@ public class HoraPeriodoHora extends Pantalla {
     }
     public void insertarReceso(){
         mension = set_tab_mension.getSeleccionados();
-        TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_receso") ));
+        TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_receso"),"true" ));
         String maximo = "";
         receso.imprimirSql();
         TablaGenerica tab_dias = utilitario.consultar(ser_horarios.getNumDias(dias));
@@ -297,6 +297,10 @@ public class HoraPeriodoHora extends Pantalla {
         }
         
   
+    }
+    public void insertaHorasClase(){
+        TablaGenerica entrada_salida = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_entrada_salida"),"true" ));
+
     }
     public Combo getCom_dia_modalidad() {
         return com_dia_modalidad;
