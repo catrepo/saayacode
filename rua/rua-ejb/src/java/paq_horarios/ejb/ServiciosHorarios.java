@@ -184,14 +184,14 @@ public class ServiciosHorarios {
             "where a.ide_ystpea ="+ide_ystpea+" and a.ide_ystmod ="+ide_ystmod+" and a.ide_ystjor = "+ide_ystjor+"" ;
         return sql;
          }
-        public String getDefinicionReceso(String ide_ystjor, String ide_ystpea, String ide_ystmod, String ide_yhothj) {
+        public String getDefinicionReceso(String ide_ystjor, String ide_ystpea, String ide_ystmod, String ide_yhothj,String estado) {
         String sql="";
         sql="select a.ide_yhodeh, a.ide_ystpea, a.ide_yhothj, b.descripcion_yhothj, a.ide_ystjor, c.descripcion_ystjor, a.ide_ystmod, d.descripcion_ystmod, a.hora_inicio_yhodeh, a.hora_final_yhodeh, a.activo_yhodeh\n" +
             "from yavirac_hora_definicion_hora a\n" +
             "inner join yavirac_hora_tipo_horario_jorna b on a.ide_yhothj = b.ide_yhothj\n" +
             "inner join yavirac_stror_jornada c on a.ide_ystjor = c.ide_ystjor\n" +
             "inner join yavirac_stror_modalidad d on a.ide_ystmod = d.ide_ystmod\n" +
-            "where a.ide_ystpea in ("+ide_ystpea+")  and a.ide_yhothj in ("+ide_yhothj+")  and a.ide_ystmod in ("+ide_ystmod+") and a.ide_ystjor in ("+ide_ystjor+")" ;
+            "where activo_yhodeh in ("+estado+") and a.ide_ystpea in ("+ide_ystpea+")  and a.ide_yhothj in ("+ide_yhothj+")  and a.ide_ystmod in ("+ide_ystmod+") and a.ide_ystjor in ("+ide_ystjor+")" ;
         return sql;
          }
         public String getNumDias(String ide_yhodia) {
