@@ -53,13 +53,15 @@ public class PermisoHoras extends Pantalla {
 		bot_limpiar.setMetodo("limpiar");
                 
                 Boton bot_aprobar= new Boton();
-		bot_aprobar.setValue("APROBAR SOLICTUD");
+		bot_aprobar.setValue("Aprobar Solicitud");
 		bot_aprobar.setMetodo("aprobar");
+                bot_aprobar.setIcon("ui-icon-circle-check");
 
                 
                 Boton bot_anular= new Boton();
-		bot_anular.setValue("ANULAR SOLICTUD");
-		bot_anular.setMetodo("anular");                
+		bot_anular.setValue("Anular Solicitud");
+		bot_anular.setMetodo("anular"); 
+                bot_anular.setIcon("ui-icon-circle-close");
                 
         // autocompletar empleado
 		aut_empleado.setId("aut_empleado");
@@ -77,7 +79,8 @@ public class PermisoHoras extends Pantalla {
                 
         Boton bot_imprimir = new Boton();
         bot_imprimir.setIcon("ui-icon-print");
-        bot_imprimir.setValue("IMPRIMIR SOLICITUD");
+        bot_imprimir.setValue("Imprimir solicitud");
+        
         bot_imprimir.setMetodo("generarPDF");
         bar_botones.agregarBoton(bot_imprimir);
         
