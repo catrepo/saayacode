@@ -103,6 +103,7 @@ public class Biometrico extends Pantalla {
        
        Boton bot_abrir_upload = new Boton();
        bot_abrir_upload.setValue("Subir Marcaciones");
+       bot_abrir_upload.setIcon("ui-icon-circle-arrow-n");//set icono Subir Marcacion///
        bot_abrir_upload.setMetodo("abrirUpload");
         bar_botones.agregarBoton(bot_abrir_upload);
        
