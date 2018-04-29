@@ -93,12 +93,14 @@ public class ControlAsistenciaAlumno extends Pantalla{
                 
            
            Boton bot_consultar = new Boton();
+           bot_consultar.setIcon("ui-icon-folder-open");//set icono consultar///
            bot_consultar.setValue("Consultar Asistencia");
            bot_consultar.setMetodo("filtraAlumno");
            bar_botones.agregarComponente(bot_consultar);
            
             Boton bot_asistencia = new Boton();
             bot_asistencia.setValue("Registrar Asistencia");
+            bot_asistencia.setIcon("ui-icon-note");//set icono Registrar///
             bot_asistencia.setMetodo("abrirCalendario");
             bar_botones.agregarBoton(bot_asistencia);  
             
