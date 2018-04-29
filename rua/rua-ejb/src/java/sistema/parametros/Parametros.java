@@ -29,11 +29,6 @@ public class Parametros {
         lis_parametros.add(new Parametro("0", "P_SIS_DESBLOQUEA_USUARIO", "Indica cuando se desbloquea a un usuario", "10", "SIS_ACCION_AUDITORIA", "IDE_ACAU", "DESCRIPCION_ACAU"));
 
 
-        /*
-         * HORARIOS MODULO =1
-         */
-        lis_parametros.add(new Parametro("1", "p_tipo_horario_jornada", "Indica la entrad salida y receso ", "4", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
-
        /*
          * ESTRUCTURA MODULO =2
          */
@@ -52,7 +47,8 @@ public class Parametros {
          * HORARIOS MODULO =5
          */
         lis_parametros.add(new Parametro("5", "p_tipo_receso", "Indica el receso para generacion de horarios", "2", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
-        lis_parametros.add(new Parametro("5", "p_tipo_hora", "Indica las horas para generacion de horarios", "2", "yavirac_hora_hora", "ide_yhohor", "descripcion_yhohor"));
+        lis_parametros.add(new Parametro("5", "p_tipo_hora", "Indica el codigo del numero de hora de tipo receso, asi como hora clase dice primera hora, segunda esta dice receso", "20", "yavirac_hora_hora", "ide_yhohor", "descripcion_yhohor"));
+        lis_parametros.add(new Parametro("5", "p_tipo_entrada_salida", "Indica el tipo de hora entrada salida para generacion de horarios", "2", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
 
         
 //////////////////////////////////////////////////////////////////////
