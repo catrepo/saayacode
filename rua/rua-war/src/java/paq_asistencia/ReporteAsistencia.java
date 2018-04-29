@@ -106,8 +106,8 @@ public class ReporteAsistencia extends Pantalla {
         Etiqueta eti_encab = new Etiqueta();
         grid_pant.getChildren().add(ImaReportes);
         Boton bot_imprimir = new Boton();
-        bot_imprimir.setValue("IMPRIMIR REPORTE");
-        bot_imprimir.setIcon("ui-icon-document-b");
+        bot_imprimir.setValue("Imprimir Reporte");
+        bot_imprimir.setIcon("ui-icon-print");
         bot_imprimir.setMetodo("abrirListaReportes");
         bar_botones.agregarBoton(bot_imprimir);
         grid_pant.getChildren().add(bot_imprimir);
