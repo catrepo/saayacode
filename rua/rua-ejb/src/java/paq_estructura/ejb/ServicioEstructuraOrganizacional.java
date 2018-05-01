@@ -24,7 +24,7 @@ public class ServicioEstructuraOrganizacional {
      */
     public String getPeriodoAcademico(String activo) {
         String sql="";
-        sql=" select ide_ystpea, descripcion_ystpea, fecha_inicio_ystpea, fecha_fianal_ystpera,descripcion_ystani from yavirac_stror_periodo_academic a,yavirac_stror_anio b where a.ide_ystani = b.ide_ystani and activo_ystpea in ("+activo+") order by descripcion_ystani desc, fecha_inicio_ystpea desc";
+        sql=" select ide_ystpea, descripcion_ystpea, fecha_inicio_ystpea, fecha_final_ystpera,descripcion_ystani from yavirac_stror_periodo_academic a,yavirac_stror_anio b where a.ide_ystani = b.ide_ystani and activo_ystpea in ("+activo+") order by descripcion_ystani desc, fecha_inicio_ystpea desc";
         return sql;
     }
     
