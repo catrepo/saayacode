@@ -6,10 +6,14 @@ package paq_horario;
 
 import sistema.aplicacion.Pantalla;
 import framework.componentes.Arbol;
+import framework.componentes.Combo;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import javax.ejb.EJB;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_horarios.ejb.ServiciosHorarios;
 
 
 /**
@@ -21,8 +25,15 @@ public class distribucioninstitucional extends Pantalla {
     private Arbol arb_arbol = new Arbol();
     private Tabla tab_tabla1 = new Tabla();
     private Tabla tab_tabla2 = new Tabla();
+    
 
+     @EJB
+    private final  ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
 
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    
+    
     public distribucioninstitucional() {
         
         Tabulador tab_tabulador = new Tabulador();
@@ -30,8 +41,10 @@ public class distribucioninstitucional extends Pantalla {
         
         tab_tabla1.setId("tab_tabla1");
         tab_tabla1.setTabla("yavirac_hora_distribuc_instit", "ide_yhodin", 1);
+        
         tab_tabla1.setCampoPadre("yav_ide_yhodin");
         tab_tabla1.setCampoNombre("descripcion_yhodin");
+        tab_tabla1.agregarRelacion(tab_tabla2);
         tab_tabla1.agregarArbol(arb_arbol);
         tab_tabla1.dibujar();
         PanelTabla pat_panel = new PanelTabla();
@@ -43,6 +56,10 @@ public class distribucioninstitucional extends Pantalla {
         tab_tabla2.setId("tab_tabla2");
         tab_tabla2.setIdCompleto("tab_tabulador:tab_tabla2");
         tab_tabla2.setTabla("yavirac_hora_disponibi_laborat", "ide_yhodil", 2);
+        tab_tabla2.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true"));
+        tab_tabla2.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        tab_tabla2.getColumna("ide_yhodia").setCombo(ser_horarios.getDia());
+        tab_tabla2.getColumna("ide_ystins").setCombo(ser_estructura_organizacional.getTipoInstalacion());
         tab_tabla2.dibujar();
         PanelTabla pat_panel2 = new PanelTabla();
         pat_panel2.setPanelTabla(tab_tabla2);
@@ -65,19 +82,21 @@ public class distribucioninstitucional extends Pantalla {
 
     @Override
     public void insertar() {
-        tab_tabla1.insertar();
+        utilitario.getTablaisFocus().insertar();
     }
 
     @Override
     public void guardar() {
         if (tab_tabla1.guardar()) {
-            guardarPantalla();
+            if (tab_tabla2.guardar()) {
+            }           
         }
+        guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        tab_tabla1.eliminar();
+        utilitario.getTablaisFocus().eliminar();
     }
 
     public Arbol getArb_arbol() {
