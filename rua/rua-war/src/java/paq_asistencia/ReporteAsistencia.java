@@ -102,7 +102,7 @@ public class ReporteAsistencia extends Pantalla {
         
          Grid grid_pant = new Grid();
         grid_pant.setColumns(1);
-        grid_pant.setStyle("text-align:center;position:absolute;top:210px;left:575px;");
+        grid_pant.setStyle("text-align:center;position:absolute;top:210px;left:535px;");
         Etiqueta eti_encab = new Etiqueta();
         grid_pant.getChildren().add(ImaReportes);
         Boton bot_imprimir = new Boton();
