@@ -183,6 +183,13 @@ public class HoraPeriodoHora extends Pantalla {
         bar_botones.agregarBoton(bot_replicar);    
         bot_replicar.setMetodo("generarPeriodoHora");
         
+        Boton bot_n = new Boton();
+        bot_n.setIcon("ui-icon-newwin");
+        bot_n.setValue("NUEVO");
+        bot_n.setTitle("NUEVO");
+        bar_botones.agregarBoton(bot_n);    
+        bot_n.setMetodo("insertaHorasClase");
+        
                 }
      public void filtroComboPeriodoAcademnico(){
         
@@ -299,9 +306,16 @@ public class HoraPeriodoHora extends Pantalla {
   
     }
     public void insertaHorasClase(){
+       
         TablaGenerica entrada_salida = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_entrada_salida"),"true" ));
-
+           for (int i=0;i<entrada_salida.getTotalFilas();i++){
+               TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(entrada_salida.getValor(i, "ide_ystjor"), com_periodo_academico.getValue().toString(), entrada_salida.getValor(i, "ideyhomod"), utilitario.getVariable("p_tipo_receso"), "true"));
+               utilitario.agregarMensajeInfo("ADVERTENCIA ", "MODA"+receso);
+               //System.out.print(receso);
+           }
     }
+    
+    
     public Combo getCom_dia_modalidad() {
         return com_dia_modalidad;
     }
