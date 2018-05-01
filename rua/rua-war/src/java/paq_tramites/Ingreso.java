@@ -11,7 +11,9 @@ import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import java.util.List;
 import javax.ejb.EJB;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_personal.ejb.ServicioPersonal;
 import paq_tramites.ejb.ServicioTramite;
 import sistema.aplicacion.Pantalla;
@@ -30,18 +32,23 @@ public class Ingreso extends Pantalla{
     private final ServicioTramite ser_tramite = (ServicioTramite) utilitario.instanciarEJB(ServicioTramite.class);
     @EJB
     private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
 
     
     public Ingreso (){
+        if (tienePerfilAsistencia()) {
         tab_ingreso.setId("tab_ingreso");
         tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
         tab_ingreso.getColumna("ide_ytrdoc").setCombo(ser_tramite.getSqlDocumento());
         tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad());
         tab_ingreso.getColumna("ide_ytrtid").setCombo(ser_tramite.getSqlTipoEntidad());
-            tab_ingreso.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
-            tab_ingreso.getColumna("ide_ypedpe").setAutoCompletar();
-            tab_ingreso.getColumna("ide_ypedpe").setLectura(true);        
-        tab_ingreso.setHeader("Registro Ingreso");
+        tab_ingreso.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
+        tab_ingreso.getColumna("ide_ypedpe").setAutoCompletar();
+        tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
+        tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setValorDefecto("1");
+        tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setVisible(false);
+        tab_ingreso.setHeader("REGISTRO DOCUMENTAL INTERNO");
         tab_ingreso.setTipoFormulario(true);
         tab_ingreso.getGrid().setColumns(6);
         tab_ingreso.dibujar();
@@ -82,12 +89,41 @@ public class Ingreso extends Pantalla{
         
         
         agregarComponente(div_ingreso);   
+        } else {
+            utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
+        }
 }
 
+    String docente = "";
+    String documento="";
+    String ide_docente="";
+        private boolean tienePerfilAsistencia() {
+        List sql = utilitario.getConexion().consultar(ser_estructura_organizacional.getUsuarioSistema(utilitario.getVariable("IDE_USUA")," and not ide_ypedpe is null"));
+
+        if (!sql.isEmpty()) {
+            Object[] fila = (Object[]) sql.get(0);
+                    List sql2 = utilitario.getConexion().consultar(ser_personal.getDatoPersonalCodigo(fila[3].toString()));
+            if (!sql2.isEmpty()) {
+                Object[] fila2 = (Object[]) sql2.get(0);
+                docente = fila2[1].toString()+" "+fila2[2].toString();
+                documento = fila2[3].toString();
+                ide_docente=fila2[0].toString();
+                    return true;
+            }  
+            else{
+            return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
     @Override
     public void insertar() {
         if(tab_ingreso.isFocus()){
          tab_ingreso.insertar();
+         tab_ingreso.insertar();
+         tab_ingreso.setValor("ide_ypedpe", ide_docente);
         }
         else if(tab_asignacion.isFocus()){
             tab_asignacion.insertar();
