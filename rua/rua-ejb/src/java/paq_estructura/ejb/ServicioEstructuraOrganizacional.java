@@ -24,7 +24,7 @@ public class ServicioEstructuraOrganizacional {
      */
     public String getPeriodoAcademico(String activo) {
         String sql="";
-        sql="select ide_ystpea, descripcion_ystpea, fecha_inicio_ystpea, fecha_fianal_ystpera from yavirac_stror_periodo_academic  where activo_ystpea in ("+activo+") order by fecha_inicio_ystpea desc";
+        sql=" select ide_ystpea, descripcion_ystpea, fecha_inicio_ystpea, fecha_fianal_ystpera,descripcion_ystani from yavirac_stror_periodo_academic a,yavirac_stror_anio b where a.ide_ystani = b.ide_ystani and activo_ystpea in ("+activo+") order by descripcion_ystani desc, fecha_inicio_ystpea desc";
         return sql;
     }
     
@@ -206,13 +206,13 @@ public class ServicioEstructuraOrganizacional {
        
       public String getSexo() {
         String sql="";
-        sql="select ide_ysttin,descripcion_ysttin from yavirac_stror_tipo_instalacion ";
+        sql="select ide_ystsex,descripcion_ystsex from yavirac_stror_sexo ";
         return sql;
         
 }
             public String getDiscapacidad() {
         String sql="";
-        sql="select ide_ysttid,descripcion_ysttid,activo_ysttid from yavirac_stror_tipo_discapacid";
+        sql="select ide_ysttid,descripcion_ysttid from yavirac_stror_tipo_discapacid";
         return sql;
             }
       
@@ -227,7 +227,7 @@ public class ServicioEstructuraOrganizacional {
     public String getGradoDiscapacidad() {
           
         String sql="";
-        sql="select ide_ystgrd,descripcion_ystgrd,activo_ystgrd from yavirac_stror_grado_discapaci";
+        sql="select ide_ystgrd,descripcion_ystgrd from yavirac_stror_grado_discapaci";
         return sql;
             
              }
@@ -282,10 +282,20 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystani,descripcion_ystani from yavirac_stror_anio";
         return sql;
  }
-            public String getDistribucionPolitica() {
+          public String getIdioma() {
           
         String sql="";
-        sql="select ide_ystdip,yav_ide_ystdip,descripcion_ystdip,activo_ystdip from yavirac_stror_distribucion_pol";
+        sql="select ide_ystdom,descripcion_ystdom from YAVIRAC_STROR_IDIOMA order by descripcion_ystdom";
+        return sql;
+ }          
+            public String getDistribucionPolitica(String tipo, String condicion) {
+          
+        String sql="";
+        sql="select ide_ystdip,descripcion_ystdip from yavirac_stror_distribucion_pol";
+        if(tipo.equals("1")){
+            sql+=" where ide_ysttdp in ('"+condicion+"') ";
+        }
+        sql +=" order by descripcion_ystdip";
         return sql;
  }
  

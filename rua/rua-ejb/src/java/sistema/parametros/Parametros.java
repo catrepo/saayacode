@@ -27,6 +27,9 @@ public class Parametros {
         lis_parametros.add(new Parametro("0", "P_SIS_CREAR_USUARIO", "Indica cuando se crea un usuario en el sistema", "9", "SIS_ACCION_AUDITORIA", "IDE_ACAU", "DESCRIPCION_ACAU"));
         lis_parametros.add(new Parametro("0", "P_SIS_BLOQUEA_USUARIO", "Indica cuando se bloqueao a un usuario", "2", "SIS_ACCION_AUDITORIA", "IDE_ACAU", "DESCRIPCION_ACAU"));
         lis_parametros.add(new Parametro("0", "P_SIS_DESBLOQUEA_USUARIO", "Indica cuando se desbloquea a un usuario", "10", "SIS_ACCION_AUDITORIA", "IDE_ACAU", "DESCRIPCION_ACAU"));
+        lis_parametros.add(new Parametro("0", "p_tipo_pais", "Indica el tipo pais para recargar los paises", "2", "yavirac_stror_tipo_divisio_po", "ide_ysttdp", "descripcion_ysttdp"));
+        lis_parametros.add(new Parametro("0", "p_tipo_provincia", "Indica tipo provincia para recargar las provincias", "2", "yavirac_stror_tipo_divisio_po", "ide_ysttdp", "descripcion_ysttdp"));
+        lis_parametros.add(new Parametro("0", "p_tipo_canton", "Indica tipo canton para recragar cantones", "2", "yavirac_stror_tipo_divisio_po", "ide_ysttdp", "descripcion_ysttdp"));
 
 
        /*

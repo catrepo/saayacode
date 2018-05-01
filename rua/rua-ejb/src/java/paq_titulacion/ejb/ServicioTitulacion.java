@@ -56,7 +56,7 @@ public class ServicioTitulacion {
    public String getEmpresa() {
           
         String sql="";
-        sql="select ide_ytiemp,ruc_ytiemp,direccion_ytiemp,correo_ytiemp,movil_ytiemp,logo tipo_ytiemp,nombre comercial_ytiemp from yavirac_titu_empresa";
+        sql="select ide_ytiemp,nombre_comercial_ytiemp from yavirac_titu_empresa";
         return sql;
  }
    public String getTipoEmpresa() {
