@@ -1121,5 +1121,13 @@ public class Utilitario extends Framework {
     public void getConexion(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+   public String getDiferenciaHorasMinutos(String hora_inicial, String hora_final){
+       String sql="";
+        sql="select ( date_part('hour', cast('2001-02-16 '|| '"+hora_final+"' as timestamp) ) * 60 \n" +
+            "+ ( date_part('minute', cast('2017-09-30 '|| '"+hora_final+"' as timestamp)))) - \n" +
+            "(date_part('hour', cast('2017-05-01 '|| '"+hora_inicial+"' as timestamp) ) * 60 \n" +
+            "+ ( date_part('minute', cast('2017-05-01 '|| '"+hora_inicial+"' as timestamp)))) as resultado";
+        return sql;
+   }
 }
+       
