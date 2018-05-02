@@ -1123,10 +1123,15 @@ public class Utilitario extends Framework {
     }
    public String getDiferenciaHorasMinutos(String hora_inicial, String hora_final){
        String sql="";
-        sql="select ( date_part('hour', cast('2001-02-16 '|| '"+hora_final+"' as timestamp) ) * 60 \n" +
+        sql="select 1 as codigo,( date_part('hour', cast('2001-02-16 '|| '"+hora_final+"' as timestamp) ) * 60 \n" +
             "+ ( date_part('minute', cast('2017-09-30 '|| '"+hora_final+"' as timestamp)))) - \n" +
             "(date_part('hour', cast('2017-05-01 '|| '"+hora_inicial+"' as timestamp) ) * 60 \n" +
             "+ ( date_part('minute', cast('2017-05-01 '|| '"+hora_inicial+"' as timestamp)))) as resultado";
+        return sql;
+   }
+    public String getSumaHoras(String hora_inicial, String segundos){
+       String sql="";
+        sql="select 1 as codigo, '"+hora_inicial+"'::interval + '"+segundos+"'::interval as hora_nueva";
         return sql;
    }
 }
