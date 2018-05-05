@@ -336,7 +336,7 @@ public void generarPDF() {
 
     public void filtroComboPeriodoAcademnico() {
 
-        tab_matriculas.setCondicion("ide_ymaper=" + com_periodo_academico.getValue().toString());
+        tab_matriculas.setCondicion("ide_ystpea=" + com_periodo_academico.getValue().toString());
         tab_matriculas.ejecutarSql();
         tab_registro_credito.ejecutarSql();
         utilitario.addUpdate("tab_pre_inscrip");
