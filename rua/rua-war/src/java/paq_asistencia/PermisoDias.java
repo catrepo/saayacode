@@ -120,7 +120,8 @@ public class PermisoDias extends Pantalla {
 	tab_tipomotivo.getColumna("total_horas_yasper").alinearCentro();
 	tab_tipomotivo.getColumna("num_dias_yasper").setRequerida(true);
 	tab_tipomotivo.getColumna("num_dias_yasper").setEtiqueta();
-	tab_tipomotivo.getColumna("num_dias_yasper").alinearCentro();   
+	tab_tipomotivo.getColumna("num_dias_yasper").alinearCentro();  
+        tab_tipomotivo.getColumna("archivo_yaspe").setUpload();
          tab_tipomotivo.getColumna("total_horas_yasper").setEstilo("color: red; font-size: 18px; align: right;font-weight:bold");
          tab_tipomotivo.getColumna("num_dias_yasper").setEstilo("color: red; font-size: 18px; align: right;font-weight:bold");
         tab_tipomotivo.setTipoFormulario(true);

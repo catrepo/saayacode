@@ -129,6 +129,7 @@ public class PermisoHoras extends Pantalla {
 	tab_tipomotivo.getColumna("num_dias_yasper").setRequerida(true);
 	tab_tipomotivo.getColumna("num_dias_yasper").setEtiqueta();
 	tab_tipomotivo.getColumna("num_dias_yasper").alinearCentro();   
+        tab_tipomotivo.getColumna("archivo_yaspe").setUpload();
          tab_tipomotivo.getColumna("total_horas_yasper").setEstilo("color: red; font-size: 18px; align: right;font-weight:bold");
          tab_tipomotivo.getColumna("num_dias_yasper").setEstilo("color: red; font-size: 18px; align: right;font-weight:bold");
         tab_tipomotivo.setTipoFormulario(true);
@@ -324,6 +325,34 @@ public void calcularDiasPermisos(DateSelectEvent evt){
             return false;
         }
     }
+public boolean validarSolicitudPermiso(){
+		if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_hasta_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_desde_yasper")))){
+			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha hasta no puede ser menor que la fecha desde");
+			return false;
+		}
+		if (tab_tipomotivo.getValor("fecha_desde_yasper")==null || tab_tipomotivo.getValor("fecha_desde_yasper").isEmpty()){
+			utilitario.agregarMensajeInfo("No se puede guardar", "Debe ingresar la fecha desde ");
+			return false;
+		}
+
+		if (tab_tipomotivo.getValor("fecha_hasta_yasper")==null || tab_tipomotivo.getValor("fecha_hasta_yasper").isEmpty()){
+			utilitario.agregarMensajeInfo("No se puede guardar", "Debe ingresar la fecha hasta");
+			return false;
+		}
+if (tab_tipomotivo.getValor("hora_fin_yasper")==null || tab_tipomotivo.getValor("hora_fin_yasper").isEmpty()){
+			utilitario.agregarMensajeInfo("No se puede guardar", "Debe ingresar la hora hasta");
+			return false;
+		}
+		if (tab_tipomotivo.getValor("hora_inicio_yasper")==null || tab_tipomotivo.getValor("hora_inicio_yasper").isEmpty()){
+			utilitario.agregarMensajeInfo("No se puede guardar", "Debe ingresar la hora desde");
+			return false;
+		}
+		if (isHoraMayor(tab_tipomotivo.getValor("hora_inicio_yasper"),tab_tipomotivo.getValor("hora_fin_yasper"))) {
+			utilitario.agregarMensajeInfo("No se puede guardar", "La Hora Inicial no puede ser Menor a Hora Final");
+			return false;
+		}                
+    return true;
+    }    
     @Override
     public void insertar() {
         if (aut_empleado.getValor()!=null){
@@ -337,8 +366,16 @@ public void calcularDiasPermisos(DateSelectEvent evt){
 
     @Override
     public void guardar() {
+        if (aut_empleado.getValor()!=null){		
+			if (validarSolicitudPermiso()){	
         tab_tipomotivo.guardar();
         guardarPantalla();
+        }
+        tab_tipomotivo.guardar();
+        guardarPantalla();
+        }else{
+			utilitario.agregarMensajeInfo("No se puede guardar el Permiso", "Debe seleccionar un Empleado");
+		}
     }
 
     @Override
