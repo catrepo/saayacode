@@ -5,6 +5,7 @@
  */
 package paq_asistencia;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.AutoCompletar;
 import framework.componentes.Boton;
 import framework.componentes.Division;
@@ -177,8 +178,17 @@ String docente = "";
 
     @Override
     public void guardar() {
+        TablaGenerica tab_dias =utilitario.consultar("select * from yavirac_stror_periodo_academic where activo_ystpea=true");
+        TablaGenerica tab_fecha = utilitario.consultar("SELECT 1 as codigo,cast((now() - CAST('"+tab_dias.getValor("dias_justifica_ystpea")+" days' AS INTERVAL)) as date) as fecha");
+        
+        if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_ausento_yasjus")), utilitario.getFecha(tab_tipomotivo.getValor("fecha")))){
+			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha de ausencia supera el limite permitido para justificar que son "+tab_dias.getValor("dias_justifica_ystpea")+" dias");
+			return;
+		}
+        else{
         tab_tipomotivo.guardar();
         guardarPantalla();
+        }
     }
 
     @Override
