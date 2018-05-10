@@ -326,10 +326,20 @@ public void calcularDiasPermisos(DateSelectEvent evt){
         }
     }
 public boolean validarSolicitudPermiso(){
-		if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_hasta_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_desde_yasper")))){
+    
+                if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_aprobado_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_desde_yasper")))){
+			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha de aprobacionno puede ser menor que la fecha desde");
+			return false;
+		}
+		if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_aprobado_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_solicitud_yasper")))){
+			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha hasta no puede ser menor que la fecha solicitud");
+			return false;
+		}
+                if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_hasta_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_desde_yasper")))){
 			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha hasta no puede ser menor que la fecha desde");
 			return false;
 		}
+                
 		if (tab_tipomotivo.getValor("fecha_desde_yasper")==null || tab_tipomotivo.getValor("fecha_desde_yasper").isEmpty()){
 			utilitario.agregarMensajeInfo("No se puede guardar", "Debe ingresar la fecha desde ");
 			return false;
@@ -368,11 +378,10 @@ if (tab_tipomotivo.getValor("hora_fin_yasper")==null || tab_tipomotivo.getValor(
     public void guardar() {
         if (aut_empleado.getValor()!=null){		
 			if (validarSolicitudPermiso()){	
-        tab_tipomotivo.guardar();
-        guardarPantalla();
+                            tab_tipomotivo.guardar();
+                     guardarPantalla();
         }
-        tab_tipomotivo.guardar();
-        guardarPantalla();
+
         }else{
 			utilitario.agregarMensajeInfo("No se puede guardar el Permiso", "Debe seleccionar un Empleado");
 		}
