@@ -17,7 +17,7 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
@@ -30,8 +30,15 @@
 	<parameter name="nombre" isForPrompting="true" class="java.lang.String"/>
 	<parameter name="ide_sucu" isForPrompting="true" class="java.lang.Integer"/>
 	<parameter name="ide_empr" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="pfechainicial" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["2018-15-10"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pfechafinal" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["2018-15-11"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[select num_yasbio,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,fecha_yasbio,hora_yasbio from
-yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_reloj_ypedpe]]></queryString>
+yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_reloj_ypedpe
+ and fecha_yasbio between cast($P{pfechainicial} as date) and cast($P{pfechafinal} as date)]]></queryString>
 
 	<field name="num_yasbio" class="java.lang.Long"/>
 	<field name="apellido_ypedpe" class="java.lang.String"/>
@@ -91,7 +98,7 @@ yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_
 						key="staticText-2"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Cod.Usua]]></text>
 				</staticText>
@@ -104,7 +111,7 @@ yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_
 						key="staticText-3"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Cedula]]></text>
 				</staticText>
@@ -117,7 +124,7 @@ yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_
 						key="staticText-4"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left">
-						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Apellidos]]></text>
 				</staticText>
@@ -130,7 +137,7 @@ yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_
 						key="staticText-5"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left">
-						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Nombres]]></text>
 				</staticText>
@@ -143,9 +150,9 @@ yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_
 						key="staticText-6"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left">
-						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Fecha]]></text>
+				<text><![CDATA[Fecha Marcación]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -156,16 +163,16 @@ yavirac_perso_dato_personal a,yavirac_asis_biometrico b where num_yasbio=codigo_
 						key="staticText-7"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left">
-						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Hora]]></text>
+				<text><![CDATA[Hora Marcación]]></text>
 				</staticText>
 				<rectangle radius="6" >
 					<reportElement
 						mode="Transparent"
-						x="10"
+						x="0"
 						y="5"
-						width="490"
+						width="510"
 						height="13"
 						key="rectangle-1"/>
 					<graphicElement stretchType="NoStretch"/>
