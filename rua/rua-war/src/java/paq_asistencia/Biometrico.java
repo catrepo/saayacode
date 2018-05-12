@@ -329,8 +329,8 @@ public void aceptarReporte() {
                 
                 Map map_parametros = new HashMap();
                 map_parametros.put("nombre", utilitario.getVariable("NICK"));
-                map_parametros.put("pfechai", sel_fechas.getFecha1String());
-                map_parametros.put("pfechaf", sel_fechas.getFecha2String());
+                map_parametros.put("pfechainicial", sel_fechas.getFecha1String());
+                map_parametros.put("pfechafinal", sel_fechas.getFecha2String());
                 sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
                 sel_fechas.cerrar();
                 sel_rep.dibujar();            
