@@ -124,7 +124,7 @@ public class HoraPeriodoHora extends Pantalla {
         //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
         set_tab_mension.setWidth("80%");
         set_tab_mension.setHeight("70%");
-        set_tab_mension.getBot_aceptar().setMetodo("insertarReceso");
+        set_tab_mension.getBot_aceptar().setMetodo("generarSemanero");
         agregarComponente(set_tab_mension);
         
     tab_hora_periodo_hora.setId("tab_hora_periodo_hora");   //identificador
@@ -273,14 +273,18 @@ public class HoraPeriodoHora extends Pantalla {
                 }
 }
     public void generarSemanero(){
-        
+        /*
         utilitario.agregarMensajeInfo("ADVERTENCIA","modalidad "+modalidad);
         utilitario.agregarMensajeInfo("ADVERTENCIA", "jornada "+jornada);
         utilitario.agregarMensajeInfo("ADVERTENCIA", "dias "+dias);
         mension = set_tab_mension.getSeleccionados();
         utilitario.agregarMensajeInfo("ADVERTENCIA", "mension "+mension);
         set_tab_mension.cerrar();
+*/
+         insertarReceso();
+         insertaHorasClase();
     }
+   
     public void insertarReceso(){
         mension = set_tab_mension.getSeleccionados();
         TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_receso"),"true" ));
@@ -306,12 +310,105 @@ public class HoraPeriodoHora extends Pantalla {
   
     }
     public void insertaHorasClase(){
-       
-        TablaGenerica entrada_salida = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_entrada_salida"),"true" ));
-           for (int i=0;i<entrada_salida.getTotalFilas();i++){
-               TablaGenerica receso = utilitario.consultar(ser_horarios.getDefinicionReceso(entrada_salida.getValor(i, "ide_ystjor"), com_periodo_academico.getValue().toString(), entrada_salida.getValor(i, "ideyhomod"), utilitario.getVariable("p_tipo_receso"), "true"));
-               utilitario.agregarMensajeInfo("ADVERTENCIA ", "MODA"+receso);
-               //System.out.print(receso);
+        double numero_horas_entrada=0;
+        double numero_horas_receso=0;
+        int numero_horas_total=0;
+        double numero_horas_clase=0;
+        String maximo="";
+        String hora_ini="";
+        String hora_fin="";
+        boolean receso=false;
+        TablaGenerica tab_entrada_salida = utilitario.consultar(ser_horarios.getDefinicionReceso(jornada, com_periodo_academico.getValue().toString(), modalidad, utilitario.getVariable("p_tipo_entrada_salida"),"true" ));
+        TablaGenerica tab_periodo= utilitario.consultar("select * from yavirac_stror_periodo_academic where ide_ystpea="+com_periodo_academico.getValue());
+        numero_horas_clase = Double.parseDouble(tab_periodo.getValor("hora_clase_ystpea"));
+        for (int i=0;i<tab_entrada_salida.getTotalFilas();i++){
+            
+               utilitario.getConexion().ejecutarSql("delete from yavirac_hora_matriz; ");
+               TablaGenerica tab_hora_entrada=utilitario.consultar(utilitario.getDiferenciaHorasMinutos(tab_entrada_salida.getValor(i,"hora_inicio_yhodeh"), tab_entrada_salida.getValor(i,"hora_final_yhodeh")));
+               numero_horas_entrada = Double.parseDouble(tab_hora_entrada.getValor("resultado"));
+               TablaGenerica tab_receso = utilitario.consultar("select * from yavirac_hora_definicion_hora where ide_ystpea="+com_periodo_academico.getValue()+" and ide_yhothj="+utilitario.getVariable("p_tipo_receso")+" and ide_ystjor="+tab_entrada_salida.getValor(i, "ide_ystjor")+" and ide_ystmod="+tab_entrada_salida.getValor(i, "ide_ystmod"));
+              
+               if(tab_receso.getTotalFilas()>0){
+                    TablaGenerica tab_hora_receso=utilitario.consultar(utilitario.getDiferenciaHorasMinutos(tab_receso.getValor("hora_inicio_yhodeh"), tab_receso.getValor("hora_final_yhodeh")));
+                    numero_horas_receso = Double.parseDouble(tab_hora_receso.getValor("resultado"));
+                    receso=true;
+               }
+               else {
+                   receso=false;
+               }
+               double opera=(numero_horas_entrada+numero_horas_receso)/numero_horas_clase;
+               TablaGenerica resul_int=utilitario.consultar("select 1 as codigo,cast( cast('"+opera+"' as numeric) as integer) as res");
+               numero_horas_total=Integer.parseInt(resul_int.getValor("res"));
+               System.out.println("horas enteras "+numero_horas_total);
+               //if(utilitario.isEnteroPositivo(numero_horas_total+"")){
+               if(1==1){
+                    System.out.println("entre  horas enteras "+numero_horas_total);
+                   TablaGenerica tab_inicia_hora = utilitario.consultar("select * from yavirac_stror_jornada where ide_ystjor="+tab_entrada_salida.getValor(i, "ide_ystjor")); 
+                   int inicia_hora= Integer.parseInt(tab_inicia_hora.getValor("inicia_hora_ystjor"));
+                   for (int j=1;j<Integer.parseInt(numero_horas_total+"");j++){
+                   TablaGenerica codigo_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_matriz", "ide_yhomat"));
+                   maximo = codigo_maximo.getValor("maximo");
+                        if(j==1){
+                            System.out.println("valor j "+j);
+                            hora_ini=tab_entrada_salida.getValor(i, "hora_inicio_yhodeh");
+                            System.out.println("valor hora_ini "+hora_ini);
+                        }
+                        else{
+                            System.out.println("valor j else "+j);
+                            TablaGenerica tab_hora_ini = utilitario.consultar("select * from yavirac_hora_matriz where ide_yhomat="+(j));
+                            hora_ini= tab_hora_ini.getValor("hora_fin_yhomat");
+                            System.out.println("valor hora_ini else "+hora_ini);
+                        }
+                         System.out.println("valor j suma "+j);
+                        int horas_sumar=Integer.parseInt(tab_periodo.getValor("hora_clase_ystpea"))*60;
+                        System.out.println("valor horas_sumar suma "+horas_sumar);
+                        TablaGenerica tab_hora_fin= utilitario.consultar(utilitario.getSumaHoras(hora_ini, horas_sumar+""));
+                        hora_fin=tab_hora_fin.getValor("hora_nueva");
+                        System.out.println("hora_fin "+hora_fin);
+                        
+                        if(receso){
+                            //TablaGenerica tab_valida_receso=utilitario.consultar(ser_horarios.getResultadoExisteReceso(tab_receso.getValor("hora_inicio_yhodeh"), tab_entrada_salida.getValor(i,"hora_inicio_yhodeh"), tab_entrada_salida.getValor(i,"hora_final_yhodeh")));
+                            TablaGenerica tab_valida_receso=utilitario.consultar(ser_horarios.getResultadoExisteReceso(tab_receso.getValor("hora_inicio_yhodeh"), hora_ini, hora_fin));
+                            if(tab_valida_receso.getTotalFilas()>0){
+                                hora_ini=tab_receso.getValor("hora_final_yhodeh");
+                                TablaGenerica tab_hora_f= utilitario.consultar(utilitario.getSumaHoras(hora_ini, horas_sumar+""));
+                                hora_fin=tab_hora_f.getValor("hora_nueva");
+                            }
+                        }
+                        System.out.println("hora_fin saliendo else"+hora_fin);
+                        utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_matriz(ide_yhomat, hora_inicio_yhomat, hora_fin_yhomat, orden_hora_yhomat)" +
+                        " VALUES ('"+maximo+"','"+hora_ini+"','"+hora_fin+"','"+inicia_hora+"');");
+                        inicia_hora=inicia_hora+1;                        
+                   }
+                   TablaGenerica tab_matriz_hora= utilitario.consultar("select * from yavirac_hora_matriz");
+                   for(int k=0;k<tab_matriz_hora.getTotalFilas();k++){
+                       
+                        TablaGenerica tab_dias = utilitario.consultar(ser_horarios.getNumDias(dias));
+                        TablaGenerica tab_mension = utilitario.consultar(ser_horarios.getNumMension(mension));
+                         
+                             for(int m=0; m<tab_dias.getTotalFilas();m++){ 
+                                for (int n=0; n<tab_mension.getTotalFilas();n++){
+                       
+                       TablaGenerica codigo_maximo_hora = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_periodo_hor", "ide_yhopeh"));
+                       maximo = codigo_maximo_hora.getValor("maximo");
+                       
+                       TablaGenerica tab_hohor=utilitario.consultar("select ide_yhohor,orden_yhohor from yavirac_hora_hora where orden_yhohor="+tab_matriz_hora.getValor(k, "orden_hora_yhomat"));
+                       String ide_hohor=tab_hohor.getValor("ide_yhohor");
+                       
+                       utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_periodo_hor(ide_yhopeh, ide_ystmod, ide_ystjor, ide_yhohor, ide_ystpea, horainicial_yhopeh,horafinal_yhopeh, activo_yhopeh, ide_yhodia, ide_yhothj, ide_ystmen)\n" +
+                        " VALUES ('"+maximo+"', '"+tab_entrada_salida.getValor(i, "ide_ystmod")+"', '"+tab_entrada_salida.getValor(i, "ide_ystjor")+"', '"+ide_hohor+"', '"+com_periodo_academico.getValue()+"', '"+tab_matriz_hora.getValor(k, "hora_inicio_yhomat")+"','"+tab_matriz_hora.getValor(k, "hora_fin_yhomat")+"', 'true', '"+tab_dias.getValor(m, "ide_yhodia")+"', '"+utilitario.getVariable("p_tipo_entrada_salida")+"', '"+tab_mension.getValor(n, "ide_ystmen")+"');");
+                       
+                                }
+                             }
+                        
+                    }
+               }
+               else{
+                    System.out.println("elseee    horas enteras "+numero_horas_total);
+                   utilitario.agregarMensajeError("No se puede continuar", "No se encuentra bien definidos las horas clase");
+                   return;
+               }
+                //System.out.print(receso);
            }
     }
     
