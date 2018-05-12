@@ -204,4 +204,10 @@ public class ServiciosHorarios {
         sql="select ide_ystmen, descripcion_ystmen from yavirac_stror_mension where ide_ystmen in ("+ide_ystmen+") order by descripcion_ystmen" ;
         return sql;
          }
+        public String getResultadoExisteReceso(String hora_receso,String hora_inicio,String hora_fin) {
+        String sql="";
+        sql="select 1 as resultado,2 as respuesta from yavirac_hora_definicion_hora where ('"+hora_receso+"'::interval + '60' ::interval) between '"+hora_inicio+"'::interval and '"+hora_fin+"'::interval limit 1" ;
+        System.out.println("imprimo resultao receso "+sql);
+        return sql;
+         }        
 }

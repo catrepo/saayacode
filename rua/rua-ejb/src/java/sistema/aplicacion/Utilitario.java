@@ -1131,7 +1131,8 @@ public class Utilitario extends Framework {
    }
     public String getSumaHoras(String hora_inicial, String segundos){
        String sql="";
-        sql="select 1 as codigo, '"+hora_inicial+"'::interval + '"+segundos+"'::interval as hora_nueva";
+        sql="select 1 as codigo, '"+hora_inicial+"'::interval + '"+segundos+"'::interval||'' as hora_nueva";
+        System.out.println("calculando las horas "+sql);
         return sql;
    }
 }
