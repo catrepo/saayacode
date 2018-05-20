@@ -258,6 +258,12 @@ public void calcularDiasPermisos(DateSelectEvent evt){
         }
     }
     	public boolean validarSolicitudPermiso(){
+            
+                if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_aprobado_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_solicitud_yasper")))){
+			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha aprobacion no puede ser menor que la fecha solicitud");
+			return false;
+		}
+            
 		if (utilitario.isFechaMenor(utilitario.getFecha(tab_tipomotivo.getValor("fecha_hasta_yasper")), utilitario.getFecha(tab_tipomotivo.getValor("fecha_desde_yasper")))){
 			utilitario.agregarMensajeInfo("No se puede guardar", "La fecha hasta no puede ser menor que la fecha desde");
 			return false;
