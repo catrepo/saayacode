@@ -21,6 +21,7 @@ public class HoraDocenteMalla extends Pantalla{
     private Tabla tab_docente_malla = new Tabla();
     /*private Combo com_periodo_academico = new Combo();*/
     private AutoCompletar aut_alumno = new AutoCompletar();
+    private Combo com_periodo_academico = new Combo();
     
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -32,14 +33,25 @@ public class HoraDocenteMalla extends Pantalla{
     private final  ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
     
     public HoraDocenteMalla(){
+        com_periodo_academico.setId("cmb_periodo_academico");
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
+       
+        bar_botones.agregarComponente(new Etiqueta("PERIODO ACADÉMICO"));
+        bar_botones.agregarComponente(com_periodo_academico);
+        
         tab_docente_malla.setId("tab_docente_malla");   //identificador
-        tab_docente_malla.setTabla("yavirac_hora_docente_malla", "ide_yhodom", 1);
-        tab_docente_malla.setCondicion("ide_yhodom=-1"); // no dibuja nada de entrada
+        tab_docente_malla.setTabla("yavirac_perso_malla_docente", "ide_ypemad", 1);
+       // tab_docente_malla.setCondicion("ide_yhodom=-1"); // no dibuja nada de entrada
+        tab_docente_malla.setCondicion("ide_ystpea=-1");
+        tab_docente_malla.getColumna("ide_ystpea").setVisible(false);
         tab_docente_malla.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_docente_malla.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
-        tab_docente_malla.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());        
+        tab_docente_malla.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());   
+        tab_docente_malla.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true"));
         tab_docente_malla.getColumna("ide_yhodom").setNombreVisual("CÓDIGO PRINCIPAL");
         tab_docente_malla.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTES");
+        tab_docente_malla.getColumna("ide_ystjor").setNombreVisual("JORNADA");
         tab_docente_malla.getColumna("ide_ypedpe").setVisible(false);
         tab_docente_malla.getColumna("ide_ystmal").setNombreVisual("MALLA ACADÉMICA");
         tab_docente_malla.getColumna("ide_yhogra").setNombreVisual("GRUPOS / PARALELOS");
@@ -70,12 +82,27 @@ public class HoraDocenteMalla extends Pantalla{
         
      
     }
+    public void filtroComboPeriodoAcademnico(){
+        
+        tab_docente_malla.setCondicion("ide_ystpea="+com_periodo_academico.getValue().toString());
+        tab_docente_malla.ejecutarSql();
+        utilitario.addUpdate("tab_docente_malla");
+        
+    }
     
      @Override
     public void insertar() {
-
-        
+        if(com_periodo_academico.getValue() == null){
+            utilitario.agregarMensajeError("ERROR", "Seleccione el Periodo Académico");
+            return;
+        }
+        else if(tab_docente_malla.isFocus()){
         tab_docente_malla.insertar();
+        tab_docente_malla.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
+       utilitario.addUpdateTabla( tab_docente_malla, "ide_ystpea", "");
+       }
+        
+        //tab_docente_malla.insertar();
        // tab_docente_malla.setValor("ide_ypedpe", aut_alumno.getValue().);
        //utilitario.addUpdateTabla( tab_docente_malla, "ide_ypedpe", "");
 
