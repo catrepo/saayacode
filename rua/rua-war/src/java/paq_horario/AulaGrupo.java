@@ -39,6 +39,7 @@ public class AulaGrupo extends Pantalla {
     tab_cupo_alumno.getColumna("ide_ystmen").setCombo(ser_instalacion.getMension());
     tab_cupo_alumno.getColumna("ide_ystnie").setCombo(ser_instalacion.getNivelEducacion());
     tab_cupo_alumno.getColumna("ide_yhogra").setCombo(ser_instalacion1.getGrupoAcademico());
+    tab_cupo_alumno.getColumna("ide_ystjor").setCombo(ser_instalacion.getJornada("true,false"));
     tab_cupo_alumno.getColumna("ide_ystpea").setVisible(false);
     tab_cupo_alumno.setCondicion("ide_ystpea=-1");
     
@@ -88,8 +89,10 @@ public class AulaGrupo extends Pantalla {
 
     @Override
     public void guardar() {
+        if(tab_cupo_alumno.guardar()){
         tab_aula_grupo.guardar();
         guardarPantalla();
+        }
     }
 
     @Override
