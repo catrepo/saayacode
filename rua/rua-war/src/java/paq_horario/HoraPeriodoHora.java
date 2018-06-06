@@ -237,8 +237,8 @@ public class HoraPeriodoHora extends Pantalla {
         modalidad = com_dia_modalidad.getValue()+"";
        dia_modalidad.cerrar();
        set_tab_jornada.getTab_seleccion().setSql(ser_horarios.getDefinicionJornada(com_dia_modalidad.getValue().toString(),com_periodo_academico.getValue().toString()));
-            set_tab_jornada.getTab_seleccion().ejecutarSql();              
-            set_tab_jornada.dibujar();
+       set_tab_jornada.getTab_seleccion().ejecutarSql();              
+       set_tab_jornada.dibujar();
             
                 }
 }
