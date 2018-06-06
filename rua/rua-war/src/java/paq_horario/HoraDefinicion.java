@@ -140,7 +140,7 @@ public class HoraDefinicion extends Pantalla{
         
         Grupo gru_cuerpo = new Grupo();
         Etiqueta eti_mensaje = new Etiqueta();
-        eti_mensaje.setValue("Seleccione Perido Activo");
+        eti_mensaje.setValue("Seleccione el Periodo Activo");
         eti_mensaje.setStyle("font-size: 13px;border: none;text-shadow: 0px 2px 3px #ccc;background: none;");
         
         gru_cuerpo.getChildren().add(eti_mensaje);
