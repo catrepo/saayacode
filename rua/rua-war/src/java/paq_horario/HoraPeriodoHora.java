@@ -178,10 +178,19 @@ public class HoraPeriodoHora extends Pantalla {
         
         Boton bot_replicar = new Boton();
         bot_replicar.setIcon("ui-icon-newwin");
-        bot_replicar.setValue("GENERAR HORARIO");
-        bot_replicar.setTitle("GENERAR HORARIO");
+        bot_replicar.setValue("GENERAR SEMANERO");
+        bot_replicar.setTitle("GENERAR SEMANERO");
         bar_botones.agregarBoton(bot_replicar);    
         bot_replicar.setMetodo("generarPeriodoHora");
+
+        Boton bot_hora_clase = new Boton();
+        bot_hora_clase.setIcon("ui-icon-newwin");
+        bot_hora_clase.setValue("GENERAR HORARIO CLASE");
+        bot_hora_clase.setTitle("GENERAR HORARIO CLASE");
+        bar_botones.agregarBoton(bot_hora_clase);    
+        bot_hora_clase.setMetodo("generarPeriodoHora");
+        
+     
         
         Boton bot_n = new Boton();
         bot_n.setIcon("ui-icon-newwin");
@@ -412,7 +421,19 @@ public class HoraPeriodoHora extends Pantalla {
            }
     }
     
+    public void insertaHorarioClase(){
+        utilitario.getConexion().ejecutarSql("delete from yavirac_matriz_temp; ");
+        horarioLaboratorio();
+        horarioClase();
+    }
     
+    public void horarioClase(){
+        utilitario.getConexion().ejecutarSql(ser_horarios.insertHorarioMatriz("2", com_periodo_academico.getValue().toString()));
+
+    }
+    public void horarioLaboratorio(){
+        utilitario.getConexion().ejecutarSql(ser_horarios.insertHorarioMatriz("1", com_periodo_academico.getValue().toString()));
+    }
     public Combo getCom_dia_modalidad() {
         return com_dia_modalidad;
     }
