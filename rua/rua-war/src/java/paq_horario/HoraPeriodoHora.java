@@ -102,8 +102,8 @@ public class HoraPeriodoHora extends Pantalla {
         set_tab_jornada.setTitle("TABLA DE LA JORNADA");
         set_tab_jornada.setSeleccionTabla(ser_horarios.getDefinicionJornada("-1","-1"), "ide_ystjor");
         set_tab_jornada.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
-        set_tab_jornada.setWidth("80%");
-        set_tab_jornada.setHeight("70%");
+        set_tab_jornada.setWidth("40%");
+        set_tab_jornada.setHeight("40%");
         set_tab_jornada.getBot_aceptar().setMetodo("aceptarJornada");
         agregarComponente(set_tab_jornada);
         
@@ -112,8 +112,8 @@ public class HoraPeriodoHora extends Pantalla {
         set_tab_dias.setSeleccionTabla(ser_horarios.getDia(), "ide_yhodia");
         //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
         //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
-        set_tab_dias.setWidth("80%");
-        set_tab_dias.setHeight("70%");
+        set_tab_dias.setWidth("30%");
+        set_tab_dias.setHeight("50%");
         set_tab_dias.getBot_aceptar().setMetodo("aceptarDiasSemana");
         agregarComponente(set_tab_dias);
         
@@ -122,8 +122,8 @@ public class HoraPeriodoHora extends Pantalla {
         set_tab_mension.setSeleccionTabla(ser_estructura_organizacional.getMension(), "IDE_YSTMEN");
         //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
         //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
-        set_tab_mension.setWidth("80%");
-        set_tab_mension.setHeight("70%");
+        set_tab_mension.setWidth("60%");
+        set_tab_mension.setHeight("60%");
         set_tab_mension.getBot_aceptar().setMetodo("generarSemanero");
         agregarComponente(set_tab_mension);
         
@@ -196,7 +196,7 @@ public class HoraPeriodoHora extends Pantalla {
         bot_n.setIcon("ui-icon-newwin");
         bot_n.setValue("NUEVO");
         bot_n.setTitle("NUEVO");
-        bar_botones.agregarBoton(bot_n);    
+     //   bar_botones.agregarBoton(bot_n);    
         bot_n.setMetodo("insertaHorasClase");
         
                 }
