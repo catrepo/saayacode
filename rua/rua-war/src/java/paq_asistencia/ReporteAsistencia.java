@@ -70,7 +70,7 @@ public class ReporteAsistencia extends Pantalla {
 	           "1", "ALUMNOS"
 	       };
 	       Object fila2[] = {
-	           "2", "DOCENTES"
+	           "2", "COLABORADORES"
 	       };
 	       
 	       lista.add(fila1);
