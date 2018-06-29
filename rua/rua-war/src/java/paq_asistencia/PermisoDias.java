@@ -175,7 +175,7 @@ public void aprobar(){
     guardarPantalla();
     }
     else {
-        utilitario.agregarMensajeError("Aprobar Solicitud", "Para aprobar al socitud de encontrase en estado Registrado");
+        utilitario.agregarMensajeError("Aprobar Solicitud", "Para aprobar la solicitud de encontrase en estado Registrado");
     }
 }
 public void anular(){
@@ -186,7 +186,7 @@ public void anular(){
     guardarPantalla();
     }
     else {
-        utilitario.agregarMensajeError("Aprobar Solicitud", "Para aprobar al socitud de encontrase en estado Registrado");
+        utilitario.agregarMensajeError("Aprobar Solicitud", "Para aprobar la solicitud de encontrase en estado Registrado");
     }
 }
 public void filtrarEmpleado(SelectEvent evt){
