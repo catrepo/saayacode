@@ -137,7 +137,152 @@ public void aceptarReporte() {
     
     
     }
+    else if (rep_reporte.getReporteSelecionado().equals("Inscripcion Carreras y Periodo Academico")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_tab_periodo.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_periodo");
+        }
+        else if(sel_tab_periodo.isVisible()){ 
+                str_seleccionado_periodo = sel_tab_periodo.getSeleccionados();
+                sel_tab_periodo.cerrar();
+                sel_tab_carrera.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_carrera");
+        }
+        else if(sel_tab_carrera.isVisible()){ 
+                String str_seleccionado_carrera = sel_tab_carrera.getSeleccionados();
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", str_seleccionado_carrera);
+                map_parametros.put("pperiodo", str_seleccionado_periodo);
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_carrera.cerrar();
+                sel_rep.dibujar();
+        }
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    
+    
+    }
+    else if (rep_reporte.getReporteSelecionado().equals("Inscritos vs Matriculados")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_tab_periodo.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_periodo");
+        }
+        else if(sel_tab_periodo.isVisible()){ 
+                str_seleccionado_periodo = sel_tab_periodo.getSeleccionados();
+                sel_tab_periodo.cerrar();
+                sel_tab_carrera.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_carrera");
+        }
+        else if(sel_tab_carrera.isVisible()){ 
+                String str_seleccionado_carrera = sel_tab_carrera.getSeleccionados();
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", str_seleccionado_carrera);
+                map_parametros.put("pperiodo", str_seleccionado_periodo);
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_carrera.cerrar();
+                sel_rep.dibujar();
+        }
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    
+    
+    }
     else if (rep_reporte.getReporteSelecionado().equals("Matriculas Carreras y Genero")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_tab_periodo.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_periodo");
+        }
+        else if(sel_tab_periodo.isVisible()){ 
+                str_seleccionado_periodo = sel_tab_periodo.getSeleccionados();
+                sel_tab_periodo.cerrar();
+                sel_tab_carrera.dibujar();
+                 utilitario.addUpdate("rep_reporte,sel_tab_carrera");
+        }
+        else if(sel_tab_carrera.isVisible()){ 
+                String str_seleccionado_carrera = sel_tab_carrera.getSeleccionados();
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", str_seleccionado_carrera);
+                map_parametros.put("pperiodo", str_seleccionado_periodo);
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_carrera.cerrar();
+                sel_rep.dibujar();
+        }
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    
+    
+    }
+    else if (rep_reporte.getReporteSelecionado().equals("Matriculas por Periodo Academico")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_tab_periodo.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_periodo");
+        }
+        else if(sel_tab_periodo.isVisible()){ 
+                str_seleccionado_periodo = sel_tab_periodo.getSeleccionados();
+                sel_tab_periodo.cerrar();
+                sel_tab_carrera.dibujar();
+                 utilitario.addUpdate("rep_reporte,sel_tab_carrera");
+        }
+        else if(sel_tab_carrera.isVisible()){ 
+                String str_seleccionado_carrera = sel_tab_carrera.getSeleccionados();
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", str_seleccionado_carrera);
+                map_parametros.put("pperiodo", str_seleccionado_periodo);
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_carrera.cerrar();
+                sel_rep.dibujar();
+        }
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    
+    
+    }
+    else if (rep_reporte.getReporteSelecionado().equals("Porcentaje de Asistencia Alumnos")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_tab_periodo.dibujar();
+                utilitario.addUpdate("rep_reporte,sel_tab_periodo");
+        }
+        else if(sel_tab_periodo.isVisible()){ 
+                str_seleccionado_periodo = sel_tab_periodo.getSeleccionados();
+                sel_tab_periodo.cerrar();
+                sel_tab_carrera.dibujar();
+                 utilitario.addUpdate("rep_reporte,sel_tab_carrera");
+        }
+        else if(sel_tab_carrera.isVisible()){ 
+                String str_seleccionado_carrera = sel_tab_carrera.getSeleccionados();
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", str_seleccionado_carrera);
+                map_parametros.put("pperiodo", str_seleccionado_periodo);
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_carrera.cerrar();
+                sel_rep.dibujar();
+        }
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    
+    
+    }
+    else if (rep_reporte.getReporteSelecionado().equals("Porcentaje de Asistencia Funcionarios")){
                 
         if(rep_reporte.isVisible()){
                 rep_reporte.cerrar();
