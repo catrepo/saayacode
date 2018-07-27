@@ -40,10 +40,12 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.getColumna("ide_ystpea").setNombreVisual("CÓDIGO");
         tab_periodo_academic.getColumna("descripcion_ystpea").setNombreVisual("DESCRIPCIÓN");
         tab_periodo_academic.getColumna("fecha_inicio_ystpea").setNombreVisual("FECHA INICIO");
-        tab_periodo_academic.getColumna("fecha_fianal_ystpera").setNombreVisual("FECHA FINAL");
+        tab_periodo_academic.getColumna("fecha_final_ystpea").setNombreVisual("FECHA FINAL");
         tab_periodo_academic.getColumna("activo_ystpea").setNombreVisual("ACTIVO");
         tab_periodo_academic.getColumna("hora_clase_ystpea").setNombreVisual("HORA CLASE");
         tab_periodo_academic.getColumna("aplica_jornada_completa_ystpea").setNombreVisual("APLICA JORNADA");
+        tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
+        tab_periodo_academic.getColumna("ide_ystani").setNombreVisual("AÑO");
         //*****************
         tab_periodo_academic.dibujar();
 
