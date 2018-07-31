@@ -8,12 +8,16 @@ package paq_horarios.ejb;
 import framework.aplicacion.TablaGenerica;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import sistema.aplicacion.Pantalla;
+import sistema.aplicacion.Utilitario;
+
 /**
  *
  * @author Andres
  */
 @Stateless
 public class ServiciosHorarios {
+    private final Utilitario utilitario = new Utilitario();
     
        /**
      * Retorna el periodo academico vigente
@@ -211,36 +215,74 @@ public class ServiciosHorarios {
         return sql;
          }  
         
-        public String insertHorarioMatriz(String tipo_horario,String periodo) {
+        public String insertHorarioMatriz(String tipo_horario,String periodo, String mension, String jornada, String modalidad) {
         String sql="";
-        sql="INSERT INTO yavirac_matriz_temp(ide_yamatz, ide_ystmal, ide_ystnie,ide_ystmat,ide_ystmen,ide_ysttif,ide_ystjor,ide_ymacal, ide_yhogra, ide_ystins, ide_ypedpe,   " +
-            "            numero_horas_ystmal, prioridad_materia_ystmal, maximo_horas_ystmal,ide_ystpea,minimo_horas_ystmal, aplica_laboratorio_ystmal, num_min_lab_ystmal, " +
-            "            num_max_lab_ystmal,horas_semana_ystmal,horas_semana_lab_ystmal)" +
-            " select row_number()over(order by a.ide_ystmal) + (select (case when max( ide_yamatz) is null then 0 else max( ide_yamatz) end) as codigo from yavirac_matriz_temp) as ide, " +
-            " a.ide_ystmal, a.ide_ystnie, a.ide_ystmat, a.ide_ystmen, a.ide_ysttif,a.ide_ystjor,a.ide_ymacal,a.ide_yhogra, b.ide_ystins,c.ide_ypedpe," +
-            " a.numero_horas_ystmal, a.prioridad_materia_ystmal, a.maximo_horas_ystmal, a.ide_ystpea," +
-            " a.minimo_horas_ystmal, a.aplica_laboratorio_ystmal, a.num_min_lab_ystmal, a.num_max_lab_ystmal,a.horas_semana_ystmal,a.horas_semana_lab_ystmal" +
-            " from (" +
-            " select a.ide_ystmal, a.ide_ystnie, a.ide_ystmat, a.ide_ystmen, a.ide_ysttif, a.numero_horas_ystmal, a.prioridad_materia_ystmal, a.maximo_horas_ystmal, " +
-            " a.minimo_horas_ystmal, a.aplica_laboratorio_ystmal, a.num_min_lab_ystmal, a.num_max_lab_ystmal,ide_ystjor,ide_yhogra,ide_ymacal,b.ide_ystpea,a.horas_semana_ystmal,a.horas_semana_lab_ystmal" +
-            " from yavirac_stror_malla a,yavirac_stror_periodo_mension b,  yavirac_hora_malla_periodo c,yavirac_matri_cupo_alumno d" +
-            " where  a.ide_ystmen = b.ide_ystmen" +
-            " and b.ide_ystpea= c.ide_ystpea" +
-            " and a.ide_ystmal= c.ide_ystmal" +
-            " and b.ide_ystpea=d.ide_ystpea" +
-            " and a.ide_ystnie=d.ide_ystnie" +
-            " and a.ide_ystmen=d.ide_ystmen" +
-            " and b.ide_ystpea =" +periodo+
-            " ) a" +
-            " left join yavirac_hora_aula_grupo b on a.ide_ymacal=b.ide_ymacal" +
-            " left join yavirac_perso_malla_docente c on a.ide_ystmal=c.ide_ystmal and a.ide_ystpea= c.ide_ystpea and a.ide_yhogra=c.ide_yhogra and a.ide_ystjor = c.ide_ystjor" ;
+        sql="INSERT INTO yavirac_matriz_temp(ide_yamatz, ide_ystmal, ide_ystnie,ide_ystmat,ide_ystmen,ide_ysttif,ide_ystjor,\n" +
+"ide_ymacal, ide_yhogra, ide_ystins, ide_ypedpe, numero_horas_ystmal, prioridad_materia_ystmal, maximo_horas_ystmal,ide_ystpea,minimo_horas_ystmal, \n" +
+"aplica_laboratorio_ystmal, num_min_lab_ystmal, num_max_lab_ystmal,horas_semana_ystmal,horas_semana_lab_ystmal, ide_ystmod) \n" +
+"select row_number()over(order by a.ide_ystmal) + (select (case when max( ide_yamatz) is null then 0 else max( ide_yamatz) end) as codigo \n" +
+"from yavirac_matriz_temp) as ide, a.ide_ystmal, a.ide_ystnie, a.ide_ystmat, a.ide_ystmen, a.ide_ysttif,a.ide_ystjor,a.ide_ymacal,a.ide_yhogra, \n" +
+"b.ide_ystins,c.ide_ypedpe, a.numero_horas_ystmal, a.prioridad_materia_ystmal, a.maximo_horas_ystmal, a.ide_ystpea, a.minimo_horas_ystmal, \n" +
+"a.aplica_laboratorio_ystmal, a.num_min_lab_ystmal, a.num_max_lab_ystmal,a.horas_semana_ystmal, (case when a.horas_semana_lab_ystmal is null \n" +
+"then 0 else a.horas_semana_lab_ystmal end) as hora_lab, d.ide_ystmod from ( select a.ide_ystmal, a.ide_ystnie, a.ide_ystmat, a.ide_ystmen, a.ide_ysttif, \n" +
+"a.numero_horas_ystmal, a.prioridad_materia_ystmal, a.maximo_horas_ystmal, a.minimo_horas_ystmal, a.aplica_laboratorio_ystmal, a.num_min_lab_ystmal, \n" +
+"a.num_max_lab_ystmal,ide_ystjor,ide_yhogra,ide_ymacal,b.ide_ystpea,a.horas_semana_ystmal,a.horas_semana_lab_ystmal \n" +
+"from yavirac_stror_malla a,yavirac_stror_periodo_mension b, yavirac_hora_malla_periodo c,yavirac_matri_cupo_alumno d \n" +
+"where a.ide_ystmen = b.ide_ystmen and b.ide_ystpea= c.ide_ystpea and a.ide_ystmal= c.ide_ystmal and b.ide_ystpea=d.ide_ystpea \n" +
+"and a.ide_ystnie=d.ide_ystnie and a.ide_ystmen=d.ide_ystmen and b.ide_ystpea = "+periodo+" ) a \n" +
+"left join yavirac_hora_aula_grupo b on a.ide_ymacal=b.ide_ymacal \n" +
+"left join yavirac_perso_malla_docente c on a.ide_ystmal=c.ide_ystmal \n" +
+"and a.ide_ystpea= c.ide_ystpea and a.ide_yhogra=c.ide_yhogra \n" +
+"and a.ide_ystjor = c.ide_ystjor \n" +
+"left join yavirac_hora_periodo_hor d on a.ide_ystpea = d.ide_ystpea and a.ide_ystjor = d.ide_ystjor and a.ide_ystmen = d.ide_ystmen\n" +
+"where a.ide_ystjor = "+jornada+"\n" +
+"and d.ide_ystmod = "+modalidad+"\n" +
+"and a.ide_ystmen = "+mension+"" ;
             if(tipo_horario.equals("1")){
-            sql +=" where aplica_laboratorio_ystmal=true" ;
+            sql +=" and aplica_laboratorio_ystmal=true " ;
             }
             if(tipo_horario.equals("2")){
-            sql +=" where aplica_laboratorio_ystmal=false" ;
+            sql +=" and aplica_laboratorio_ystmal=false " ;
             }
         //System.out.println("imprimo resultao receso "+sql);
         return sql;
          }  
+        
+        public int sumDetalleMatriz(String ide){
+            int suma_hora=0;
+            TablaGenerica tab_suma_detalle_matriz_temp=utilitario.consultar("select 1 as codigo,(case when sum(horas_semana_lab_yamadt) is null then 0 else sum(horas_semana_lab_yamadt) end) +\n" +
+            "(case when sum(horas_semana_yamadt) is null then 0 else sum(horas_semana_yamadt) end) as hora_clase\n" +
+            "from yavirac_matriz_detalle_temp group by ide_yamatz having ide_yamatz ="+ide);
+            if(tab_suma_detalle_matriz_temp.getTotalFilas()>0){
+                suma_hora= Integer.parseInt(tab_suma_detalle_matriz_temp.getValor("hora_clase"));
+            }
+            return suma_hora;
+        }
+        public int horaLaboratorio(String ide){
+            int suma_hora=0;
+            TablaGenerica tab_suma_detalle_matriz_temp=utilitario.consultar("select 1 as codigo,(case when sum(horas_semana_lab_yamadt) is null then 0 else sum(horas_semana_lab_yamadt) end) as hora_lab\n" +
+                "from yavirac_matriz_detalle_temp group by ide_yamatz having ide_yamatz ="+ide);
+            if(tab_suma_detalle_matriz_temp.getTotalFilas()>0){
+                suma_hora= Integer.parseInt(tab_suma_detalle_matriz_temp.getValor("hora_lab"));
+            }
+            return suma_hora;
+        }
+        public int horaClase(String ide){
+            int suma_hora=0;
+            TablaGenerica tab_suma_detalle_matriz_temp=utilitario.consultar("select 1 as codigo,(case when sum(horas_semana_yamadt) is null then 0 else sum(horas_semana_yamadt) end) + (case when sum(horas_semana_lab_yamadt) is null then 0 else sum(horas_semana_lab_yamadt) end) as hora_clase\n" +
+                "from yavirac_matriz_detalle_temp group by ide_yamatz having ide_yamatz ="+ide);
+            if(tab_suma_detalle_matriz_temp.getTotalFilas()>0){
+                suma_hora= Integer.parseInt(tab_suma_detalle_matriz_temp.getValor("hora_clase"));
+            }
+            return suma_hora;
+        }
+        public String insertaMatrizDetalle(String codigo,String ide_yamatz,String ide_ystnie,String ide_ystmal, String ide_ypedpe,String ide_ystmat,String ide_ystmen,String ide_ysttif,String ide_ystjor,
+                                           String ide_ymacal,String ide_yhogra,String ide_ystins,String ide_ystpea,String aplica_laboratorio_yamadt,String horas_semana_lab_yamadt,String horas_semana_yamadt, String ide_ystmod){
+            String sql="";
+            sql="INSERT INTO yavirac_matriz_detalle_temp( ide_yamadt, ide_yamatz, ide_ystmal, ide_ystnie, ide_ypedpe, ide_ystmat,ide_ystmen, ide_ysttif, ide_ystjor, \n" +
+            "ide_ymacal, ide_yhogra, ide_ystins,ide_ystpea, aplica_laboratorio_yamadt, horas_semana_lab_yamadt,horas_semana_yamadt, ide_ystmod) values ( "
+                    + codigo+","+ide_yamatz+", "+ide_ystnie+", "+ide_ystmal+", "+ide_ypedpe+", "+ide_ystmat+", "+ide_ystmen+", "+ide_ysttif+", "+ide_ystjor+", "+ide_ymacal+", "+ide_yhogra+", "+ide_ystins+", "+ide_ystpea+", "+aplica_laboratorio_yamadt+", "+horas_semana_lab_yamadt+", "+horas_semana_yamadt+", "+ide_ystmod+")";
+            System.out.println("sql: "+sql);
+            return sql;
+        }
 }
