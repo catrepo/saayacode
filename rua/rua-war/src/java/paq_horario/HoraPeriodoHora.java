@@ -188,7 +188,7 @@ public class HoraPeriodoHora extends Pantalla {
         bot_hora_clase.setValue("GENERAR HORARIO CLASE");
         bot_hora_clase.setTitle("GENERAR HORARIO CLASE");
         bar_botones.agregarBoton(bot_hora_clase);    
-        bot_hora_clase.setMetodo("generarPeriodoHora");
+        bot_hora_clase.setMetodo("insertaHorarioClase");
         
      
         
@@ -196,8 +196,8 @@ public class HoraPeriodoHora extends Pantalla {
         bot_n.setIcon("ui-icon-newwin");
         bot_n.setValue("NUEVO");
         bot_n.setTitle("NUEVO");
-     //   bar_botones.agregarBoton(bot_n);    
-        bot_n.setMetodo("insertaHorasClase");
+        bar_botones.agregarBoton(bot_n);    
+        bot_n.setMetodo("horarioClaseConsolidado");
         
                 }
      public void filtroComboPeriodoAcademnico(){
@@ -292,6 +292,7 @@ public class HoraPeriodoHora extends Pantalla {
 */
          insertarReceso();
          insertaHorasClase();
+         
     }
    
     public void insertarReceso(){
@@ -396,6 +397,7 @@ public class HoraPeriodoHora extends Pantalla {
                         TablaGenerica tab_mension = utilitario.consultar(ser_horarios.getNumMension(mension));
                          
                              for(int m=0; m<tab_dias.getTotalFilas();m++){ 
+                                 
                                 for (int n=0; n<tab_mension.getTotalFilas();n++){
                        
                        TablaGenerica codigo_maximo_hora = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_periodo_hor", "ide_yhopeh"));
@@ -423,16 +425,123 @@ public class HoraPeriodoHora extends Pantalla {
     
     public void insertaHorarioClase(){
         utilitario.getConexion().ejecutarSql("delete from yavirac_matriz_temp; ");
-        horarioLaboratorio();
-        horarioClase();
+        horarioLaboratorioTemp();
+        horarioClaseTemp();
+        generarDetalleMatrizTemp();
     }
     
-    public void horarioClase(){
-        utilitario.getConexion().ejecutarSql(ser_horarios.insertHorarioMatriz("2", com_periodo_academico.getValue().toString()));
+    public void generarDetalleMatrizTemp(){
+        TablaGenerica tab_matriz_tem = utilitario.consultar("select * from yavirac_matriz_temp");
+        for(int i=0;i<tab_matriz_tem.getTotalFilas();i++){
+            //System.out.println("entre primer for "+i);
+            // sumo los detalle de la hora para de esta manera validar que se tengan todas las horas divididas
+            
+            int suma_hora= 0;
+            int hora_semana=Integer.parseInt(tab_matriz_tem.getValor(i,"horas_semana_ystmal"));
+            int hora_laboratorio=Integer.parseInt(tab_matriz_tem.getValor(i,"horas_semana_lab_ystmal"));
+            int max_laboratorio=Integer.parseInt(tab_matriz_tem.getValor(i,"num_max_lab_ystmal"));
+            int max_clase=Integer.parseInt(tab_matriz_tem.getValor(i,"maximo_horas_ystmal"));
+            int detalle_hora_lab=0;
+            int detalle_hora_cla=0;
+            int modulo_lab=0;
+            int recorrido_lab=0;
+            String maximo_primario_detalle="";
+            suma_hora=ser_horarios.sumDetalleMatriz(tab_matriz_tem.getValor(i,"ide_yamatz"));
+            //System.out.println("antes de entrar al while "+suma_hora+" de la matriz: "+tab_matriz_tem.getValor(i,"ide_yamatz")+" hora semana: "+hora_semana);
+            while(suma_hora<hora_semana){
+                //System.out.println("entre el while: "+suma_hora+" de la matriz: "+tab_matriz_tem.getValor(i,"ide_yamatz"));
+                detalle_hora_lab= ser_horarios.horaLaboratorio(tab_matriz_tem.getValor(i,"ide_yamatz"));
+                //System.out.println("detalle_hora_lab: "+detalle_hora_lab+" detalle_hora_cla: "+detalle_hora_cla);
+                if(detalle_hora_lab<hora_laboratorio){
+                    //System.out.println("entre al primer if "+detalle_hora_cla);
+                    TablaGenerica tab_recorrido = utilitario.consultar("select 1 as codigo,(horas_semana_lab_ystmal - mod(horas_semana_lab_ystmal,num_max_lab_ystmal) )/num_max_lab_ystmal as recorrido,mod(horas_semana_lab_ystmal,num_max_lab_ystmal) as modulo\n" +
+                    "from yavirac_matriz_temp where ide_yamatz ="+tab_matriz_tem.getValor(i,"ide_yamatz"));
+                    modulo_lab = Integer.parseInt(tab_recorrido.getValor("modulo"));
+                    recorrido_lab = Integer.parseInt(tab_recorrido.getValor("recorrido"));
+                    //System.out.println("modulo "+modulo_lab+" recorrido_lab "+recorrido_lab);
+                    for(int r=0;r<recorrido_lab;r++){
+                        //System.out.println("primer for"+r);
+                        TablaGenerica tab_cod_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_matriz_detalle_temp", "ide_yamadt"));
+                        maximo_primario_detalle= tab_cod_maximo.getValor("maximo");
+                        utilitario.getConexion().ejecutarSql(ser_horarios.insertaMatrizDetalle(maximo_primario_detalle, tab_matriz_tem.getValor(i, "ide_yamatz"), tab_matriz_tem.getValor(i, "ide_ystmal"), tab_matriz_tem.getValor(i, "ide_ystnie"), tab_matriz_tem.getValor(i, "ide_ypedpe"), tab_matriz_tem.getValor(i, "ide_ystmat"), tab_matriz_tem.getValor(i, "ide_ystmen"), tab_matriz_tem.getValor(i, "ide_ysttif"), tab_matriz_tem.getValor(i, "ide_ystjor"), tab_matriz_tem.getValor(i, "ide_ymacal"), tab_matriz_tem.getValor(i, "ide_yhogra"), tab_matriz_tem.getValor(i, "ide_ystins"), tab_matriz_tem.getValor(i, "ide_ystpea"), tab_matriz_tem.getValor(i, "aplica_laboratorio_ystmal"), tab_matriz_tem.getValor(i, "num_max_lab_ystmal"), "0", tab_matriz_tem.getValor(i, "ide_ystmod")));
+
+                    }
+                    for(int m=0;m<modulo_lab;m++){
+                        //System.out.println("modulo_lab "+modulo_lab);
+                        TablaGenerica tab_cod_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_matriz_detalle_temp", "ide_yamadt"));
+                        maximo_primario_detalle= tab_cod_maximo.getValor("maximo");
+                        utilitario.getConexion().ejecutarSql(ser_horarios.insertaMatrizDetalle(maximo_primario_detalle, tab_matriz_tem.getValor(i, "ide_yamatz"), tab_matriz_tem.getValor(i, "ide_ystmal"), tab_matriz_tem.getValor(i, "ide_ystnie"), tab_matriz_tem.getValor(i, "ide_ypedpe"), tab_matriz_tem.getValor(i, "ide_ystmat"), tab_matriz_tem.getValor(i, "ide_ystmen"), tab_matriz_tem.getValor(i, "ide_ysttif"), tab_matriz_tem.getValor(i, "ide_ystjor"), tab_matriz_tem.getValor(i, "ide_ymacal"), tab_matriz_tem.getValor(i, "ide_yhogra"), tab_matriz_tem.getValor(i, "ide_ystins"), tab_matriz_tem.getValor(i, "ide_ystpea"), tab_matriz_tem.getValor(i, "aplica_laboratorio_ystmal"),"1", "0", tab_matriz_tem.getValor(i, "ide_ystmod")));
+                        
+                    }                   
+                      
+                }
+                detalle_hora_cla= ser_horarios.horaClase(tab_matriz_tem.getValor(i,"ide_yamatz"));
+                // horas clases de las materias registro de horarios
+                if(detalle_hora_cla<hora_semana ){
+                    //System.out.println("Ingrese al if de horas clase: "+detalle_hora_cla+" hora_semana "+ hora_semana);
+                    TablaGenerica tab_recorrido = utilitario.consultar("select 1 as codigo,((horas_semana_ystmal-horas_semana_lab_ystmal) - mod((horas_semana_ystmal-horas_semana_lab_ystmal),maximo_horas_ystmal))/maximo_horas_ystmal as recorrido,mod((horas_semana_ystmal-horas_semana_lab_ystmal),maximo_horas_ystmal) as modulo\n" +
+                    "from yavirac_matriz_temp where ide_yamatz ="+tab_matriz_tem.getValor(i,"ide_yamatz"));
+                    modulo_lab = Integer.parseInt(tab_recorrido.getValor("modulo"));
+                    recorrido_lab = Integer.parseInt(tab_recorrido.getValor("recorrido"));
+                    for(int h=0;h<recorrido_lab;h++){
+                        //System.out.println("for horas clase "+h);
+                        TablaGenerica tab_cod_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_matriz_detalle_temp", "ide_yamadt"));
+                        maximo_primario_detalle= tab_cod_maximo.getValor("maximo");
+                        utilitario.getConexion().ejecutarSql(ser_horarios.insertaMatrizDetalle(maximo_primario_detalle, tab_matriz_tem.getValor(i, "ide_yamatz"), tab_matriz_tem.getValor(i, "ide_ystmal"), tab_matriz_tem.getValor(i, "ide_ystnie"), tab_matriz_tem.getValor(i, "ide_ypedpe"), tab_matriz_tem.getValor(i, "ide_ystmat"), tab_matriz_tem.getValor(i, "ide_ystmen"), tab_matriz_tem.getValor(i, "ide_ysttif"), tab_matriz_tem.getValor(i, "ide_ystjor"), tab_matriz_tem.getValor(i, "ide_ymacal"), tab_matriz_tem.getValor(i, "ide_yhogra"), tab_matriz_tem.getValor(i, "ide_ystins"), tab_matriz_tem.getValor(i, "ide_ystpea"), tab_matriz_tem.getValor(i, "aplica_laboratorio_ystmal"),"0", tab_matriz_tem.getValor(i, "maximo_horas_ystmal"), tab_matriz_tem.getValor(i, "ide_ystmod")));
+
+                    }
+                    for(int n=0;n<modulo_lab;n++){
+                        //System.out.println("modulo clases "+modulo_lab);
+                        TablaGenerica tab_cod_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_matriz_detalle_temp", "ide_yamadt"));
+                        maximo_primario_detalle= tab_cod_maximo.getValor("maximo");
+                        utilitario.getConexion().ejecutarSql(ser_horarios.insertaMatrizDetalle(maximo_primario_detalle, tab_matriz_tem.getValor(i, "ide_yamatz"), tab_matriz_tem.getValor(i, "ide_ystmal"), tab_matriz_tem.getValor(i, "ide_ystnie"), tab_matriz_tem.getValor(i, "ide_ypedpe"), tab_matriz_tem.getValor(i, "ide_ystmat"), tab_matriz_tem.getValor(i, "ide_ystmen"), tab_matriz_tem.getValor(i, "ide_ysttif"), tab_matriz_tem.getValor(i, "ide_ystjor"), tab_matriz_tem.getValor(i, "ide_ymacal"), tab_matriz_tem.getValor(i, "ide_yhogra"), tab_matriz_tem.getValor(i, "ide_ystins"), tab_matriz_tem.getValor(i, "ide_ystpea"), tab_matriz_tem.getValor(i, "aplica_laboratorio_ystmal"), "0", "1", tab_matriz_tem.getValor(i, "ide_ystmod")));
+                        
+                    }                   
+                      
+                }
+                
+                suma_hora=ser_horarios.sumDetalleMatriz(tab_matriz_tem.getValor(i,"ide_yamatz"));
+            } 
+            
+        }
+        // Una vez ejecutado el temproral se actualiza el randomico
+        randomicoHorarioTemp();
+    }
+    
+    public void randomicoHorarioTemp(){
+        TablaGenerica tab_detalle_matriz=utilitario.consultar("select * from yavirac_matriz_detalle_temp order by ide_yamadt");
+        int maximo= tab_detalle_matriz.getTotalFilas();
+    
+        for(int i=0;i<tab_detalle_matriz.getTotalFilas();i++){
+            TablaGenerica tab_randomico= utilitario.consultar("select 1 as codigo,cast((random() * "+maximo+" + 1) as integer) as resul");
+            
+            utilitario.getConexion().ejecutarSql("update yavirac_matriz_detalle_temp set randomico_yamadt="+tab_randomico.getValor("resul")+" where ide_yamadt="+tab_detalle_matriz.getValor(i, "ide_yamadt"));
+        }
+    }
+    public void horarioClaseConsolidado(){
+        // caragamos tabla generica de matriz detalle ordeno por laboratorio para hacer primero esas inserciones
+        TablaGenerica tab_detalle_matriz=utilitario.consultar("select * from yavirac_matriz_detalle_temp order by aplica_laboratorio_yamadt desc,randomico_yamadt");
+        for(int i=0;i<tab_detalle_matriz.getTotalFilas();i++){
+            // verificamos si la materia a ser dada tiene laboratorio
+            if(tab_detalle_matriz.getValor(i, "aplica_laboratorio_yamadt").equals("true")){
+                
+                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
+                "values ();");
+            }
+            else{// con el sisguiente else no palica a laboratorios
+                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
+                "values ();");
+            }
+            
+        }
+    }
+    public void horarioClaseTemp(){
+        
+        utilitario.getConexion().ejecutarSql(ser_horarios.insertHorarioMatriz("2", com_periodo_academico.getValue().toString(), mension, jornada, modalidad ));
 
     }
-    public void horarioLaboratorio(){
-        utilitario.getConexion().ejecutarSql(ser_horarios.insertHorarioMatriz("1", com_periodo_academico.getValue().toString()));
+    public void horarioLaboratorioTemp(){
+        utilitario.getConexion().ejecutarSql(ser_horarios.insertHorarioMatriz("1", com_periodo_academico.getValue().toString(), mension, jornada, modalidad));
     }
     public Combo getCom_dia_modalidad() {
         return com_dia_modalidad;
