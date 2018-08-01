@@ -527,79 +527,89 @@ public class HoraPeriodoHora extends Pantalla {
             if(tab_detalle_matriz.getValor(i, "aplica_laboratorio_yamadt").equals("true")){
                 String ide_ypedpe=tab_detalle_matriz.getValor(i, "ide_ypedpe");
                 String ide_ystins=tab_detalle_matriz.getValor(i, "ide_ystins");
-                System.out.println("ide_pedpe "+ide_ypedpe);
-                System.out.println("ide_ystins "+ide_ystins);
+                String ide_ypedpe_inserta="";
+                String ide_ystins_inserta="";
+                
                 if(ide_ypedpe.equals("0")){
                     ide_ypedpe=" is null ";
+                    ide_ypedpe_inserta="null";
                 }
                 else{
                     ide_ypedpe=" = "+tab_detalle_matriz.getValor(i, "ide_ypedpe");
                 }
                 if(ide_ystins.equals("0")){
                     ide_ystins=" is null ";
+                    ide_ystins_inserta="null";
                 }
                 else{
                     ide_ystins=" = "+tab_detalle_matriz.getValor(i, "ide_ystins");
                 }
                 
-                TablaGenerica tab_semana_dia=utilitario.consultar(ser_horarios.getSqlDiaHabilitado(utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"),  tab_detalle_matriz.getValor(i,"ide_ystmen")));
+                TablaGenerica tab_semana_dia=utilitario.consultar(ser_horarios.getSqlDiaHabilitado(utilitario.getVariable("p_tipo_entrada_salida"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"),  tab_detalle_matriz.getValor(i,"ide_ystmen")));
                 for(int w=0;w<tab_semana_dia.getTotalFilas();w++){
                     System.out.println("while laboratorio "+w);
-                    TablaGenerica tab_hora_disponible=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("1",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(w,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where 1=1 "));
+                    TablaGenerica tab_hora_disponible=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("1",utilitario.getVariable("p_tipo_entrada_salida"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(w,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where 1=1 "));
                         int hora_requerida=Integer.parseInt(tab_detalle_matriz.getValor(i, "horas_semana_lab_yamadt"));
                         int hora_disponible=Integer.parseInt(tab_hora_disponible.getValor("hora_disponible"));
                         if(hora_requerida<=hora_disponible){
-                            TablaGenerica tab_previo_inserta=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("2",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(w,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where (case when contador is null then 0 else contador end)=0 "));
+                            TablaGenerica tab_previo_inserta=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("2",utilitario.getVariable("p_tipo_entrada_salida"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(w,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where (case when contador is null then 0 else contador end)=0 "));
                             for(int k=0;k<hora_requerida;k++){
+                                System.out.println("hora_requerida "+hora_requerida);
                                 TablaGenerica tab_maximo_hora=utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_horario_mate", "ide_yhohma"));
-                                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
-                                "values ("+tab_maximo_hora.getValor("maximo")+","+tab_detalle_matriz.getValor(i, "ide_ypedpe")+","+tab_detalle_matriz.getValor(i, "ide_ystmal")+","+tab_detalle_matriz.getValor(i, "ide_yhogra")+","+tab_previo_inserta.getValor(k, "ide_yhopeh")+");");
+                                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh,ide_ystins)\n" +
+                                "values ("+tab_maximo_hora.getValor("maximo")+","+ide_ypedpe_inserta+","+tab_detalle_matriz.getValor(i, "ide_ystmal")+","+tab_detalle_matriz.getValor(i, "ide_yhogra")+","+tab_previo_inserta.getValor(k, "ide_yhopeh")+","+ide_ystins_inserta+");");
                             }
                             break;
-                        }
-                    
+                        }                    
                     
                 }
             }
             else{// con el sisguiente else no palica a laboratorios
+                
                 String ide_ypedpe=tab_detalle_matriz.getValor(i, "ide_ypedpe");
                 String ide_ystins=tab_detalle_matriz.getValor(i, "ide_ystins");
+                String ide_ypedpe_inserta="";
+                String ide_ystins_inserta="";
                 if(ide_ypedpe.equals("0")){
                     ide_ypedpe=" is null ";
+                    ide_ypedpe_inserta="null";
                 }
                 else{
                     ide_ypedpe=" = "+tab_detalle_matriz.getValor(i, "ide_ypedpe");
                 }
                 if(ide_ystins.equals("0")){
                     ide_ystins=" is null ";
+                    ide_ystins_inserta="null";
+                    
                 }
                 else{
                     ide_ystins=" = "+tab_detalle_matriz.getValor(i, "ide_ystins");
                 }
                 
-                TablaGenerica tab_semana_dia=utilitario.consultar(ser_horarios.getSqlDiaHabilitado(utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"),  tab_detalle_matriz.getValor(i,"ide_ystmen")));
-                System.out.println(" sql semana");
-                tab_detalle_matriz.imprimirSql();
+                TablaGenerica tab_semana_dia=utilitario.consultar(ser_horarios.getSqlDiaHabilitado(utilitario.getVariable("p_tipo_entrada_salida"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"),  tab_detalle_matriz.getValor(i,"ide_ystmen")));
+                System.out.println(" sql tab_semana_dia.getTotalFilas() "+tab_semana_dia.getTotalFilas());
+                // tab_detalle_matriz.imprimirSql();
                 
                 for(int m=0;m<tab_semana_dia.getTotalFilas();m++){
                     System.out.println("while "+m);
-                    TablaGenerica tab_hora_disponible=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("1",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(m,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where 1=1 "));
-                        int hora_requerida=Integer.parseInt(tab_detalle_matriz.getValor(i, "horas_semana_lab_yamadt"));
+                    TablaGenerica tab_hora_disponible=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("1",utilitario.getVariable("p_tipo_entrada_salida"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(m,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where 1=1 "));
+                        int hora_requerida=Integer.parseInt(tab_detalle_matriz.getValor(i, "horas_semana_yamadt"));
                         int hora_disponible=Integer.parseInt(tab_hora_disponible.getValor("hora_disponible"));
                         if(hora_requerida<=hora_disponible){
                             System.out.println("if1 "+hora_requerida);
                             System.out.println("if2 "+hora_disponible);
-                            TablaGenerica tab_previo_inserta=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("2",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(m,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where (case when contador is null then 0 else contador end)=0 "));
+                            TablaGenerica tab_previo_inserta=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("2",utilitario.getVariable("p_tipo_entrada_salida"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(m,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where (case when contador is null then 0 else contador end)=0 "));
                             for(int k=0;k<hora_requerida;k++){
                                 System.out.println("for "+k);
                                 TablaGenerica tab_maximo_hora=utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_horario_mate", "ide_yhohma"));
-                                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
-                                "values ("+tab_maximo_hora.getValor("maximo")+","+tab_detalle_matriz.getValor(i, "ide_ypedpe")+","+tab_detalle_matriz.getValor(i, "ide_ystmal")+","+tab_detalle_matriz.getValor(i, "ide_yhogra")+","+tab_previo_inserta.getValor(k, "ide_yhopeh")+");");
+                                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh,ide_ystins)\n" +
+                                "values ("+tab_maximo_hora.getValor("maximo")+","+ide_ypedpe_inserta+","+tab_detalle_matriz.getValor(i, "ide_ystmal")+","+tab_detalle_matriz.getValor(i, "ide_yhogra")+","+tab_previo_inserta.getValor(k, "ide_yhopeh")+","+ide_ystins_inserta+");");
                             }
                             break;
                         }
                     
                 }
+                
             }
             
         }
