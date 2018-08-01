@@ -520,17 +520,86 @@ public class HoraPeriodoHora extends Pantalla {
     }
     public void horarioClaseConsolidado(){
         // caragamos tabla generica de matriz detalle ordeno por laboratorio para hacer primero esas inserciones
-        TablaGenerica tab_detalle_matriz=utilitario.consultar("select * from yavirac_matriz_detalle_temp order by aplica_laboratorio_yamadt desc,randomico_yamadt");
+        TablaGenerica tab_detalle_matriz=utilitario.consultar("select ide_yamadt, ide_yamatz, ide_ystmal, ide_ystnie, (case when ide_ypedpe is null then 0 else ide_ypedpe end), ide_ystmat, ide_ystmen, ide_ysttif, ide_ystjor, ide_ymacal, ide_yhogra, (case when ide_ystins is null then 0 else ide_ystins end),\n" +
+        "ide_ystpea, aplica_laboratorio_yamadt, horas_semana_lab_yamadt, horas_semana_yamadt, ide_ystmod from yavirac_matriz_detalle_temp  order by aplica_laboratorio_yamadt desc,randomico_yamadt");
         for(int i=0;i<tab_detalle_matriz.getTotalFilas();i++){
             // verificamos si la materia a ser dada tiene laboratorio
             if(tab_detalle_matriz.getValor(i, "aplica_laboratorio_yamadt").equals("true")){
+                String ide_ypedpe=tab_detalle_matriz.getValor(i, "ide_ypedpe");
+                String ide_ystins=tab_detalle_matriz.getValor(i, "ide_ystins");
+                System.out.println("ide_pedpe "+ide_ypedpe);
+                System.out.println("ide_ystins "+ide_ystins);
+                if(ide_ypedpe.equals("0")){
+                    ide_ypedpe=" is null ";
+                }
+                else{
+                    ide_ypedpe=" = "+tab_detalle_matriz.getValor(i, "ide_ypedpe");
+                }
+                if(ide_ystins.equals("0")){
+                    ide_ystins=" is null ";
+                }
+                else{
+                    ide_ystins=" = "+tab_detalle_matriz.getValor(i, "ide_ystins");
+                }
                 
-                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
-                "values ();");
+                TablaGenerica tab_semana_dia=utilitario.consultar(ser_horarios.getSqlDiaHabilitado(utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"),  tab_detalle_matriz.getValor(i,"ide_ystmen")));
+                for(int w=0;w<tab_semana_dia.getTotalFilas();w++){
+                    System.out.println("while laboratorio "+w);
+                    TablaGenerica tab_hora_disponible=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("1",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(w,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where 1=1 "));
+                        int hora_requerida=Integer.parseInt(tab_detalle_matriz.getValor(i, "horas_semana_lab_yamadt"));
+                        int hora_disponible=Integer.parseInt(tab_hora_disponible.getValor("hora_disponible"));
+                        if(hora_requerida<=hora_disponible){
+                            TablaGenerica tab_previo_inserta=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("2",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(w,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where (case when contador is null then 0 else contador end)=0 "));
+                            for(int k=0;k<hora_requerida;k++){
+                                TablaGenerica tab_maximo_hora=utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_horario_mate", "ide_yhohma"));
+                                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
+                                "values ("+tab_maximo_hora.getValor("maximo")+","+tab_detalle_matriz.getValor(i, "ide_ypedpe")+","+tab_detalle_matriz.getValor(i, "ide_ystmal")+","+tab_detalle_matriz.getValor(i, "ide_yhogra")+","+tab_previo_inserta.getValor(k, "ide_yhopeh")+");");
+                            }
+                            break;
+                        }
+                    
+                    
+                }
             }
             else{// con el sisguiente else no palica a laboratorios
-                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
-                "values ();");
+                String ide_ypedpe=tab_detalle_matriz.getValor(i, "ide_ypedpe");
+                String ide_ystins=tab_detalle_matriz.getValor(i, "ide_ystins");
+                if(ide_ypedpe.equals("0")){
+                    ide_ypedpe=" is null ";
+                }
+                else{
+                    ide_ypedpe=" = "+tab_detalle_matriz.getValor(i, "ide_ypedpe");
+                }
+                if(ide_ystins.equals("0")){
+                    ide_ystins=" is null ";
+                }
+                else{
+                    ide_ystins=" = "+tab_detalle_matriz.getValor(i, "ide_ystins");
+                }
+                
+                TablaGenerica tab_semana_dia=utilitario.consultar(ser_horarios.getSqlDiaHabilitado(utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"),  tab_detalle_matriz.getValor(i,"ide_ystmen")));
+                System.out.println(" sql semana");
+                tab_detalle_matriz.imprimirSql();
+                
+                for(int m=0;m<tab_semana_dia.getTotalFilas();m++){
+                    System.out.println("while "+m);
+                    TablaGenerica tab_hora_disponible=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("1",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(m,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where 1=1 "));
+                        int hora_requerida=Integer.parseInt(tab_detalle_matriz.getValor(i, "horas_semana_lab_yamadt"));
+                        int hora_disponible=Integer.parseInt(tab_hora_disponible.getValor("hora_disponible"));
+                        if(hora_requerida<=hora_disponible){
+                            System.out.println("if1 "+hora_requerida);
+                            System.out.println("if2 "+hora_disponible);
+                            TablaGenerica tab_previo_inserta=utilitario.consultar(ser_horarios.validaGeneracionHorarioLaboratorio("2",utilitario.getVariable("p_tipo_hora"), tab_detalle_matriz.getValor(i,"ide_ystmod"), tab_detalle_matriz.getValor(i,"ide_ystjor"), tab_detalle_matriz.getValor(i,"ide_ystpea"), tab_semana_dia.getValor(m,"ide_yhodia"), tab_detalle_matriz.getValor(i,"ide_ystmen"), tab_detalle_matriz.getValor(i,"ide_yhogra"), ide_ystins,ide_ypedpe," where (case when contador is null then 0 else contador end)=0 "));
+                            for(int k=0;k<hora_requerida;k++){
+                                System.out.println("for "+k);
+                                TablaGenerica tab_maximo_hora=utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_horario_mate", "ide_yhohma"));
+                                utilitario.getConexion().ejecutarSql("INSERT INTO yavirac_hora_horario_mate(ide_yhohma, ide_ypedpe, ide_ystmal, ide_yhogra, ide_yhopeh)\n" +
+                                "values ("+tab_maximo_hora.getValor("maximo")+","+tab_detalle_matriz.getValor(i, "ide_ypedpe")+","+tab_detalle_matriz.getValor(i, "ide_ystmal")+","+tab_detalle_matriz.getValor(i, "ide_yhogra")+","+tab_previo_inserta.getValor(k, "ide_yhopeh")+");");
+                            }
+                            break;
+                        }
+                    
+                }
             }
             
         }
