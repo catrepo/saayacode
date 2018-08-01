@@ -285,4 +285,80 @@ public class ServiciosHorarios {
             System.out.println("sql: "+sql);
             return sql;
         }
+        public String validaGeneracionHorarioLaboratorio(String tipo_consulta,String tipo_horario,String ide_ystmod,String ide_ystjor,String ide_ystpea,String ide_yhodia,String ide_ystmen,String ide_yhogra,String ide_ystins,String ide_ypedpe,String condicion){
+            String sql="";
+            if(tipo_consulta.equals("1")){
+                sql+="select ide_yhodia,sum(hora_ocupada) as hora_ocupada,sum( hora_clase) as hora_clase,sum( hora_clase)-sum(hora_ocupada) as hora_disponible from (";
+            }
+            //if(tipo_consulta.equals("2")){
+                sql +="select a.ide_yhopeh,ide_ystmod,ide_ystjor,ide_ystpea,ide_yhodia,ide_ystmen,descripcion_yhodia,orden_yhodia,\n" +
+                "(case when contador is null then 0 else contador end) as hora_ocupada,ide_ystins,hora_clase,ide_ypedpe,ide_yhohor,descripcion_yhohor,orden_yhohor\n" +
+                "from (\n" +
+                "select a.ide_yhopeh,a.ide_ystmod,a.ide_ystjor,a.ide_ystpea,a.ide_yhodia,ide_ystmen,descripcion_yhodia,orden_yhodia,\n" +
+                "hora_clase_ystpea/60 as hora_clase,a.ide_yhohor,descripcion_yhohor,orden_yhohor \n" +
+                "from yavirac_hora_periodo_hor a,yavirac_hora_dia b,yavirac_stror_periodo_academic c,yavirac_hora_hora d\n" +
+                "where  a.ide_yhodia = b.ide_yhodia and a.ide_yhohor = d.ide_yhohor\n" +
+                "and a.ide_ystpea = c.ide_ystpea\n" +
+                "and ide_yhothj =" +tipo_horario+
+                "and ide_ystmod =" +ide_ystmod+
+                "and ide_ystjor = " +ide_ystjor+
+                "and a.ide_ystpea = " +ide_ystpea+
+                "and b.ide_yhodia = " +ide_yhodia+
+                "and ide_ystmen = " +ide_ystmen+
+                "order by orden_yhodia\n" +
+                ") a\n" +
+                "left join (select count(*) as contador,ide_ystins,ide_yhopeh,ide_ypedpe \n" +
+                "from yavirac_hora_horario_mate group by ide_yhopeh,ide_ystins,ide_ypedpe )b on a.ide_yhopeh = b.ide_yhopeh and ide_ystins "+ide_ystins+" and ide_ypedpe "+ide_ypedpe+condicion;
+            //}
+             if(tipo_consulta.equals("1")){
+                 sql+=" ) a group by ide_yhodia";
+             }
+            return sql;
+        }
+        public String validaGeneracionHorarioClase(String tipo_consulta,String tipo_horario,String ide_ystmod,String ide_ystjor,String ide_ystpea,String ide_yhodia,String ide_ystmen,String ide_yhogra,String ide_ystmal,String ide_ypedpe,String condicion){
+            String sql="";
+            if(tipo_consulta.equals("1")){
+                sql+="select ide_yhodia,sum(hora_ocupada) as hora_ocupada,sum( hora_clase) as hora_clase,sum( hora_clase)-sum(hora_ocupada) as hora_disponible from (";
+            }
+            //if(tipo_consulta.equals("2")){
+                sql +="select a.ide_yhopeh,ide_ystmod,ide_ystjor,ide_ystpea,ide_yhodia,ide_ystmen,descripcion_yhodia,orden_yhodia,\n" +
+                    "(case when contador is null then 0 else contador end) as hora_ocupada,ide_yhogra,hora_clase,ide_ypedpe,descripcion_yhohor,orden_yhohor\n" +
+                    "from (\n" +
+                    "select a.ide_yhopeh,a.ide_ystmod,a.ide_ystjor,a.ide_ystpea,a.ide_yhodia,ide_ystmen,descripcion_yhodia,orden_yhodia,ide_yhohor,\n" +
+                    "hora_clase_ystpea/60 as hora_clase,a.ide_yhohor,descripcion_yhohor,orden_yhohor\n" +
+                    "from yavirac_hora_periodo_hor a,yavirac_hora_dia b,yavirac_stror_periodo_academic c,yavirac_hora_hora d\n" +
+                    "where  a.ide_yhodia = b.ide_yhodia and a.ide_yhohor = d.ide_yhohor\n" +
+                    "and a.ide_ystpea = c.ide_ystpea\n" +
+                    "and ide_yhothj = " +tipo_horario+
+                    "and ide_ystmod = " +ide_ystmod+
+                    "and ide_ystjor = " +ide_ystjor+
+                    "and a.ide_ystpea = " +ide_ystpea+
+                    "and b.ide_yhodia = " +ide_yhodia+
+                    "and ide_ystmen = " +ide_ystmen+
+                    "order by orden_yhodia\n" +
+                    ") a\n" +
+                    "left join (select count(*) as contador,ide_yhogra,ide_yhopeh,ide_ystmal,ide_ypedpe \n" +
+                    "from yavirac_hora_horario_mate group by ide_yhopeh,ide_yhogra,ide_ystmal,ide_ypedpe )b on a.ide_yhopeh = b.ide_yhopeh \n" +
+                    "and ide_yhogra="+ide_yhogra+" and ide_ystmal="+ide_ystmal+" and ide_ypedpe="+ide_ypedpe+condicion;
+            //}
+            if(tipo_consulta.equals("1")){
+                 sql+=" ) a group by ide_yhodia";
+             }
+            sql+=" order by orden_yhodia,orden_yhohor";
+            return sql;
+        }
+        public String getSqlDiaHabilitado(String tipo_hora,String ide_ystmod,String ide_ystjor,String ide_ystpea,String ide_ystmen){
+            String sql="";
+                sql="select a.ide_ystmod,a.ide_ystjor,a.ide_ystpea,a.ide_yhodia,ide_ystmen,descripcion_yhodia,orden_yhodia\n" +
+                    "from yavirac_hora_periodo_hor a,yavirac_hora_dia b,yavirac_stror_periodo_academic c\n" +
+                    "where  a.ide_yhodia = b.ide_yhodia\n" +
+                    "and a.ide_ystpea = c.ide_ystpea\n" +
+                    "and ide_yhothj = " +tipo_hora+
+                    "and ide_ystmod =" +ide_ystmod+
+                    "and ide_ystjor =  " +ide_ystjor+
+                    "and a.ide_ystpea = " +ide_ystpea+
+                    "and ide_ystmen = "+ide_ystmen+" group by a.ide_ystmod,a.ide_ystjor,a.ide_ystpea,a.ide_yhodia,ide_ystmen,descripcion_yhodia,orden_yhodia\n" +
+                    "order by orden_yhodia";
+            return sql;
+        }
 }
