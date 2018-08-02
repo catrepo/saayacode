@@ -178,8 +178,8 @@ public class HoraPeriodoHora extends Pantalla {
         
         Boton bot_replicar = new Boton();
         bot_replicar.setIcon("ui-icon-newwin");
-        bot_replicar.setValue("GENERAR SEMANERO");
-        bot_replicar.setTitle("GENERAR SEMANERO");
+        bot_replicar.setValue("GENERAR HORARIO CLASE");
+        bot_replicar.setTitle("GENERAR HORARIO CLASE");
         bar_botones.agregarBoton(bot_replicar);    
         bot_replicar.setMetodo("generarPeriodoHora");
 
@@ -187,7 +187,7 @@ public class HoraPeriodoHora extends Pantalla {
         bot_hora_clase.setIcon("ui-icon-newwin");
         bot_hora_clase.setValue("GENERAR HORARIO CLASE");
         bot_hora_clase.setTitle("GENERAR HORARIO CLASE");
-        bar_botones.agregarBoton(bot_hora_clase);    
+     //   bar_botones.agregarBoton(bot_hora_clase);    
         bot_hora_clase.setMetodo("insertaHorarioClase");
         
      
@@ -196,7 +196,7 @@ public class HoraPeriodoHora extends Pantalla {
         bot_n.setIcon("ui-icon-newwin");
         bot_n.setValue("NUEVO");
         bot_n.setTitle("NUEVO");
-        bar_botones.agregarBoton(bot_n);    
+       // bar_botones.agregarBoton(bot_n);    
         bot_n.setMetodo("horarioClaseConsolidado");
         
                 }
@@ -292,6 +292,11 @@ public class HoraPeriodoHora extends Pantalla {
 */
          insertarReceso();
          insertaHorasClase();
+         utilitario.getConexion().ejecutarSql("delete from yavirac_matriz_detalle_temp");
+         insertaHorarioClase();
+         horarioClaseConsolidado();
+         utilitario.addUpdate("tab_hora_periodo_hora");
+         utilitario.addUpdate("tab_hora_horario_materia");
          
     }
    
