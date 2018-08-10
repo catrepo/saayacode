@@ -72,6 +72,7 @@ public class PeriodoAcademico extends Pantalla {
         tab_actividad_evaluacion.setId("tab_actividad_evaluacion");  // todo objeto instanciado poner id 
         tab_actividad_evaluacion.setIdCompleto("tab_tabulador:tab_actividad_evaluacion");
         tab_actividad_evaluacion.setTabla("yavirac_nota_periodo_activ_eva", "ide_ynopae", 1);    // nom bdd
+        tab_actividad_evaluacion.getColumna("ide_ynopee").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         //cambio etiketas
         tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
