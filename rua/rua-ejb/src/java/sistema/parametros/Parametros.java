@@ -53,7 +53,12 @@ public class Parametros {
         lis_parametros.add(new Parametro("5", "p_tipo_hora", "Indica el codigo del numero de hora de tipo receso, asi como hora clase dice primera hora, segunda esta dice receso", "20", "yavirac_hora_hora", "ide_yhohor", "descripcion_yhohor"));
         lis_parametros.add(new Parametro("5", "p_tipo_entrada_salida", "Indica el tipo de hora entrada salida para generacion de horarios", "2", "yavirac_hora_tipo_horario_jorna", "ide_yhothj", "descripcion_yhothj"));
 
-        
+        /*
+         * TRAMITES MODULO =6
+         */
+        lis_parametros.add(new Parametro("6", "p_secuencial_interno", "Indica el nuemro secuecnial para tramites internos", "2", "yavirac_tra_secuencial", "ide_ytrsec", "detalle_ytrsec"));
+        lis_parametros.add(new Parametro("6", "p_entidad_yavirac", "Indica el tipo entidad yavirac para tramites internos", "2", "yavirac_tra_tipo_entidad", "ide_ytrtie", "nombre_ytrtie"));
+      
 //////////////////////////////////////////////////////////////////////
         return lis_parametros;
     }
