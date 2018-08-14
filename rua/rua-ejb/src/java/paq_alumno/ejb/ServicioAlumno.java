@@ -29,6 +29,16 @@ public class ServicioAlumno {
         sql="Select ide_yaldap,nombre_yaldap,apellido_yaldap,doc_identidad_yaldap FROM yavirac_alum_dato_personal where activo_yaldap in ("+estado+") order by nombre_yaldap";
         return sql;
     }
+         /**
+     * Consultamos los datos del alumno 
+     *
+     * @return los datos del alumno
+     */
+    public String getDatosAlumnosCodigo(String ide) {
+        String sql="";
+        sql="Select ide_yaldap,nombre_yaldap,apellido_yaldap,doc_identidad_yaldap FROM yavirac_alum_dato_personal where ide_yaldap in ("+ide+") order by nombre_yaldap";
+        return sql;
+    }
        /**
      * Consultamos los datos de la vivienda
      *
