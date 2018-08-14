@@ -5,14 +5,20 @@
  */
 package paq_tramites;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.Barra;
+import framework.componentes.Boton;
 import framework.componentes.Division;
 import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
+import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.event.SelectEvent;
+import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_personal.ejb.ServicioPersonal;
 import paq_tramites.ejb.ServicioTramite;
@@ -28,27 +34,66 @@ public class Ingreso extends Pantalla{
     private Tabla tab_ingreso = new Tabla();
     private Tabla tab_anexo = new Tabla();
     private Tabla tab_asignacion = new Tabla();
+    private SeleccionTabla sel_registra_alumno = new SeleccionTabla();
+
     @EJB
     private final ServicioTramite ser_tramite = (ServicioTramite) utilitario.instanciarEJB(ServicioTramite.class);
     @EJB
     private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    @EJB
+    private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
 
     
     public Ingreso (){
-        if (tienePerfilAsistencia()) {
+        if (tienePerfilSecretaria()) {
+            
+            //bar_botones.getBot_insertar().setRendered(false);
+            //BOTON REGISTRO DE ALUMNOS
+            Boton bot_registroAlumno = new Boton();
+            bot_registroAlumno.setValue("Listado Alumnos");
+            bot_registroAlumno.setIcon("ui-icon-note");
+            bot_registroAlumno.setMetodo("selregistraAlumno");
+            bar_botones.agregarBoton(bot_registroAlumno);     
+            //boton para asiganar trammites
+            Boton bot_asignar= new Boton();
+             bot_asignar.setValue("Asignar Tramite");
+            bot_asignar.setIcon("ui-icon-note");
+            bot_asignar.setMetodo("selregistraAlumno");
+            bar_botones.agregarBoton(bot_asignar);
+            
         tab_ingreso.setId("tab_ingreso");
         tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
-        tab_ingreso.getColumna("ide_ytrdoc").setCombo(ser_tramite.getSqlDocumento());
         tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad());
-        tab_ingreso.getColumna("ide_ytrtid").setCombo(ser_tramite.getSqlTipoEntidad());
+        tab_ingreso.getColumna("ide_ytrtid").setCombo(ser_tramite.getSqlTipoDocumento());
+        tab_ingreso.getColumna("ide_ytrtid").setMetodoChange("textoBase");
         tab_ingreso.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_ingreso.getColumna("ide_ypedpe").setAutoCompletar();
-        tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
+         tab_ingreso.getColumna("ide_ypedpe").setLectura(true);
+         tab_ingreso.getColumna("ide_ytrtie").setLectura(true);
+         tab_ingreso.getColumna("fecha_entrega_ytring").setValorDefecto(utilitario.getFechaActual());
+         tab_ingreso.getColumna("hora_ytring").setValorDefecto(utilitario.getHoraActual());
+         tab_ingreso.getColumna("fecha_entrega_ytring").setEtiqueta();
+                 tab_ingreso.getColumna("hora_ytring").setEtiqueta();
+        tab_ingreso.getColumna("estado_ytring").setEtiqueta();
+        tab_ingreso.getColumna("estado_ytring").setEstilo("font-size:15px;font-weight: bold;color:green");
+        tab_ingreso.getColumna("fecha_conclusion_ytring").setEtiqueta();
+        tab_ingreso.getColumna("fecha_conclusion_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:blue");
+        tab_ingreso.getColumna("fecha_entrega_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:blue");
+        tab_ingreso.getColumna("hora_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:blue");
+                 
+        tab_ingreso.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+        tab_ingreso.getColumna("ide_yaldap").setAutoCompletar();
+        tab_ingreso.getColumna("ide_yaldap").setLectura(true);
+        tab_ingreso.getColumna("numero_sec_ytring").setEtiqueta();
+        tab_ingreso.getColumna("numero_sec_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
+        //tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
         tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setValorDefecto("1");
         tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setVisible(false);
         tab_ingreso.setHeader("REGISTRO DOCUMENTAL INTERNO");
+        tab_ingreso.agregarRelacion(tab_asignacion);
+        tab_ingreso.agregarRelacion(tab_anexo);
         tab_ingreso.setTipoFormulario(true);
         tab_ingreso.getGrid().setColumns(6);
         tab_ingreso.dibujar();
@@ -89,15 +134,30 @@ public class Ingreso extends Pantalla{
         
         
         agregarComponente(div_ingreso);   
+        
+        //PANTALLA INGRESA ALUMNO
+            sel_registra_alumno.setId("sel_registra_alumno");
+            sel_registra_alumno.setTitle("SELECCIONE EL ALUMNO");
+            sel_registra_alumno.getBot_aceptar().setMetodo("registraAlumno");
+            sel_registra_alumno.setSeleccionTabla(ser_alumno.getDatosAlumnos("null"), "ide_yaldap");
+            sel_registra_alumno.getTab_seleccion().getColumna("apellido_yaldap").setFiltro(true);
+            sel_registra_alumno.getTab_seleccion().getColumna("nombre_yaldap").setFiltro(true);
+            sel_registra_alumno.setRadio();
+            agregarComponente(sel_registra_alumno);
+            
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
 }
-
+public void textoBase(AjaxBehaviorEvent evt){
+    TablaGenerica tab_texto_base = utilitario.consultar(ser_tramite.getSqlTipoDocumentoPara(tab_ingreso.getValor("ide_ytrtid")));
+    tab_ingreso.setValor("asunto_ytring", tab_texto_base.getValor("texto_base_ytrtid"));
+    utilitario.addUpdateTabla(tab_ingreso, "asunto_ytring", "");
+}
     String docente = "";
     String documento="";
     String ide_docente="";
-        private boolean tienePerfilAsistencia() {
+        private boolean tienePerfilSecretaria() {
         List sql = utilitario.getConexion().consultar(ser_estructura_organizacional.getUsuarioSistema(utilitario.getVariable("IDE_USUA")," and not ide_ypedpe is null"));
 
         if (!sql.isEmpty()) {
@@ -117,13 +177,48 @@ public class Ingreso extends Pantalla{
             return false;
         }
     }
-    
+    public void registraAlumno() {
+        String str_seleccionado = sel_registra_alumno.getValorSeleccionado();
+        if (str_seleccionado != null) {
+            //Inserto los cleintes seleccionados en la tabla  
+            if (tab_ingreso.isFilaInsertada() == false) {
+                //Controla que si ya esta insertada no vuelva a insertar
+                tab_ingreso.insertar();
+            }
+            TablaGenerica tab_secuencial= utilitario.consultar(ser_tramite.getSqlSecuencial(utilitario.getVariable("p_secuencial_interno")));
+            TablaGenerica tab_procedencia= utilitario.consultar(ser_alumno.getDatosAlumnosCodigo(str_seleccionado));
+            tab_ingreso.setValor("ide_ypedpe", ide_docente);
+            tab_ingreso.setValor("procedencia_ytring", tab_procedencia.getValor("apellido_yaldap")+" "+tab_procedencia.getValor("nombre_yaldap"));
+            tab_ingreso.setValor("cedula_ytring", tab_procedencia.getValor("doc_identidad_yaldap"));
+            tab_ingreso.setValor("ide_yaldap", str_seleccionado);
+            tab_ingreso.setValor("estado_ytring", "REGISTRADO");
+            tab_ingreso.setValor("ide_ytrtie",utilitario.getVariable("p_entidad_yavirac"));
+            tab_ingreso.setValor("numero_sec_ytring", tab_secuencial.getValor("detalle_ytrsec")+" "+tab_secuencial.getValor("secuencial"));
+            tab_ingreso.modificar(tab_ingreso.getFilaActual());//para que haga el update
+
+            sel_registra_alumno.cerrar();
+            utilitario.addUpdate("tab_pre_inscrip");
+        } else {
+            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
+        }
+    }
+    public void selregistraAlumno() {
+
+            sel_registra_alumno.getTab_seleccion().setSql(ser_alumno.getDatosAlumnos("true"));
+            sel_registra_alumno.getTab_seleccion().ejecutarSql();
+            sel_registra_alumno.dibujar();
+        
+
+    }
     @Override
     public void insertar() {
         if(tab_ingreso.isFocus()){
+            utilitario.agregarMensajeInfo("Seleccione el Almuno", "Para registrar un tramite, seleccione el Alumno");
+            /*
          tab_ingreso.insertar();
          tab_ingreso.insertar();
          tab_ingreso.setValor("ide_ypedpe", ide_docente);
+            */
         }
         else if(tab_asignacion.isFocus()){
             tab_asignacion.insertar();
@@ -195,6 +290,14 @@ public class Ingreso extends Pantalla{
 
     public void setTab_asignacion(Tabla tab_asignacion) {
         this.tab_asignacion = tab_asignacion;
+    }
+
+    public SeleccionTabla getSel_registra_alumno() {
+        return sel_registra_alumno;
+    }
+
+    public void setSel_registra_alumno(SeleccionTabla sel_registra_alumno) {
+        this.sel_registra_alumno = sel_registra_alumno;
     }
     
 }
