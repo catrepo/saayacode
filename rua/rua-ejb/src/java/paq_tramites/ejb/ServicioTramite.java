@@ -51,5 +51,28 @@ public class ServicioTramite {
         String sql="";
         sql="select ide_ytrtid,nombre_ytrtid from yavirac_tra_tipo_documento order by nombre_ytrtid";
         return sql;
-    }    
+    }  
+    /**
+     * Dervuelve el sql del scuencial del tramite
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getSqlSecuencial(String codigo) {
+        String sql="";
+        sql="select ide_ytrsec,detalle_ytrsec,secuencial_ytrsec +1 as secuencial from yavirac_tra_secuencial where ide_ytrsec="+codigo;
+        return sql;
+    } 
+    
+/**
+     * Dervuelve el sql de tipo entidad
+     *
+     * @param todos.- Ingresar todos  los campos requeridos en la tabla
+     * @return la Tabla insertada
+     */
+    public String getSqlTipoDocumentoPara(String ide) {
+        String sql="";
+        sql="select ide_ytrtid,nombre_ytrtid,texto_base_ytrtid from yavirac_tra_tipo_documento where ide_ytrtid="+ide;
+        return sql;
+    }     
 }
