@@ -20,8 +20,8 @@ public class Secuencial extends Pantalla {
 
     public Secuencial() {
         tab_tabla.setId("tab_tabla");
-        tab_tabla.setTipoFormulario(true);
-        tab_tabla.setTabla("YAVIRAC_TRA_SECUECIAL", "IDE_YTRSEC", 1);
+        //tab_tabla.setTipoFormulario(true);
+        tab_tabla.setTabla("YAVIRAC_TRA_SECUENCIAL", "IDE_YTRSEC", 1);
 
         tab_tabla.dibujar();
         PanelTabla pat_panel = new PanelTabla();
