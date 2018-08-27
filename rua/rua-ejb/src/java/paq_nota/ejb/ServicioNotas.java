@@ -51,4 +51,39 @@ public class ServicioNotas {
         sql="select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in ("+activo+")";
         return sql;
     }
+         /**
+     * Retorna Remplazo de Gion
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getRemplazaG(String campo,String tabla) {
+        String sql="";
+        sql="select 1 as codigo,replace(replace('"+campo+"','-',''),' ','') as repa from "+tabla;
+        return sql;
+    }
+    
+         /**
+     * Retorna Limite de caracteres
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getlimiteC(String campo) {
+        String sql="";
+        sql="select 1 as codigo,substring('"+campo+"' from 1  for 30) as nombre ";
+        return sql;
+    }
+    
+        /**
+     * Retorna creacion de la tabla nota maestro
+     *
+     * @param tabla.- permite crear una tabla maestro segun el periodo academico.
+     * @return sql del tipo de evaluacion
+     */
+    public String gettabnotamaestro(String tabla) {
+        String sql="";
+        sql="create table "+tabla+" ( ide_ynotma integer,primary key (ide_ynotma))";
+        return sql;
+    }
 }
