@@ -5,13 +5,15 @@
  */
 package paq_estructura;
 
+import framework.aplicacion.TablaGenerica;
+import framework.componentes.Boton;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
+import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
 import javax.ejb.EJB;
 import paq_nota.ejb.ServicioNotas;
-import servicios.sistema.ServicioSeguridad;
 import sistema.aplicacion.Pantalla;
 
 /**
@@ -22,19 +24,49 @@ public class PeriodoAcademico extends Pantalla {
 
     Tabla tab_periodo_academic = new Tabla(); // importar tabla 
     Tabla tab_periodo_evaluacion = new Tabla();
-    Tabla tab_actividad_evaluacion = new Tabla();
+    Tabla tab_nota_final = new Tabla();
+    private SeleccionTabla sel_periodo_acedemico = new SeleccionTabla();
 
     @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
 
+    private static final String ORIGINAL
+            = "ÁáÉéÍíÓóÚúÑñÜü";
+    private static final String REPLACEMENT
+            = "AaEeIiOoUuNnUu";
+
+    public static String stripAccents(String str) {
+        if (str == null) {
+            return null;
+        }
+        char[] array = str.toCharArray();
+        for (int index = 0; index < array.length; index++) {
+            int pos = ORIGINAL.indexOf(array[index]);
+            if (pos > -1) {
+                array[index] = REPLACEMENT.charAt(pos);
+            }
+        }
+        return new String(array);
+    }
+
+    public void generartabla() {
+        sel_periodo_acedemico.getTab_seleccion().setSql(ser_notas.gettabnotamaestro("tabla"));
+        sel_periodo_acedemico.getTab_seleccion().ejecutarSql();
+    }
+
     public PeriodoAcademico() {
+        //botones
+        Boton bot_generar = new Boton();
+        bot_generar.setValue("Generar Tabla");
+        bot_generar.setIcon("ui-icon-calculator");
+        bot_generar.setMetodo("generartabla");
+        bar_botones.agregarBoton(bot_generar);
 
         //tab_periodo_academic.setIdCompleto("tab_tabulador:tab_periodo_academic");
         tab_periodo_academic.setId("tab_periodo_academic");  // todo objeto instanciado poner id 
-
         tab_periodo_academic.setTabla("yavirac_stror_periodo_academic", "ide_ystpea", 1);    // nom bdd
         tab_periodo_academic.agregarRelacion(tab_periodo_evaluacion);
-        tab_periodo_academic.agregarRelacion(tab_actividad_evaluacion);
+        tab_periodo_academic.agregarRelacion(tab_nota_final);
         tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
         //renombra etiquetas de la tabla
         tab_periodo_academic.getColumna("ide_ystpea").setNombreVisual("CÓDIGO");
@@ -44,6 +76,9 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.getColumna("activo_ystpea").setNombreVisual("ACTIVO");
         tab_periodo_academic.getColumna("hora_clase_ystpea").setNombreVisual("HORA CLASE");
         tab_periodo_academic.getColumna("aplica_jornada_completa_ystpea").setNombreVisual("APLICA JORNADA");
+        tab_periodo_academic.getColumna("tabla_notas_ystpea").setNombreVisual("NOMBRE TABLA");
+        tab_periodo_academic.getColumna("tabla_notas_ystpea").setLectura(true);
+        tab_periodo_academic.getColumna("tabla_notas_ystpea").setUnico(true);
         tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
         tab_periodo_academic.getColumna("ide_ystani").setNombreVisual("AÑO");
         //*****************
@@ -69,32 +104,28 @@ public class PeriodoAcademico extends Pantalla {
         pa_periodoevaluacion.setPanelTabla(tab_periodo_evaluacion);
 
         //tabala  periodo actividad de evaluacion
-        tab_actividad_evaluacion.setId("tab_actividad_evaluacion");  // todo objeto instanciado poner id 
-        tab_actividad_evaluacion.setIdCompleto("tab_tabulador:tab_actividad_evaluacion");
-        tab_actividad_evaluacion.setTabla("yavirac_nota_periodo_activ_eva", "ide_ynopae", 1);    // nom bdd
-        tab_actividad_evaluacion.getColumna("ide_ynopee").setCombo(ser_notas.getTipoEvaluacion("true,false"));
-        tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
+        tab_nota_final.setId("tab_nota_final");  // todo objeto instanciado poner id 
+        tab_nota_final.setIdCompleto("tab_tabulador:tab_nota_final");
+        tab_nota_final.setTabla("yavirac_nota_nota_final", "ide_ynonof", 1);    // nom bdd
+        tab_nota_final.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         //cambio etiketas
-        tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
-        tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD DE EVALUACIÓN");
-        tab_actividad_evaluacion.getColumna("orden_ynopae").setNombreVisual("ORDEN");
-        tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
+        tab_nota_final.getColumna("ide_ynonof").setNombreVisual("CÓDIGO");
+        tab_nota_final.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD DE EVALUACIÓN");
+        tab_nota_final.getColumna("formula_ynonof").setNombreVisual("FORMULA");
         //*******************
-        tab_actividad_evaluacion.dibujar();
+        tab_nota_final.dibujar();
 
-        PanelTabla pa_actividadevaluacion = new PanelTabla();
-        pa_actividadevaluacion.setId("pa_actividadevaluacion"); // nombre de i
-        pa_actividadevaluacion.setPanelTabla(tab_actividad_evaluacion);
+        PanelTabla pa_nota_final = new PanelTabla();
+        pa_nota_final.setId("pa_nota_final"); // nombre de i
+        pa_nota_final.setPanelTabla(tab_nota_final);
 
         ///// tabuladores
         Tabulador tab_tabulador = new Tabulador();
         tab_tabulador.setId("tab_tabulador");
-
         tab_tabulador.agregarTab("PERIODO EVALUACIÓN", pa_periodoevaluacion);
-        tab_tabulador.agregarTab("PERIODO ACTIVIDAD EVALUACIÓN", pa_actividadevaluacion);
-
+        tab_tabulador.agregarTab("NOTA FINAL", pa_nota_final);
         Division div_periodo_academico = new Division();
-        div_periodo_academico.dividir2(pa_periodoacademico, tab_tabulador, "30%", "h");
+        div_periodo_academico.dividir2(pa_periodoacademico, tab_tabulador, "40%", "h");
         agregarComponente(div_periodo_academico);
 
     }
@@ -103,29 +134,45 @@ public class PeriodoAcademico extends Pantalla {
     public void insertar() {
         if (tab_periodo_academic.isFocus()) {
             tab_periodo_academic.insertar();
-        } else if (tab_actividad_evaluacion.isFocus()) {
-            tab_actividad_evaluacion.insertar();
+        } else if (tab_nota_final.isFocus()) {
+            tab_nota_final.insertar();
         } else if (tab_periodo_evaluacion.isFocus()) {
             tab_periodo_evaluacion.insertar();
         }
     }
 
+    String data = "";
+    String anio = "";
+    String limite = "";
+    String generar = "";
+
     @Override
     public void guardar() {
-        if (tab_periodo_academic.guardar()) {
+        if (tab_periodo_academic.isFocus()) {
+            TablaGenerica tab_anio = utilitario.consultar("select ide_ystani,descripcion_ystani from yavirac_stror_anio where ide_ystani=" + tab_periodo_academic.getValor("ide_ystani"));
+            anio = tab_anio.getValor("descripcion_ystani");
+            data = stripAccents(tab_periodo_academic.getValor("descripcion_ystpea"));
+            TablaGenerica tab_remplazdo = utilitario.consultar(ser_notas.getRemplazaG(data, "yavirac_stror_periodo_academic"));
+            //System.out.println("YAVIRAC" + anio + tab_remplazdo.getValor("repa"));
+            limite = "yavirac_" + anio + "_" + tab_remplazdo.getValor("repa").toLowerCase();
+            TablaGenerica tab_limite = utilitario.consultar(ser_notas.getlimiteC(limite));
+            tab_periodo_academic.setValor("tabla_notas_ystpea", tab_limite.getValor("nombre"));
+            utilitario.addUpdateTabla(tab_periodo_academic, "tabla_notas_ystpea", "");
+            tab_periodo_academic.guardar();
             if (tab_periodo_evaluacion.guardar()) {
-                tab_actividad_evaluacion.guardar();
+                tab_nota_final.guardar();
             }
         }
         guardarPantalla();
+
     }
 
     @Override
     public void eliminar() {
         if (tab_periodo_academic.isFocus()) {
             tab_periodo_academic.eliminar();
-        } else if (tab_actividad_evaluacion.isFocus()) {
-            tab_actividad_evaluacion.eliminar();
+        } else if (tab_nota_final.isFocus()) {
+            tab_nota_final.eliminar();
         } else if (tab_periodo_evaluacion.isFocus()) {
             tab_periodo_evaluacion.eliminar();
         }
@@ -147,12 +194,11 @@ public class PeriodoAcademico extends Pantalla {
         this.tab_periodo_evaluacion = tab_periodo_evaluacion;
     }
 
-    public Tabla getTab_actividad_evaluacion() {
-        return tab_actividad_evaluacion;
+    public Tabla getTab_nota_final() {
+        return tab_nota_final;
     }
 
-    public void setTab_actividad_evaluacion(Tabla tab_actividad_evaluacion) {
-        this.tab_actividad_evaluacion = tab_actividad_evaluacion;
+    public void setTab_nota_final(Tabla tab_nota_final) {
+        this.tab_nota_final = tab_nota_final;
     }
-
 }
