@@ -276,6 +276,12 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystcam,descripcion_ystcam from yavirac_stror_categoria_migrato";
         return sql;
  }
+      public String getListaReportes(String opcion) {
+          
+        String sql="";
+        sql="select ide_repo,nom_repo from sis_reporte where ide_opci="+opcion;
+        return sql;
+ }      
           public String getAnioPeriodoCarrera() {
           
         String sql="";
