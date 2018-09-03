@@ -7,6 +7,7 @@ package paq_gerencial;
 
 import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
+import framework.componentes.Combo;
 import framework.componentes.Dialogo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
@@ -28,6 +29,7 @@ import javax.ejb.EJB;
 import paq_asistencia.ejb.ServicioAsistencia;
 import sistema.aplicacion.Pantalla;
 import framework.componentes.Panel;
+import framework.componentes.VisualizarPDF;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 
 /**
@@ -41,6 +43,11 @@ public class ReporteGerencial extends Pantalla {
     private Panel panOpcion = new Panel();
     private ListaSeleccion lis_periodo = new ListaSeleccion();
     private ListaSeleccion lis_carrera = new ListaSeleccion();
+    private SeleccionFormatoReporte sef_reporte=new SeleccionFormatoReporte();
+    private Map p_parametros=new HashMap();
+    private Combo com_reportes = new Combo();
+    
+    private VisualizarPDF vipdf_comprobante = new VisualizarPDF();
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     
@@ -54,10 +61,10 @@ public class ReporteGerencial extends Pantalla {
        rep_reporte.setId("rep_reporte");
        rep_reporte.getBot_aceptar().setMetodo("aceptarReporte");
        agregarComponente(rep_reporte);
-       bar_botones.agregarReporte();
-       sel_rep.setId("sel_rep");
-       agregarComponente(sel_rep);    
-       
+
+        com_reportes.setId("com_reportes");
+        com_reportes.setCombo(ser_estructura.getListaReportes(utilitario.getVariable("p_menu_reportes")));
+        bar_botones.agregarComponente(com_reportes);
        
         //Diseño de fondo reporte //
         Imagen ImaReportes = new Imagen();
@@ -102,6 +109,18 @@ public class ReporteGerencial extends Pantalla {
         Division div= new Division();
         div.dividir1(gri_formulario);
         agregarComponente(div);
+        // agrego boton para imprimir reportes
+        Boton bot_imprimirpdf = new Boton();
+        bot_imprimirpdf.setIcon("ui-icon-print");
+        bot_imprimirpdf.setValue("IMPRIMIR REPORTE");
+        bot_imprimirpdf.setMetodo("abrirListaReportes");
+        bar_botones.agregarBoton(bot_imprimirpdf);        
+        
+        vipdf_comprobante.setId("vipdf_comprobante");
+        vipdf_comprobante.setTitle("REPORTES GERENCIALES");
+        agregarComponente(vipdf_comprobante);
+        
+        
          //PANTALLA CONSULTA LA MENSIONES
             sel_tab_carrera.setId("sel_tab_carrera");
             sel_tab_carrera.setWidth("80%");
@@ -129,7 +148,7 @@ if (lis_periodo.getSeleccionados()!="")
             if (lis_carrera.getSeleccionados()!="")   
             {
                  carrera =lis_carrera.getSeleccionados();
-                 rep_reporte.dibujar();
+                 generarPDF();
 
             }
             else {
@@ -143,6 +162,104 @@ if (lis_periodo.getSeleccionados()!="")
 }
 
 String str_seleccionado_periodo="";
+
+public void generarPDF() {
+    TablaGenerica tab_reportes = utilitario.consultar("select * from sis_reporte where ide_repo="+com_reportes.getValue());
+    String nombre_reporte="";
+    String reporte="";
+    nombre_reporte= tab_reportes.getValor("nom_repo");
+    reporte= tab_reportes.getValor("path_repo");
+    System.out.println("usuario y contraseña "+nombre_reporte+" reporte "+reporte);
+    if (nombre_reporte.equals("Inscripcion Carreras y Genero")){
+                   Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+       
+    
+    
+    }
+    else if (nombre_reporte.equals("Inscripcion Carreras y Periodo Academico")){
+                
+        
+                
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+        
+    
+    }
+    else if (nombre_reporte.equals("Inscritos vs Matriculados")){
+                
+                    
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante"); 
+        
+    }
+    else if (nombre_reporte.equals("Matriculas Carreras y Genero")){
+                
+                    
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+    
+    }
+    else if (nombre_reporte.equals("Matriculas por Periodo Academico")){
+                
+                
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+
+    
+    }
+    else if (nombre_reporte.equals("Porcentaje de Asistencia Alumnos")){
+                
+                   
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+
+    }
+    else if (nombre_reporte.equals("Porcentaje de Asistencia Funcionarios")){
+                
+                
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+    
+    }
+
+                        
+}
 public void aceptarReporte() {
     
     
