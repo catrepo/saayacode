@@ -37,6 +37,7 @@ public class Parametros {
          */
         lis_parametros.add(new Parametro("2", "p_gth_tipo_documento_cedula", "Indica el tipo de documento cedula", "1", "yavirac_stror_docu_identidad", "ide_ystdoi", "descripcion_ystdoi"));
         lis_parametros.add(new Parametro("2", "p_gth_tipo_documento_ruc", "Indica la el tipo documento de ruc", "2", "yavirac_stror_docu_identidad", "ide_ystdoi", "descripcion_ystdoi"));
+        lis_parametros.add(new Parametro("2", "p_menu_reportes", "la opcion para reportes", "2", "sis_opcion", "ide_opci", "nom_opci"));
 
        /*
          * INSCRIPCION MODULO =3
