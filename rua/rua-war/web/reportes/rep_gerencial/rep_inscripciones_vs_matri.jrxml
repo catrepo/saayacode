@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="67"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -13,9 +13,13 @@
 	<parameter name="pmension" class="java.lang.String"/>
 	<parameter name="pperiodo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select ide_ystpea,carrera_matri,total_matri as total,descripcion_ystpea,ide_ystmen,tipo,descripcion_ystani
+		<![CDATA[select a.ide_ystpea,carrera_matri,total_matri as total,descripcion_ystpea,a.ide_ystmen,tipo,descripcion_ystani,total_grupo,round(((total_matri*100)/total_grupo),2) as porce
+from ger_ins_vs_matri a
+left join ( select sum(total_matri) as total_grupo,ide_ystpea,ide_ystmen
 from ger_ins_vs_matri
- where  ide_ystpea in ($P!{pperiodo}) and ide_ystmen in ($P!{pmension})
+where  ide_ystpea in ($P!{pperiodo}) and ide_ystmen in ($P!{pmension})
+group by ide_ystpea,ide_ystmen  ) b on a.ide_ystpea=b.ide_ystpea and a.ide_ystmen = b.ide_ystmen
+where  a.ide_ystpea in ($P!{pperiodo}) and a.ide_ystmen in ($P!{pmension})
 order by descripcion_ystpea desc,carrera_matri]]>
 	</queryString>
 	<field name="ide_ystpea" class="java.lang.Long"/>
@@ -25,8 +29,13 @@ order by descripcion_ystpea desc,carrera_matri]]>
 	<field name="ide_ystmen" class="java.lang.Long"/>
 	<field name="tipo" class="java.lang.String"/>
 	<field name="descripcion_ystani" class="java.lang.String"/>
+	<field name="total_grupo" class="java.math.BigDecimal"/>
+	<field name="porce" class="java.math.BigDecimal"/>
 	<variable name="descripcion_ystpea_1" class="java.lang.Integer" resetType="Page" calculation="Count">
 		<variableExpression><![CDATA[$F{descripcion_ystpea}]]></variableExpression>
+	</variable>
+	<variable name="suma_carrera" class="java.math.BigDecimal" resetType="Group" resetGroup="carrera" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
 	<group name="periodo">
 		<groupExpression><![CDATA[$F{ide_ystpea}]]></groupExpression>
@@ -87,10 +96,10 @@ order by descripcion_ystpea desc,carrera_matri]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="174">
+			<band height="204">
 				<pie3DChart>
 					<chart>
-						<reportElement x="10" y="12" width="542" height="146" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
+						<reportElement x="10" y="23" width="542" height="146" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
@@ -99,13 +108,24 @@ order by descripcion_ystpea desc,carrera_matri]]>
 						<dataset resetType="Group" resetGroup="carrera"/>
 						<keyExpression><![CDATA[$F{tipo}]]></keyExpression>
 						<valueExpression><![CDATA[$F{total}]]></valueExpression>
-						<labelExpression><![CDATA[$F{total}+" - "+$F{tipo}]]></labelExpression>
+						<labelExpression><![CDATA[$F{porce}+" % - "+$F{tipo}]]></labelExpression>
 					</pieDataset>
 					<pie3DPlot>
 						<plot/>
 						<itemLabel/>
 					</pie3DPlot>
 				</pie3DChart>
+				<staticText>
+					<reportElement x="196" y="0" width="100" height="15" uuid="80660737-9ea1-4ec4-aac9-7d73fe65d26c"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="296" y="0" width="100" height="15" uuid="834b657d-b2cf-4074-b6a5-f1051ad7bb82"/>
+					<textFieldExpression><![CDATA[$V{suma_carrera}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
