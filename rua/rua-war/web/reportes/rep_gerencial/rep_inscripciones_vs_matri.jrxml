@@ -33,11 +33,11 @@ order by descripcion_ystpea desc,carrera_matri]]>
 		<groupHeader>
 			<band height="33">
 				<staticText>
-					<reportElement x="0" y="13" width="110" height="15" uuid="da45b83f-4a32-4390-8561-b4b5e5f58c97"/>
+					<reportElement x="0" y="13" width="122" height="15" uuid="da45b83f-4a32-4390-8561-b4b5e5f58c97"/>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Periodo Académico:]]></text>
+					<text><![CDATA[PERIODO ACADÉMICO:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="122" y="13" width="422" height="20" uuid="6bec678d-f991-47eb-b2ff-71698d1c6605"/>
@@ -61,7 +61,7 @@ order by descripcion_ystpea desc,carrera_matri]]>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Carrera:]]></text>
+					<text><![CDATA[CARRERA:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement x="122" y="0" width="422" height="20" isPrintWhenDetailOverflows="true" uuid="0d8b17d0-1b01-42a5-9e55-153d1ab72785"/>

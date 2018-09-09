@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="33"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -13,8 +13,7 @@
 	<parameter name="pmension" class="java.lang.String"/>
 	<parameter name="pperiodo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select funcionario,count(asistencia) as total,asistencia from ger_asi_docente group by asistencia,funcionario
-]]>
+		<![CDATA[select funcionario,count(asistencia) as total,asistencia from ger_asi_docente group by asistencia,funcionario]]>
 	</queryString>
 	<field name="funcionario" class="java.lang.String"/>
 	<field name="total" class="java.lang.Long"/>
@@ -29,7 +28,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL INSCRITOS POR CARRERA Y PERIODO ACADEMICO]]></text>
+				<text><![CDATA[PORCENTAJE DE ASISTENCIA FUNCIONARIOS  ]]></text>
 			</staticText>
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-1" x="0" y="0" width="110" height="40" uuid="529017fa-f3f6-4f9e-b5d9-e20497b2313c"/>
@@ -50,28 +49,28 @@
 	<pageHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="22" y="4" width="100" height="15" uuid="da45b83f-4a32-4390-8561-b4b5e5f58c97"/>
+				<reportElement x="10" y="7" width="100" height="15" uuid="da45b83f-4a32-4390-8561-b4b5e5f58c97"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Funcionario]]></text>
+				<text><![CDATA[FUNCIONARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="151" y="4" width="100" height="15" uuid="2012b4ac-a327-4a75-a2f6-b5f8fc2070cf"/>
+				<reportElement x="279" y="7" width="100" height="15" uuid="2012b4ac-a327-4a75-a2f6-b5f8fc2070cf"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Asistencia]]></text>
+				<text><![CDATA[ASISTENCIA ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="4" width="100" height="15" uuid="c7c65693-7c0d-4423-9ccf-00787b113bca"/>
+				<reportElement x="508" y="7" width="36" height="15" uuid="c7c65693-7c0d-4423-9ccf-00787b113bca"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total]]></text>
+				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement mode="Transparent" x="0" y="2" width="555" height="20" uuid="873b1ceb-9f7c-400e-ae7a-f97dfffad583"/>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="20" uuid="873b1ceb-9f7c-400e-ae7a-f97dfffad583"/>
 			</rectangle>
 		</band>
 	</pageHeader>
@@ -81,18 +80,18 @@
 	<detail>
 		<band height="25" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="5" width="123" height="20" uuid="6bec678d-f991-47eb-b2ff-71698d1c6605"/>
+				<reportElement x="10" y="5" width="265" height="20" uuid="6bec678d-f991-47eb-b2ff-71698d1c6605"/>
 				<textFieldExpression><![CDATA[$F{funcionario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="151" y="5" width="188" height="20" uuid="0d8b17d0-1b01-42a5-9e55-153d1ab72785"/>
+				<reportElement x="279" y="5" width="145" height="20" uuid="0d8b17d0-1b01-42a5-9e55-153d1ab72785"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{asistencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="362" y="5" width="100" height="20" uuid="e282066a-de65-442c-b686-de32ff6b5aa2"/>
+				<reportElement x="524" y="5" width="42" height="20" uuid="e282066a-de65-442c-b686-de32ff6b5aa2"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
