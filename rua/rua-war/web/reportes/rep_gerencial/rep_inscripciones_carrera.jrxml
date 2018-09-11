@@ -81,7 +81,7 @@ order by descripcion_ystpea desc,descripcion_ystmen]]>
 				</textField>
 				<pie3DChart>
 					<chart>
-						<reportElement x="110" y="70" width="300" height="113" uuid="04fa2727-e169-442d-a85d-71670518baf0"/>
+						<reportElement x="135" y="15" width="289" height="168" uuid="04fa2727-e169-442d-a85d-71670518baf0"/>
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
