@@ -10,6 +10,7 @@ import framework.componentes.Boton;
 import framework.componentes.Combo;
 import framework.componentes.Dialogo;
 import framework.componentes.Division;
+import framework.componentes.Espacio;
 import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.Imagen;
@@ -100,9 +101,12 @@ public class ReporteGerencial extends Pantalla {
         //lis_tipo_vivienda.setMetodoChange("", "@this");
         lis_carrera.setListaSeleccion("SELECT ide_ystmen, descripcion_ystmen ,detalle_ysttfe FROM yavirac_stror_mension  a, yavirac_stror_tipo_for_educaci b where a.ide_ysttfe = b.ide_ysttfe");
         lis_carrera.setLayout("pageDirection"); 
+        Espacio esp=new Espacio();
+        gri_formulario.getChildren().add(new Etiqueta(""));
         gri_formulario.getChildren().add(new Etiqueta("PERIODO ACADEMICO"));
        
         gri_formulario.getChildren().add(new Etiqueta("CARRERAS"));
+        gri_formulario.getChildren().add(ImaReportes);
         gri_formulario.getChildren().add(lis_periodo);
         gri_formulario.getChildren().add(lis_carrera);
         
