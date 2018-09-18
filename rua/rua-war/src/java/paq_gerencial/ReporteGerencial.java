@@ -102,7 +102,7 @@ public class ReporteGerencial extends Pantalla {
         lis_carrera.setListaSeleccion("SELECT ide_ystmen, descripcion_ystmen ,detalle_ysttfe FROM yavirac_stror_mension  a, yavirac_stror_tipo_for_educaci b where a.ide_ysttfe = b.ide_ysttfe");
         lis_carrera.setLayout("pageDirection"); 
         Espacio esp=new Espacio();
-        gri_formulario.getChildren().add(new Etiqueta(""));
+        gri_formulario.getChildren().add(esp);
         gri_formulario.getChildren().add(new Etiqueta("PERIODO ACADEMICO"));
        
         gri_formulario.getChildren().add(new Etiqueta("CARRERAS"));
