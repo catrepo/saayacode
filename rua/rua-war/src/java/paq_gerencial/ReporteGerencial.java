@@ -227,7 +227,7 @@ public void generarPDF() {
                 utilitario.addUpdate("vipdf_comprobante");
     
     }
-    else if (nombre_reporte.equals("Matriculas por Periodo Academico")){
+    else if (nombre_reporte.equals("Matriculas Carreras y Periodo Academico")){
                 
                 
                 Map map_parametros = new HashMap();
@@ -370,7 +370,7 @@ public void aceptarReporte() {
     
     
     }
-    else if (rep_reporte.getReporteSelecionado().equals("Matriculas por Periodo Academico")){
+    else if (rep_reporte.getReporteSelecionado().equals("Matriculas Carreras y Periodo Academico")){
                 
         if(rep_reporte.isVisible()){
                 rep_reporte.cerrar();
