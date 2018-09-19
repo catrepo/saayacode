@@ -103,9 +103,9 @@ public class ReporteGerencial extends Pantalla {
         lis_carrera.setLayout("pageDirection"); 
         Espacio esp=new Espacio();
         Etiqueta eti_per= new Etiqueta("PERIODO ACADEMICO");
-        eti_per.setEstiloContenido("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
+        eti_per.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
         Etiqueta eti_carr= new Etiqueta("CARRERAS");
-        eti_carr.setEstiloContenido("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
+        eti_carr.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
         gri_formulario.getChildren().add(esp);
         gri_formulario.getChildren().add(eti_per);       
         gri_formulario.getChildren().add(eti_carr);
