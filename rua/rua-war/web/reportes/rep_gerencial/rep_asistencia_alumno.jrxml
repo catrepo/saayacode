@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="118"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -108,7 +108,7 @@ order by a.ide_ystpea,descripcion_ystmen]]>
 						<reportElement x="0" y="20" width="555" height="258" uuid="c7209f3e-b40e-4242-b32e-b69b3f697afa"/>
 						<chartTitle/>
 						<chartSubtitle/>
-						<chartLegend/>
+						<chartLegend position="Bottom"/>
 					</chart>
 					<pieDataset>
 						<dataset resetType="Group" resetGroup="carrera"/>
