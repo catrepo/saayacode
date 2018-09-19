@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="67"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -13,7 +13,7 @@
 	<parameter name="pmension" class="java.lang.String"/>
 	<parameter name="pperiodo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select a.ide_ystpea,carrera_matri,total_matri as total,descripcion_ystpea,a.ide_ystmen,tipo,descripcion_ystani,total_grupo,round(((total_matri*100)/total_grupo),2) as porce
+		<![CDATA[select a.ide_ystpea,carrera_matri,total_matri as total,descripcion_ystpea,a.ide_ystmen,tipo,descripcion_ystani,total_grupo,round(((total_matri*100)/total_grupo),2) as porce,abreviatura_ystmen
 from ger_ins_vs_matri a
 left join ( select sum(total_matri) as total_grupo,ide_ystpea,ide_ystmen
 from ger_ins_vs_matri
@@ -31,6 +31,7 @@ order by descripcion_ystpea desc,carrera_matri]]>
 	<field name="descripcion_ystani" class="java.lang.String"/>
 	<field name="total_grupo" class="java.math.BigDecimal"/>
 	<field name="porce" class="java.math.BigDecimal"/>
+	<field name="abreviatura_ystmen" class="java.lang.String"/>
 	<variable name="descripcion_ystpea_1" class="java.lang.Integer" resetType="Page" calculation="Count">
 		<variableExpression><![CDATA[$F{descripcion_ystpea}]]></variableExpression>
 	</variable>
@@ -96,10 +97,10 @@ order by descripcion_ystpea desc,carrera_matri]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="204">
+			<band height="278">
 				<pie3DChart>
 					<chart>
-						<reportElement x="10" y="23" width="542" height="146" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
+						<reportElement x="0" y="19" width="555" height="258" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
@@ -158,7 +159,7 @@ order by descripcion_ystpea desc,carrera_matri]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="22" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
