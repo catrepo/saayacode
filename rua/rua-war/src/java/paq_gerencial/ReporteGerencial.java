@@ -105,6 +105,7 @@ public class ReporteGerencial extends Pantalla {
         Etiqueta eti_per= new Etiqueta("PERIODO ACADEMICO");
         eti_per.setEstiloContenido("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
         Etiqueta eti_carr= new Etiqueta("CARRERAS");
+        eti_carr.setEstiloContenido("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
         gri_formulario.getChildren().add(esp);
         gri_formulario.getChildren().add(eti_per);       
         gri_formulario.getChildren().add(eti_carr);
@@ -252,6 +253,30 @@ public void generarPDF() {
 
     }
     else if (nombre_reporte.equals("Porcentaje de Asistencia Funcionarios")){
+                
+                
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+    
+    }
+    else if (nombre_reporte.equals("Docentes del Instituto")){
+                
+                
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+    
+    }
+    else if (nombre_reporte.equals("Docentes por Genero")){
                 
                 
                 Map map_parametros = new HashMap();
