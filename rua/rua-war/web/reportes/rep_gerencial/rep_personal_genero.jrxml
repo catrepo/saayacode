@@ -143,7 +143,7 @@ order by a.ide_ystpea,a.ide_ystmen]]>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL PERSONAL POR CARRERAS Y GÉNERO]]></text>
+				<text><![CDATA[TOTAL DOCENTES POR CARRERA Y GÉNERO]]></text>
 			</staticText>
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-1" x="0" y="0" width="110" height="40" uuid="00f28688-7de6-49d9-b53b-6760c5924e6d"/>
