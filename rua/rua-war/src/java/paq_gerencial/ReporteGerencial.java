@@ -95,17 +95,19 @@ public class ReporteGerencial extends Pantalla {
         
         // creo las listas de los reportes
         Grid gri_formulario=new Grid();
-        gri_formulario.setColumns(2);
+        gri_formulario.setColumns(3);
         lis_periodo.setListaSeleccion("select ide_ystpea, descripcion_ystpea, fecha_inicio_ystpea, fecha_final_ystpea,descripcion_ystani from yavirac_stror_periodo_academic a,yavirac_stror_anio b where a.ide_ystani = b.ide_ystani and activo_ystpea in (true,false) order by descripcion_ystani desc, fecha_inicio_ystpea desc");
         lis_periodo.setLayout("pageDirection");
         //lis_tipo_vivienda.setMetodoChange("", "@this");
         lis_carrera.setListaSeleccion("SELECT ide_ystmen, descripcion_ystmen ,detalle_ysttfe FROM yavirac_stror_mension  a, yavirac_stror_tipo_for_educaci b where a.ide_ysttfe = b.ide_ysttfe");
         lis_carrera.setLayout("pageDirection"); 
         Espacio esp=new Espacio();
+        Etiqueta eti_per= new Etiqueta("PERIODO ACADEMICO");
+        eti_per.setEstiloContenido("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
+        Etiqueta eti_carr= new Etiqueta("CARRERAS");
         gri_formulario.getChildren().add(esp);
-        gri_formulario.getChildren().add(new Etiqueta("PERIODO ACADEMICO"));
-       
-        gri_formulario.getChildren().add(new Etiqueta("CARRERAS"));
+        gri_formulario.getChildren().add(eti_per);       
+        gri_formulario.getChildren().add(eti_carr);
         gri_formulario.getChildren().add(ImaReportes);
         gri_formulario.getChildren().add(lis_periodo);
         gri_formulario.getChildren().add(lis_carrera);
