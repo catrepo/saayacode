@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="282"/>
+	<property name="ireport.y" value="343"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -100,26 +100,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="284">
-				<pie3DChart>
-					<chart>
-						<reportElement x="0" y="0" width="555" height="258" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
-						<chartTitle/>
-						<chartSubtitle/>
-						<chartLegend/>
-					</chart>
-					<pieDataset>
-						<dataset resetType="Group" resetGroup="carrera"/>
-						<keyExpression><![CDATA[$F{descripcion_ystgen}]]></keyExpression>
-						<valueExpression><![CDATA[$F{total}]]></valueExpression>
-						<labelExpression><![CDATA[$F{porce}+" % - "+$F{descripcion_ystgen}]]></labelExpression>
-					</pieDataset>
-					<pie3DPlot>
-						<plot/>
-						<itemLabel/>
-					</pie3DPlot>
-				</pie3DChart>
-			</band>
+			<band height="284"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -157,7 +138,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="241" splitType="Stretch">
+		<band height="302" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="296" y="0" width="100" height="15" uuid="e282066a-de65-442c-b686-de32ff6b5aa2"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
@@ -177,6 +158,24 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				</textElement>
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
+			<pie3DChart>
+				<chart>
+					<reportElement x="0" y="44" width="555" height="258" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="Group" resetGroup="carrera"/>
+					<keyExpression><![CDATA[$F{descripcion_ystgen}]]></keyExpression>
+					<valueExpression><![CDATA[$F{total}]]></valueExpression>
+					<labelExpression><![CDATA[$F{porce}+" % - "+$F{descripcion_ystgen}]]></labelExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
 		</band>
 	</detail>
 	<columnFooter>
