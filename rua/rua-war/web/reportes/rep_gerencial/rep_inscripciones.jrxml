@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="49"/>
+	<property name="ireport.y" value="282"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -126,7 +126,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="67" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<staticText>
 				<reportElement x="296" y="14" width="256" height="45" uuid="dbc2a2cc-15ec-48c6-866a-be38aeb9283e"/>
 				<textElement textAlignment="Center">
@@ -157,7 +157,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="94" splitType="Stretch">
+		<band height="241" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="296" y="0" width="100" height="15" uuid="e282066a-de65-442c-b686-de32ff6b5aa2"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
