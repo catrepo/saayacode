@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="104"/>
+	<property name="ireport.y" value="22"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -100,10 +100,10 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="278">
+			<band height="282">
 				<pie3DChart>
 					<chart>
-						<reportElement x="0" y="19" width="555" height="258" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
+						<reportElement x="0" y="24" width="555" height="258" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
@@ -183,9 +183,9 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="15">
+		<band height="38">
 			<textField pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="false">
-				<reportElement key="textField-7" x="278" y="0" width="100" height="15" uuid="f0f4fe87-5d96-496b-8d9b-7722b6cb41e9"/>
+				<reportElement key="textField-7" x="278" y="23" width="100" height="15" uuid="f0f4fe87-5d96-496b-8d9b-7722b6cb41e9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -195,7 +195,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-9" x="219" y="0" width="56" height="15" uuid="942d6e7c-df12-49c1-9586-72453def7fca"/>
+				<reportElement key="staticText-9" x="222" y="23" width="56" height="15" uuid="942d6e7c-df12-49c1-9586-72453def7fca"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -206,7 +206,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-10" x="110" y="0" width="100" height="15" uuid="a70440c0-f015-4fa8-8ceb-2058bc41b7f0"/>
+				<reportElement key="textField-10" x="110" y="23" width="100" height="15" uuid="a70440c0-f015-4fa8-8ceb-2058bc41b7f0"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -216,7 +216,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField-9" x="504" y="0" width="40" height="15" uuid="f853edc3-9f43-4ba2-930f-9363e7a90413"/>
+				<reportElement key="textField-9" x="504" y="23" width="40" height="15" uuid="f853edc3-9f43-4ba2-930f-9363e7a90413"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -226,7 +226,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-8" x="10" y="0" width="100" height="15" uuid="6e57f2dd-dc7f-427a-b678-8493d7370074"/>
+				<reportElement key="staticText-8" x="0" y="23" width="100" height="15" uuid="6e57f2dd-dc7f-427a-b678-8493d7370074"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -236,7 +236,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				<text><![CDATA[Usuario Impresión:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-8" x="424" y="0" width="80" height="15" uuid="f73f4d84-c0ad-440e-a244-558fa04c00d4"/>
+				<reportElement key="textField-8" x="424" y="23" width="80" height="15" uuid="f73f4d84-c0ad-440e-a244-558fa04c00d4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
