@@ -103,7 +103,7 @@ order by a.ide_ystpea,a.ide_ystmen]]>
 			<band height="297">
 				<pie3DChart>
 					<chart>
-						<reportElement x="0" y="39" width="555" height="258" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
+						<reportElement x="81" y="46" width="423" height="204" uuid="cb1e18cd-5fe1-4241-973c-a4c4fa581280"/>
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
