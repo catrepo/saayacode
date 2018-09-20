@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="343"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -148,11 +148,11 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 				<textFieldExpression><![CDATA[$F{descripcion_ystgen}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="296" y="15" width="100" height="15" uuid="834b657d-b2cf-4074-b6a5-f1051ad7bb82"/>
+				<reportElement x="296" y="44" width="100" height="15" uuid="834b657d-b2cf-4074-b6a5-f1051ad7bb82"/>
 				<textFieldExpression><![CDATA[$V{suma_carrera}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="196" y="15" width="100" height="15" uuid="80660737-9ea1-4ec4-aac9-7d73fe65d26c"/>
+				<reportElement x="196" y="44" width="100" height="15" uuid="80660737-9ea1-4ec4-aac9-7d73fe65d26c"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
