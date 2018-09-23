@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b36f51c8-06b0-4fed-a434-8a87c290531a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="90"/>
+	<property name="ireport.y" value="125"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Saayascode\\trunk\\rua\\rua-war\\web\\reportes\\rep_asistencia\\"]]></defaultValueExpression>
 	</parameter>
@@ -12,10 +12,16 @@
 	<parameter name="ide_empr" class="java.lang.Integer"/>
 	<parameter name="pmension" class="java.lang.String"/>
 	<parameter name="pperiodo" class="java.lang.String"/>
+	<parameter name="pfechai" class="java.lang.String"/>
+	<parameter name="pfechaf" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select funcionario,count(asistencia) as total,asistencia,a.ide_ypedpe,round(((count(asistencia)*100)/total_global),2) as porce
 from ger_asi_docente a
-left join (  select count(asistencia) as total_global,ide_ypedpe from ger_asi_docente group by ide_ypedpe ) b on a.ide_ypedpe=b.ide_ypedpe
+left join (  select count(asistencia) as total_global,ide_ypedpe from ger_asi_docente
+where fecha_yasbio between cast($P{pfechai} as date) and cast($P{pfechaf}as date)
+group by ide_ypedpe
+) b on a.ide_ypedpe=b.ide_ypedpe
+where fecha_yasbio between cast($P{pfechai} as date) and cast($P{pfechaf}as date)
 group by asistencia,funcionario,a.ide_ypedpe,total_global
 order by funcionario]]>
 	</queryString>
@@ -121,7 +127,13 @@ order by funcionario]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="22" splitType="Stretch"/>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="555" height="20" uuid="bca62445-cc66-42bf-a817-06d5707dafe8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["DEL "+$P{pfechai}+" AL "+$P{pfechaf}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>

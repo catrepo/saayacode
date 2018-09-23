@@ -14,7 +14,7 @@
 	<parameter name="pperiodo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select a.ide_ystpea,asiste, total,descripcion_ystmen,descripcion_ystpea,a.ide_ystmen,
-round(((total*100)/total_global),2) as porce
+round(((total*100)/total_global),2) as porce,descripcion_ystani
  from ger_asi_alumno a
 left join (
 select ide_ystpea,sum(total) as total_global,ide_ystmen from ger_asi_alumno
@@ -32,6 +32,7 @@ order by a.ide_ystpea,descripcion_ystmen]]>
 	<field name="descripcion_ystpea" class="java.lang.String"/>
 	<field name="ide_ystmen" class="java.lang.Long"/>
 	<field name="porce" class="java.math.BigDecimal"/>
+	<field name="descripcion_ystani" class="java.lang.String"/>
 	<variable name="total" class="java.math.BigDecimal" resetType="Group" resetGroup="carrera" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
@@ -47,8 +48,8 @@ order by a.ide_ystpea,descripcion_ystmen]]>
 					<text><![CDATA[PERIODO ACADÉMICO:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="133" y="0" width="123" height="20" uuid="6bec678d-f991-47eb-b2ff-71698d1c6605"/>
-					<textFieldExpression><![CDATA[$F{descripcion_ystpea}]]></textFieldExpression>
+					<reportElement x="133" y="0" width="411" height="20" uuid="6bec678d-f991-47eb-b2ff-71698d1c6605"/>
+					<textFieldExpression><![CDATA[$F{descripcion_ystpea}+" "+$F{descripcion_ystani}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
