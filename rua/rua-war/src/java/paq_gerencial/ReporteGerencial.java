@@ -47,7 +47,9 @@ public class ReporteGerencial extends Pantalla {
     private SeleccionFormatoReporte sef_reporte=new SeleccionFormatoReporte();
     private Map p_parametros=new HashMap();
     private Combo com_reportes = new Combo();
-    
+    private SeleccionCalendario sel_fechas= new SeleccionCalendario();
+    String fechai="";
+    String fechaf="";
     private VisualizarPDF vipdf_comprobante = new VisualizarPDF();
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -142,7 +144,12 @@ public class ReporteGerencial extends Pantalla {
             sel_tab_periodo.setTitle("SELECCIONE EL/LOS PERIODOS ACADEMICOS QUE DESEA CONSULTAR");
             sel_tab_periodo.getBot_aceptar().setMetodo("aceptarReporte");
             sel_tab_periodo.setSeleccionTabla(ser_estructura.getPeriodoAcademico("true,false"), "ide_ystpea"); 
-            agregarComponente(sel_tab_periodo);            
+            agregarComponente(sel_tab_periodo);          
+            
+            sel_fechas.setId("sec_rango_fechas");
+       sel_fechas.getBot_aceptar().setMetodo("aceptarReporte");
+       sel_fechas.setFechaActual();
+       agregarComponente(sel_fechas);
         
     }
     String periodo="";
@@ -254,11 +261,23 @@ public void generarPDF() {
     }
     else if (nombre_reporte.equals("Porcentaje de Asistencia Funcionarios")){
                 
+                if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_fechas.dibujar();
+                }
+                else if (sel_fechas.isVisible()){
+                    fechai=sel_fechas.getFecha1String();
+                    fechaf=sel_fechas.getFecha2String();
+                    sel_fechas.cerrar();                
+                }
                 
                 Map map_parametros = new HashMap();
                 map_parametros.put("nombre", utilitario.getVariable("NICK"));
                 map_parametros.put("pmension", carrera);
                 map_parametros.put("pperiodo", periodo);
+                map_parametros.put("pfechai", fechai);
+                map_parametros.put("pfechaf", fechaf);
+                
                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
                 vipdf_comprobante.dibujar();
                 utilitario.addUpdate("vipdf_comprobante");
@@ -288,7 +307,18 @@ public void generarPDF() {
                 utilitario.addUpdate("vipdf_comprobante");
     
     }
-
+else if (nombre_reporte.equals("Docentes por Carrera")){
+                
+                
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("pmension", carrera);
+                map_parametros.put("pperiodo", periodo);
+                vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+                utilitario.addUpdate("vipdf_comprobante");
+    
+    }
                         
 }
 public void aceptarReporte() {
@@ -677,6 +707,14 @@ public void aceptarReporte() {
 
     public void setSel_tab_periodo(SeleccionTabla sel_tab_periodo) {
         this.sel_tab_periodo = sel_tab_periodo;
+    }
+
+    public SeleccionCalendario getSel_fechas() {
+        return sel_fechas;
+    }
+
+    public void setSel_fechas(SeleccionCalendario sel_fechas) {
+        this.sel_fechas = sel_fechas;
     }
 
  
