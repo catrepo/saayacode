@@ -146,10 +146,11 @@ public class ReporteGerencial extends Pantalla {
             sel_tab_periodo.setSeleccionTabla(ser_estructura.getPeriodoAcademico("true,false"), "ide_ystpea"); 
             agregarComponente(sel_tab_periodo);          
             
-            sel_fechas.setId("sec_rango_fechas");
-       sel_fechas.getBot_aceptar().setMetodo("aceptarReporte");
+            sel_fechas.setId("sel_fechas");
+       sel_fechas.getBot_aceptar().setMetodo("abrirListaReportes");
        sel_fechas.setFechaActual();
        agregarComponente(sel_fechas);
+       
         
     }
     String periodo="";
@@ -261,17 +262,15 @@ public void generarPDF() {
     }
     else if (nombre_reporte.equals("Porcentaje de Asistencia Funcionarios")){
                 
-                if(rep_reporte.isVisible()){
-                rep_reporte.cerrar();
-                sel_fechas.dibujar();
-                }
-                else if (sel_fechas.isVisible()){
+                System.out.println("ingreso a reporte asistencia funcionarios");
+                
+                
+                if (sel_fechas.isVisible()){
+                    System.out.println("ingreso a ifffff");
                     fechai=sel_fechas.getFecha1String();
                     fechaf=sel_fechas.getFecha2String();
-                    sel_fechas.cerrar();                
-                }
-                
-                Map map_parametros = new HashMap();
+                    sel_fechas.cerrar(); 
+                    Map map_parametros = new HashMap();
                 map_parametros.put("nombre", utilitario.getVariable("NICK"));
                 map_parametros.put("pmension", carrera);
                 map_parametros.put("pperiodo", periodo);
@@ -281,6 +280,15 @@ public void generarPDF() {
                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
                 vipdf_comprobante.dibujar();
                 utilitario.addUpdate("vipdf_comprobante");
+                
+                }
+                        else{
+                    System.out.println("ingreso a else");
+                        sel_fechas.dibujar();
+                        
+                        }
+                
+                
     
     }
     else if (nombre_reporte.equals("Docentes del Instituto")){
