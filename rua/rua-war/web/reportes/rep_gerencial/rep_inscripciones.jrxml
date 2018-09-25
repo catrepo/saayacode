@@ -13,18 +13,19 @@
 	<parameter name="pmension" class="java.lang.String"/>
 	<parameter name="pperiodo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select descripcion_ystpea,a.ide_ystpea, descripcion_ystmen,descripcion_ystgen , total,ide_ystgen,a.ide_ystmen,
-round(((total*100)/total_global),2) as porce,descripcion_ystani
-from ger_ins_genero a
+		<![CDATA[select descripcion_ystgen,descripcion_ystpea,descripcion_ystmen,total,a.ide_ystpea,descripcion_ystani,a.ide_ystmen,
+round(((total*100)/total_global),2) as porce
+from ger_matri_oper_gen a
 left join (
-select ide_ystpea, sum(total) as total_global,ide_ystmen
-from ger_ins_genero a
-where a.ide_ystpea in ($P!{pperiodo})
-and a.ide_ystmen in ($P!{pmension}) group by ide_ystpea,ide_ystmen
- ) b on a.ide_ystpea=b.ide_ystpea  and a.ide_ystmen = b.ide_ystmen
-where a.ide_ystpea in ($P!{pperiodo})
+select sum(total) as total_global,ide_ystpea,ide_ystmen
+from ger_matri_oper_gen a
+where  ide_ystpea in ($P!{pperiodo})
+and ide_ystmen in ($P!{pmension})
+group by ide_ystpea,ide_ystmen
+ ) b on a.ide_ystpea = b.ide_ystpea and a.ide_ystmen= b.ide_ystmen
+where  a.ide_ystpea in ($P!{pperiodo})
 and a.ide_ystmen in ($P!{pmension})
-order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
+order by a.ide_ystpea,a.ide_ystmen]]>
 	</queryString>
 	<field name="descripcion_ystgen" class="java.lang.String"/>
 	<field name="descripcion_ystpea" class="java.lang.String"/>
