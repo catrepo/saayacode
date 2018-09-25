@@ -24,8 +24,7 @@ and a.ide_ystmen in ($P!{pmension}) group by ide_ystpea,ide_ystmen
  ) b on a.ide_ystpea=b.ide_ystpea  and a.ide_ystmen = b.ide_ystmen
 where a.ide_ystpea in ($P!{pperiodo})
 and a.ide_ystmen in ($P!{pmension})
-order by ide_ystpea,descripcion_ystmen,descripcion_ystgen
-]]>
+order by ide_ystpea,descripcion_ystmen,descripcion_ystgen]]>
 	</queryString>
 	<field name="descripcion_ystgen" class="java.lang.String"/>
 	<field name="descripcion_ystpea" class="java.lang.String"/>
@@ -41,7 +40,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen
 	<variable name="suma_carrera" class="java.math.BigDecimal" resetType="Group" resetGroup="carrera" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
-	<group name="periodo">
+	<group name="periodo" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystpea}]]></groupExpression>
 		<groupHeader>
 			<band height="33">
@@ -65,7 +64,7 @@ order by ide_ystpea,descripcion_ystmen,descripcion_ystgen
 			<band/>
 		</groupFooter>
 	</group>
-	<group name="carrera">
+	<group name="carrera" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystmen}]]></groupExpression>
 		<groupHeader>
 			<band height="35">

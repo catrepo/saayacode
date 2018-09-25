@@ -33,7 +33,7 @@ order by funcionario]]>
 	<variable name="total_suma" class="java.math.BigDecimal" resetType="Group" resetGroup="empleado" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
-	<group name="empleado">
+	<group name="empleado" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ypedpe}]]></groupExpression>
 		<groupHeader>
 			<band height="35">

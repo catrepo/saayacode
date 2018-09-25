@@ -41,7 +41,7 @@ order by a.ide_ystpea,a.ide_ystmen]]>
 	<variable name="suma_carrera" class="java.math.BigDecimal" resetType="Group" resetGroup="carrera" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
-	<group name="periodo">
+	<group name="periodo" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystpea}]]></groupExpression>
 		<groupHeader>
 			<band height="33">
@@ -65,7 +65,7 @@ order by a.ide_ystpea,a.ide_ystmen]]>
 			<band/>
 		</groupFooter>
 	</group>
-	<group name="carrera">
+	<group name="carrera" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystmen}]]></groupExpression>
 		<groupHeader>
 			<band height="35">

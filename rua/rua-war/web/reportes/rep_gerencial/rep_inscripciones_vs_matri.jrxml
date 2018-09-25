@@ -62,7 +62,7 @@ order by descripcion_ystpea desc,carrera_matri]]>
 			<band/>
 		</groupFooter>
 	</group>
-	<group name="carrera">
+	<group name="carrera" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystmen}]]></groupExpression>
 		<groupHeader>
 			<band height="35">

@@ -37,7 +37,7 @@ and c.ide_ystmen in ($P!{pmension})
 	<variable name="suma_carrera" class="java.math.BigDecimal" resetType="Group" resetGroup="carrera" calculation="Count">
 		<variableExpression><![CDATA[$F{doc_identidad_ypedpe}]]></variableExpression>
 	</variable>
-	<group name="periodo">
+	<group name="periodo" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystpea}]]></groupExpression>
 		<groupHeader>
 			<band height="33">
@@ -61,7 +61,7 @@ and c.ide_ystmen in ($P!{pmension})
 			<band/>
 		</groupFooter>
 	</group>
-	<group name="carrera">
+	<group name="carrera" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ystmen}]]></groupExpression>
 		<groupHeader>
 			<band height="35">

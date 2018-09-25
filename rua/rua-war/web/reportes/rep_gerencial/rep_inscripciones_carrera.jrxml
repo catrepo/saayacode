@@ -37,7 +37,7 @@ order by descripcion_ystpea desc,descripcion_ystmen]]>
 	<variable name="sum_total" class="java.math.BigDecimal" resetType="Group" resetGroup="periodo_academico" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
-	<group name="periodo_academico">
+	<group name="periodo_academico" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{descripcion_ystpea}]]></groupExpression>
 		<groupHeader>
 			<band height="35">
