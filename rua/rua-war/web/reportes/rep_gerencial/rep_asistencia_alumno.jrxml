@@ -135,7 +135,7 @@ order by a.ide_ystpea,descripcion_ystmen]]>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PORCENTAJE DE ASISTENCIA ALUMNOS]]></text>
+				<text><![CDATA[PORCENTAJE DE ASISTENCIA POR CARRERA Y PERIODO ACADÉMICO]]></text>
 			</staticText>
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-1" x="0" y="0" width="110" height="40" uuid="529017fa-f3f6-4f9e-b5d9-e20497b2313c"/>
