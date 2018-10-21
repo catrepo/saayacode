@@ -44,32 +44,29 @@ public class Empresa extends Pantalla {
         tab_empresa.getColumna("ide_ytitie").setCombo(ser_titulacion.getSqlTipoEmpresa());
         tab_empresa.getColumna("ide_ytiace").setCombo(ser_titulacion.getSqlActividadEconomica());
         tab_empresa.getColumna("ide_ytitip").setCombo(ser_titulacion.getSqlTipoProducto());
-        //tab_carrera.getColumna("ide_ytiemp").setNombreVisual("CÓDIGO");
-        //tab_empresa.getColumna("ide_ytiten").setCombo(ser_titulacion.getSqlTipoEntidad());
-        //tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
         tab_empresa.setHeader("Registro de datos de la Empresa");
 
         tab_empresa.agregarRelacion(tab_carrera);
         tab_empresa.agregarRelacion(tab_representante);
         tab_empresa.setTipoFormulario(true);
-        tab_empresa.getGrid().setColumns(4);
+        tab_empresa.getGrid().setColumns(6);
         tab_empresa.getColumna("ide_ytiemp").setNombreVisual("CÓDIGO");
-        tab_empresa.getColumna(" ide_ytiace").setNombreVisual("CÓDIGO DE ACTIVIDAD ECONOMICA");
-        tab_empresa.getColumna("ide_ytitie").setNombreVisual("CÓDIGO DE TIPO EMPRESA ");
-        tab_empresa.getColumna("direccion_ytiemp").setNombreVisual("DIRECCIÓN ");
-        tab_empresa.getColumna("telefono_fijo_ytiemp").setNombreVisual("TELEFÓNO ");
-        tab_empresa.getColumna(" logo_tipo_ytiemp").setNombreVisual("LOGO ");
-        tab_empresa.getColumna(" ide_ytitip").setNombreVisual("CODIGÓ TIPO PERSONA ");
-        tab_empresa.getColumna(" ide_ytiten").setNombreVisual("CODIGÓ TIPO ENTIDAD ");
-        tab_empresa.getColumna("  ruc_ytiemp").setNombreVisual("RUC");
+        tab_empresa.getColumna("ide_ytiace").setNombreVisual("ACTIVIDAD ECONOMICA");
+        tab_empresa.getColumna("ide_ytitie").setNombreVisual("TIPO EMPRESA");
+        tab_empresa.getColumna("direccion_ytiemp").setNombreVisual("DIRECCIÓN");
+        tab_empresa.getColumna("telefono_fijo_ytiemp").setNombreVisual("TELEFÓNO FIJO");
+        tab_empresa.getColumna("ide_ytitip").setNombreVisual("TIPO PRODUCTO");
+        tab_empresa.getColumna("ide_ytiten").setNombreVisual("TIPO ENTIDAD ");
+        tab_empresa.getColumna("ruc_ytiemp").setNombreVisual("RUC");
         tab_empresa.getColumna("correo_ytiemp ").setNombreVisual("CORREO");
         tab_empresa.getColumna("movil_ytiemp").setNombreVisual("TELEFÓNO");
-        tab_empresa.getColumna("nombre_comercial_ytiemp").setNombreVisual("NOMBRE COMERCIAL DE LA EMPRESA");
-        
-        
-        
-        
-        
+        tab_empresa.getColumna("nombre_comercial_ytiemp").setNombreVisual("NOMBRE COMERCIAL");
+        tab_empresa.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+        tab_empresa.getColumna("ide_ytiten").setCombo(ser_titulacion.getSqlTipoEntidad());
+        tab_empresa.getColumna("ide_ystdip").setEstilo("with:100");
+        tab_empresa.getColumna("ide_ytiten").setLongitud(100);
+        tab_empresa.getColumna("ide_ytitie").setLongitud(100);
+        tab_empresa.getColumna("ide_ytiace").setLongitud(100);
         tab_empresa.dibujar();
 
         tab_representante.setId("tab_representante");// id de la tabla de representantes
@@ -80,16 +77,17 @@ public class Empresa extends Pantalla {
         tab_representante.getColumna("ide_ytitpv").setCombo(ser_titulacion.getSqlTipoPersonaVincula());
         // tab_representante.setTipoFormulario(true);
         tab_representante.getColumna(" ide_ytipee "). setNombreVisual("CÓDIGO");
-        tab_representante.getColumna("  ide_ytitpv "). setNombreVisual("CÓDIGO  DE LA VINCULACIÓN");
+        tab_representante.getColumna("  ide_ytitpv "). setNombreVisual("CARGO REPRESENTA");
         tab_representante.getColumna("  nombre_ytipee "). setNombreVisual("NOMBRE");
-        tab_representante.getColumna(" docu_identida_ytipee  "). setNombreVisual("DOCUMENTO DE IDENTIDAD");
+        tab_representante.getColumna(" docu_identida_ytipee  "). setNombreVisual("DOC. IDENTIDAD");
         tab_representante.getColumna(" celular_ytipee  "). setNombreVisual("CELULAR");
         tab_representante.getColumna("  telefono_ytipee "). setNombreVisual("TELEFÓNO");
         tab_representante.getColumna(" correo_ytipee "). setNombreVisual("CORREO");
         tab_representante.getColumna(" observacion_ytipee "). setNombreVisual("OBSERVACIÓN");
-        tab_representante.getColumna(" activo_ytipee "). setNombreVisual("ACTIVO");
-        tab_representante.getColumna(" autorizado_firma_convenio_ytipe ").setNombreVisual("AUTORIZADO");
-        
+        tab_representante.getColumna(" activo_ytipee "). setNombreVisual("ESTADO");
+        tab_representante.getColumna(" autorizado_firma_convenio_ytipe ").setNombreVisual("RESPONSABLE AUTORIZA CONVENIO");
+        tab_representante.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
+        tab_representante.getColumna("ide_ystdoi").setLongitud(50);
         tab_representante.dibujar();
 
         tab_carrera.setId("tab_carrera");
@@ -99,12 +97,7 @@ public class Empresa extends Pantalla {
         tab_carrera.setHeader("Registro de datos la Carrera");
         tab_carrera.getColumna(" ide_yticaa  "). setNombreVisual("CÓDIGO");
         tab_carrera.getColumna(" observacion_yticaa "). setNombreVisual("OBSERVACIÓN");
-        tab_carrera.getColumna(" activo_yticaa "). setNombreVisual("ACTIVO");
-        
-       
-       
-        //tab_carrera.getColumna(" ide_ytitip").setNombreVisual(" ");
-        // tab_carrera.setTipoFormulario(true);
+        tab_carrera.getColumna(" activo_yticaa "). setNombreVisual("ESTADO");
         tab_carrera.dibujar();
 
         PanelTabla pat_empresa = new PanelTabla();
@@ -126,7 +119,7 @@ public class Empresa extends Pantalla {
 
         Division div_empresa = new Division();
         div_empresa.setId("div_empresa");
-        div_empresa.dividir2(pat_empresa, tab_tabulador, "50%", "H");
+        div_empresa.dividir2(pat_empresa, tab_tabulador, "40%", "H");
 
         agregarComponente(div_empresa);
     }
