@@ -86,4 +86,25 @@ public class ServicioNotas {
         sql="create table "+tabla+" ( ide_ynotma integer,primary key (ide_ynotma))";
         return sql;
     }
+    
+      /**
+     * Retorna periodo tipo evaluacion
+     *
+     * @param codigo.- permite crear una tabla maestro segun el periodo academico.
+     * @return sql del tipo de evaluacion
+     */
+    public String getperiodotipoevaluacion(String codigo ) {
+        String sql="";
+        sql="select pe.ide_ynopee,t.descripcion_ynotie from yavirac_stror_periodo_academic p\n" +
+        "join yavirac_nota_periodo_evaluacio pe\n" +
+        "on p.ide_ystpea=pe.ide_ystpea\n" +
+        "join yavirac_nota_tipo_evaluacion t\n" +
+        "on t.ide_ynotie = pe.ide_ynotie\n" +
+        "where p.ide_ystpea in ("+codigo+")";
+        return sql;
+    }
+    
 }
+
+
+
