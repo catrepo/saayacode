@@ -160,12 +160,4 @@ public class Nota extends Pantalla {
         this.com_periodo_academico = com_periodo_academico;
     }
 
-    public Grupo getGru_pantalla() {
-        return gru_pantalla;
-    }
-
-    public void setGru_pantalla(Grupo gru_pantalla) {
-        this.gru_pantalla = gru_pantalla;
-    }
-
 }
