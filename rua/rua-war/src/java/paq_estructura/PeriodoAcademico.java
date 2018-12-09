@@ -51,18 +51,18 @@ public class PeriodoAcademico extends Pantalla {
     }
 
     public void generartabla() {
-      // System.err.println("1° metodo"+tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "tabla_creada_ystpea"));
-    if(tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(),"tabla_creada_ystpea").equals("true")){
-        utilitario.agregarNotificacionInfo("Mensajes", "Existe la tabla");
-    }else {
-        utilitario.getConexion().ejecutarSql(ser_notas.gettabnotamaestro(tab_periodo_academic.getValor("tabla_notas_ystpea")));
-        tab_periodo_academic.setValor("tabla_creada_ystpea", "true");
-        tab_periodo_academic.modificar(tab_periodo_academic.getFilaActual());
-        tab_periodo_academic.guardar();
-        guardarPantalla();
-        utilitario.addUpdateTabla(tab_periodo_academic, "tabla_creada_ystpea","");
-        utilitario.agregarMensaje("Mensaje", "Tabla creada exitosamente");
-    }
+        // System.err.println("1° metodo"+tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "tabla_creada_ystpea"));
+        if (tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "tabla_creada_ystpea").equals("true")) {
+            utilitario.agregarNotificacionInfo("Mensajes", "Existe la tabla");
+        } else {
+            utilitario.getConexion().ejecutarSql(ser_notas.gettabnotamaestro(tab_periodo_academic.getValor("tabla_notas_ystpea")));
+            tab_periodo_academic.setValor("tabla_creada_ystpea", "true");
+            tab_periodo_academic.modificar(tab_periodo_academic.getFilaActual());
+            tab_periodo_academic.guardar();
+            guardarPantalla();
+            utilitario.addUpdateTabla(tab_periodo_academic, "tabla_creada_ystpea", "");
+            utilitario.agregarMensaje("Mensaje", "Tabla creada exitosamente");
+        }
         //
     }
 
@@ -133,15 +133,16 @@ public class PeriodoAcademico extends Pantalla {
         PanelTabla pa_nota_final = new PanelTabla();
         pa_nota_final.setId("pa_nota_final"); // nombre de i
         pa_nota_final.setPanelTabla(tab_nota_final);
-        
+
         ///tabla periodo actividad evaluacion
         tab_periodo_actividad_eva.setId("tab_periodo_actividad_eva");
         tab_periodo_actividad_eva.setIdCompleto("tab_tabulador:tab_periodo_actividad_eva");
-        tab_periodo_actividad_eva.setTabla("yavirac_nota_periodo_activ_eva","ide_ynopae", 1);
+        tab_periodo_actividad_eva.setTabla("yavirac_nota_periodo_activ_eva", "ide_ynopae", 1);
         tab_periodo_actividad_eva.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
-        tab_periodo_actividad_eva.getColumna("ide_ynopee").setCombo(ser_notas.getPeriodoEvaluacion("true,false"));
-        tab_periodo_actividad_eva.dibujar();
+        tab_periodo_actividad_eva.getColumna("ide_ynopee").setCombo(ser_notas.getPerioEvaluac("true,false"));
         
+        tab_periodo_actividad_eva.dibujar();
+
         PanelTabla pa_periodo_actividad_eva = new PanelTabla();
         pa_periodo_actividad_eva.setId("pa_periodo_actividad_eva"); // nombre de i
         pa_periodo_actividad_eva.setPanelTabla(tab_periodo_actividad_eva);
@@ -151,7 +152,7 @@ public class PeriodoAcademico extends Pantalla {
         tab_tabulador.setId("tab_tabulador");
         tab_tabulador.agregarTab("PERIODO EVALUACIÓN", pa_periodoevaluacion);
         tab_tabulador.agregarTab("NOTA FINAL", pa_nota_final);
-        tab_tabulador.agregarTab("PERIODO ACTIVIDAD EVALUACIÓN",pa_periodo_actividad_eva );
+        tab_tabulador.agregarTab("PERIODO ACTIVIDAD EVALUACIÓN", pa_periodo_actividad_eva);
         Division div_periodo_academico = new Division();
         div_periodo_academico.dividir2(pa_periodoacademico, tab_tabulador, "40%", "h");
         agregarComponente(div_periodo_academico);
@@ -166,10 +167,9 @@ public class PeriodoAcademico extends Pantalla {
             tab_nota_final.insertar();
         } else if (tab_periodo_evaluacion.isFocus()) {
             tab_periodo_evaluacion.insertar();
-        }
-        else if (tab_periodo_actividad_eva.isFocus()) {
+        } else if (tab_periodo_actividad_eva.isFocus()) {
             tab_periodo_actividad_eva.insertar();
-            tab_periodo_actividad_eva.getColumna("ide_ynopee").setCombo(ser_notas.getperiodotipoevaluacion(tab_periodo_academic.getValor("ide_ystpea")));
+            //tab_periodo_actividad_eva.getColumna("ide_ynopee").setCombo(ser_notas.getFiltroperiodotipoevaluacion(tab_periodo_academic.getValor("ide_ystpea")));
         }
     }
 
@@ -180,7 +180,9 @@ public class PeriodoAcademico extends Pantalla {
 
     @Override
     public void guardar() {
-        if (tab_periodo_academic.isFocus()) {
+
+        if (tab_periodo_academic.isFilaInsertada()) {
+
             TablaGenerica tab_anio = utilitario.consultar("select ide_ystani,descripcion_ystani from yavirac_stror_anio where ide_ystani=" + tab_periodo_academic.getValor("ide_ystani"));
             anio = tab_anio.getValor("descripcion_ystani");
             data = stripAccents(tab_periodo_academic.getValor("descripcion_ystpea"));
@@ -190,13 +192,15 @@ public class PeriodoAcademico extends Pantalla {
             TablaGenerica tab_limite = utilitario.consultar(ser_notas.getlimiteC(limite));
             tab_periodo_academic.setValor("tabla_notas_ystpea", tab_limite.getValor("nombre"));
             utilitario.addUpdateTabla(tab_periodo_academic, "tabla_notas_ystpea", "");
-            tab_periodo_academic.guardar();
+        }
+        if (tab_periodo_academic.guardar()) {
             if (tab_periodo_evaluacion.guardar()) {
-              if (tab_nota_final.guardar()) {
-                tab_periodo_actividad_eva.guardar();
-                }  
+                if (tab_nota_final.guardar()) {
+                    tab_periodo_actividad_eva.guardar();
+                    guardarPantalla();
+                }
             }
-            
+
         }
         guardarPantalla();
 
