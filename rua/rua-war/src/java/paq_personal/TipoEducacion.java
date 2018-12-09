@@ -8,6 +8,7 @@ package paq_personal;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import framework.componentes.Tabulador;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_nota.ejb.ServicioNotas;
@@ -20,10 +21,11 @@ import sistema.aplicacion.Pantalla;
 public class TipoEducacion extends Pantalla {
 
     private Tabla tab_tipo_educacion = new Tabla(); //intanciamos componente tabla
+    private Tabla tab_actividad_docente = new Tabla();
+
     @EJB
-    
     private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
-    
+
     public TipoEducacion() {
         tab_tipo_educacion.setId("tab_tipo_educacion");
         tab_tipo_educacion.setTabla("yavirac_perso_dato_personal", "ide_ypedpe", 1);
@@ -58,19 +60,34 @@ public class TipoEducacion extends Pantalla {
         tab_tipo_educacion.getColumna("firma_ypedpe").setImagen();
         tab_tipo_educacion.getColumna("doc_identidad_ypedpe").setNombreVisual("DOCUMENTO IDENTIDAD");
         tab_tipo_educacion.getColumna("edad_ypedpe").setNombreVisual("EDAD");
-        tab_tipo_educacion.getColumna("codigo_reloj_ypedpe").setNombreVisual("CÓDIGO RELOJ");     
+        tab_tipo_educacion.getColumna("codigo_reloj_ypedpe").setNombreVisual("CÓDIGO RELOJ");
         tab_tipo_educacion.getColumna("discapacitado_ypedpe").setNombreVisual("DISCAPACIDAD");
-        tab_tipo_educacion.getColumna("activo_ypedpe").setNombreVisual("ACTIVO");               
+        tab_tipo_educacion.getColumna("activo_ypedpe").setNombreVisual("ACTIVO");
         //************************************************************************
         tab_tipo_educacion.dibujar();
         PanelTabla pat_tipo_educacion = new PanelTabla();
         pat_tipo_educacion.setId("pat_tipo_educacion");
         pat_tipo_educacion.setPanelTabla(tab_tipo_educacion);
 
-        Division div_tipo_educacion = new Division();
-        div_tipo_educacion.setId("div_tipo_evaluacion");
-        div_tipo_educacion.dividir1(pat_tipo_educacion);
+        //TABLA ACTIVIDAD DOCENTE
+        tab_actividad_docente.setId("tab_actividad_docente");
+        tab_actividad_docente.setIdCompleto("tab_tabulador:tab_actividad_docente");
+        tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 2);
+        tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIO");
+        tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("PERIODO ACTIVIDAD EVALUACIÓN");
+        tab_actividad_docente.getColumna("ide_ypedpe").setNombreVisual("DOCENTE");
+        tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual("% EVALUACIÓN");
+        tab_actividad_docente.dibujar();
 
+        PanelTabla pa_actividad_docente = new PanelTabla();
+        pa_actividad_docente.setId("pa_actividad_docente"); 
+        pa_actividad_docente.setPanelTabla(tab_actividad_docente);
+
+        Tabulador tab_tabulador = new Tabulador();
+        tab_tabulador.setId("tab_tabulador");
+        tab_tabulador.agregarTab("ACTIVDAD DOCENTE", pa_actividad_docente);
+        Division div_tipo_educacion = new Division();
+        div_tipo_educacion.dividir2(pat_tipo_educacion, tab_tabulador, "60%", "h");
         agregarComponente(div_tipo_educacion);
     }
 
@@ -98,4 +115,12 @@ public class TipoEducacion extends Pantalla {
         this.tab_tipo_educacion = tab_tipo_educacion;
     }
 
+    public Tabla getTab_actividad_docente() {
+        return tab_actividad_docente;
+    }
+
+    public void setTab_actividad_docente(Tabla tab_actividad_docente) {
+        this.tab_actividad_docente = tab_actividad_docente;
+    }
+    
 }
