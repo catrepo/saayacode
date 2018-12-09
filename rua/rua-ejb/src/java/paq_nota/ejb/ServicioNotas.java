@@ -104,6 +104,71 @@ public class ServicioNotas {
         return sql;
     }
     
+    
+     /**
+     * Retorna periodo tipo evaluacion
+     *
+     * @param codigo.- permite crear una tabla maestro segun el periodo academico.
+     * @return sql del tipo de evaluacion
+     */
+    public String getFiltroperiodotipoevaluacion(String peridoacademico ) {
+        String sql="";
+        sql="select ide_ynopee,descripcion_ynotie\n" +
+            "From yavirac_nota_periodo_evaluacio b \n" +
+            "join yavirac_nota_tipo_evaluacion c on c.ide_ynotie = b.ide_ynotie where ide_ystpea in ("+peridoacademico+")";
+        return sql;
+    }
+    
+      /**
+     * Retorna periodo tipo evaluacion
+     *
+     * @param periodoacademico.- permite crear una tabla maestro segun el periodo academico.
+     * @return sql del tipo de evaluacion
+     */
+    public String getPeriodoActividadEvaluacion(String periodoacademico,String tipo ) {
+        String sql="";
+        sql+="select ide_ynopae,a.descripcion_ynoace,t.descripcion_ynotie\n" +
+        "from yavirac_nota_periodo_activ_eva p\n" +
+        "join  yavirac_nota_actividad_evaluac a on p.ide_ynoace = a.ide_ynoace\n" +
+        "join yavirac_nota_periodo_evaluacio e on e.ide_ynopee = p.ide_ynopee\n" +
+        "join yavirac_nota_tipo_evaluacion t on t.ide_ynotie = e.ide_ynotie\n";
+        if(tipo.equals("1")){        
+          sql+="where p.ide_ystpea in ("+periodoacademico+")";
+        }
+        return sql;
+    }
+    
+     /**
+     * Retorna periodo tipo evaluacion
+     *
+     * @param codigo.- permite crear una tabla maestro segun el periodo academico.
+     * @return sql del tipo de evaluacion
+     */
+    public String getPersonMallaDocente(String codigo ) {
+        String sql="";
+        sql+="select ide_ypemad,ide_ystpea, ide_ystmen, b.ide_ystnie, ide_ypedpe, ide_yhogra, ide_ystjor\n" +
+        "from yavirac_perso_malla_docente a\n" +
+        "join yavirac_stror_malla b on a.ide_ystmal = b.ide_ystmal\n" +
+        "join yavirac_stror_nivel_educacion c on b.ide_ystnie = c.ide_ystnie\n" +
+        "where a.ide_ypemad in ("+codigo+")";
+        return sql;
+    }
+    
+     /**
+     * Retorna Descripción Periodo Evaluación
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getPerioEvaluac(String activo) {
+        String sql="";
+        sql="select ide_ynopee,descripcion_ynotie\n" +
+            "From yavirac_nota_periodo_evaluacio b \n" +
+            "join yavirac_nota_tipo_evaluacion c on c.ide_ynotie = b.ide_ynotie where activo_ynotie in ("+activo+")";
+        return sql;
+    }
+     
+    
 }
 
 
