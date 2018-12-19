@@ -70,7 +70,7 @@ public class ServicioMatriculas {
      * @param todos.- Ingresar todos  los campos requeridos en la tabla
      * @return la Tabla insertada
      */
-    public String getAlumnosMallaGrupo (String malla,String grupo,String periodo) {
+    public String getAlumnosMallaGrupo (String malla,String grupo,String periodo,String jornada) {
         String sql="";
         sql="select a.ide_ymamat,ide_ystmal,ide_yhogra,a.ide_yaldap,apellido_yaldap,nombre_yaldap" +
             " from yavirac_matri_matricula a, yavirac_matri_registro_credito b,yavirac_alum_dato_personal c,yavirac_matri_periodo_matric d" +
@@ -80,6 +80,7 @@ public class ServicioMatriculas {
             " and ide_ystmal ="+malla +
             " and ide_yhogra ="+grupo +
             " and d.ide_ystpea="+periodo +
+            " and b.ide_ystjor="+jornada +
             " order by apellido_yaldap";
         return sql;
     }         
