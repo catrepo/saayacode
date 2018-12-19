@@ -6,16 +6,13 @@
 package paq_nota;
 
 import framework.componentes.Arbol;
-import framework.componentes.Barra;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
-import framework.componentes.Tabulador;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_nota.ejb.ServicioNotas;
 import sistema.aplicacion.Pantalla;
-import sistema.aplicacion.Utilitario;
 
 /**
  *
@@ -43,7 +40,8 @@ public class PesoNota extends Pantalla {
         tab_peso_nota.getColumna("ide_ynotie").setNombreVisual("TIPO EVALUACIÓN");
         tab_peso_nota.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         tab_peso_nota.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADÉMICO");
-        tab_peso_nota.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
+        tab_peso_nota.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        tab_peso_nota.getColumna("ide_ystpea").setAutoCompletar();
         tab_peso_nota.getColumna("detalle_ynopen").setNombreVisual("DETALLE");
         tab_peso_nota.getColumna("peso_ynopen").setNombreVisual("PESO NOTA");
         tab_peso_nota.getColumna("nivel_ynopen").setNombreVisual("NIVEL");
@@ -67,7 +65,7 @@ public class PesoNota extends Pantalla {
         pat_detalle_peso.setPanelTabla(tab_detalle_peso_actividad);
 
         Division div3 = new Division();
-        div3.dividir2(tab_peso_nota, tab_detalle_peso_actividad, "50%", "H");
+        div3.dividir2(pat_peso_nota, pat_detalle_peso, "50%", "H");
         Division div_division = new Division();
         div_division.setId("div_division");
         div_division.dividir2(arb_arbol, div3, "21%", "V");  //arbol y div3
@@ -119,22 +117,6 @@ public class PesoNota extends Pantalla {
 
     public void setArb_arbol(Arbol arb_arbol) {
         this.arb_arbol = arb_arbol;
-    }
-
-    public Utilitario getUtilitario() {
-        return utilitario;
-    }
-
-    public void setUtilitario(Utilitario utilitario) {
-        this.utilitario = utilitario;
-    }
-
-    public Barra getBar_botones() {
-        return bar_botones;
-    }
-
-    public void setBar_botones(Barra bar_botones) {
-        this.bar_botones = bar_botones;
     }
     
 }

@@ -36,7 +36,7 @@ public class TipoEvaluacion extends Pantalla {
         div_tipo_evaluacion.dividir1(pat_tipo_evaluacion);
 
         agregarComponente(div_tipo_evaluacion);
-    
+
         //constructor reporte
         rep_reporte.setId("rep_reporte");
         agregarComponente(rep_reporte);
@@ -87,9 +87,8 @@ public class TipoEvaluacion extends Pantalla {
     public void setTab_tipo_evaluacion(Tabla tab_tipo_evaluacion) {
         this.tab_tipo_evaluacion = tab_tipo_evaluacion;
     }
-    
-    //set and get reporte
 
+    //set and get reporte
     public Reporte getRep_reporte() {
         return rep_reporte;
     }
@@ -113,6 +112,5 @@ public class TipoEvaluacion extends Pantalla {
     public void setMap_parametros(Map map_parametros) {
         this.map_parametros = map_parametros;
     }
-    
 
 }

@@ -6,15 +6,16 @@
 package paq_nota;
 
 import framework.aplicacion.TablaGenerica;
-import framework.componentes.Barra;
 import framework.componentes.Boton;
 import framework.componentes.Calendario;
 import framework.componentes.Combo;
+import framework.componentes.Dialogo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import framework.componentes.Texto;
 import java.util.List;
 import javax.ejb.EJB;
 import paq_alumno.ejb.ServicioAlumno;
@@ -24,16 +25,12 @@ import paq_matricula.ejb.ServicioMatriculas;
 import paq_nota.ejb.ServicioNotas;
 import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
-import framework.componentes.Dialogo;
-import framework.componentes.SeleccionCalendario;
-import framework.componentes.Texto;
-import org.primefaces.component.calendar.Calendar;
 
 /**
  *
- * @author Jhon
+ * @author usuario
  */
-public class Nota extends Pantalla {
+public class RegistroNota extends Pantalla {
 
     private Combo com_periodo_academico = new Combo();
     private Combo com_materia_docente = new Combo();
@@ -61,8 +58,7 @@ public class Nota extends Pantalla {
     @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
 
-    public Nota() {
-
+    public RegistroNota() {
         if (TienePerfilNota()) {
 
             bar_botones.getBot_insertar().setRendered(false);
@@ -118,6 +114,7 @@ public class Nota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ypedpe").setVisible(false);
             tab_cabecera_nota.getColumna("ide_yhogra").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ystjor").setVisible(false);
+            tab_cabecera_nota.getColumna("ide_ystmal").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ynopae").setAutoCompletar();
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setLectura(true);
@@ -262,7 +259,7 @@ public class Nota extends Pantalla {
         } else {
             String cod = com_materia_docente.getValue() + "";
             TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
-            tab_cabecera_nota.setCondicion("ide_ystpea ="+com_periodo_academico.getValue()+" and ide_ystnie="+tab_consuta.getValor("ide_ystnie")+" and ide_yhogra="+tab_consuta.getValor("ide_yhogra")+" and ide_ystjor="+tab_consuta.getValor("ide_ystjor")+" and ide_ypedpe="+tab_consuta.getValor("ide_ypedpe"));
+            tab_cabecera_nota.setCondicion("ide_ystpea =" + com_periodo_academico.getValue() + " and ide_ystnie=" + tab_consuta.getValor("ide_ystnie") + " and ide_yhogra=" + tab_consuta.getValor("ide_yhogra") + " and ide_ystjor=" + tab_consuta.getValor("ide_ystjor") + " and ide_ypedpe=" + tab_consuta.getValor("ide_ypedpe") + " and ide_ystmal=" + tab_consuta.getValor("ide_ystmal"));
             tab_cabecera_nota.ejecutarSql();
             tab_detalle_nota.ejecutarValorForanea(tab_cabecera_nota.getValorSeleccionado());
         }
@@ -281,6 +278,7 @@ public class Nota extends Pantalla {
             TablaGenerica tab_malla_docente = utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
             String malla = tab_malla_docente.getValor("ide_ystmal");
             String grupo = tab_malla_docente.getValor("ide_yhogra");
+            String jornada = tab_malla_docente.getValor("ide_ystjor");
 
             tab_cabecera_nota.insertar();
             tab_cabecera_nota.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
@@ -290,14 +288,15 @@ public class Nota extends Pantalla {
             tab_cabecera_nota.setValor("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
             tab_cabecera_nota.setValor("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
             tab_cabecera_nota.setValor("ide_ynopae", com_actividad.getValue().toString());
+            tab_cabecera_nota.setValor("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
             tab_cabecera_nota.setValor("detalle_ynocan", tex_detalle.getValue().toString());
             tab_cabecera_nota.setValor("fecha_calificacion_ynocan", cal_fecha_calificacion.getFecha());
-            TablaGenerica tab_alumnos_asistencia = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(malla, grupo, com_periodo_academico.getValue().toString()));
+            TablaGenerica tab_alumnos_asistencia = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(malla, grupo, com_periodo_academico.getValue().toString(), jornada));
             String maximo = "";
             for (int i = 0; i < tab_alumnos_asistencia.getTotalFilas(); i++) {
                 tab_detalle_nota.insertar();
                 tab_detalle_nota.setValor("ide_yaldap", tab_alumnos_asistencia.getValor(i, "ide_yaldap"));
-                tab_detalle_nota.setValor("nota_ynodet", "0" );
+                tab_detalle_nota.setValor("nota_ynodet", "0");
 
             }
 
@@ -329,14 +328,6 @@ public class Nota extends Pantalla {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Tabla getTab_docente_mencion() {
-        return tab_docente_mencion;
-    }
-
-    public void setTab_docente_mencion(Tabla tab_docente_mencion) {
-        this.tab_docente_mencion = tab_docente_mencion;
-    }
-
     public Combo getCom_periodo_academico() {
         return com_periodo_academico;
     }
@@ -351,6 +342,14 @@ public class Nota extends Pantalla {
 
     public void setCom_materia_docente(Combo com_materia_docente) {
         this.com_materia_docente = com_materia_docente;
+    }
+
+    public Tabla getTab_docente_mencion() {
+        return tab_docente_mencion;
+    }
+
+    public void setTab_docente_mencion(Tabla tab_docente_mencion) {
+        this.tab_docente_mencion = tab_docente_mencion;
     }
 
     public Etiqueta getEti_docente() {
@@ -377,6 +376,46 @@ public class Nota extends Pantalla {
         this.eti_fecha_asistencia = eti_fecha_asistencia;
     }
 
+    public Tabla getTab_detalle_nota() {
+        return tab_detalle_nota;
+    }
+
+    public void setTab_detalle_nota(Tabla tab_detalle_nota) {
+        this.tab_detalle_nota = tab_detalle_nota;
+    }
+
+    public Tabla getTab_cabecera_nota() {
+        return tab_cabecera_nota;
+    }
+
+    public void setTab_cabecera_nota(Tabla tab_cabecera_nota) {
+        this.tab_cabecera_nota = tab_cabecera_nota;
+    }
+
+    public Dialogo getDia_dialogo() {
+        return dia_dialogo;
+    }
+
+    public void setDia_dialogo(Dialogo dia_dialogo) {
+        this.dia_dialogo = dia_dialogo;
+    }
+
+    public Texto getTex_detalle() {
+        return tex_detalle;
+    }
+
+    public void setTex_detalle(Texto tex_detalle) {
+        this.tex_detalle = tex_detalle;
+    }
+
+    public Calendario getCal_fecha_calificacion() {
+        return cal_fecha_calificacion;
+    }
+
+    public void setCal_fecha_calificacion(Calendario cal_fecha_calificacion) {
+        this.cal_fecha_calificacion = cal_fecha_calificacion;
+    }
+
     public String getDocente() {
         return docente;
     }
@@ -401,44 +440,5 @@ public class Nota extends Pantalla {
         this.ide_docente = ide_docente;
     }
 
-    public Tabla getTab_detalle_nota() {
-        return tab_detalle_nota;
-    }
-
-    public void setTab_detalle_nota(Tabla tab_detalle_nota) {
-        this.tab_detalle_nota = tab_detalle_nota;
-    }
-
-    public Tabla getTab_cabecera_nota() {
-        return tab_cabecera_nota;
-    }
-
-    public void setTab_cabecera_nota(Tabla tab_cabecera_nota) {
-        this.tab_cabecera_nota = tab_cabecera_nota;
-    }
-
-    public Barra getBar_botones() {
-        return bar_botones;
-    }
-
-    public void setBar_botones(Barra bar_botones) {
-        this.bar_botones = bar_botones;
-    }
-
-    public Dialogo getDia_dialogo() {
-        return dia_dialogo;
-    }
-
-    public void setDia_dialogo(Dialogo dia_dialogo) {
-        this.dia_dialogo = dia_dialogo;
-    }
-
-    public Texto getTex_detalle() {
-        return tex_detalle;
-    }
-
-    public void setTex_detalle(Texto tex_detalle) {
-        this.tex_detalle = tex_detalle;
-    }
-
+    
 }
