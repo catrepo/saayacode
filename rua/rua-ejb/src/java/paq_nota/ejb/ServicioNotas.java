@@ -113,7 +113,7 @@ public class ServicioNotas {
      */
     public String getFiltroperiodotipoevaluacion(String peridoacademico ) {
         String sql="";
-        sql="select ide_ynopee,descripcion_ynotie\n" +
+        sql+="select ide_ynopee,descripcion_ynotie\n" +
             "From yavirac_nota_periodo_evaluacio b \n" +
             "join yavirac_nota_tipo_evaluacion c on c.ide_ynotie = b.ide_ynotie where ide_ystpea in ("+peridoacademico+")";
         return sql;
@@ -133,7 +133,7 @@ public class ServicioNotas {
         "join yavirac_nota_periodo_evaluacio e on e.ide_ynopee = p.ide_ynopee\n" +
         "join yavirac_nota_tipo_evaluacion t on t.ide_ynotie = e.ide_ynotie\n";
         if(tipo.equals("1")){        
-          sql+="where p.ide_ystpea in ("+periodoacademico+")";
+          sql+="where e.ide_ystpea in ("+periodoacademico+")";
         }
         return sql;
     }
@@ -146,7 +146,7 @@ public class ServicioNotas {
      */
     public String getPersonMallaDocente(String codigo ) {
         String sql="";
-        sql+="select ide_ypemad,ide_ystpea, ide_ystmen, b.ide_ystnie, ide_ypedpe, ide_yhogra, ide_ystjor\n" +
+        sql+="select ide_ypemad,ide_ystpea, ide_ystmen, b.ide_ystnie, ide_ypedpe, ide_yhogra, ide_ystjor,b.ide_ystmal\n" +
         "from yavirac_perso_malla_docente a\n" +
         "join yavirac_stror_malla b on a.ide_ystmal = b.ide_ystmal\n" +
         "join yavirac_stror_nivel_educacion c on b.ide_ystnie = c.ide_ystnie\n" +
