@@ -230,7 +230,9 @@ public void cargarFecha(){
             String malla =tab_malla_docente.getValor("ide_ystmal");
             String grupo =tab_malla_docente.getValor("ide_yhogra");
             
-            TablaGenerica tab_alumnos_asistencia = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(malla, grupo, com_periodo_academico.getValue().toString()));
+            
+            //Observacion se incremento jornada ojo tener en cuenta este servicio 
+            TablaGenerica tab_alumnos_asistencia = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(malla, grupo, com_periodo_academico.getValue().toString(),"1"));
             String maximo="";
             for(int i=0;i< tab_alumnos_asistencia.getTotalFilas();i++){
                 TablaGenerica tab_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_asis_asistencia", "ide_yasasi"));
