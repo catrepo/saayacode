@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_horarios.ejb.ServiciosHorarios;
 import paq_matricula.ejb.ServicioMatriculas;
 import paq_personal.ejb.ServicioPersonal;
 import persistencia.Conexion;
@@ -43,6 +44,8 @@ public class Matriculas extends Pantalla {
     private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     @EJB
     private final ServicioMatriculas ser_matricula = (ServicioMatriculas) utilitario.instanciarEJB(ServicioMatriculas.class);
+    @EJB
+    private final ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
 
     public Matriculas() {//constructor
 
@@ -59,14 +62,14 @@ public class Matriculas extends Pantalla {
             bot_clean.setTitle("Limpiar");
             bot_clean.setMetodo("limpiar");
             bar_botones.agregarComponente(bot_clean);
-            
-                        //bar_botones.agregarBoton(bot_anular);
-        Boton bot_imprimir = new Boton();
-        bot_imprimir.setIcon("ui-icon-print");
-        bot_imprimir.setValue("CERTIFICADO MATRÍCULA");
-        bot_imprimir.setMetodo("generarPDF");
 
-        bar_botones.agregarBoton(bot_imprimir);
+            //bar_botones.agregarBoton(bot_anular);
+            Boton bot_imprimir = new Boton();
+            bot_imprimir.setIcon("ui-icon-print");
+            bot_imprimir.setValue("CERTIFICADO MATRÍCULA");
+            bot_imprimir.setMetodo("generarPDF");
+
+            bar_botones.agregarBoton(bot_imprimir);
 
             Tabulador tab_tabulador = new Tabulador();
             tab_tabulador.setId("tab_tabulador");
@@ -88,7 +91,7 @@ public class Matriculas extends Pantalla {
             tab_matriculas.getColumna("ide_ypedpe").setLectura(true);
             tab_matriculas.agregarRelacion(tab_documento_entregado);
             tab_matriculas.agregarRelacion(tab_registro_credito);
-            
+
             tab_matriculas.setTipoFormulario(true);//para que se haga un formulario
             tab_matriculas.getGrid().setColumns(4); //numero de columnas del formulario
             //*********************************Etiquetas*****************************************************
@@ -146,6 +149,10 @@ public class Matriculas extends Pantalla {
             tab_registro_credito.getColumna("codigo_asignatura_ymarcm").setNombreVisual("CÓDIGO ASIGNATURA");
             tab_registro_credito.getColumna("numero_de_creditos_ymarcm").setNombreVisual("NUMERO CRÉDITO");
             tab_registro_credito.getColumna("observacion_ymarec").setNombreVisual("OBSERVACIÓN");
+            tab_registro_credito.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
+            tab_registro_credito.getColumna("ide_yhogra").setNombreVisual("PARALELO");
+            tab_registro_credito.getColumna("ide_ystjor").setCombo(ser_estructura.getJornada("true,false"));
+            tab_registro_credito.getColumna("ide_ystjor").setNombreVisual("JORNADA");
             tab_registro_credito.dibujar();//dibuja la tabla
 
             PanelTabla pa_registro_credito = new PanelTabla();//intanciamos el panel del framework
@@ -207,21 +214,22 @@ public class Matriculas extends Pantalla {
 
             con_guardar_alumno.setId("con_guardar_alumno");
             agregarComponente(con_guardar_alumno);
-            
-             vipdf_comprobante.setId("vipdf_comprobante");
+
+            vipdf_comprobante.setId("vipdf_comprobante");
             vipdf_comprobante.setTitle("CERTIFICADO DE MATRICULA");
             agregarComponente(vipdf_comprobante);
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el registro de Matriculas. Consulte con el Administrador");
         }
     }
-public void generarPDF() {
+
+    public void generarPDF() {
         if (tab_matriculas.getValorSeleccionado() != null) {
             ///////////AQUI ABRE EL REPORTE
             Map map_parametros = new HashMap();
             map_parametros.put("pide_ins", Integer.parseInt(tab_matriculas.getValor("ide_ymamat")));
             map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            
+
             System.out.println(" " + map_parametros);
             //vipdf_comprobante.setVisualizarPDF(data, docente, map_parametros);
             vipdf_comprobante.setVisualizarPDF("rep_matricula/rep_certificado_matricula.jasper", map_parametros);
@@ -230,7 +238,8 @@ public void generarPDF() {
         } else {
             utilitario.agregarMensajeInfo("Seleccione una Matricula", "");
         }
-    } 
+    }
+
     public void actualizaAlumno() {
         String str_clienteActualizado = sel_actualiza_alumno.getValorSeleccionado();
         if (str_clienteActualizado != null) {
@@ -401,12 +410,11 @@ public void generarPDF() {
 
     @Override
     public void guardar() {
-        if (tab_matriculas.guardar()){
-            if (tab_documento_entregado.guardar())
-            {
-                if (tab_registro_credito.guardar())
-        
-            guardarPantalla();
+        if (tab_matriculas.guardar()) {
+            if (tab_documento_entregado.guardar()) {
+                if (tab_registro_credito.guardar()) {
+                    guardarPantalla();
+                }
             }
         }
     }
