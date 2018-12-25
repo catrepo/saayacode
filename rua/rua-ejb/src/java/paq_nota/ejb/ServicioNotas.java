@@ -24,7 +24,7 @@ public class ServicioNotas {
      */
     public String getTipoEvaluacion(String activo) {
         String sql="";
-        sql="select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in ("+activo+")";
+        sql+="select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in ("+activo+")";
         return sql;
     }
     
@@ -36,7 +36,7 @@ public class ServicioNotas {
      */
     public String getActividadEvaluacion(String activo) {
         String sql="";
-        sql="select ide_ynoace,descripcion_ynoace from yavirac_nota_actividad_evaluac  where activo_ynoace in ("+activo+")";
+        sql+="select ide_ynoace,descripcion_ynoace from yavirac_nota_actividad_evaluac  where activo_ynoace in ("+activo+")";
         return sql;
     }
     
@@ -48,7 +48,7 @@ public class ServicioNotas {
      */
     public String getPeriodoEvaluacion(String activo) {
         String sql="";
-        sql="select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in ("+activo+")";
+        sql+="select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in ("+activo+")";
         return sql;
     }
          /**
@@ -59,7 +59,7 @@ public class ServicioNotas {
      */
     public String getRemplazaG(String campo,String tabla) {
         String sql="";
-        sql="select 1 as codigo,replace(replace('"+campo+"','-',''),' ','') as repa from "+tabla;
+        sql+="select 1 as codigo,replace(replace('"+campo+"','-',''),' ','') as repa from "+tabla;
         return sql;
     }
     
@@ -71,7 +71,7 @@ public class ServicioNotas {
      */
     public String getlimiteC(String campo) {
         String sql="";
-        sql="select 1 as codigo,substring('"+campo+"' from 1  for 30) as nombre ";
+        sql+="select 1 as codigo,substring('"+campo+"' from 1  for 30) as nombre ";
         return sql;
     }
     
@@ -83,7 +83,7 @@ public class ServicioNotas {
      */
     public String gettabnotamaestro(String tabla) {
         String sql="";
-        sql="create table "+tabla+" ( ide_ynotma integer,primary key (ide_ynotma))";
+        sql+="create table "+tabla+" ( ide_ynotma integer,primary key (ide_ynotma))";
         return sql;
     }
     
@@ -95,7 +95,7 @@ public class ServicioNotas {
      */
     public String getperiodotipoevaluacion(String codigo ) {
         String sql="";
-        sql="select pe.ide_ynopee,t.descripcion_ynotie from yavirac_stror_periodo_academic p\n" +
+        sql+="select pe.ide_ynopee,t.descripcion_ynotie from yavirac_stror_periodo_academic p\n" +
         "join yavirac_nota_periodo_evaluacio pe\n" +
         "on p.ide_ystpea=pe.ide_ystpea\n" +
         "join yavirac_nota_tipo_evaluacion t\n" +
@@ -125,15 +125,15 @@ public class ServicioNotas {
      * @param periodoacademico.- permite crear una tabla maestro segun el periodo academico.
      * @return sql del tipo de evaluacion
      */
-    public String getPeriodoActividadEvaluacion(String periodoacademico,String tipo ) {
+    public String getPeriodoActividadEvaluacion(String periodoacademico,String tipo,String estado ) {
         String sql="";
         sql+="select ide_ynopae,a.descripcion_ynoace,t.descripcion_ynotie\n" +
         "from yavirac_nota_periodo_activ_eva p\n" +
         "join  yavirac_nota_actividad_evaluac a on p.ide_ynoace = a.ide_ynoace\n" +
         "join yavirac_nota_periodo_evaluacio e on e.ide_ynopee = p.ide_ynopee\n" +
-        "join yavirac_nota_tipo_evaluacion t on t.ide_ynotie = e.ide_ynotie\n";
+        "join yavirac_nota_tipo_evaluacion t on t.ide_ynotie = e.ide_ynotie where activo_ynopae in("+estado+") \n";
         if(tipo.equals("1")){        
-          sql+="where e.ide_ystpea in ("+periodoacademico+")";
+          sql+="and e.ide_ystpea in ("+periodoacademico+")";
         }
         return sql;
     }
@@ -162,12 +162,28 @@ public class ServicioNotas {
      */
     public String getPerioEvaluac(String activo) {
         String sql="";
-        sql="select ide_ynopee,descripcion_ynotie\n" +
+        sql+="select ide_ynopee,descripcion_ynotie\n" +
             "From yavirac_nota_periodo_evaluacio b \n" +
             "join yavirac_nota_tipo_evaluacion c on c.ide_ynotie = b.ide_ynotie where activo_ynotie in ("+activo+")";
         return sql;
     }
      
+     /**
+     * Retorna consulta tipo examen
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getConsultaTipoExamen(String m ,String n ) {
+        String sql="";
+        sql+="select ide_ynocan,b.ide_ynoace,descripcion_ynoace from yavirac_nota_cabecera_nota  a \n" +
+           "join yavirac_nota_periodo_activ_eva  b on a.ide_ynopae  = b.ide_ynopae\n" +
+            "join yavirac_nota_actividad_evaluac c on b.ide_ynoace = c.ide_ynoace "
+            + "where a.ide_ynocan in ("+m+") and  b.ide_ynoace in ("+n+")";
+        return sql;
+    }
+    
+    
     
 }
 
