@@ -60,6 +60,13 @@ public class Parametros {
         lis_parametros.add(new Parametro("6", "p_secuencial_interno", "Indica el nuemro secuecnial para tramites internos", "2", "yavirac_tra_secuencial", "ide_ytrsec", "detalle_ytrsec"));
         lis_parametros.add(new Parametro("6", "p_entidad_yavirac", "Indica el tipo entidad yavirac para tramites internos", "2", "yavirac_tra_tipo_entidad", "ide_ytrtie", "nombre_ytrtie"));
       
+        /*
+         * NOTAS MODULO =7
+         */
+        lis_parametros.add(new Parametro("7", "p_tipo_eva_examen", "Indica el tipo de evaluación de examen para verificar si tiene recuperacion de examen", "2", "yavirac_nota_actividad_evaluac", "ide_ynoace", "descripcion_ynoace"));
+   
+      
+        
 //////////////////////////////////////////////////////////////////////
         return lis_parametros;
     }
