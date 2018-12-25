@@ -28,6 +28,23 @@ public class ServicioEstructuraOrganizacional {
         return sql;
     }
     
+    /**
+     * Retorna el periodo academico general
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya sea true, false, o ambos.
+     * @return sql del periodo academico
+     */
+    public String getPeriodoAcademicoGeneral(String codigo,String activo,String tipo) {
+        String sql="";
+        sql+=" select * from yavirac_stror_periodo_academic where ide_ystpea in ("+codigo+") and activo_ystpea in ("+activo+") ";
+        if(tipo.equals("1")){        
+          sql+="and aplica_recuperacion_ystpea in (true)";
+        }
+        //System.out.println("yyyy "+sql);
+        return sql;
+    }
+    
+    
        /**
      * Retorna la jornada vigente
      *
