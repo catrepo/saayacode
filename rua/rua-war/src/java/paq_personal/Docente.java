@@ -67,7 +67,7 @@ public class Docente extends Pantalla {
         tab_tipo_educacion.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
         //crear formularios
         tab_tipo_educacion.setTipoFormulario(true);//para que se haga un formulario
-        tab_tipo_educacion.getGrid().setColumns(4);//numero de columnas del formulario
+        tab_tipo_educacion.getGrid().setColumns(6);//numero de columnas del formulario
         //*****************************************************************************
         tab_tipo_educacion.getColumna("ide_ypedpe").setNombreVisual("CÓDIGO");
         tab_tipo_educacion.getColumna("ide_ysttis").setNombreVisual("TIPO SANGRE");
@@ -114,7 +114,7 @@ public class Docente extends Pantalla {
         tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 2);
         tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
         tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("PERIODO ACTIVIDAD EVALUACIÓN");
-        tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0"));
+        tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true,false"));
         tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
         //tab_actividad_docente.getColumna("ide_ynopae").setLectura(true);
         //tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", com_periodo_academico.getValue().toString()));
@@ -122,7 +122,12 @@ public class Docente extends Pantalla {
         tab_actividad_docente.getColumna("ide_ypedpe").setNombreVisual("DOCENTE");
         tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual(" % EVALUACIÓN");
         tab_actividad_docente.setHeader(gri_cuerpo);
-
+        tab_actividad_docente.getColumna("ide_ypedpe").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystmal").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystmen").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystnie").setVisible(false);
+        tab_actividad_docente.getColumna("ide_yhogra").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystjor").setVisible(false);
         tab_actividad_docente.dibujar();
         limpiar();
         PanelTabla pa_actividad_docente = new PanelTabla();
@@ -133,7 +138,7 @@ public class Docente extends Pantalla {
         tab_tabulador.setId("tab_tabulador");
         tab_tabulador.agregarTab("ACTIVDAD DOCENTE", pa_actividad_docente);
         Division div_tipo_educacion = new Division();
-        div_tipo_educacion.dividir2(pat_tipo_educacion, tab_tabulador, "60%", "h");
+        div_tipo_educacion.dividir2(pat_tipo_educacion, tab_tabulador, "50%", "h");
         agregarComponente(div_tipo_educacion);
     }
 
@@ -142,20 +147,25 @@ public class Docente extends Pantalla {
         tab_tipo_educacion.setCondicion("ide_ypedpe=" + aut_alumno.getValor());
         tab_tipo_educacion.ejecutarSql();
         utilitario.addUpdate("tab_tipo_educacion");
-
     }
 
     public void mostrarActividad() {
-        TablaGenerica tab_actividad = utilitario.consultar(ser_personal.getDatoPersonalCodigo(aut_alumno.getValor()));
-        tab_actividad_docente.setCondicion("ide_ypedpe = " + tab_actividad.getValor("ide_ypedpe") + " and ide_ynopae in (select ide_ynopae from yavirac_nota_periodo_activ_eva a join yavirac_nota_periodo_evaluacio b on a.ide_ynopee = b.ide_ynopee where b.ide_ystpea = " + com_periodo_academico.getValue() + ")");
-        tab_actividad_docente.ejecutarSql();
-        utilitario.addUpdate("tab_actividad_docente");
+        if (aut_alumno.getValue() == null) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Por favor, Seleccione o ingrese el docente");
+            return;
+        } else {
+            TablaGenerica tab_actividad = utilitario.consultar(ser_personal.getDatoPersonalCodigo(aut_alumno.getValor()));
+            tab_actividad_docente.setCondicion("ide_ypedpe = " + tab_actividad.getValor("ide_ypedpe") + " and ide_ynopae in (select ide_ynopae from yavirac_nota_periodo_activ_eva a join yavirac_nota_periodo_evaluacio b on a.ide_ynopee = b.ide_ynopee where b.ide_ystpea = " + com_periodo_academico.getValue() + ")");
+            tab_actividad_docente.ejecutarSql();
+            utilitario.addUpdate("tab_actividad_docente");
+        }
     }
 
     public void limpiar() {
         aut_alumno.limpiar();
         tab_tipo_educacion.limpiar();
         com_periodo_academico.limpiar();
+        utilitario.addUpdate("tab_actividad_docente");
     }
 
     @Override
@@ -168,7 +178,7 @@ public class Docente extends Pantalla {
                 return;
             } else {
                 tab_actividad_docente.insertar();
-                tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1"));
+                tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true,false"));
 
             }
 
