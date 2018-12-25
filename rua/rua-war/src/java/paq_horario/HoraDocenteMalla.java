@@ -35,7 +35,7 @@ public class HoraDocenteMalla extends Pantalla{
     public HoraDocenteMalla(){
         com_periodo_academico.setId("cmb_periodo_academico");
         com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
-        com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
+        //com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
        
         bar_botones.agregarComponente(new Etiqueta("PERIODO ACADÉMICO"));
         bar_botones.agregarComponente(com_periodo_academico);
@@ -76,7 +76,7 @@ public class HoraDocenteMalla extends Pantalla{
     }
         public void selecionoAutocompletar(){
         
-        tab_docente_malla.setCondicion("ide_ypedpe="+aut_alumno.getValor());
+        tab_docente_malla.setCondicion("ide_ystpea="+com_periodo_academico.getValue() + "and ide_ypedpe="+aut_alumno.getValor());
         tab_docente_malla.ejecutarSql();
         utilitario.addUpdate("tab_docente_malla");
         
@@ -99,6 +99,7 @@ public class HoraDocenteMalla extends Pantalla{
         else if(tab_docente_malla.isFocus()){
         tab_docente_malla.insertar();
         tab_docente_malla.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
+        tab_docente_malla.setValor("ide_ypedpe", aut_alumno.getValor());
        utilitario.addUpdateTabla( tab_docente_malla, "ide_ystpea", "");
        }
         
