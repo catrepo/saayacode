@@ -86,6 +86,8 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.getColumna("tabla_creada_ystpea").setVisible(false);
         tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
         tab_periodo_academic.getColumna("ide_ystani").setNombreVisual("AÑO");
+        tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setValorDefecto("false");
+      
         //*****************
         tab_periodo_academic.dibujar();
 
@@ -96,7 +98,7 @@ public class PeriodoAcademico extends Pantalla {
         ///// tabuladores
         Division div_periodo_academico = new Division();
         div_periodo_academico.setId("div_actividad_docente");
-        div_periodo_academico.dividir1(tab_periodo_academic);
+        div_periodo_academico.dividir1(pa_periodoacademico);
         agregarComponente(div_periodo_academico);
 
     }
