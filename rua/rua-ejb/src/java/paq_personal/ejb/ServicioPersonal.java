@@ -17,7 +17,7 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class ServicioPersonal {
-
+ 
      /**
      * Insertar en la tabla Biometrico
      *
@@ -50,7 +50,7 @@ public class ServicioPersonal {
     public String getPersonalMalla(String codigo) {
           
         String sql="";
-        sql="select ide_ypemad,ide_ystmal,ide_ystpea,ide_ypedpe,ide_yhogra from yavirac_perso_malla_docente   where ide_ypemad ="+codigo;
+        sql="select ide_ypemad,ide_ystmal,ide_ystpea,ide_ypedpe,ide_yhogra,ide_ystjor from yavirac_perso_malla_docente   where ide_ypemad ="+codigo;
         return sql;
  }
     
