@@ -25,6 +25,7 @@ public class TipoEvaluacion extends Pantalla {
         tab_tipo_evaluacion.getColumna("ide_ynotie").setNombreVisual("CODIGO");
         tab_tipo_evaluacion.getColumna("descripcion_ynotie").setNombreVisual("DESCRIPCION");
         tab_tipo_evaluacion.getColumna("activo_ynotie").setNombreVisual("ACTIVO");
+        tab_tipo_evaluacion.getColumna("bloquear_ynotie").setNombreVisual("BLOQUEAR");
         tab_tipo_evaluacion.dibujar();
 
         PanelTabla pat_tipo_evaluacion = new PanelTabla();

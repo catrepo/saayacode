@@ -18,6 +18,7 @@ import framework.componentes.Tabla;
 import framework.componentes.Texto;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_asistencia.ejb.ServicioAsistencia;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -44,6 +45,7 @@ public class RegistroNota extends Pantalla {
     private final Combo com_actividad = new Combo();
     private Texto tex_detalle = new Texto();
     private Calendario cal_fecha_calificacion = new Calendario();
+    private Etiqueta eti_notificacion = new Etiqueta();
 
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -70,7 +72,7 @@ public class RegistroNota extends Pantalla {
 
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
-            bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
+            bar_botones.agregarComponente(new Etiqueta("Periodo Académico "));
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
 
@@ -78,7 +80,7 @@ public class RegistroNota extends Pantalla {
             com_materia_docente.setMetodo("mostrarNota");
             com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente("-1", "2"));
 
-            bar_botones.agregarComponente(new Etiqueta("Cursos:"));
+            bar_botones.agregarComponente(new Etiqueta("Curso "));
             bar_botones.agregarComponente(com_materia_docente);
 
             //boton limpiar
@@ -96,14 +98,14 @@ public class RegistroNota extends Pantalla {
 
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
-
+            eti_notificacion.setId("eti_notificacion");
             /* TAB 1 cabecera nota*/
             tab_cabecera_nota.setId("tab_cabecera_nota");  // todo objeto instanciado poner id 
             tab_cabecera_nota.setTabla("yavirac_nota_cabecera_nota", "ide_ynocan", 1);    // nom bdd
             tab_cabecera_nota.setHeader("Docente: " + docente);
             tab_cabecera_nota.agregarRelacion(tab_detalle_nota);
             tab_cabecera_nota.setCondicion("ide_ynocan=-1");
-            tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0"));
+            tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true,false"));
             tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_cabecera_nota.getColumna("ide_ynocan").setNombreVisual("CODIGO");
             tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
@@ -130,7 +132,7 @@ public class RegistroNota extends Pantalla {
 
             /* TAB 2 detalle nota*/
             tab_detalle_nota.setId("tab_detalle_nota");
-            tab_detalle_nota.setHeader("Detalle Nota");
+            tab_detalle_nota.setHeader(eti_notificacion);
             tab_detalle_nota.setTabla("yavirac_nota_detalle_nota", "ide_ynodet", 1);
             tab_detalle_nota.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
@@ -138,6 +140,9 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.getColumna("ide_ynodet").setNombreVisual("CODIGO");
             tab_detalle_nota.getColumna("ide_yaldap").setNombreVisual("ALUMNO");
             tab_detalle_nota.getColumna("nota_ynodet").setNombreVisual("NOTA");
+            tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
+            tab_detalle_nota.getColumna("recuperacion_ynodet").setNombreVisual("RECUPERACIÓN");
+            tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
             tab_detalle_nota.dibujar();
 
             PanelTabla pa_detalle_nota = new PanelTabla();
@@ -146,7 +151,7 @@ public class RegistroNota extends Pantalla {
 
             ///// tabuladores
             Division div_nota = new Division();
-            div_nota.dividir2(pa_cabecera_nota, pa_detalle_nota, "20%", "h");
+            div_nota.dividir2(pa_cabecera_nota, pa_detalle_nota, "30%", "h");
             agregarComponente(div_nota);
 
             //Dialogo
@@ -163,7 +168,7 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
 
             gri_cuerpo.getChildren().add(new Etiqueta("Actividad"));
-            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0"));
+            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true"));
             gri_cuerpo.getChildren().add(com_actividad);
             gri_cuerpo.getChildren().add(new Etiqueta("Detalle Tarea"));
             gri_cuerpo.getChildren().add(tex_detalle);
@@ -191,7 +196,7 @@ public class RegistroNota extends Pantalla {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Curso para Generar Nota");
             return;
         } else {
-            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1"));
+            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true"));
             abrirDialogo();
         }
     }
@@ -237,6 +242,65 @@ public class RegistroNota extends Pantalla {
 
         com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), ide_docente));
         utilitario.addUpdate("com_materia_docente");
+
+    }
+
+    public void validarNotaEvaluDacion(AjaxBehaviorEvent evt) {
+        tab_detalle_nota.modificar(evt);
+        String cod = com_periodo_academico.getValue() + "";
+        String nota = tab_detalle_nota.getValor("nota_ynodet");
+        TablaGenerica tab_consuta = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true", "0"));
+        String notaglobal = tab_consuta.getValor("nota_evaluacion_ystpea");
+        String notarecu = tab_consuta.getValor("nota_recuperacion_ystpea");
+        Double notaevaluacion = Double.parseDouble(notaglobal);
+        Double notaactividad = Double.parseDouble(nota);
+        Double recuperacion = Double.parseDouble(notarecu);
+        /*System.out.println("n1 " + notaevaluacion);
+        System.out.println("n2 " + notaactividad);*/
+        if (notaactividad < 0) {
+
+            tab_detalle_nota.setValor("nota_ynodet", "0");
+            //System.out.println("Estoy en el IF 1");
+            eti_notificacion.setValue("Error, No puede ingresar números menores a 0");
+            utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
+            //utilitario.agregarMensajeError("Edad no válida", "La edad ingresada no es válida");
+            return;
+            
+        } else if (notaactividad > notaevaluacion) {
+            tab_detalle_nota.setValor("nota_ynodet", "0");
+            //System.out.println("Estoy en el IF 2");
+            eti_notificacion.setValue("Error, No puede ingresar números mayores a " + notaevaluacion);
+            utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
+            return;
+        }
+        //validar si el xamen tiene recuperacion
+        TablaGenerica tab_examen = utilitario.consultar(ser_notas.getConsultaTipoExamen(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"), utilitario.getVariable("p_tipo_eva_examen")));
+        TablaGenerica tab_validacion = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true", "1"));
+        //ystem.out.println("Tablaprueba " + tab_validacion.getSql());
+        if (tab_validacion.getTotalFilas() > 0) {
+
+            if (tab_examen.getTotalFilas() > 0) {
+                if (notaactividad < recuperacion) {
+                    tab_detalle_nota.setValor("recuperacion_ynodet", "true");
+                    utilitario.addUpdate("tab_detalle_nota");
+                    tab_detalle_nota.guardar();
+                    guardarPantalla();
+                } else {
+                    tab_detalle_nota.setValor("recuperacion_ynodet", "false");
+                    utilitario.addUpdate("tab_detalle_nota");
+                    tab_detalle_nota.guardar();
+                    guardarPantalla();
+                }
+            }
+        } else {
+            tab_detalle_nota.setValor("recuperacion_ynodet", "false");
+            utilitario.addUpdate("tab_detalle_nota");
+            tab_detalle_nota.guardar();
+            guardarPantalla();
+        }
+
+        eti_notificacion.setValue("");
+        utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
 
     }
 
@@ -432,6 +496,7 @@ public class RegistroNota extends Pantalla {
         this.documento = documento;
     }
 
+
     public String getIde_docente() {
         return ide_docente;
     }
@@ -440,5 +505,12 @@ public class RegistroNota extends Pantalla {
         this.ide_docente = ide_docente;
     }
 
-    
+    public Etiqueta getEti_notificacion() {
+        return eti_notificacion;
+    }
+
+    public void setEti_notificacion(Etiqueta eti_notificacion) {
+        this.eti_notificacion = eti_notificacion;
+    }
+
 }

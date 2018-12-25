@@ -34,7 +34,7 @@ public class ActividadEvaluacion extends Pantalla {
         //instanciar una division del framework
         Division div_actividad_evaluacion =new Division ();//instanciamos
         div_actividad_evaluacion.setId("div_actividad_evaluacion");//es un idientificador
-        div_actividad_evaluacion.dividir1(tab_actividad_evaluacion);
+        div_actividad_evaluacion.dividir1(pa_actividad_evaluacion);
         
         agregarComponente(div_actividad_evaluacion);//agregar componente
     }

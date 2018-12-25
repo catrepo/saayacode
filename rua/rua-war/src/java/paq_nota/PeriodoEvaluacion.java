@@ -53,6 +53,7 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_periodo_evaluacion.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         tab_periodo_evaluacion.getColumna("ide_ynopee").setNombreVisual("CÓDIGO");
         tab_periodo_evaluacion.getColumna("ide_ynotie").setNombreVisual("TIPO DE EVALUACIÓN");
+        tab_periodo_evaluacion.getColumna("ide_ystpea").setVisible(false);
         tab_periodo_evaluacion.dibujar();
 
         PanelTabla pa_periodo_evaluacion = new PanelTabla();
