@@ -162,9 +162,9 @@ public class ServicioEstructuraOrganizacional {
         sql="SELECT ide_ystpaf, descripcion_ystpaf  FROM yavirac_stror_parentezco_fami where activo_ystpaf in ("+activo+") ";
         return sql;
     } 
-        public String getTipoFormacionEducativa() {
+        public String getTipoFormacionEducativa(String activo) {
         String sql="";
-        sql="SELECT ide_ysttfe, detalle_ysttfe,abreviatura_ysttfe  FROM yavirac_stror_tipo_for_educaci order by detalle_ysttfe";
+        sql="SELECT ide_ysttfe, detalle_ysttfe,abreviatura_ysttfe  FROM yavirac_stror_tipo_for_educaci where activo_ysttif in ("+activo+")order by detalle_ysttfe";
         return sql;
     } 
         public String getGenero(String activo) {
