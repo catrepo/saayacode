@@ -43,7 +43,7 @@ public class Carrera extends Pantalla{
         
         tab_mension.setId("tab_mension");
         tab_mension.setTabla("yavirac_stror_mension", "ide_ystmen",2 );
-        tab_mension.getColumna("ide_ysttfe").setCombo(ser_estructura.getTipoFormacionEducativa());
+        tab_mension.getColumna("ide_ysttfe").setCombo(ser_estructura.getTipoFormacionEducativa("true"));
         tab_mension.setHeader("REGISTRO DE MENSIONES");
         tab_mension.agregarRelacion(tab_malla);
         tab_mension.getColumna("ide_ystmen").setNombreVisual("CÓDIGO");
