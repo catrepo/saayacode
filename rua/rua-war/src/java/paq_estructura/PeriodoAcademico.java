@@ -86,6 +86,10 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.getColumna("tabla_creada_ystpea").setVisible(false);
         tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
         tab_periodo_academic.getColumna("ide_ystani").setNombreVisual("AÑO");
+        tab_periodo_academic.getColumna("nota_evaluacion_ystpea").setNombreVisual("NOTA EVALUACIÓN");
+        tab_periodo_academic.getColumna("nota_minima_aprobada_ystpea").setNombreVisual("NOTA APROBACIÓN");
+        tab_periodo_academic.getColumna("nota_recuperacion_ystpea").setNombreVisual("NOTA RECUPERACIÓN");
+        tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setNombreVisual("APLICA RECUPERACIÓN");
         tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setValorDefecto("false");
       
         //*****************
