@@ -105,7 +105,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.setHeader("Docente: " + docente);
             tab_cabecera_nota.agregarRelacion(tab_detalle_nota);
             tab_cabecera_nota.setCondicion("ide_ynocan=-1");
-            tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true,false"));
+            tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true,false", "0"));
             tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_cabecera_nota.getColumna("ide_ynocan").setNombreVisual("CODIGO");
             tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
@@ -168,7 +168,7 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
 
             gri_cuerpo.getChildren().add(new Etiqueta("Actividad"));
-            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true"));
+            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
             gri_cuerpo.getChildren().add(com_actividad);
             gri_cuerpo.getChildren().add(new Etiqueta("Detalle Tarea"));
             gri_cuerpo.getChildren().add(tex_detalle);
@@ -196,7 +196,16 @@ public class RegistroNota extends Pantalla {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Curso para Generar Nota");
             return;
         } else {
-            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true"));
+            String cod = com_materia_docente.getValue() + "";
+            TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
+            String mension = tab_consulta.getValor("ide_ystmen");
+            TablaGenerica tab_formacion = utilitario.consultar(ser_notas.getFormacion(mension));
+            String formacion = tab_formacion.getValor("ide_ysttfe");
+
+            tab_formacion.imprimirSql();
+            //System.out.println("Mension " + mension);
+            com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true", tab_formacion.getValor("ide_ysttfe")));
+
             abrirDialogo();
         }
     }
@@ -265,7 +274,7 @@ public class RegistroNota extends Pantalla {
             utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
             //utilitario.agregarMensajeError("Edad no válida", "La edad ingresada no es válida");
             return;
-            
+
         } else if (notaactividad > notaevaluacion) {
             tab_detalle_nota.setValor("nota_ynodet", "0");
             //System.out.println("Estoy en el IF 2");
@@ -495,7 +504,6 @@ public class RegistroNota extends Pantalla {
     public void setDocumento(String documento) {
         this.documento = documento;
     }
-
 
     public String getIde_docente() {
         return ide_docente;

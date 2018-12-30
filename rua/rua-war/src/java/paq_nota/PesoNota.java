@@ -45,6 +45,7 @@ public class PesoNota extends Pantalla {
         tab_peso_nota.getColumna("detalle_ynopen").setNombreVisual("DETALLE");
         tab_peso_nota.getColumna("peso_ynopen").setNombreVisual("PESO NOTA");
         tab_peso_nota.getColumna("nivel_ynopen").setNombreVisual("NIVEL");
+        tab_peso_nota.getColumna("nivel_ynopen").setCombo(ser_notas.getNivelResumen());
         tab_peso_nota.agregarArbol(arb_arbol);
         tab_peso_nota.dibujar();
 

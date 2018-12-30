@@ -1,6 +1,5 @@
 package paq_nota;
 
-import static com.lowagie.text.xml.simpleparser.EntitiesToSymbol.map;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Reporte;
@@ -59,7 +58,7 @@ public class TipoEvaluacion extends Pantalla {
             rep_reporte.cerrar();
             map_parametros.put("titulo", "Tipo Evaluación");
             sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
-            sel_rep.dibujar();
+            sel_rep.dibujar(); 
         }
     }
 

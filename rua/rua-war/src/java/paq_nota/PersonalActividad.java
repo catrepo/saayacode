@@ -70,10 +70,10 @@ public class PersonalActividad extends Pantalla {
 
             //TABLA
             tab_actividad_docente.setId("tab_actividad_docente");
-            tab_actividad_docente.setTabla("yavirac_nota_actividad_docente ", "ide_ynoacd", 1);
-            tab_actividad_docente.setHeader("Docente: " + docente);
+            tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 1);
             tab_actividad_docente.setCondicion("ide_ynoacd=-1");
-            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0","true,false"));
+            tab_actividad_docente.setHeader("Docente: " + docente);
+            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true", "0"));
             tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
             tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
             tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACÓN");
@@ -113,8 +113,17 @@ public class PersonalActividad extends Pantalla {
         } else {
             String cod = com_materia_docente.getValue() + "";
             TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
-            tab_actividad_docente.setCondicion("ide_ypedpe=" + tab_consuta.getValor("ide_ypedpe") + "and ide_ystmal=" + tab_consuta.getValor("ide_ystmal") + " and ide_ystnie=" + tab_consuta.getValor("ide_ystnie") + " and ide_yhogra=" + tab_consuta.getValor("ide_yhogra") + " and ide_ystjor=" + tab_consuta.getValor("ide_ystjor")+" and ide_ynopae in (select ide_ynopae from yavirac_nota_periodo_activ_eva where ide_ynopee in (select ide_ynopee from yavirac_nota_periodo_evaluacio where ide_ystpea="+com_periodo_academico.getValue()+"))");
+            String mension = tab_consuta.getValor("ide_ystmen");
+            TablaGenerica tab_formacion = utilitario.consultar(ser_notas.getFormacion(mension));
+            tab_actividad_docente.setCondicion("ide_ypedpe=" + tab_consuta.getValor("ide_ypedpe") + "and ide_ystmal=" + tab_consuta.getValor("ide_ystmal")
+                    + " and ide_ystnie=" + tab_consuta.getValor("ide_ystnie") + " and ide_yhogra=" + tab_consuta.getValor("ide_yhogra")
+                    + " and ide_ystjor=" + tab_consuta.getValor("ide_ystjor") + "and ide_ystmen=" + tab_consuta.getValor("ide_ystmen")
+                    + " and ide_ynopae in (select ide_ynopae from yavirac_nota_periodo_activ_eva where ide_ynopee in "
+                    + "(select ide_ynopee from yavirac_nota_periodo_evaluacio where ide_ystpea=" + com_periodo_academico.getValue() + ") "
+                    + " and ide_ynoace in (select ide_ynoace from yavirac_nota_actividad_evaluac where ide_ynoace in \n"
+                    + "(select ide_ynoace from yavirac_nota_actividad_tipo_for where ide_ysttfe=" + tab_formacion.getValor("ide_ysttfe") + ")))");
             tab_actividad_docente.ejecutarSql();
+            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true", tab_formacion.getValor("ide_ysttfe")));
 
         }
     }
@@ -162,8 +171,8 @@ public class PersonalActividad extends Pantalla {
         utilitario.addUpdate("com_materia_docente");
 
     }
-    
-    public void limpiar(){
+
+    public void limpiar() {
         com_periodo_academico.limpiar();
         com_materia_docente.limpiar();
         tab_actividad_docente.limpiar();
