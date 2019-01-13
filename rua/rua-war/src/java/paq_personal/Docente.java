@@ -14,7 +14,6 @@ import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
-import framework.componentes.Tabulador;
 import javax.ejb.EJB;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_nota.ejb.ServicioNotas;
