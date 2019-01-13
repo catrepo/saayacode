@@ -35,6 +35,7 @@ public class ResumenNota extends Pantalla {
     private Etiqueta eti_docente = new Etiqueta();
     private Tabla tab_docente_mencion = new Tabla();
     private Tabla tab_resumen_nota = new Tabla();
+    private Tabla tab_docente_alumno = new Tabla();
     private Dialogo dia_dialogo = new Dialogo();
     private Combo com_resumen = new Combo();
 
@@ -84,15 +85,30 @@ public class ResumenNota extends Pantalla {
             Boton bot_nota = new Boton();
             bot_nota.setValue("Calcular Nota");
             bot_nota.setIcon("ui-icon-note");//set icono Registrar///
-            bot_nota.setMetodo("calcularNota"); 
+            bot_nota.setMetodo("calcularNota");
             bar_botones.agregarBoton(bot_nota);
-           
+
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
 
+            tab_docente_alumno.setId("tab_docente_alumno");   //identificador
+            tab_docente_alumno.setTabla("yavirac_perso_malla_docen_alum", "ide_ypemda", 1);
+            tab_docente_alumno.agregarRelacion(tab_resumen_nota);
+            tab_docente_alumno.setCondicion("ide_ypemad=-1");
+            tab_docente_alumno.getColumna("ide_ypemad").setVisible(false);
+            tab_docente_alumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO/A");
+            tab_docente_alumno.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+            tab_docente_alumno.getColumna("ide_yaldap").setLectura(true);
+            tab_docente_alumno.getColumna("ide_ymamat").setVisible(false);
+            tab_docente_alumno.dibujar();
+
+            PanelTabla pa_docente_alumno = new PanelTabla();
+            pa_docente_alumno.setId("pa_docente_alumno");
+            pa_docente_alumno.setPanelTabla(tab_docente_alumno);
+
             //TABLA RESUMEN NOTA
             tab_resumen_nota.setId("tab_resumen_nota");
-            tab_resumen_nota.setTabla("yavirac_nota_alumno_resumen", "ide_ynoalr", 1);
+            tab_resumen_nota.setTabla("yavirac_nota_alumno_resumen", "ide_ynoalr", 2);
             tab_resumen_nota.setHeader("Docente: " + docente);
             tab_resumen_nota.dibujar();
 
@@ -101,9 +117,7 @@ public class ResumenNota extends Pantalla {
             pa_resumen_nota.setPanelTabla(tab_resumen_nota);
 
             Division div_resumen_nota = new Division();
-            div_resumen_nota.setId("div_resumen_nota");
-            div_resumen_nota.dividir1(pa_resumen_nota);
-
+            div_resumen_nota.dividir2(pa_docente_alumno, pa_resumen_nota, "40%", "h");
             agregarComponente(div_resumen_nota);
 
             //DIALOGO
@@ -240,26 +254,15 @@ public class ResumenNota extends Pantalla {
         } else {
             String cod = com_materia_docente.getValue() + "";
             TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
-            tab_resumen_nota.setCondicion("ide_ystpea =" + com_periodo_academico.getValue() + " and ide_ystnie=" + tab_consuta.getValor("ide_ystnie") + " and ide_yhogra=" + tab_consuta.getValor("ide_yhogra") + " and ide_ystjor=" + tab_consuta.getValor("ide_ystjor") + " and ide_ypedpe=" + tab_consuta.getValor("ide_ypedpe") + " and ide_ystmal=" + tab_consuta.getValor("ide_ystmal"));
-            tab_resumen_nota.ejecutarSql();
-            //tab_detalle_resumen.ejecutarValorForanea(tab_resumen_nota.getValorSeleccionado());
+            tab_docente_alumno.setCondicion("ide_ypemad =" + tab_consuta.getValor("ide_ypemad"));
+            tab_docente_alumno.ejecutarSql();
+            tab_resumen_nota.ejecutarValorForanea(tab_resumen_nota.getValorSeleccionado());
         }
     }
 
     public void calcularNota() {
-        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNivel("3"));
-        
-        for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
-            tab_peso.imprimirSql();
-            TablaGenerica tab_detalle_peso = utilitario.consultar(ser_notas.getDetallePeso(tab_peso.getValor(i,"ide_ynopen")));
-            
-            for (int j = 0; j < tab_detalle_peso.getTotalFilas(); j++) {
-                tab_detalle_peso.imprimirSql();
-            }
-        }
-
     }
-
+       
     public Combo getCom_periodo_academico() {
         return com_periodo_academico;
     }
@@ -338,6 +341,14 @@ public class ResumenNota extends Pantalla {
 
     public void setCom_resumen(Combo com_resumen) {
         this.com_resumen = com_resumen;
+    }
+
+    public Tabla getTab_docente_alumno() {
+        return tab_docente_alumno;
+    }
+
+    public void setTab_docente_alumno(Tabla tab_docente_alumno) {
+        this.tab_docente_alumno = tab_docente_alumno;
     }
 
     @Override
