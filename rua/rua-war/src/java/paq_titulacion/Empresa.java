@@ -28,6 +28,7 @@ public class Empresa extends Pantalla {
     private Tabla tab_empresa = new Tabla();
     private Tabla tab_representante = new Tabla();
     private Tabla tab_carrera = new Tabla();
+   
     // private Combo com_pantalla = new Combo();
 
     @EJB
@@ -67,6 +68,8 @@ public class Empresa extends Pantalla {
         tab_empresa.getColumna("ide_ytiten").setLongitud(100);
         tab_empresa.getColumna("ide_ytitie").setLongitud(100);
         tab_empresa.getColumna("ide_ytiace").setLongitud(100);
+                tab_empresa.getColumna("logo_tipo_ytiemp").setUpload();
+        tab_empresa.getColumna("logo_tipo_ytiemp").setImagen();
         tab_empresa.dibujar();
 
         tab_representante.setId("tab_representante");// id de la tabla de representantes
@@ -98,6 +101,7 @@ public class Empresa extends Pantalla {
         tab_carrera.getColumna(" ide_yticaa  "). setNombreVisual("CÓDIGO");
         tab_carrera.getColumna(" observacion_yticaa "). setNombreVisual("OBSERVACIÓN");
         tab_carrera.getColumna(" activo_yticaa "). setNombreVisual("ESTADO");
+        tab_carrera.getColumna("ide_ystcrr").setCombo(ser_estructura.getCarrera());
         tab_carrera.dibujar();
 
         PanelTabla pat_empresa = new PanelTabla();

@@ -60,6 +60,7 @@ public class DivisionPolitica extends Pantalla {
     @Override
     public void guardar() {
         tab_division_politica.guardar();
+        guardarPantalla();
     }
 
     @Override

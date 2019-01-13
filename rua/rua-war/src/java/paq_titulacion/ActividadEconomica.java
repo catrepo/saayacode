@@ -26,7 +26,7 @@ public class ActividadEconomica extends Pantalla{
          tab_actividad_economica.setTabla("yavirac_titu_actividad_economic", "ide_ytiace", 1);
          tab_actividad_economica.setHeader("ACTIVIDAD ECONOMICA");
          tab_actividad_economica.getColumna("ide_ytiace").setNombreVisual("CÓDIGO");
-         tab_actividad_economica.getColumna("decripcion_ytiace").setNombreVisual("DESCRIPCIÓN");
+         tab_actividad_economica.getColumna("descripcion_ytiace").setNombreVisual("DESCRIPCIÓN");
          tab_actividad_economica.dibujar();
          
          
