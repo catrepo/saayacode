@@ -305,6 +305,14 @@ public class ServicioEstructuraOrganizacional {
         sql="select ide_ystani,descripcion_ystani from yavirac_stror_anio";
         return sql;
  }
+                    public String getCarrera() {
+          
+        String sql="";
+        
+        sql="select ide_ystcrr,descripcion_ystcrr from yavirac_stror_carrera order by descripcion_ystcrr";
+        
+        return sql;
+ }
           public String getIdioma() {
           
         String sql="";
