@@ -207,46 +207,6 @@ public class ResumenNota extends Pantalla {
         }
     }
 
-    /* public void aceptarDialogo() {
-        String cod = com_materia_docente.getValue() + "";
-        TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
-        if (com_resumen.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la Actividad Academica");
-            return;
-        } else {
-            TablaGenerica tab_malla_docente = utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
-            String malla = tab_malla_docente.getValor("ide_ystmal");
-            String grupo = tab_malla_docente.getValor("ide_yhogra");
-            String jornada = tab_malla_docente.getValor("ide_ystjor");
-
-            tab_resumen_nota.insertar();
-            tab_resumen_nota.setValor("ide_ynopen", com_resumen.getValue().toString());
-            tab_resumen_nota.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
-            tab_resumen_nota.setValor("ide_ystmen", tab_consuta.getValor("ide_ystmen"));
-            tab_resumen_nota.setValor("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
-            tab_resumen_nota.setValor("ide_ypedpe", tab_consuta.getValor("ide_ypedpe"));
-            tab_resumen_nota.setValor("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-            tab_resumen_nota.setValor("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-            tab_resumen_nota.setValor("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-
-            TablaGenerica tab_alumnos_asistencia = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(malla, grupo, com_periodo_academico.getValue().toString(), jornada));
-            String maximo = "";
-            for (int i = 0; i < tab_alumnos_asistencia.getTotalFilas(); i++) {
-                tab_detalle_resumen.insertar();
-                tab_detalle_resumen.setValor("ide_yaldap", tab_alumnos_asistencia.getValor(i, "ide_yaldap"));
-                tab_detalle_resumen.setValor("nota_final_ynodtr", "0");
-
-            }
-
-            tab_resumen_nota.guardar();
-            tab_detalle_resumen.guardar();
-            guardarPantalla();
-            utilitario.addUpdate("tab_resumen_nota,tab_detalle_resumen");
-            dia_dialogo.cerrar();
-        }
-
-    }
-     */
     public void mostrarResumen() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
@@ -261,6 +221,25 @@ public class ResumenNota extends Pantalla {
     }
 
     public void calcularNota() {
+        String cod = com_materia_docente.getValue() + "";
+        TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
+        TablaGenerica tab_consulta2 = utilitario.consultar(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), ide_docente));
+        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true"));
+        for (int i = 0;i < tab_peso.getTotalFilas(); i++){
+            TablaGenerica tab_detalle = utilitario.consultar(ser_notas.getPesoDetalleNota(tab_peso.getValor(i,"ide_ynopen")));
+            for (int j = 0;j < tab_detalle.getTotalFilas(); j++){
+                for (int k = 0;k < tab_docente_alumno.getTotalFilas(); k++){
+                    TablaGenerica tab_nota = utilitario.consultar(ser_notas.getImportarSumaNotas("1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
+                        tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor("ide_ynotie"), tab_docente_alumno.getValor(k,"ide_yaldap"), tab_consulta2.getValor("ide_ysttfe")));
+                    if (tab_peso.getTotalFilas() > 0){
+                        tab_resumen_nota.insertar();
+                        tab_resumen_nota.setValor("ide_ypemda", tab_docente_alumno.getValor(k,"ide_ypemda"));
+                        System.out.println(i+" "+" "+j+" "+k+" mda: "+tab_docente_alumno.getValor(k,"ide_ypemda")+" Alumno: "+tab_docente_alumno.getValor(k,"ide_yaldap") +" pesonota: "+
+                        tab_detalle.getValor(j,"ide_ynopen")+" nota_final: ");
+                    }   
+                }
+            }
+        }
     }
        
     public Combo getCom_periodo_academico() {
