@@ -293,4 +293,44 @@ public class ServicioNotas {
         sql += "select a.ide_ysttfe,detalle_ysttfe from yavirac_stror_mension a,yavirac_stror_tipo_for_educaci b where a.ide_ysttfe=b.ide_ysttfe and ide_ystmen in ("+codigo+")";
         return sql;
     }
+    
+    public String getImportarSumaNotas(String tipo,String periodoacademico,String docente,String malla,String nivel,String paralelo,String jornada,String parcial,String alumno,String formacion ) {
+        String sql = "";
+        if(tipo.equals("1")){
+            sql+="select round(sum(nota) / count(ide_ynoace),2) as notas,a.ide_ystpea,a.ide_ypedpe,a.ide_ystmal,a.ide_ystnie,a.ide_yhogra,a.ide_ystjor,a.ide_ynotie,a.ide_yaldap,a.ide_ysttfe,a.ide_ynoace\n" +
+                "from ( ";
+        }
+        sql +="select (case when aplica_recuperacion_ystpea=true then case when f.ide_ynoace=cast((select valor_para from sis_parametros where nom_para = 'p_tipo_eva_examen') as numeric) then\n" +
+            "case when recuperacion_ynodet=true then	nota_ynodet else nota_ynodet*2 end else nota_ynodet end else nota_ynodet end) as nota,\n" +
+            "ide_yaldap,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal,a.ide_ynopae,e.ide_ynotie,i.ide_ysttfe,g.ide_ystpea\n" +
+            ",aplica_recuperacion_ystpea,recuperacion_ynodet,f.ide_ynoace\n" +
+            "from yavirac_nota_cabecera_nota  a,yavirac_nota_detalle_nota b,yavirac_nota_periodo_activ_eva c,yavirac_nota_periodo_evaluacio d,\n" +
+            "yavirac_nota_tipo_evaluacion e,yavirac_nota_actividad_evaluac f,yavirac_stror_periodo_academic g,yavirac_nota_actividad_tipo_for h,\n" +
+            "yavirac_stror_tipo_for_educaci i\n" +
+            "where a.ide_ynocan=b.ide_ynocan and a.ide_ynopae=c.ide_ynopae and c.ide_ynopee=d.ide_ynopee and d.ide_ynotie=e.ide_ynotie \n" +
+            "and c.ide_ynoace=f.ide_ynoace and a.ide_ystpea=g.ide_ystpea and f.ide_ynoace=h.ide_ynoace and h.ide_ysttfe=i.ide_ysttfe and activo_ynopae=true\n" +
+            "and a.ide_ystpea="+periodoacademico+" and ide_ypedpe="+docente+"  and ide_ystmal="+malla+" and ide_ystnie="+nivel+" and ide_yhogra="+paralelo+" and ide_ystjor="+jornada+" and e.ide_ynotie="+parcial+" and b.ide_yaldap="+alumno+" and i.ide_ysttfe="+formacion+"";
+     
+        if(tipo.equals("1")){
+            sql+=" ) a\n" +
+                "group by ide_ystpea,ide_ypedpe,ide_ystmal,ide_ystnie,ide_yhogra,ide_ystjor,ide_ynotie,ide_yaldap,ide_ysttfe,ide_ynoace";
+        }
+        return sql;
+    }
+    
+    public String getPesoNota(String nivel,String estado) {
+        String sql = "";
+        sql += "select ide_ynopen,ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota \n" +
+        "where nivel_ynopen in("+nivel+") and bloqueo_ynopen in("+estado+") ";
+        return sql;
+    }
+     
+    public String getPesoDetalleNota(String codigo) {
+        String sql = "";
+        sql += "select ide_ynodpn,ide_ynoace,ide_ynopen from yavirac_nota_detalle_peso_acti\n" +
+            "where ide_ynopen in("+codigo+") ";
+        return sql;
+    }
+     
+
 }
