@@ -73,13 +73,13 @@ public class ServicioAsistencia {
      */
     public String getMateriaNivelDocente(String periodo,String docente) {
         String sql="";
-        sql="select a.ide_ypemad,detalle_ystmat,descripcion_ystnie,detalle_yhogra,d.descripcion_ystjor " +
-            " from yavirac_perso_malla_docente a, (" +
-            " select ide_ystmal, detalle_ystmat, descripcion_ystnie " +
-            " from yavirac_stror_malla a,yavirac_stror_nivel_educacion b,yavirac_stror_materia c " +
-            " where a.ide_ystnie = b.ide_ystnie and a.ide_ystmat = c.ide_ystmat " +
-            " ) b, yavirac_hora_grupo_academic c,yavirac_stror_jornada  d  where a.ide_ystmal = b.ide_ystmal and a.ide_yhogra= c.ide_yhogra and ide_ystpea ="+periodo+" and ide_ypedpe =" +docente+ ""
-                + "and a.ide_ystjor= d.ide_ystjor order by descripcion_ystnie,detalle_ystmat,descripcion_ystjor";
+        sql="select a.ide_ypemad,detalle_ystmat,descripcion_ystnie,detalle_yhogra,d.descripcion_ystjor,detalle_ysttfe\n" +
+            "from yavirac_perso_malla_docente a,(select ide_ystmal, detalle_ystmat, descripcion_ystnie,detalle_ysttfe from yavirac_stror_malla a,yavirac_stror_nivel_educacion b,yavirac_stror_materia c,\n" +
+            "yavirac_stror_mension d,yavirac_stror_tipo_for_educaci e where a.ide_ystnie = b.ide_ystnie and a.ide_ystmat = c.ide_ystmat and a.ide_ystmen=d.ide_ystmen and d.ide_ysttfe=e.ide_ysttfe) b, \n" +
+            "yavirac_hora_grupo_academic c,yavirac_stror_jornada  d\n" +
+            "where a.ide_ystmal = b.ide_ystmal and a.ide_yhogra= c.ide_yhogra and ide_ystpea ="+periodo+" and ide_ypedpe ="+docente+"\n" +
+            "and a.ide_ystjor= d.ide_ystjor \n" +
+            "order by descripcion_ystnie,detalle_ystmat,descripcion_ystjor";
               
         return sql;
     }   
