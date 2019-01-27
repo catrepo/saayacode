@@ -159,11 +159,10 @@ public class ServicioNotas {
      */
     public String getPersonMallaDocente(String codigo) {
         String sql = "";
-        sql += "select ide_ypemad,ide_ystpea, ide_ystmen, b.ide_ystnie, ide_ypedpe, ide_yhogra, ide_ystjor,b.ide_ystmal\n"
-                + "from yavirac_perso_malla_docente a\n"
-                + "join yavirac_stror_malla b on a.ide_ystmal = b.ide_ystmal\n"
-                + "join yavirac_stror_nivel_educacion c on b.ide_ystnie = c.ide_ystnie\n"
-                + "where a.ide_ypemad in (" + codigo + ")";
+        sql += "select ide_ypemad,ide_ystpea, d.ide_ystmen, b.ide_ystnie, ide_ypedpe, ide_yhogra, ide_ystjor,b.ide_ystmal,d.ide_ysttfe\n" +
+                "from yavirac_perso_malla_docente a,yavirac_stror_malla b,yavirac_stror_nivel_educacion c,yavirac_stror_mension d,yavirac_stror_tipo_for_educaci  e\n" +
+                "where a.ide_ystmal = b.ide_ystmal and b.ide_ystnie = c.ide_ystnie and b.ide_ystmen=d.ide_ystmen and d.ide_ysttfe=e.ide_ysttfe\n" +
+                "and a.ide_ypemad in ("+codigo+")";
         return sql;
     }
 
@@ -208,13 +207,13 @@ public class ServicioNotas {
     public List getNivelResumen() {
         List lista = new ArrayList();
         Object dato1[] = {
-            "1", "Nivel 1"
+            "1", "NIVEL 1"
         };
         Object dato2[] = {
-            "2", "Nivel 2"
+            "2", "NIVEL 2"
         };
         Object dato3[] = {
-            "3", "Nivel 3"
+            "3", "NIVEL 3"
         };
         lista.add(dato1);
         lista.add(dato2);
@@ -294,14 +293,22 @@ public class ServicioNotas {
         return sql;
     }
     
-    public String getImportarSumaNotas(String tipo,String periodoacademico,String docente,String malla,String nivel,String paralelo,String jornada,String parcial,String alumno,String formacion ) {
-        String sql = "";
+    public String getImportarSumaNotas(String aplicanota,String tipo,String periodoacademico,String docente,String malla,String nivel,String paralelo,String jornada,String parcial,String alumno,String formacion,String actividad ) {
+        //System.out.println("Parametros "+aplicanota+" "+tipo+" "+periodoacademico+" "+docente+" "+malla+" "+nivel+" "+paralelo+" "+jornada+" "+parcial+" "+alumno+" "+formacion+" "+actividad);
+        String sql = ""; 
+        String case_nota="1";
+        if (aplicanota.equals("1")){
+            case_nota="(case when aplica_recuperacion_ystpea=true then case when f.ide_ynoace=cast((select valor_para from sis_parametros where nom_para = 'p_tipo_eva_examen') as numeric) then\n" +
+                        "case when recuperacion_ynodet=true then nota_ynodet else nota_ynodet*2 end else nota_ynodet end else nota_ynodet end)";
+        }
+        else {
+            case_nota=" nota_ynodet ";
+        }
         if(tipo.equals("1")){
-            sql+="select round(sum(nota) / count(ide_ynoace),2) as notas,a.ide_ystpea,a.ide_ypedpe,a.ide_ystmal,a.ide_ystnie,a.ide_yhogra,a.ide_ystjor,a.ide_ynotie,a.ide_yaldap,a.ide_ysttfe,a.ide_ynoace\n" +
+            sql+="select round(sum(nota) / count(ide_ynoace),2) as notas,a.ide_ystpea,a.ide_ypedpe,a.ide_ystmal,a.ide_ystnie,a.ide_yhogra,a.ide_ystjor,a.ide_ynotie,a.ide_yaldap,a.ide_ysttfe,a.ide_ynoace,a.ide_ynopae,recuperacion_ynodet\n" +
                 "from ( ";
         }
-        sql +="select (case when aplica_recuperacion_ystpea=true then case when f.ide_ynoace=cast((select valor_para from sis_parametros where nom_para = 'p_tipo_eva_examen') as numeric) then\n" +
-            "case when recuperacion_ynodet=true then	nota_ynodet else nota_ynodet*2 end else nota_ynodet end else nota_ynodet end) as nota,\n" +
+        sql +="select "+case_nota+" as nota,\n" +
             "ide_yaldap,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal,a.ide_ynopae,e.ide_ynotie,i.ide_ysttfe,g.ide_ystpea\n" +
             ",aplica_recuperacion_ystpea,recuperacion_ynodet,f.ide_ynoace\n" +
             "from yavirac_nota_cabecera_nota  a,yavirac_nota_detalle_nota b,yavirac_nota_periodo_activ_eva c,yavirac_nota_periodo_evaluacio d,\n" +
@@ -309,12 +316,13 @@ public class ServicioNotas {
             "yavirac_stror_tipo_for_educaci i\n" +
             "where a.ide_ynocan=b.ide_ynocan and a.ide_ynopae=c.ide_ynopae and c.ide_ynopee=d.ide_ynopee and d.ide_ynotie=e.ide_ynotie \n" +
             "and c.ide_ynoace=f.ide_ynoace and a.ide_ystpea=g.ide_ystpea and f.ide_ynoace=h.ide_ynoace and h.ide_ysttfe=i.ide_ysttfe and activo_ynopae=true\n" +
-            "and a.ide_ystpea="+periodoacademico+" and ide_ypedpe="+docente+"  and ide_ystmal="+malla+" and ide_ystnie="+nivel+" and ide_yhogra="+paralelo+" and ide_ystjor="+jornada+" and e.ide_ynotie="+parcial+" and b.ide_yaldap="+alumno+" and i.ide_ysttfe="+formacion+"";
+            "and a.ide_ystpea="+periodoacademico+" and ide_ypedpe="+docente+"  and ide_ystmal="+malla+" and ide_ystnie="+nivel+" and ide_yhogra="+paralelo+" and ide_ystjor="+jornada+" and e.ide_ynotie="+parcial+" and b.ide_yaldap="+alumno+" and i.ide_ysttfe="+formacion+" and f.ide_ynoace in ("+actividad+")";
      
         if(tipo.equals("1")){
             sql+=" ) a\n" +
-                "group by ide_ystpea,ide_ypedpe,ide_ystmal,ide_ystnie,ide_yhogra,ide_ystjor,ide_ynotie,ide_yaldap,ide_ysttfe,ide_ynoace";
+                "group by ide_ystpea,ide_ypedpe,ide_ystmal,ide_ystnie,ide_yhogra,ide_ystjor,ide_ynotie,ide_yaldap,ide_ysttfe,ide_ynoace,ide_ynopae,recuperacion_ynodet";
         }
+        
         return sql;
     }
     
@@ -332,5 +340,27 @@ public class ServicioNotas {
         return sql;
     }
      
+    /**
+     * Retorna Peso notas
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya
+     * sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getPesoNotas(String activo) {
+        String sql = "";
+        sql += "select ide_ynopen,descripcion_ynotie,detalle_ynopen from yavirac_nota_peso_nota a,yavirac_nota_tipo_evaluacion b\n" +
+                "where a.ide_ynotie=b.ide_ynotie and bloqueo_ynopen in ("+activo+")";
+        return sql;
+    }
 
+    public String getPorcientoParametroEvaluacion(String nota,String docente,String malla,String nivel,String paralelo,String jornada,String actividad) {
+        //System.out.println("Porcentaje "+nota+" "+docente+" "+malla+" "+nivel+" "+paralelo+" "+jornada+" "+actividad);
+        String sql = "";
+        sql += "select ide_ynoacd,round((("+nota+") * porciento_evaluacion_ynoacd),2) as porcentaje \n" +
+                "from yavirac_nota_actividad_docente a,yavirac_nota_periodo_activ_eva c,yavirac_nota_actividad_evaluac d\n" +
+                "where a.ide_ynopae=c.ide_ynopae and c.ide_ynoace=d.ide_ynoace and \n" +
+                "ide_ypedpe=("+docente+")  and ide_ystmal=("+malla+") and ide_ystnie=("+nivel+") and ide_yhogra=("+paralelo+") and ide_ystjor=("+jornada+") and d.ide_ynoace=("+actividad+") ";
+        return sql;
+    }
 }
