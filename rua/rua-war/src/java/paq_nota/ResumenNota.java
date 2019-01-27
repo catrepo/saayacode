@@ -26,7 +26,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author usuario
+ * @author JHON
  */
 public class ResumenNota extends Pantalla {
 
@@ -36,6 +36,7 @@ public class ResumenNota extends Pantalla {
     private Tabla tab_docente_mencion = new Tabla();
     private Tabla tab_resumen_nota = new Tabla();
     private Tabla tab_docente_alumno = new Tabla();
+    private Tabla tab_nota_resumen = new Tabla();
     private Dialogo dia_dialogo = new Dialogo();
     private Combo com_resumen = new Combo();
 
@@ -93,6 +94,7 @@ public class ResumenNota extends Pantalla {
 
             tab_docente_alumno.setId("tab_docente_alumno");   //identificador
             tab_docente_alumno.setTabla("yavirac_perso_malla_docen_alum", "ide_ypemda", 1);
+            tab_docente_alumno.setHeader("Docente: " + docente);
             tab_docente_alumno.agregarRelacion(tab_resumen_nota);
             tab_docente_alumno.setCondicion("ide_ypemad=-1");
             tab_docente_alumno.getColumna("ide_ypemad").setVisible(false);
@@ -109,13 +111,22 @@ public class ResumenNota extends Pantalla {
             //TABLA RESUMEN NOTA
             tab_resumen_nota.setId("tab_resumen_nota");
             tab_resumen_nota.setTabla("yavirac_nota_alumno_resumen", "ide_ynoalr", 2);
-            tab_resumen_nota.setHeader("Docente: " + docente);
+            tab_resumen_nota.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
+            tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas("true"));
+            tab_resumen_nota.getColumna("ide_ynopen").setLectura(true);
+            tab_resumen_nota.getColumna("ide_ynoace").setLectura(true);
+            tab_resumen_nota.getColumna("nota_ynoalr").setLectura(true);
+            tab_resumen_nota.getColumna("porcentaje_evaluacion_ynoalr").setLectura(true);
             tab_resumen_nota.dibujar();
 
             PanelTabla pa_resumen_nota = new PanelTabla();
             pa_resumen_nota.setId("pa_resumen_nota");
             pa_resumen_nota.setPanelTabla(tab_resumen_nota);
 
+            //TABLA RESUMEN
+            tab_nota_resumen.setId("tab_resumen");
+            tab_nota_resumen.setTabla("yavirac_nota_resumen", "ide_ynores", 3);
+            
             Division div_resumen_nota = new Division();
             div_resumen_nota.dividir2(pa_docente_alumno, pa_resumen_nota, "40%", "h");
             agregarComponente(div_resumen_nota);
@@ -216,32 +227,68 @@ public class ResumenNota extends Pantalla {
             TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
             tab_docente_alumno.setCondicion("ide_ypemad =" + tab_consuta.getValor("ide_ypemad"));
             tab_docente_alumno.ejecutarSql();
-            tab_resumen_nota.ejecutarValorForanea(tab_resumen_nota.getValorSeleccionado());
+            tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
         }
     }
 
     public void calcularNota() {
-        String cod = com_materia_docente.getValue() + "";
-        TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
-        TablaGenerica tab_consulta2 = utilitario.consultar(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), ide_docente));
-        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true"));
-        for (int i = 0;i < tab_peso.getTotalFilas(); i++){
-            TablaGenerica tab_detalle = utilitario.consultar(ser_notas.getPesoDetalleNota(tab_peso.getValor(i,"ide_ynopen")));
-            for (int j = 0;j < tab_detalle.getTotalFilas(); j++){
-                for (int k = 0;k < tab_docente_alumno.getTotalFilas(); k++){
-                    TablaGenerica tab_nota = utilitario.consultar(ser_notas.getImportarSumaNotas("1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
-                        tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor("ide_ynotie"), tab_docente_alumno.getValor(k,"ide_yaldap"), tab_consulta2.getValor("ide_ysttfe")));
-                    if (tab_peso.getTotalFilas() > 0){
-                        tab_resumen_nota.insertar();
-                        tab_resumen_nota.setValor("ide_ypemda", tab_docente_alumno.getValor(k,"ide_ypemda"));
-                        System.out.println(i+" "+" "+j+" "+k+" mda: "+tab_docente_alumno.getValor(k,"ide_ypemda")+" Alumno: "+tab_docente_alumno.getValor(k,"ide_yaldap") +" pesonota: "+
-                        tab_detalle.getValor(j,"ide_ynopen")+" nota_final: ");
-                    }   
+        if (com_periodo_academico.getValue() == null) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
+            return;
+        } else if (com_materia_docente.getValue() == null) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la materia");
+            return;
+        } else {
+            String cod = com_materia_docente.getValue() + "";
+            TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
+            TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true"));
+            for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
+                TablaGenerica tab_detalle = utilitario.consultar(ser_notas.getPesoDetalleNota(tab_peso.getValor(i, "ide_ynopen")));
+                for (int j = 0; j < tab_detalle.getTotalFilas(); j++) {
+                    for (int k = 0; k < tab_docente_alumno.getTotalFilas(); k++) {
+                        TablaGenerica tab_nota = utilitario.consultar(ser_notas.getImportarSumaNotas("1","1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
+                                tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor(i, "ide_ynotie"), tab_docente_alumno.getValor(k, "ide_yaldap"), tab_consulta.getValor("ide_ysttfe"), tab_detalle.getValor(j, "ide_ynoace")));
+                        TablaGenerica tab_resumen = utilitario.consultar(ser_notas.getImportarSumaNotas("2","1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
+                                tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor(i, "ide_ynotie"), tab_docente_alumno.getValor(k, "ide_yaldap"), tab_consulta.getValor("ide_ysttfe"), tab_detalle.getValor(j, "ide_ynoace")));
+                        utilitario.getConexion().ejecutarSql("delete from yavirac_nota_alumno_resumen where ide_ypemda="+tab_docente_alumno.getValor(k, "ide_ypemda")+" and ide_ynopen="+tab_peso.getValor(i, "ide_ynopen")+" and ide_ynoace="+tab_nota.getValor("ide_ynoace")+"");
+                        utilitario.getConexion().ejecutarSql("delete from yavirac_nota_resumen where ide_ystpea="+com_periodo_academico.getValue().toString()+" and ide_ystmen="+tab_consulta.getValor("ide_ystmen")+" and ide_ystnie="+tab_consulta.getValor("ide_ystnie")+" and ide_ypedpe="+tab_consulta.getValor("ide_ypedpe")+" and ide_yhogra="+tab_consulta.getValor("ide_yhogra")+" and ide_ystjor="+tab_consulta.getValor("ide_ystjor")+" "
+                                + "and ide_ynopae="+tab_nota.getValor("ide_ynopae")+" and ide_ystmal="+tab_consulta.getValor("ide_ystmal")+" and ide_yaldap="+tab_docente_alumno.getValor(k, "ide_yaldap")+"");
+                        //tab_resumen.imprimirSql();
+                        if (tab_nota.getTotalFilas() > 0) {
+                            TablaGenerica tab_porciento = utilitario.consultar(ser_notas.getPorcientoParametroEvaluacion(tab_nota.getValor("notas"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_nota.getValor("ide_ynoace")));
+                        
+                            /*tab_resumen_nota.insertar();
+                            tab_resumen_nota.setValor("ide_ypemda", tab_docente_alumno.getValor(k, "ide_ypemda"));
+                            tab_resumen_nota.setValor("ide_ynopen", tab_peso.getValor(i, "ide_ynopen"));
+                            tab_resumen_nota.setValor("ide_ynoace", tab_nota.getValor("ide_ynoace"));
+                            tab_resumen_nota.setValor("nota_ynoalr", tab_nota.getValor("notas"));
+                            tab_resumen_nota.setValor("porcentaje_evaluacion_ynoalr", tab_porciento.getValor("porcentaje"));*/
+                            //INSERTAR TABLA RESUMEN
+                            tab_nota_resumen.insertar();
+                            tab_nota_resumen.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
+                            tab_nota_resumen.setValor("ide_ystmen", tab_consulta.getValor("ide_ystmen"));
+                            tab_nota_resumen.setValor("ide_ystnie", tab_consulta.getValor("ide_ystnie"));
+                            tab_nota_resumen.setValor("ide_ypedpe", tab_consulta.getValor("ide_ypedpe"));
+                            tab_nota_resumen.setValor("ide_yhogra", tab_consulta.getValor("ide_yhogra"));
+                            tab_nota_resumen.setValor("ide_ystjor", tab_consulta.getValor("ide_ystjor"));
+                            tab_nota_resumen.setValor("ide_ynopae", tab_nota.getValor("ide_ynopae"));
+                            tab_nota_resumen.setValor("ide_ystmal", tab_consulta.getValor("ide_ystmal"));
+                            tab_nota_resumen.setValor("ide_yaldap", tab_docente_alumno.getValor(k, "ide_yaldap"));
+                            tab_nota_resumen.setValor("nota_ynores", tab_resumen.getValor("notas"));
+                            tab_nota_resumen.setValor("porciento_ynores", tab_porciento.getValor("porcentaje"));
+                            tab_nota_resumen.setValor("recuperacion_ynores", tab_resumen.getValor("recuperacion_ynodet"));
+                        }
+                    }
                 }
             }
+            tab_resumen_nota.guardar();
+            tab_nota_resumen.guardar();
+            guardarPantalla();
+            tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
+
         }
     }
-       
+
     public Combo getCom_periodo_academico() {
         return com_periodo_academico;
     }
@@ -329,6 +376,15 @@ public class ResumenNota extends Pantalla {
     public void setTab_docente_alumno(Tabla tab_docente_alumno) {
         this.tab_docente_alumno = tab_docente_alumno;
     }
+
+    public Tabla getTab_nota_resumen() {
+        return tab_nota_resumen;
+    }
+
+    public void setTab_nota_resumen(Tabla tab_nota_resumen) {
+        this.tab_nota_resumen = tab_nota_resumen;
+    }
+    
 
     @Override
     public void insertar() {

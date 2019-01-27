@@ -66,7 +66,7 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
         tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
-        tab_actividad_evaluacion.getColumna("orden_ynopae").setNombreVisual("ORDEN");
+        tab_actividad_evaluacion.getColumna("orden_ynopae").setVisible(false);
         tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
         tab_actividad_evaluacion.dibujar();
 

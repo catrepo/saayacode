@@ -16,7 +16,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author usuario
+ * @author JHON
  */
 public class PesoNota extends Pantalla {
 
@@ -36,15 +36,10 @@ public class PesoNota extends Pantalla {
         tab_peso_nota.setCampoPadre("yav_ide_ynopen");
         tab_peso_nota.setCampoNombre("detalle_ynopen");
         tab_peso_nota.agregarRelacion(tab_detalle_peso_actividad);
-        tab_peso_nota.getColumna("ide_ynopen").setNombreVisual("CODIGO");
-        tab_peso_nota.getColumna("ide_ynotie").setNombreVisual("TIPO EVALUACIÓN");
         tab_peso_nota.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
-        tab_peso_nota.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADÉMICO");
         tab_peso_nota.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
         tab_peso_nota.getColumna("ide_ystpea").setAutoCompletar();
-        tab_peso_nota.getColumna("detalle_ynopen").setNombreVisual("DETALLE");
-        tab_peso_nota.getColumna("peso_ynopen").setNombreVisual("PESO NOTA");
-        tab_peso_nota.getColumna("nivel_ynopen").setNombreVisual("NIVEL");
+        tab_peso_nota.getColumna("ide_ysttfe").setCombo(ser_estructura_organizacional.getTipoFormacionEducativa("true"));
         tab_peso_nota.getColumna("nivel_ynopen").setCombo(ser_notas.getNivelResumen());
         tab_peso_nota.agregarArbol(arb_arbol);
         tab_peso_nota.dibujar();
@@ -57,8 +52,6 @@ public class PesoNota extends Pantalla {
 
         tab_detalle_peso_actividad.setId("tab_detalle_peso_actividad");
         tab_detalle_peso_actividad.setTabla("yavirac_nota_detalle_peso_acti", "ide_ynodpn", 2);
-        tab_detalle_peso_actividad.getColumna("ide_ynodpn").setNombreVisual("CODIGO");
-        tab_detalle_peso_actividad.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
         tab_detalle_peso_actividad.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         tab_detalle_peso_actividad.dibujar();
 

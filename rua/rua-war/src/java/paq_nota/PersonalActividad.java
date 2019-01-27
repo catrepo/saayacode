@@ -22,7 +22,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author usuario
+ * @author JHON
  */
 public class PersonalActividad extends Pantalla {
 

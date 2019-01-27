@@ -15,7 +15,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author ITSY
+ * @author JHON
  */
 public class ActividadEvaluacion extends Pantalla {
 
@@ -47,7 +47,6 @@ public class ActividadEvaluacion extends Pantalla {
         tab_actividad_formacion.getColumna("ide_ynoatf").setNombreVisual("CODIGO");
         tab_actividad_formacion.getColumna("ide_ysttfe").setNombreVisual("FORMACION EDUCATIVA");
         tab_actividad_formacion.getColumna("ide_ysttfe").setCombo(ser_estructura_organizacional.getTipoFormacionEducativa("true"));
-        tab_actividad_formacion.getColumna("ide_ysttfe").setAutoCompletar();
         tab_actividad_formacion.dibujar();
 
         PanelTabla pa_actividad_formacion = new PanelTabla();

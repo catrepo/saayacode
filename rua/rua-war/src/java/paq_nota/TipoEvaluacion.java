@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import sistema.aplicacion.Pantalla;
 
+/**
+ *
+ * @author JHON
+ */
+
 public class TipoEvaluacion extends Pantalla {
 
     private Tabla tab_tipo_evaluacion = new Tabla(); //intanciamos componente tabla
