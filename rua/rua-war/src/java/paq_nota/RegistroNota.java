@@ -29,7 +29,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author usuario
+ * @author JHON
  */
 public class RegistroNota extends Pantalla {
 
@@ -42,6 +42,7 @@ public class RegistroNota extends Pantalla {
     private Tabla tab_detalle_nota = new Tabla();
     private Tabla tab_cabecera_nota = new Tabla();
     private Dialogo dia_dialogo = new Dialogo();
+    private Dialogo dia_calcular = new Dialogo();
     private final Combo com_actividad = new Combo();
     private Texto tex_detalle = new Texto();
     private Calendario cal_fecha_calificacion = new Calendario();
@@ -91,10 +92,17 @@ public class RegistroNota extends Pantalla {
 
             //boton registrar notas
             Boton bot_nota = new Boton();
-            bot_nota.setValue("Generar Nota");
+            bot_nota.setValue("Registrar Nota");
             bot_nota.setIcon("ui-icon-note");//set icono Registrar///
-            bot_nota.setMetodo("GenerarNota");
+            bot_nota.setMetodo("registrarNota");
             bar_botones.agregarBoton(bot_nota);
+
+            //calculo de notas finales
+            Boton bot_calcular = new Boton();
+            bot_calcular.setValue("Generar Notas");
+            bot_calcular.setIcon("ui-icon-note");//set icono Registrar///
+            bot_calcular.setMetodo("calcularNota");
+            bar_botones.agregarBoton(bot_calcular);
 
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
@@ -106,10 +114,6 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.agregarRelacion(tab_detalle_nota);
             tab_cabecera_nota.setCondicion("ide_ynocan=-1");
             tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true,false", "0"));
-            tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
-            tab_cabecera_nota.getColumna("ide_ynocan").setNombreVisual("CODIGO");
-            tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
-            tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
             tab_cabecera_nota.getColumna("ide_ystpea").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ystmen").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ystnie").setVisible(false);
@@ -133,13 +137,10 @@ public class RegistroNota extends Pantalla {
             /* TAB 2 detalle nota*/
             tab_detalle_nota.setId("tab_detalle_nota");
             tab_detalle_nota.setHeader(eti_notificacion);
-            tab_detalle_nota.setTabla("yavirac_nota_detalle_nota", "ide_ynodet", 1);
+            tab_detalle_nota.setTabla("yavirac_nota_detalle_nota", "ide_ynodet", 2);
             tab_detalle_nota.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
-            tab_detalle_nota.getColumna("ide_ynodet").setNombreVisual("CODIGO");
-            tab_detalle_nota.getColumna("ide_yaldap").setNombreVisual("ALUMNO");
-            tab_detalle_nota.getColumna("nota_ynodet").setNombreVisual("NOTA");
             tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setNombreVisual("RECUPERACIÓN");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
@@ -156,10 +157,9 @@ public class RegistroNota extends Pantalla {
 
             //Dialogo
             dia_dialogo.setId("dia_dialogo");
-            dia_dialogo.setTitle("Prueba");
+            dia_dialogo.setTitle("REGISTRO DE TAREAS POR ACTIVIDAD");
             dia_dialogo.setWidth("40%");
             dia_dialogo.setHeight("40%");
-
             dia_dialogo.setResizable(false);
 
             Grid gri_cuerpo = new Grid();
@@ -167,17 +167,35 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.setWidth("100%");
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
 
-            gri_cuerpo.getChildren().add(new Etiqueta("Actividad"));
+            gri_cuerpo.getChildren().add(new Etiqueta("ACTIVIDAD"));
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
             gri_cuerpo.getChildren().add(com_actividad);
-            gri_cuerpo.getChildren().add(new Etiqueta("Detalle Tarea"));
+            gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA"));
             gri_cuerpo.getChildren().add(tex_detalle);
-            gri_cuerpo.getChildren().add(new Etiqueta("Fecha Calificación"));
+            gri_cuerpo.getChildren().add(new Etiqueta("FECHA CALIFICACION"));
             gri_cuerpo.getChildren().add(cal_fecha_calificacion);
 
             dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
             dia_dialogo.setDialogo(gri_cuerpo);
             agregarComponente(dia_dialogo);
+
+            //Dialogo calcular
+            dia_calcular.setId("dia_calcular");
+            dia_calcular.setTitle("COMPONENTES DE EVALUACION");
+            dia_calcular.setWidth("80%");
+            dia_calcular.setHeight("80%");
+            dia_calcular.setResizable(false);
+
+            Grid gri_calcular = new Grid();
+            gri_calcular.setColumns(2);
+            gri_calcular.setWidth("100%");
+
+            gri_calcular.setStyle("width:100%;overflow: auto;display: block;");
+            gri_calcular.getChildren().add(new Etiqueta("Actividad"));
+            gri_calcular.getChildren().add(new Etiqueta("Fecha Calificación"));
+            //calcular_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
+            dia_calcular.setDialogo(gri_calcular);
+            agregarComponente(dia_calcular);
 
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
@@ -188,7 +206,7 @@ public class RegistroNota extends Pantalla {
     String documento = "";
     String ide_docente = "";
 
-    public void GenerarNota() {
+    public void registrarNota() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico para Generar nota");
             return;
@@ -208,6 +226,10 @@ public class RegistroNota extends Pantalla {
 
             abrirDialogo();
         }
+    }
+
+    public void calcularNota() {
+        abrirDialogoCalcular();
     }
 
     private boolean TienePerfilNota() {
@@ -325,6 +347,10 @@ public class RegistroNota extends Pantalla {
         dia_dialogo.dibujar();
     }
 
+    public void abrirDialogoCalcular() {
+        dia_calcular.dibujar();
+    }
+
     public void mostrarNota() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
@@ -344,8 +370,11 @@ public class RegistroNota extends Pantalla {
         if (com_actividad.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la Actividad Academica");
             return;
-        } else if (tex_detalle.getValue() == "") {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese un detalle o descripción");
+        } else if (tex_detalle.getValue() == " ") {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese un detalle o descripción de la actividad");
+            return;
+        } else if (cal_fecha_calificacion.getValue() == " "){
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese la fecha de evaluacion");
             return;
         } else {
             TablaGenerica tab_malla_docente = utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
@@ -519,6 +548,14 @@ public class RegistroNota extends Pantalla {
 
     public void setEti_notificacion(Etiqueta eti_notificacion) {
         this.eti_notificacion = eti_notificacion;
+    }
+
+    public Dialogo getDia_calcular() {
+        return dia_calcular;
+    }
+
+    public void setDia_calcular(Dialogo dia_calcular) {
+        this.dia_calcular = dia_calcular;
     }
 
 }
