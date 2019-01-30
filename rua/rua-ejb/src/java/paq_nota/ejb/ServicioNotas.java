@@ -326,10 +326,10 @@ public class ServicioNotas {
         return sql;
     }
     
-    public String getPesoNota(String nivel,String estado) {
+    public String getPesoNota(String nivel,String estado,String formacion) {
         String sql = "";
-        sql += "select ide_ynopen,ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota \n" +
-        "where nivel_ynopen in("+nivel+") and bloqueo_ynopen in("+estado+") ";
+        sql += "select ide_ynopen,ide_ysttfe,ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota\n" +
+                "where nivel_ynopen in ("+nivel+") and bloqueo_ynopen in("+estado+") and ide_ysttfe in ("+formacion+")";
         return sql;
     }
      
@@ -360,7 +360,24 @@ public class ServicioNotas {
         sql += "select ide_ynoacd,round((("+nota+") * porciento_evaluacion_ynoacd),2) as porcentaje \n" +
                 "from yavirac_nota_actividad_docente a,yavirac_nota_periodo_activ_eva c,yavirac_nota_actividad_evaluac d\n" +
                 "where a.ide_ynopae=c.ide_ynopae and c.ide_ynoace=d.ide_ynoace and \n" +
-                "ide_ypedpe=("+docente+")  and ide_ystmal=("+malla+") and ide_ystnie=("+nivel+") and ide_yhogra=("+paralelo+") and ide_ystjor=("+jornada+") and d.ide_ynoace=("+actividad+") ";
+                "ide_ypedpe in ("+docente+")  and ide_ystmal in ("+malla+") and ide_ystnie in ("+nivel+") and ide_yhogra in ("+paralelo+") and ide_ystjor in ("+jornada+") and d.ide_ynoace in ("+actividad+") ";
+        return sql;
+    }
+    
+    public String getActualizarTablaResumenNota(String malladocente,String pesonota,String actividad) {
+        
+        String sql = "";
+        sql += "delete from yavirac_nota_alumno_resumen "
+                + " where ide_ypemda in ("+malladocente+") and ide_ynopen in ("+pesonota+") and ide_ynoace in ("+actividad+")";
+        return sql;
+    }
+    
+    public String getActualizarTablaResumen(String periodoacademico,String mension,String nivel,String docente,String paralelo,String jornada,String malla,String alumno,String pesonota) {
+        
+        String sql = "";
+        sql += "delete from yavirac_nota_resumen "
+                + " where ide_ystpea in ("+periodoacademico+") and ide_ystmen in ("+mension+") and ide_ystnie in ("+nivel+") and ide_ypedpe in ("+docente+") and ide_yhogra in ("+paralelo+") and ide_ystjor in ("+jornada+") and ide_ystmal in ("+malla+") \n" +
+                "and ide_yaldap in ("+alumno+")  and ide_ynopen in ("+pesonota+") ";
         return sql;
     }
 }
