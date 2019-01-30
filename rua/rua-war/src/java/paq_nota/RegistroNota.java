@@ -107,7 +107,7 @@ public class RegistroNota extends Pantalla {
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
             eti_notificacion.setId("eti_notificacion");
-            /* TAB 1 cabecera nota*/
+            // TAB 1 cabecera nota
             tab_cabecera_nota.setId("tab_cabecera_nota");  // todo objeto instanciado poner id 
             tab_cabecera_nota.setTabla("yavirac_nota_cabecera_nota", "ide_ynocan", 1);    // nom bdd
             tab_cabecera_nota.setHeader("Docente: " + docente);
@@ -125,14 +125,15 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setLectura(true);
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setLectura(true);
-            tab_cabecera_nota.setRows(5);
             tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
+            tab_cabecera_nota.setRows(5);
             tab_cabecera_nota.dibujar();
 
             PanelTabla pa_cabecera_nota = new PanelTabla();
             pa_cabecera_nota.setId("pa_cabecera_nota"); // nombre de i
             pa_cabecera_nota.setPanelTabla(tab_cabecera_nota);
+            
 
             /* TAB 2 detalle nota*/
             tab_detalle_nota.setId("tab_detalle_nota");
@@ -142,7 +143,6 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
             tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
-            tab_detalle_nota.getColumna("recuperacion_ynodet").setNombreVisual("RECUPERACIÓN");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
             tab_detalle_nota.dibujar();
 
@@ -152,6 +152,8 @@ public class RegistroNota extends Pantalla {
 
             ///// tabuladores
             Division div_nota = new Division();
+            div_nota.setId("div_nota");
+            //div_nota.dividir1(pa_detalle_nota);
             div_nota.dividir2(pa_cabecera_nota, pa_detalle_nota, "30%", "h");
             agregarComponente(div_nota);
 
