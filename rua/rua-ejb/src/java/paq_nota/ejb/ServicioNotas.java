@@ -182,11 +182,11 @@ public class ServicioNotas {
     }
 
     /**
-     * Retorna consulta tipo examen
+     * Retorna la consulta si aplica recuperacion del examen
      *
-     * @param activo.- permite el ingreso del paramtero activo para filtrar ya
-     * sea true, false, o ambos.
-     * @return sql del tipo de evaluacion
+     * @param m.- permite el ingreso del paramtero ide de la tabla nota cabecera
+     * @param n.- permite el ingreso del parametro ide de la tabla actividad de evalución
+     * @return sql de consulta tipo eamen
      */
     public String getConsultaTipoExamen(String m, String n) {
         String sql = "";
@@ -341,11 +341,11 @@ public class ServicioNotas {
     }
      
     /**
-     * Retorna Peso notas
+     * Retorna los datos de la tabla Peso notas
      *
      * @param activo.- permite el ingreso del paramtero activo para filtrar ya
      * sea true, false, o ambos.
-     * @return sql del tipo de evaluacion
+     * @return sql del peso notas
      */
     public String getPesoNotas(String activo) {
         String sql = "";
@@ -364,11 +364,11 @@ public class ServicioNotas {
         return sql;
     }
     
-    public String getActualizarTablaResumenNota(String malladocente,String pesonota,String actividad) {
+    public String getActualizarTablaResumenNota(String malladocente,String pesonota) {
         
         String sql = "";
         sql += "delete from yavirac_nota_alumno_resumen "
-                + " where ide_ypemda in ("+malladocente+") and ide_ynopen in ("+pesonota+") and ide_ynoace in ("+actividad+")";
+                + " where ide_ypemda in ("+malladocente+") and ide_ynopen in ("+pesonota+") ";
         return sql;
     }
     
@@ -380,4 +380,63 @@ public class ServicioNotas {
                 "and ide_yaldap in ("+alumno+")  and ide_ynopen in ("+pesonota+") ";
         return sql;
     }
+    
+     /**
+     * Retorna la nota total de la actividad de clases  y el total del examen
+     *
+     * @param periodoacademico .- permite el ingreso del paramtero activo para filtrar ya
+     * @param mension .-
+     * @param nivel .-
+     * @param docente .-
+     * @param paralelo .-
+     * @param jornada .-
+     * @param malla .-
+     * @param alumno .-
+     * @param pesonota .-
+     * @return sql de Nota total a nivel 3
+     */
+    public String getNotaTotalTercerNivel(String periodoacademico,String mension,String nivel,String docente,String paralelo,String jornada,String malla,String alumno,String pesonota) {
+        String sql = "";
+        //sql +="select 1 as cod, 2 as nota";
+        sql += "select 1 as codigo,sum(porciento_ynores) as notatotal,ide_yaldap \n" +
+                "from (\n" +
+                "select * from yavirac_nota_resumen \n" +
+                "where ide_ystpea in ("+periodoacademico+") and ide_ystmen in ("+mension+") and ide_ystnie in ("+nivel+") and ide_ypedpe in ("+docente+") and ide_yhogra in ("+paralelo+") and ide_ystjor in ("+jornada+") and ide_ystmal in ("+malla+") \n" +
+                "and ide_yaldap in ("+alumno+")  and ide_ynopen in ("+pesonota+") ) a \n "
+                + "group by ide_yaldap ";
+        return sql;
+        
+    }
+    
+    /**
+     * Retorna la nota total de la actividad de clases  y el total del examen
+     *
+     * @param periodoacademico .- permite el ingreso del paramtero activo para filtrar ya
+     * @param mension .-
+     * @param nivel .-
+     * @param docente .-
+     * @param paralelo .-
+     * @param jornada .-
+     * @param malla .-
+     * @param alumno .-
+     * @param pesonota .-
+     * @return sql de Nota total a nivel 3
+     */
+    public String getInsertarTabResumen(String codigo,String periodoacademico,String mension,String nivel,String docente,String paralelo,String jornada,String actividad,String malla,String alumno,String pesonota,String nota,String porciento,String recuperacion) {
+        String sql = "";
+        //sql +="select 1 as cod, 2 as nota";
+        sql += "insert into yavirac_nota_resumen(\n" +
+                "            ide_ynores,ide_ystpea, ide_ystmen, ide_ystnie, ide_ypedpe, ide_yhogra, \n" +
+                "            ide_ystjor, ide_ynopae, ide_ystmal, ide_yaldap, ide_ynopen, nota_ynores, \n" +
+                "            porciento_ynores, recuperacion_ynores)\n" +
+                "    values ("+codigo+","+periodoacademico+", "+mension+", "+nivel+", "+docente+", "+paralelo+", \n" +
+                "            "+jornada+", "+actividad+", "+malla+", "+alumno+", "+pesonota+", "+nota+", \n" +
+                "            "+porciento+", "+recuperacion+");";
+        //System.out.println("Estoy insertando: "+sql);
+        return sql;
+        
+    }
+
+    
+    
 }
