@@ -169,7 +169,7 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.setWidth("100%");
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
 
-            gri_cuerpo.getChildren().add(new Etiqueta("ACTIVIDAD"));
+            gri_cuerpo.getChildren().add(new Etiqueta("ACTIVIDAD EVALUACION"));
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
             gri_cuerpo.getChildren().add(com_actividad);
             gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA"));
@@ -306,7 +306,7 @@ public class RegistroNota extends Pantalla {
             utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
             return;
         }
-        //validar si el xamen tiene recuperacion
+        //validar si el examen tiene recuperacion
         TablaGenerica tab_examen = utilitario.consultar(ser_notas.getConsultaTipoExamen(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"), utilitario.getVariable("p_tipo_eva_examen")));
         TablaGenerica tab_validacion = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true", "1"));
         //ystem.out.println("Tablaprueba " + tab_validacion.getSql());
@@ -372,10 +372,10 @@ public class RegistroNota extends Pantalla {
         if (com_actividad.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la Actividad Academica");
             return;
-        } else if (tex_detalle.getValue() == " ") {
+        } else if (tex_detalle.equals(" ")) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese un detalle o descripción de la actividad");
             return;
-        } else if (cal_fecha_calificacion.getValue() == " "){
+        } else if (cal_fecha_calificacion.getValue() == null){
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese la fecha de evaluacion");
             return;
         } else {
@@ -401,6 +401,7 @@ public class RegistroNota extends Pantalla {
                 tab_detalle_nota.insertar();
                 tab_detalle_nota.setValor("ide_yaldap", tab_alumnos_asistencia.getValor(i, "ide_yaldap"));
                 tab_detalle_nota.setValor("nota_ynodet", "0");
+                tab_detalle_nota.setValor("recuperacion_ynodet", "FALSE");
 
             }
 
