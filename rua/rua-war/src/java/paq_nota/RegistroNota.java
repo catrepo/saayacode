@@ -168,7 +168,7 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.setColumns(2);
             gri_cuerpo.setWidth("100%");
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
-
+            gri_cuerpo.getChildren().clear();
             gri_cuerpo.getChildren().add(new Etiqueta("ACTIVIDAD EVALUACION"));
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
             gri_cuerpo.getChildren().add(com_actividad);
@@ -372,13 +372,13 @@ public class RegistroNota extends Pantalla {
         if (com_actividad.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la Actividad Academica");
             return;
-        } else if (tex_detalle.equals(" ")) {
+        } else if (tex_detalle.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese un detalle o descripción de la actividad");
             return;
         } else if (cal_fecha_calificacion.getValue() == null){
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese la fecha de evaluacion");
             return;
-        } else {
+        } else { 
             TablaGenerica tab_malla_docente = utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
             String malla = tab_malla_docente.getValor("ide_ystmal");
             String grupo = tab_malla_docente.getValor("ide_yhogra");
