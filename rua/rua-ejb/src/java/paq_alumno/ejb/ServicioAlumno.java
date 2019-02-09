@@ -26,7 +26,7 @@ public class ServicioAlumno {
      */
     public String getDatosAlumnos(String estado) {
         String sql="";
-        sql="Select ide_yaldap,nombre_yaldap,apellido_yaldap,doc_identidad_yaldap FROM yavirac_alum_dato_personal where activo_yaldap in ("+estado+") order by nombre_yaldap";
+        sql="Select ide_yaldap,apellido_yaldap,nombre_yaldap,doc_identidad_yaldap FROM yavirac_alum_dato_personal where activo_yaldap in ("+estado+") order by nombre_yaldap";
         return sql;
     }
          /**
