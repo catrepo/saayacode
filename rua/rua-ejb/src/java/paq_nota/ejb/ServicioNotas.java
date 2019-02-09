@@ -529,4 +529,5 @@ public class ServicioNotas {
                 "group by ide_yaldap,yav_ide_ynopen";
         return sql; 
     }
+    
 }
