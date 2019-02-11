@@ -79,4 +79,10 @@ public String getDatoEmpresa() {
         return sql;
 }
 
+public String getViabilidad () {
+String sql="";
+sql="select ide_ytiviv,no_informe_ytiviv,fecha_ytiviv from yavirac_titu_viabilidad";
+return sql;
+    
+    }
 }
