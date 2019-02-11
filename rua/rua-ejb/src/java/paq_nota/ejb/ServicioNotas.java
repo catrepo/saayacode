@@ -417,7 +417,7 @@ public class ServicioNotas {
         sql += ") b\n"
                 + " group by ide_yaldap,ide_ynopen ";
         
-        System.err.println("SQL: "+sql);
+        //System.err.println("SQL: "+sql);
         return sql;
 
     }
@@ -488,7 +488,7 @@ public class ServicioNotas {
         String sql = "";
         sql += "select ide_ynopen,ide_ysttfe,ide_ynotie,detalle_ynopen,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota\n" +
                 "where nivel_ynopen in ("+nivel+") and bloqueo_ynopen in("+estado+")";
-        System.out.println("EStoy en el nivel: "+sql);
+        //System.out.println("EStoy en el nivel: "+sql); 
         return sql;
         
     }
