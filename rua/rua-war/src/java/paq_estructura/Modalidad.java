@@ -19,6 +19,7 @@ public class Modalidad extends Pantalla {
     tab_stror_modalidad.getColumna("ide_ystmod").setNombreVisual("CÓDIGO");
     tab_stror_modalidad.getColumna("descripcion_ystmod").setNombreVisual("DESCRIPCIÓN");
     tab_stror_modalidad.getColumna("activo_ystmod").setNombreVisual("ACTIVO");
+    
     tab_stror_modalidad .dibujar();
         /*agregarComponente(tab_hora_dia);*/ 
      
