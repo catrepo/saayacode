@@ -7,7 +7,7 @@ package paq_titulacion;
 
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
-import framework.componentes.Tabla;
+import framework.componentes.Tabla; 
 import paq_estructura.DivisionPolitica;
 import sistema.aplicacion.Pantalla;
 
