@@ -98,11 +98,11 @@ public class RegistroNota extends Pantalla {
             bar_botones.agregarBoton(bot_nota);
 
             //calculo de notas finales
-            Boton bot_calcular = new Boton();
+            /*Boton bot_calcular = new Boton();
             bot_calcular.setValue("Generar Notas");
             bot_calcular.setIcon("ui-icon-note");//set icono Registrar///
             bot_calcular.setMetodo("calcularNota");
-            bar_botones.agregarBoton(bot_calcular);
+            bar_botones.agregarBoton(bot_calcular);*/
 
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);

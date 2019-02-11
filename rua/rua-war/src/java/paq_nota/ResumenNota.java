@@ -111,7 +111,7 @@ public class ResumenNota extends Pantalla {
             //TABLA RESUMEN NOTA
             tab_resumen_nota.setId("tab_resumen_nota");
             tab_resumen_nota.setTabla("yavirac_nota_alumno_resumen", "ide_ynoalr", 2);
-            //tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas()); 
+            tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas()); 
             tab_resumen_nota.getColumna("ide_ynopen").setLectura(true);
             tab_resumen_nota.getColumna("nota_ynoalr").setLectura(true);
             tab_resumen_nota.getColumna("porcentaje_evaluacion_ynoalr").setLectura(true);
@@ -308,7 +308,7 @@ public class ResumenNota extends Pantalla {
         for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
             for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
                 utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
-                TablaGenerica tab_segundoNivel = utilitario.consultar(ser_notas.getConsultarNotaTotalSegundoNivel(tab_peso.getValor(i, "ide_ynopen"), com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ysttfe"), tab_peso.getValor("ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap")));
+                TablaGenerica tab_segundoNivel = utilitario.consultar(ser_notas.getConsultarNotaTotalSegundoNivel(tab_peso.getValor(i, "ide_ynopen"), com_periodo_academico.getValue().toString(), tab_peso.getValor(i,"ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap")));
                 TablaGenerica tab_codigo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_alumno_resumen", "ide_ynoalr"));
                 utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabAlumnoResumen(tab_codigo.getValor("maximo"), tab_peso.getValor(i, "ide_ynopen"), tab_docente_alumno.getValor(j, "ide_ypemda"), tab_segundoNivel.getValor("total"), tab_peso.getValor(i, "peso_ynopen")));
             }
