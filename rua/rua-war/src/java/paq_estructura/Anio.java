@@ -27,6 +27,7 @@ public class Anio extends Pantalla {
         tab_tabla1.setTabla("yavirac_stror_anio","ide_ystani",1);  // nom bdd
         tab_tabla1.getColumna("ide_ystani").setNombreVisual("CÓDIGO");
         tab_tabla1.getColumna("descripcion_ystani").setNombreVisual("DESCRIPCIÓN");
+        tab_tabla1.getColumna("ide_ystani").setNombreVisual("AÑO");
         tab_tabla1.dibujar();
         
         PanelTabla pa_pat1 = new PanelTabla();
