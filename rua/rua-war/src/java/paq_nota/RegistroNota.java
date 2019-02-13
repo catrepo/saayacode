@@ -296,7 +296,7 @@ public class RegistroNota extends Pantalla {
             //System.out.println("Estoy en el IF 1");
             eti_notificacion.setValue("Error, No puede ingresar números menores a 0");
             utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
-            //utilitario.agregarMensajeError("Edad no válida", "La edad ingresada no es válida");
+            utilitario.agregarMensajeError("Nota no válida", "No puede ingresar números menores a 0");
             return;
 
         } else if (notaactividad > notaevaluacion) {
@@ -304,6 +304,8 @@ public class RegistroNota extends Pantalla {
             //System.out.println("Estoy en el IF 2");
             eti_notificacion.setValue("Error, No puede ingresar números mayores a " + notaevaluacion);
             utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
+            utilitario.agregarMensajeError("Nota no válida", "No puede ingresar números menores a " + notaevaluacion);
+            
             return;
         }
         //validar si el examen tiene recuperacion
