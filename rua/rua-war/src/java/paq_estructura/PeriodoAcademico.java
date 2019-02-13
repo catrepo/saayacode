@@ -69,29 +69,9 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.setId("tab_periodo_academic");  // todo objeto instanciado poner id 
         tab_periodo_academic.setTabla("yavirac_stror_periodo_academic", "ide_ystpea", 1);    // nom bdd
         tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
-        //renombra etiquetas de la tabla
-        tab_periodo_academic.getColumna("ide_ystpea").setNombreVisual("CÓDIGO");
-        tab_periodo_academic.getColumna("descripcion_ystpea").setNombreVisual("DESCRIPCIÓN");
-        tab_periodo_academic.getColumna("fecha_inicio_ystpea").setNombreVisual("FECHA INICIO");
-        tab_periodo_academic.getColumna("fecha_final_ystpea").setNombreVisual("FECHA FINAL");
-        tab_periodo_academic.getColumna("activo_ystpea").setNombreVisual("ACTIVO");
-        tab_periodo_academic.getColumna("hora_clase_ystpea").setNombreVisual("HORA CLASE");
-        tab_periodo_academic.getColumna("aplica_jornada_completa_ystpea").setNombreVisual("APLICA JORNADA");
-        tab_periodo_academic.getColumna("tabla_notas_ystpea").setNombreVisual("NOMBRE TABLA");
-        tab_periodo_academic.getColumna("tabla_notas_ystpea").setLectura(true);
-        tab_periodo_academic.getColumna("tabla_notas_ystpea").setUnico(true);
-        tab_periodo_academic.getColumna("tabla_notas_ystpea").setVisible(false);
-        tab_periodo_academic.getColumna("tabla_creada_ystpea").setLectura(true);
-        tab_periodo_academic.getColumna("tabla_creada_ystpea").setValorDefecto("false");
-        tab_periodo_academic.getColumna("tabla_creada_ystpea").setVisible(false);
         tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
-        tab_periodo_academic.getColumna("ide_ystani").setNombreVisual("AÑO");
         tab_periodo_academic.getColumna("nota_evaluacion_ystpea").setNombreVisual("NOTA EVALUACIÓN");
-        tab_periodo_academic.getColumna("nota_minima_aprobada_ystpea").setNombreVisual("NOTA APROBACIÓN");
-        tab_periodo_academic.getColumna("nota_recuperacion_ystpea").setNombreVisual("NOTA RECUPERACIÓN");
-        tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setNombreVisual("APLICA RECUPERACIÓN");
         tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setValorDefecto("false");
-      
         //*****************
         tab_periodo_academic.dibujar();
 
