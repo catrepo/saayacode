@@ -100,9 +100,9 @@ public class PeriodoAcademico extends Pantalla {
     @Override
     public void guardar() {
 
-        if (tab_periodo_academic.isFilaInsertada()) {
+        /*if (tab_periodo_academic.isFilaInsertada()) {
 
-            TablaGenerica tab_anio = utilitario.consultar("select ide_ystani,descripcion_ystani from yavirac_stror_anio where ide_ystani=" + tab_periodo_academic.getValor("ide_ystani"));
+            /*TablaGenerica tab_anio = utilitario.consultar("select ide_ystani,descripcion_ystani from yavirac_stror_anio where ide_ystani=" + tab_periodo_academic.getValor("ide_ystani"));
             anio = tab_anio.getValor("descripcion_ystani");
             data = stripAccents(tab_periodo_academic.getValor("descripcion_ystpea"));
             TablaGenerica tab_remplazdo = utilitario.consultar(ser_notas.getRemplazaG(data, "yavirac_stror_periodo_academic"));
@@ -111,7 +111,7 @@ public class PeriodoAcademico extends Pantalla {
             TablaGenerica tab_limite = utilitario.consultar(ser_notas.getlimiteC(limite));
             tab_periodo_academic.setValor("tabla_notas_ystpea", tab_limite.getValor("nombre"));
             utilitario.addUpdateTabla(tab_periodo_academic, "tabla_notas_ystpea", "");
-        }
+        }*/
         if (tab_periodo_academic.guardar()) {
             
                     guardarPantalla();
