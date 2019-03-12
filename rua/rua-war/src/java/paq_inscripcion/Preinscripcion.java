@@ -29,7 +29,8 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author USER
+ * @author Cristian Vega
+ * @deprecated Prueba de versionamiento
  */
 public class Preinscripcion extends Pantalla {
 
