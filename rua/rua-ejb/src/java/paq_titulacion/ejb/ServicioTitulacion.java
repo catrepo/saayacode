@@ -85,4 +85,40 @@ sql="select ide_ytiviv,no_informe_ytiviv,fecha_ytiviv from yavirac_titu_viabilid
 return sql;
     
     }
+public String getLineaSupervision() {
+String sql="";
+sql="select ide_ytilii,detalle_ytilii from yavirac_titu_linea_investigacio";
+return sql;
+    
+    }
+public String getIndicador() {
+String sql="";
+sql="select ide_ytiind,detalle_ytiind from yavirac_titu_indicador";
+return sql;
+    
+    }
+public String getMediosVerifica() {
+String sql="";
+sql="select ide_ytimev,detalle_ytimev from yavirac_titu_medios_verifica";
+return sql;
+}
+
+public String getTipoObjetivo() {
+String sql="";
+sql="select ide_ytitio,detalle_ytitio from yavirac_titu_tipo_objetivo";
+return sql;
+
+}
+
+
+public String getActividadResulta() {
+String sql="";
+sql="select ide_ytiacr,detalle_ytiacr from yavirac_titu_actividad_resulta";
+return sql;
+
+}
+
+
+
+
 }
