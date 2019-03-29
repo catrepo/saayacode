@@ -109,15 +109,12 @@ public class HoraDocenteMalla extends Pantalla {
     }
 
     public void selecionoAutocompletar() {
-        if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeError("ERROR", "Seleccione el Periodo Académico");
-            return;
-        } else {
+       
 
             tab_docente_malla.setCondicion("ide_ystpea=" + com_periodo_academico.getValue() + " and ide_ypedpe=" + aut_alumno.getValor());
             tab_docente_malla.ejecutarSql();
             utilitario.addUpdate("tab_docente_malla");
-        }
+       
     }
 
     public void filtroComboPeriodoAcademnico() {
