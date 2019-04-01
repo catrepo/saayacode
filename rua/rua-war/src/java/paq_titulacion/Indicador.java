@@ -21,8 +21,7 @@ public class Indicador extends Pantalla{
         tab_indicador.setId("tab_indicador");
         tab_indicador.setTabla("yavirac_titu_indicador","ide_ytiind", 1);
         tab_indicador.setHeader("Indicador");
-        tab_indicador.dibujar();
-        
+        tab_indicador.dibujar();        
         PanelTabla pat_line= new PanelTabla();
         pat_line.setId("pat_line");
         pat_line.setPanelTabla(tab_indicador);
