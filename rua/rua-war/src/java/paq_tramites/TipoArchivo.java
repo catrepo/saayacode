@@ -24,7 +24,7 @@ public class TipoArchivo extends Pantalla{
     public TipoArchivo (){
         tab_tipoarchivo.setId("tab_tipoarchivo");
         tab_tipoarchivo.setTabla("yavirac_tra_tipo_archvio", "ide_ytrtia", 1);
-        tab_tipoarchivo.setHeader("Registro Tipo de Entidad");
+        tab_tipoarchivo.setHeader("Registro Tipo de Archivo");
         tab_tipoarchivo.dibujar();
         
         PanelTabla pat_tipoarchivo = new PanelTabla();
