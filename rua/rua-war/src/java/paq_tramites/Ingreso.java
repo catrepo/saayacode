@@ -105,7 +105,7 @@ public class Ingreso extends Pantalla{
         tab_ingreso.getColumna("ide_yaldap").setNombreVisual("ESTUDIANTE");
         tab_ingreso.getColumna("ide_yaldap").setOrden(3);
         tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
-        tab_ingreso.getColumna("ide_ypede").setOrden(14);
+        //tab_ingreso.getColumna("ide_ypede").setOrden(14);
         
         tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad());
         tab_ingreso.getColumna("ide_ytrtid").setCombo(ser_tramite.getSqlTipoDocumento());
