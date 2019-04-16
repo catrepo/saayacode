@@ -79,8 +79,7 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla.getColumna("yav_ide_ystdip2").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_tabla.getColumna("ide_ystdip").setAutoCompletar();
         tab_tabla.getColumna("yav_ide_ystdip").setAutoCompletar();
-        tab_tabla.getColumna("yav_ide_ystdip2").setAutoCompletar();               
-
+        tab_tabla.getColumna("yav_ide_ystdip2").setAutoCompletar();             
         tab_tabla.dibujar();
 
         PanelTabla pat_panel = new PanelTabla();
