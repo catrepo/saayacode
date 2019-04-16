@@ -123,6 +123,29 @@ sql="select ide_ytiacr,detalle_ytiacr from yavirac_titu_actividad_resulta";
 return sql;
 
 }
+public String getProyectoVinculacion() {
+String sql="";
+sql="select ide_ytiviv from yavirac_titu_proyecto";
+return sql;
+}
+public String getIngreso() {
+String sql="";
+sql="select ide_ytring from yavirac_tra_ingreso";
+return sql;
+}
+public String getPeriodoAcademico() {
+String sql="";
+sql="select ide_ystpea from yavirac_stror_periodo_academic ";
+return sql;
+}
+
+public String getTiposVinculacion() {
+String sql="";
+sql="select ide_ytitiv from yavirac_titu_proyecto ";
+return sql;
+}
+
+
 
 }
 
