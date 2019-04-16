@@ -46,7 +46,13 @@ public class ProyectoVinculacion extends Pantalla {
         
         tab_tabla.setTipoFormulario(true);
         tab_tabla.getGrid().setColumns(6);
-        tab_tabla.getColumna("ide_ytiviv").setCombo(ser_titulacion.getViabilidad());        
+        tab_tabla.getColumna("ide_ytring ").setCombo(ser_titulacion.getIngreso());
+        tab_tabla.getColumna("ide_ytiviv").setCombo(ser_titulacion.getViabilidad());
+        tab_tabla.getColumna("ide_ystpea").setCombo(ser_titulacion.getPeriodoAcademico());     
+        tab_tabla.getColumna("ide_ytitiv").setCombo(ser_titulacion.getTiposVinculacion());
+         
+            
+        
         tab_tabla.getColumna("ide_ytipro").setNombreVisual("CODIGO DE PROYECTO");
         tab_tabla.getColumna("fecha_registro_ytipro").setNombreVisual("FECHA DE REGISTRO");
         tab_tabla.getColumna("objeto_proyecto_ytipro").setNombreVisual("OBJETO DEL PROYECTO");
