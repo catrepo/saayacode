@@ -91,6 +91,12 @@ sql="select ide_ytilii,detalle_ytilii from yavirac_titu_linea_investigacio";
 return sql;
     
     }
+public String getIntervaloTiempo() {
+String sql="";
+sql="select ide_ytiint,descripcion_ytiint from yavirac_titu_intervalo_tiempo order by descripcion_ytiint";
+return sql;
+    
+    }
 public String getIndicador() {
 String sql="";
 sql="select ide_ytiind,detalle_ytiind from yavirac_titu_indicador";

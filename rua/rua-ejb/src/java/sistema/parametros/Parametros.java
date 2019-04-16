@@ -59,6 +59,10 @@ public class Parametros {
          */
         lis_parametros.add(new Parametro("6", "p_secuencial_interno", "Indica el nuemro secuecnial para tramites internos", "2", "yavirac_tra_secuencial", "ide_ytrsec", "detalle_ytrsec"));
         lis_parametros.add(new Parametro("6", "p_entidad_yavirac", "Indica el tipo entidad yavirac para tramites internos", "2", "yavirac_tra_tipo_entidad", "ide_ytrtie", "nombre_ytrtie"));
+ /*
+         * TRAMITES MODULO =7
+         */
+        lis_parametros.add(new Parametro("7", "p_proyecto_tipo_prac", "Indica el proyecto de tipo practica", "1", "yavirac_titu_tipos_vinculacion", "ide_ytitiv", "descripcion_ytitiv"));
       
         /*
          * NOTAS MODULO =7

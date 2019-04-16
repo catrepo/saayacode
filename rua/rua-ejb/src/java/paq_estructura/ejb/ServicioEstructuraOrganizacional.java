@@ -115,7 +115,7 @@ public class ServicioEstructuraOrganizacional {
      */
     public String getDistribucionPolitica(String activo) {
         String sql="";
-        sql="SELECT ide_ystdip, ide_ysttdp, descripcion_ystdip FROM yavirac_stror_distribucion_pol where activo_ystdip in ("+activo+")";
+        sql="SELECT ide_ystdip,descripcion_ystdip FROM yavirac_stror_distribucion_pol where activo_ystdip in ("+activo+")";
         return sql;
     }  
     
