@@ -73,7 +73,7 @@ public class PersonalActividad extends Pantalla {
             tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 1);
             tab_actividad_docente.setCondicion("ide_ynoacd=-1");
             tab_actividad_docente.setHeader("Docente: " + docente);
-            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true", "0"));
+            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "false,true", "0"));
             tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
             tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
             tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACÓN");
