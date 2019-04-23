@@ -53,6 +53,11 @@ public class ServicioTitulacion {
         sql="select ide_ytitpv, descripcion_ytitpv from yavirac_titu_tipo_per_vinc order by descripcion_ytitpv";
         return sql;
     }
+        public String getSqlPersonaEmpresa() {
+        String sql="";
+        sql="select ide_ytipee, nombre_ytipee, docu_identida_ytipee from yavirac_titu_persona_empresa order by nombre_ytipee";
+        return sql;
+    }
    public String getEmpresa() {
           
         String sql="";
@@ -133,15 +138,15 @@ String sql="";
 sql="select ide_ytring from yavirac_tra_ingreso";
 return sql;
 }
-public String getPeriodoAcademico() {
+public String getCampo() {
 String sql="";
-sql="select ide_ystpea from yavirac_stror_periodo_academic ";
+sql="select ide_yticam,detalle_yticam from yavirac_titu_campo ";
 return sql;
 }
 
 public String getTiposVinculacion() {
 String sql="";
-sql="select ide_ytitiv from yavirac_titu_proyecto ";
+sql="select ide_ytitiv, descripcion_ytitiv from yavirac_titu_tipos_vinculacion ";
 return sql;
 }
 
