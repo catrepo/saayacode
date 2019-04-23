@@ -98,6 +98,7 @@ public class ResumenNota extends Pantalla {
             tab_docente_alumno.agregarRelacion(tab_resumen_nota);
             tab_docente_alumno.setCondicion("ide_ypemad=-1");
             tab_docente_alumno.getColumna("ide_ypemad").setVisible(false);
+            tab_docente_alumno.getColumna("ide_ypemda").setNombreVisual("CODIGO");
             tab_docente_alumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO/A");
             tab_docente_alumno.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_docente_alumno.getColumna("ide_yaldap").setLectura(true);
@@ -115,6 +116,10 @@ public class ResumenNota extends Pantalla {
             tab_resumen_nota.getColumna("ide_ynopen").setLectura(true);
             tab_resumen_nota.getColumna("nota_ynoalr").setLectura(true);
             tab_resumen_nota.getColumna("porcentaje_evaluacion_ynoalr").setLectura(true);
+            tab_resumen_nota.getColumna("ide_ynoalr").setNombreVisual("CODIGO");
+            tab_resumen_nota.getColumna("ide_ynopen").setNombreVisual("DETALLE");
+            tab_resumen_nota.getColumna("nota_ynoalr").setNombreVisual("NOTA FINAL");
+            tab_resumen_nota.getColumna("porcentaje_evaluacion_ynoalr").setNombreVisual("PORCENTAJE");
             tab_resumen_nota.dibujar();
 
             PanelTabla pa_resumen_nota = new PanelTabla();

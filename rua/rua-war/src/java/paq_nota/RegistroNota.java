@@ -113,6 +113,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.setHeader("Docente: " + docente);
             tab_cabecera_nota.agregarRelacion(tab_detalle_nota);
             tab_cabecera_nota.setCondicion("ide_ynocan=-1");
+            tab_cabecera_nota.getColumna("ide_ynocan").setNombreVisual("CODIGO");
             tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true,false", "0"));
             tab_cabecera_nota.getColumna("ide_ystpea").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ystmen").setVisible(false);
@@ -123,8 +124,11 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ystmal").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ynopae").setAutoCompletar();
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
+            tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_cabecera_nota.getColumna("detalle_ynocan").setLectura(true);
+            tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setLectura(true);
+            tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
             tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
             tab_cabecera_nota.setRows(5);
@@ -139,6 +143,9 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.setId("tab_detalle_nota");
             tab_detalle_nota.setHeader(eti_notificacion);
             tab_detalle_nota.setTabla("yavirac_nota_detalle_nota", "ide_ynodet", 2);
+            tab_detalle_nota.getColumna("ide_ynodet").setNombreVisual("CODIGO");
+            tab_detalle_nota.getColumna("ide_yaldap").setNombreVisual("ALUMNO/A");
+            tab_detalle_nota.getColumna("nota_ynodet").setNombreVisual("NOTA");
             tab_detalle_nota.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);

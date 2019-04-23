@@ -76,8 +76,8 @@ public class PersonalActividad extends Pantalla {
             tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "false,true", "0"));
             tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
             tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
-            tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACÓN");
-            tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual(" % EVALUACIÓN");
+            tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
+            tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual(" % PARAMETRO");
             tab_actividad_docente.getColumna("ide_ypedpe").setVisible(false);
             tab_actividad_docente.getColumna("ide_ystmal").setVisible(false);
             tab_actividad_docente.getColumna("ide_ystmen").setVisible(false);
