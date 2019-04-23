@@ -46,13 +46,14 @@ public class ProyectoVinculacion extends Pantalla {
         
         tab_tabla.setTipoFormulario(true);
         tab_tabla.getGrid().setColumns(6);
-        tab_tabla.getColumna("ide_ytring ").setCombo(ser_titulacion.getIngreso());
-        tab_tabla.getColumna("ide_ytiviv").setCombo(ser_titulacion.getViabilidad());
-        tab_tabla.getColumna("ide_ystpea").setCombo(ser_titulacion.getPeriodoAcademico());     
+        tab_tabla.getColumna("ide_ytring").setVisible(false);
+        //tab_tabla.getColumna("ide_ytiviv").setCombo(ser_titulacion.getViabilidad());
         tab_tabla.getColumna("ide_ytitiv").setCombo(ser_titulacion.getTiposVinculacion());
-         
-            
-        
+        tab_tabla.getColumna("IDE_YTICAM").setCombo(ser_titulacion.getCampo());
+        tab_tabla.getColumna("IDE_YSTTFE").setCombo(ser_periodoacademico.getTipoFormacionEducativa("true,false"));
+        tab_tabla.getColumna("ide_ytipee").setCombo(ser_titulacion.getSqlPersonaEmpresa());
+         tab_tabla.getColumna("ide_ytipee").setAutoCompletar();
+        tab_tabla.getColumna("ide_ytipee").setNombreVisual("RESPONSABLE EMPRESA");
         tab_tabla.getColumna("ide_ytipro").setNombreVisual("CODIGO DE PROYECTO");
         tab_tabla.getColumna("fecha_registro_ytipro").setNombreVisual("FECHA DE REGISTRO");
         tab_tabla.getColumna("objeto_proyecto_ytipro").setNombreVisual("OBJETO DEL PROYECTO");
@@ -80,9 +81,9 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla.getColumna("ide_ypedpe").setAutoCompletar();
         tab_tabla.getColumna("yav_ide_ypedpe").setAutoCompletar();
         tab_tabla.getColumna("yav_ide_ypedpe2").setAutoCompletar();
-        tab_tabla.getColumna("ide_ystdip").setCombo(ser_personal.getDatopersonal("true,false"));
-        tab_tabla.getColumna("yav_ide_ystdip").setCombo(ser_personal.getDatopersonal("true,false"));
-        tab_tabla.getColumna("yav_ide_ystdip2").setCombo(ser_personal.getDatopersonal("true,false"));
+        tab_tabla.getColumna("ide_ystdip").setCombo(ser_periodoacademico.getDistribucionPolitica("true,false"));
+        tab_tabla.getColumna("yav_ide_ystdip").setCombo(ser_periodoacademico.getDistribucionPolitica("true,false"));
+        tab_tabla.getColumna("yav_ide_ystdip2").setCombo(ser_periodoacademico.getDistribucionPolitica("true,false"));
         tab_tabla.getColumna("ide_ystdip").setAutoCompletar();
         tab_tabla.getColumna("yav_ide_ystdip").setAutoCompletar();
         tab_tabla.getColumna("yav_ide_ystdip2").setAutoCompletar();             
