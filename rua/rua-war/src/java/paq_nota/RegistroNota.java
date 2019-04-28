@@ -103,7 +103,8 @@ public class RegistroNota extends Pantalla {
             bot_calcular.setIcon("ui-icon-note");//set icono Registrar///
             bot_calcular.setMetodo("calcularNota");
             bar_botones.agregarBoton(bot_calcular);*/
-
+            
+            
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
             eti_notificacion.setId("eti_notificacion");
@@ -137,7 +138,7 @@ public class RegistroNota extends Pantalla {
             PanelTabla pa_cabecera_nota = new PanelTabla();
             pa_cabecera_nota.setId("pa_cabecera_nota"); // nombre de i
             pa_cabecera_nota.setPanelTabla(tab_cabecera_nota);
-            
+
 
             /* TAB 2 detalle nota*/
             tab_detalle_nota.setId("tab_detalle_nota");
@@ -166,9 +167,9 @@ public class RegistroNota extends Pantalla {
 
             //Dialogo
             dia_dialogo.setId("dia_dialogo");
-            dia_dialogo.setTitle("REGISTRO DE TAREAS POR ACTIVIDAD");
-            dia_dialogo.setWidth("40%");
-            dia_dialogo.setHeight("40%");
+            dia_dialogo.setTitle("REGISTRO DE TAREAS POR CADA ACTIVIDAD");
+            dia_dialogo.setWidth("50%");
+            dia_dialogo.setHeight("25%");
             dia_dialogo.setResizable(false);
 
             Grid gri_cuerpo = new Grid();
@@ -176,12 +177,12 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.setWidth("100%");
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
             gri_cuerpo.getChildren().clear();
-            gri_cuerpo.getChildren().add(new Etiqueta("ACTIVIDAD EVALUACION"));
+            gri_cuerpo.getChildren().add(new Etiqueta("ACTIVIDAD EVALUACIÓN: "));
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
             gri_cuerpo.getChildren().add(com_actividad);
-            gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA"));
+            gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA: "));
             gri_cuerpo.getChildren().add(tex_detalle);
-            gri_cuerpo.getChildren().add(new Etiqueta("FECHA CALIFICACION"));
+            gri_cuerpo.getChildren().add(new Etiqueta("FECHA CALIFICACIÓN: "));
             gri_cuerpo.getChildren().add(cal_fecha_calificacion);
 
             dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
@@ -190,7 +191,7 @@ public class RegistroNota extends Pantalla {
 
             //Dialogo calcular
             dia_calcular.setId("dia_calcular");
-            dia_calcular.setTitle("COMPONENTES DE EVALUACION");
+            dia_calcular.setTitle("COMPONENTES DE EVALUACIÓN");
             dia_calcular.setWidth("80%");
             dia_calcular.setHeight("80%");
             dia_calcular.setResizable(false);
@@ -207,7 +208,7 @@ public class RegistroNota extends Pantalla {
             agregarComponente(dia_calcular);
 
         } else {
-            utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
+            utilitario.agregarNotificacionInfo("Mensaje,", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
     }
 
@@ -217,10 +218,10 @@ public class RegistroNota extends Pantalla {
 
     public void registrarNota() {
         if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico para Generar nota");
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Periodo Academico para Generar nota");
             return;
         } else if (com_materia_docente.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Curso para Generar Nota");
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Curso para Generar Nota");
             return;
         } else {
             String cod = com_materia_docente.getValue() + "";
@@ -228,9 +229,7 @@ public class RegistroNota extends Pantalla {
             String mension = tab_consulta.getValor("ide_ystmen");
             TablaGenerica tab_formacion = utilitario.consultar(ser_notas.getFormacion(mension));
             String formacion = tab_formacion.getValor("ide_ysttfe");
-
-            tab_formacion.imprimirSql();
-            //System.out.println("Mension " + mension);
+            //tab_formacion.imprimirSql();
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true", tab_formacion.getValor("ide_ysttfe")));
 
             abrirDialogo();
@@ -263,11 +262,11 @@ public class RegistroNota extends Pantalla {
 
     public void filtraAlumno() {
         if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione el Periodo Académico");
+            utilitario.agregarMensajeInfo("Adevertencia,", "Seleccione el Periodo Académico");
             return;
         }
         if (com_materia_docente.getValue() == null) {
-            utilitario.agregarMensajeInfo("Adevertencia: ", "Seleccione la materia que desea consultar la asistencia");
+            utilitario.agregarMensajeInfo("Adevertencia,", "Seleccione la materia que desea consultar la asistencia");
             return;
         }
     }
@@ -295,30 +294,21 @@ public class RegistroNota extends Pantalla {
         Double notaevaluacion = Double.parseDouble(notaglobal);
         Double notaactividad = Double.parseDouble(nota);
         Double recuperacion = Double.parseDouble(notarecu);
-        /*System.out.println("n1 " + notaevaluacion);
-        System.out.println("n2 " + notaactividad);*/
+        
         if (notaactividad < 0) {
-
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones menores a 0");
             tab_detalle_nota.setValor("nota_ynodet", "0");
-            //System.out.println("Estoy en el IF 1");
-            eti_notificacion.setValue("Error, No puede ingresar números menores a 0");
-            utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
-            utilitario.agregarMensajeError("Nota no válida", "No puede ingresar números menores a 0");
+            utilitario.addUpdate("tab_detalle_nota");
             return;
-
         } else if (notaactividad > notaevaluacion) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones mayores a " + notaevaluacion);
             tab_detalle_nota.setValor("nota_ynodet", "0");
-            //System.out.println("Estoy en el IF 2");
-            eti_notificacion.setValue("Error, No puede ingresar números mayores a " + notaevaluacion);
-            utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
-            utilitario.agregarMensajeError("Nota no válida", "No puede ingresar números menores a " + notaevaluacion);
-            
+            utilitario.addUpdate("tab_detalle_nota");
             return;
         }
         //validar si el examen tiene recuperacion
         TablaGenerica tab_examen = utilitario.consultar(ser_notas.getConsultaTipoExamen(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"), utilitario.getVariable("p_tipo_eva_examen")));
         TablaGenerica tab_validacion = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true", "1"));
-        //ystem.out.println("Tablaprueba " + tab_validacion.getSql());
         if (tab_validacion.getTotalFilas() > 0) {
 
             if (tab_examen.getTotalFilas() > 0) {
@@ -341,8 +331,7 @@ public class RegistroNota extends Pantalla {
             guardarPantalla();
         }
 
-        eti_notificacion.setValue("");
-        utilitario.addUpdate("tab_detalle_nota,eti_notificacion");
+        utilitario.addUpdate("tab_detalle_nota");
 
     }
 
@@ -364,7 +353,7 @@ public class RegistroNota extends Pantalla {
 
     public void mostrarNota() {
         if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Periodo Académico");
             return;
         } else {
             String cod = com_materia_docente.getValue() + "";
@@ -378,16 +367,17 @@ public class RegistroNota extends Pantalla {
     public void aceptarDialogo() {
         String cod = com_materia_docente.getValue() + "";
         TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
-        if (com_actividad.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione la Actividad Academica");
+        if (com_actividad.getValue() == null || com_actividad.getValue().toString().isEmpty()) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione la Actividad de Evaluación");
             return;
-        } else if (tex_detalle.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese un detalle o descripción de la actividad");
+        } else if (tex_detalle.getValue() == null || tex_detalle.getValue().toString().isEmpty()) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Ingrese un detalle o descripción de la actividad a evaluarse");
             return;
-        } else if (cal_fecha_calificacion.getValue() == null){
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Ingrese la fecha de evaluacion");
+        } else if (cal_fecha_calificacion.getValue() == null || cal_fecha_calificacion.getValue().toString().isEmpty()) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Ingrese la fecha de calificación");
             return;
-        } else { 
+        } else {
+            validarFechaPeriodo();
             TablaGenerica tab_malla_docente = utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
             String malla = tab_malla_docente.getValor("ide_ystmal");
             String grupo = tab_malla_docente.getValor("ide_yhogra");
@@ -418,8 +408,19 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.guardar();
             guardarPantalla();
             utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
+            tex_detalle.limpiar();
+            cal_fecha_calificacion.limpiar();
             dia_dialogo.cerrar();
         }
+
+    }
+
+    public void validarFechaPeriodo() {
+        TablaGenerica tab_consulta = utilitario.consultar("select ide_ystpea,descripcion_ystpea,fecha_inicio_ystpea,fecha_final_ystpea from yavirac_stror_periodo_academic \n"
+                + "where ide_ystpea=" + com_periodo_academico.getValue() + " ");
+        String fecha_inicio = tab_consulta.getValor("fecha_inicio_ystpea");
+        String fecha_final = tab_consulta.getValor("fecha_final_ystpea");
+        String fecha = cal_fecha_calificacion.getValue().toString();
 
     }
 
