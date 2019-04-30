@@ -33,6 +33,31 @@ public class ServicioTitulacion {
         sql="select ide_ytiace, descripcion_ytiace from yavirac_titu_actividad_economic order by descripcion_ytiace";
         return sql;
     }
+    public String getSqlActividadVinculacion() {
+        String sql="";
+        sql="select ide_ytiacv, detalle_ytiacv from yavirac_titu_actividad_vincula order by detalle_ytiacv";
+        return sql;
+    }
+    public String getSqlEjeVinculacion() {
+        String sql="";
+        sql="select ide_ytiejv, detalle_ytiejv from yavirac_titu_eje_vinculacion order by detalle_ytiejv";
+        return sql;
+    }
+    public String getSqlAreaAplicacion() {
+        String sql="";
+        sql="select ide_ytiara, detalle_ytiara from yavirac_titu_area_aplica_vincula order by detalle_ytiara";
+        return sql;
+    }   
+    public String getSqlFuncionAsignada() {
+        String sql="";
+        sql="select ide_ytifua, detalle_ytifua from yavirac_titu_funcion_asignada order by detalle_ytifua";
+        return sql;
+    } 
+    public String getSqlTipoParticipante() {
+        String sql="";
+        sql="select ide_ytitpa, detalle_ytitpa from yavirac_titu_tipo_participante order by detalle_ytitpa";
+        return sql;
+    } 
    public String getSqlTipoProducto() {
         String sql="";
         sql="select ide_ytitip, descripcion_ytitip from yavirac_titu_tipo_producto order by descripcion_ytitip";
