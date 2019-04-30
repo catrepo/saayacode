@@ -11,7 +11,9 @@ import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
+import framework.componentes.Tabulador;
 import javax.ejb.EJB;
+import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_personal.ejb.ServicioPersonal;
 import paq_titulacion.ejb.ServicioTitulacion;
@@ -23,6 +25,14 @@ import sistema.aplicacion.Pantalla;
 public class ProyectoVinculacion extends Pantalla {
     
      private Tabla tab_tabla = new Tabla();
+     private Tabla tab_tabla1 = new Tabla();
+     private Tabla tab_tabla2 = new Tabla();
+     private Tabla tab_tabla3 = new Tabla();
+     private Tabla tab_tabla4 = new Tabla();
+     private Tabla tab_tabla5 = new Tabla();
+     private Tabla tab_tabla6 = new Tabla();
+     private Tabla tab_tabla7 = new Tabla();
+     
      private Combo com_periodo_academico = new Combo();
      @EJB
     private final ServicioEstructuraOrganizacional ser_periodoacademico = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -30,6 +40,8 @@ public class ProyectoVinculacion extends Pantalla {
   private final ServicioTitulacion ser_titulacion = (ServicioTitulacion) utilitario.instanciarEJB(ServicioTitulacion.class);
     @EJB
   private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+@EJB
+  private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
  
      public ProyectoVinculacion() {
         
@@ -42,7 +54,7 @@ public class ProyectoVinculacion extends Pantalla {
         bar_botones.agregarComponente(com_periodo_academico);
          
         tab_tabla.setId("tab_tabla");
-        tab_tabla.setTabla("yavirac_titu_proyecto", "ide_ytipro", 1);
+        tab_tabla.setTabla("yavirac_titu_proyecto", "ide_ytipro", 0);
         
         tab_tabla.setTipoFormulario(true);
         tab_tabla.getGrid().setColumns(6);
@@ -86,13 +98,113 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla.getColumna("yav_ide_ystdip2").setCombo(ser_periodoacademico.getDistribucionPolitica("true,false"));
         tab_tabla.getColumna("ide_ystdip").setAutoCompletar();
         tab_tabla.getColumna("yav_ide_ystdip").setAutoCompletar();
-        tab_tabla.getColumna("yav_ide_ystdip2").setAutoCompletar();             
+        tab_tabla.getColumna("yav_ide_ystdip2").setAutoCompletar();
+        tab_tabla.agregarRelacion(tab_tabla1);
+        tab_tabla.agregarRelacion(tab_tabla2);
+        tab_tabla.agregarRelacion(tab_tabla3);
+        tab_tabla.agregarRelacion(tab_tabla4);
+        tab_tabla.agregarRelacion(tab_tabla5);
+        tab_tabla.agregarRelacion(tab_tabla6);
+        tab_tabla.agregarRelacion(tab_tabla7);
         tab_tabla.dibujar();
 
         PanelTabla pat_panel = new PanelTabla();
         pat_panel.setPanelTabla(tab_tabla);
+        
+        Tabulador tab_tabulador = new Tabulador();
+        tab_tabulador.setId("tab_tabulador");
+        
+        tab_tabla1.setId("tab_tabla1");// todo objeto instanciado poner id 
+        tab_tabla1.setIdCompleto("tab_tabulador:tab_tabla1");
+        tab_tabla1.setTabla("yavirac_titu_proyecto_actividad","ide_ytipac",1);  // nom bdd
+        tab_tabla1.getColumna("ide_ytiacv").setCombo(ser_titulacion.getSqlActividadVinculacion());
+        tab_tabla1.getColumna("ide_ytiacv").setAutoCompletar();
+        tab_tabla1.dibujar();
+        
+        PanelTabla pa_panel1 = new PanelTabla();
+        pa_panel1.setId("pa_panel1");//nombre id
+        pa_panel1.setPanelTabla(tab_tabla1);
+        
+        
+        tab_tabla2.setId("tab_tabla2");// todo objeto instanciado poner id 
+        tab_tabla2.setIdCompleto("tab_tabulador:tab_tabla2");
+        tab_tabla2.setTabla("yavirac_titu_proyecto_eje","ide_ytipre",2);  // nom bdd
+        tab_tabla2.getColumna("ide_ytiejv").setCombo(ser_titulacion.getSqlEjeVinculacion());
+        tab_tabla2.getColumna("ide_ytiejv").setAutoCompletar();
+        tab_tabla2.dibujar();
+        
+        PanelTabla pa_panel2 = new PanelTabla();
+        pa_panel2.setId("pa_panel2");//nombre id
+        pa_panel2.setPanelTabla(tab_tabla2);
+        
+        tab_tabla3.setId("tab_tabla3");// todo objeto instanciado poner id 
+        tab_tabla3.setIdCompleto("tab_tabulador:tab_tabla3");
+        tab_tabla3.setTabla("yavirac_titu_proyecto_area","ide_ytipra",3);  // nom bdd
+        tab_tabla3.getColumna("ide_ytiara").setCombo(ser_titulacion.getSqlAreaAplicacion());
+        tab_tabla3.getColumna("ide_ytiara").setAutoCompletar();
+        tab_tabla3.dibujar();
+        
+        PanelTabla pa_panel3 = new PanelTabla();
+        pa_panel3.setId("pa_panel3");//nombre id
+        pa_panel3.setPanelTabla(tab_tabla3);
+        
+        tab_tabla4.setId("tab_tabla4");// todo objeto instanciado poner id 
+        tab_tabla4.setIdCompleto("tab_tabulador:tab_tabla4");
+        tab_tabla4.setTabla("yavirac_titu_participante_docen","ide_ytiprd",4);  // nom bdd
+        tab_tabla4.getColumna("ide_ytifua").setCombo(ser_titulacion.getSqlFuncionAsignada());
+        tab_tabla4.getColumna("ide_ytitpa").setCombo(ser_titulacion.getSqlTipoParticipante());
+        tab_tabla4.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
+        tab_tabla4.getColumna("ide_ypedpe").setAutoCompletar();
+        tab_tabla4.getColumna("ide_ytifua").setAutoCompletar();
+        tab_tabla4.getColumna("ide_ytitpa").setAutoCompletar();
+        tab_tabla4.dibujar();
+        
+        PanelTabla pa_panel4 = new PanelTabla();
+        pa_panel4.setId("pa_panel4");//nombre id
+        pa_panel4.setPanelTabla(tab_tabla4);
+        
+        tab_tabla5.setId("tab_tabla5");// todo objeto instanciado poner id 
+        tab_tabla5.setIdCompleto("tab_tabulador:tab_tabla5");
+        tab_tabla5.setTabla("yavirac_titu_participante_est","ide_ytipre",5);  // nom bdd
+        tab_tabla5.getColumna("ide_ytifua").setCombo(ser_titulacion.getSqlFuncionAsignada());
+        tab_tabla5.getColumna("ide_ytifua").setAutoCompletar();
+        tab_tabla5.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+        tab_tabla5.getColumna("ide_yaldap").setAutoCompletar();
+        tab_tabla5.dibujar();
+        
+        PanelTabla pa_panel5 = new PanelTabla();
+        pa_panel5.setId("pa_panel5");//nombre id
+        pa_panel5.setPanelTabla(tab_tabla5);
+        
+        tab_tabla6.setId("tab_tabla6");// todo objeto instanciado poner id 
+        tab_tabla6.setIdCompleto("tab_tabulador:tab_tabla6");
+        tab_tabla6.setTabla("yavirac_titu_pro_objetivo","ide_ytipoo",6);  // nom bdd
+        tab_tabla6.dibujar();
+        
+        PanelTabla pa_panel6 = new PanelTabla();
+        pa_panel6.setId("pa_panel6");//nombre id
+        pa_panel6.setPanelTabla(tab_tabla6);
+        
+        tab_tabla7.setId("tab_tabla7");// todo objeto instanciado poner id 
+        tab_tabla7.setIdCompleto("tab_tabulador:tab_tabla7");
+        tab_tabla7.setTabla("yavirac_titu_pro_act_resul","ide_ytipar",7);  // nom bdd
+        tab_tabla7.dibujar();
+        
+        PanelTabla pa_panel7 = new PanelTabla();
+        pa_panel7.setId("pa_panel7");//nombre id
+        pa_panel7.setPanelTabla(tab_tabla7);
+        
+    //*******************************AGREGA PESTAÑANAS*********************************************//
+        tab_tabulador.agregarTab("ACTIVIDAD VINCULACION", pa_panel1);
+        tab_tabulador.agregarTab("EJES ESTRATEGICOS", pa_panel2);
+        tab_tabulador.agregarTab("AREAS APLICACION", pa_panel3);
+        tab_tabulador.agregarTab("DOCENTES PARTICIPANTES", pa_panel4);
+        tab_tabulador.agregarTab("ALUMNOS PARTICIPANTES", pa_panel5);
+        tab_tabulador.agregarTab("OBEJTIVOS", pa_panel6);
+        tab_tabulador.agregarTab("ACTIVIDADES/RESULTADOS", pa_panel7);
+            
         Division div_division = new Division();
-        div_division.dividir1(pat_panel);
+        div_division.dividir2(pat_panel, tab_tabulador, "50%", "H");
         agregarComponente(div_division);
      }
         public void filtroComboPeriodoAcademico(){
@@ -109,22 +221,52 @@ public class ProyectoVinculacion extends Pantalla {
         return;
         }
         else{
-             
+             if(tab_tabla.isFocus()){
             tab_tabla.insertar();
             tab_tabla.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
+             }
+             else if(tab_tabla1.isFocus()){
+                tab_tabla1.insertar();
+             }
+             else if(tab_tabla2.isFocus()){
+                tab_tabla2.insertar();
+             }
+             else if(tab_tabla3.isFocus()){
+                tab_tabla3.insertar();
+             }
+             else if(tab_tabla4.isFocus()){
+                tab_tabla4.insertar();
+             }
+             else if(tab_tabla5.isFocus()){
+                tab_tabla5.insertar();
+             }
+             else if(tab_tabla6.isFocus()){
+                tab_tabla6.insertar();
+             }
+             else if(tab_tabla7.isFocus()){
+                tab_tabla7.insertar();
+             }
          }
     }
 
     @Override
     public void guardar() {
-        tab_tabla.guardar();
-        
-        guardarPantalla();
+        if(tab_tabla.guardar()){
+            if(tab_tabla1.guardar()){
+                if(tab_tabla2.guardar()){
+                    if(tab_tabla3.guardar()){
+                        if(tab_tabla4.guardar()){
+                          if(tab_tabla5.guardar()){
+                            if(tab_tabla6.guardar()){
+                                if(tab_tabla7.guardar()){    
+                                    guardarPantalla();
+                                }}}}}}}
+        }
     }
 
     @Override
     public void eliminar() {
-         tab_tabla.eliminar();
+         utilitario.getTablaisFocus().eliminar();
     }
     public Tabla getTab_tabla() {
         return tab_tabla;
@@ -133,4 +275,61 @@ public class ProyectoVinculacion extends Pantalla {
     public void setTab_tabla(Tabla tab_tabla) {
         this.tab_tabla = tab_tabla;
     } 
+
+    public Tabla getTab_tabla1() {
+        return tab_tabla1;
+    }
+
+    public void setTab_tabla1(Tabla tab_tabla1) {
+        this.tab_tabla1 = tab_tabla1;
+    }
+
+    public Tabla getTab_tabla2() {
+        return tab_tabla2;
+    }
+
+    public void setTab_tabla2(Tabla tab_tabla2) {
+        this.tab_tabla2 = tab_tabla2;
+    }
+
+    public Tabla getTab_tabla3() {
+        return tab_tabla3;
+    }
+
+    public void setTab_tabla3(Tabla tab_tabla3) {
+        this.tab_tabla3 = tab_tabla3;
+    }
+
+    public Tabla getTab_tabla4() {
+        return tab_tabla4;
+    }
+
+    public void setTab_tabla4(Tabla tab_tabla4) {
+        this.tab_tabla4 = tab_tabla4;
+    }
+
+    public Tabla getTab_tabla5() {
+        return tab_tabla5;
+    }
+
+    public void setTab_tabla5(Tabla tab_tabla5) {
+        this.tab_tabla5 = tab_tabla5;
+    }
+
+    public Tabla getTab_tabla6() {
+        return tab_tabla6;
+    }
+
+    public void setTab_tabla6(Tabla tab_tabla6) {
+        this.tab_tabla6 = tab_tabla6;
+    }
+
+    public Tabla getTab_tabla7() {
+        return tab_tabla7;
+    }
+
+    public void setTab_tabla7(Tabla tab_tabla7) {
+        this.tab_tabla7 = tab_tabla7;
+    }
+    
 }
