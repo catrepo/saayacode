@@ -349,7 +349,7 @@ public class ServicioNotas {
      */
     public String getPesoNotas(String estado) {
         String sql = "";
-        sql += " select ide_ynopen,detalle_ynopen,descripcion_ynotie,bloqueo_ynopen\n"
+        sql += " select ide_ynopen,detalle_ynopen,descripcion_ynotie\n"
                 + " from yavirac_nota_peso_nota a  \n"
                 + " left join yavirac_nota_tipo_evaluacion b on a.ide_ynotie=b.ide_ynotie\n"
                 + " where bloqueo_ynopen in ("+estado+") ";
