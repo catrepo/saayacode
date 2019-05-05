@@ -73,11 +73,13 @@ public class PersonalActividad extends Pantalla {
             tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 1);
             tab_actividad_docente.setCondicion("ide_ynoacd=-1");
             tab_actividad_docente.setHeader("Docente: " + docente);
-            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "false,true", "0"));
+            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "false,true", "0"));
             tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
+            tab_actividad_docente.getColumna("ide_ynopae").setUnico(true);
             tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
             tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual(" % PARAMETRO");
+            tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setValorDefecto("0");
             tab_actividad_docente.getColumna("ide_ypedpe").setVisible(false);
             tab_actividad_docente.getColumna("ide_ystmal").setVisible(false);
             tab_actividad_docente.getColumna("ide_ystmen").setVisible(false);
@@ -123,7 +125,7 @@ public class PersonalActividad extends Pantalla {
                     + " and ide_ynoace in (select ide_ynoace from yavirac_nota_actividad_evaluac where ide_ynoace in \n"
                     + "(select ide_ynoace from yavirac_nota_actividad_tipo_for where ide_ysttfe=" + tab_formacion.getValor("ide_ysttfe") + ")))");
             tab_actividad_docente.ejecutarSql();
-            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true", tab_formacion.getValor("ide_ysttfe")));
+            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true,false", tab_formacion.getValor("ide_ysttfe")));
 
         }
     }

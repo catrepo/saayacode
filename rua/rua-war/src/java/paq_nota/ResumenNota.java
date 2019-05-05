@@ -104,6 +104,7 @@ public class ResumenNota extends Pantalla {
             tab_docente_alumno.getColumna("ide_yaldap").setLectura(true);
             tab_docente_alumno.getColumna("ide_ymamat").setVisible(false);
             tab_docente_alumno.dibujar();
+            tab_docente_alumno.setRows(35);
 
             PanelTabla pa_docente_alumno = new PanelTabla();
             pa_docente_alumno.setId("pa_docente_alumno");
@@ -112,7 +113,7 @@ public class ResumenNota extends Pantalla {
             //TABLA RESUMEN NOTA
             tab_resumen_nota.setId("tab_resumen_nota");
             tab_resumen_nota.setTabla("yavirac_nota_alumno_resumen", "ide_ynoalr", 2);
-            tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas()); 
+            tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas("true,false")); 
             tab_resumen_nota.getColumna("ide_ynopen").setLectura(true);
             tab_resumen_nota.getColumna("nota_ynoalr").setLectura(true);
             tab_resumen_nota.getColumna("porcentaje_evaluacion_ynoalr").setLectura(true);
@@ -129,9 +130,10 @@ public class ResumenNota extends Pantalla {
             //TABLA RESUMEN
             tab_nota_resumen.setId("tab_resumen");
             tab_nota_resumen.setTabla("yavirac_nota_resumen", "ide_ynores", 3);
+            tab_nota_resumen.getColumna("recuperacion_ynores").setValorDefecto("false");
 
             Division div_resumen_nota = new Division();
-            div_resumen_nota.dividir2(pa_docente_alumno, pa_resumen_nota, "40%", "h");
+            div_resumen_nota.dividir2(pa_docente_alumno, pa_resumen_nota, "60%", "h");
             agregarComponente(div_resumen_nota);
 
             //DIALOGO
@@ -235,6 +237,7 @@ public class ResumenNota extends Pantalla {
     }
 
     public void calcularNota() {
+                
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
             return;

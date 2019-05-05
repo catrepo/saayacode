@@ -68,6 +68,7 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
         tab_actividad_evaluacion.getColumna("orden_ynopae").setVisible(false);
         tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
+        tab_actividad_evaluacion.getColumna("activo_ynopae").setValorDefecto("false");
         tab_actividad_evaluacion.dibujar();
 
         PanelTabla pa_actividad_evaluacion = new PanelTabla();

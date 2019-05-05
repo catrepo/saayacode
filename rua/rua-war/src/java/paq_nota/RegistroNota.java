@@ -98,13 +98,12 @@ public class RegistroNota extends Pantalla {
             bar_botones.agregarBoton(bot_nota);
 
             //calculo de notas finales
-            /*Boton bot_calcular = new Boton();
-            bot_calcular.setValue("Generar Notas");
+            Boton bot_calcular = new Boton();
+            bot_calcular.setValue("Reportes");
             bot_calcular.setIcon("ui-icon-note");//set icono Registrar///
             bot_calcular.setMetodo("calcularNota");
-            bar_botones.agregarBoton(bot_calcular);*/
-            
-            
+            bar_botones.agregarBoton(bot_calcular);
+
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
             eti_notificacion.setId("eti_notificacion");
@@ -152,8 +151,9 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
             tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
+            tab_detalle_nota.getColumna("recuperacion_ynodet").setValorDefecto("false");
             tab_detalle_nota.dibujar();
-
+            tab_detalle_nota.setRows(35);
             PanelTabla pa_detalle_nota = new PanelTabla();
             pa_detalle_nota.setId("pa_detalle_nota"); // nombre de i
             pa_detalle_nota.setPanelTabla(tab_detalle_nota);
@@ -182,30 +182,13 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.getChildren().add(com_actividad);
             gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA: "));
             gri_cuerpo.getChildren().add(tex_detalle);
+            tex_detalle.setMaxlength(50);
             gri_cuerpo.getChildren().add(new Etiqueta("FECHA CALIFICACIÓN: "));
             gri_cuerpo.getChildren().add(cal_fecha_calificacion);
 
             dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
             dia_dialogo.setDialogo(gri_cuerpo);
             agregarComponente(dia_dialogo);
-
-            //Dialogo calcular
-            dia_calcular.setId("dia_calcular");
-            dia_calcular.setTitle("COMPONENTES DE EVALUACIÓN");
-            dia_calcular.setWidth("80%");
-            dia_calcular.setHeight("80%");
-            dia_calcular.setResizable(false);
-
-            Grid gri_calcular = new Grid();
-            gri_calcular.setColumns(2);
-            gri_calcular.setWidth("100%");
-
-            gri_calcular.setStyle("width:100%;overflow: auto;display: block;");
-            gri_calcular.getChildren().add(new Etiqueta("Actividad"));
-            gri_calcular.getChildren().add(new Etiqueta("Fecha Calificación"));
-            //calcular_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
-            dia_calcular.setDialogo(gri_calcular);
-            agregarComponente(dia_calcular);
 
         } else {
             utilitario.agregarNotificacionInfo("Mensaje,", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
@@ -237,7 +220,7 @@ public class RegistroNota extends Pantalla {
     }
 
     public void calcularNota() {
-        abrirDialogoCalcular();
+        utilitario.agregarMensajeError("Error", docente);
     }
 
     private boolean TienePerfilNota() {
@@ -294,7 +277,7 @@ public class RegistroNota extends Pantalla {
         Double notaevaluacion = Double.parseDouble(notaglobal);
         Double notaactividad = Double.parseDouble(nota);
         Double recuperacion = Double.parseDouble(notarecu);
-        
+
         if (notaactividad < 0) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones menores a 0");
             tab_detalle_nota.setValor("nota_ynodet", "0");
@@ -345,6 +328,8 @@ public class RegistroNota extends Pantalla {
 
     public void abrirDialogo() {
         dia_dialogo.dibujar();
+        tex_detalle.limpiar();
+        cal_fecha_calificacion.limpiar();
     }
 
     public void abrirDialogoCalcular() {
