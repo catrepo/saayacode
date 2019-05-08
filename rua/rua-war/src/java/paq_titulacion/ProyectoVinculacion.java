@@ -12,12 +12,15 @@ import framework.componentes.Etiqueta;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import framework.componentes.VisualizarPDF;
 import javax.ejb.EJB;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_personal.ejb.ServicioPersonal;
 import paq_titulacion.ejb.ServicioTitulacion;
 import sistema.aplicacion.Pantalla;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author usuario
@@ -32,6 +35,8 @@ public class ProyectoVinculacion extends Pantalla {
      private Tabla tab_tabla5 = new Tabla();
      private Tabla tab_tabla6 = new Tabla();
      private Tabla tab_tabla7 = new Tabla();
+     private Tabla tab_tabla8 = new Tabla();
+     private VisualizarPDF vipdf_proforma = new VisualizarPDF();
      
      private Combo com_periodo_academico = new Combo();
      @EJB
@@ -55,7 +60,7 @@ public class ProyectoVinculacion extends Pantalla {
          
         tab_tabla.setId("tab_tabla");
         tab_tabla.setTabla("yavirac_titu_proyecto", "ide_ytipro", 0);
-        
+        tab_tabla.setCondicion("ide_ystpea=-1");
         tab_tabla.setTipoFormulario(true);
         tab_tabla.getGrid().setColumns(6);
         tab_tabla.getColumna("ide_ytring").setVisible(false);
@@ -106,6 +111,7 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla.agregarRelacion(tab_tabla5);
         tab_tabla.agregarRelacion(tab_tabla6);
         tab_tabla.agregarRelacion(tab_tabla7);
+        tab_tabla.agregarRelacion(tab_tabla8);
         tab_tabla.dibujar();
 
         PanelTabla pat_panel = new PanelTabla();
@@ -194,6 +200,15 @@ public class ProyectoVinculacion extends Pantalla {
         pa_panel7.setId("pa_panel7");//nombre id
         pa_panel7.setPanelTabla(tab_tabla7);
         
+        tab_tabla8.setId("tab_tabla8");// todo objeto instanciado poner id 
+        tab_tabla8.setIdCompleto("tab_tabulador:tab_tabla8");
+        tab_tabla8.setTabla("yavirac_titu_anexo","ide_ytianx",8);  // nom bdd
+        tab_tabla8.dibujar();
+        
+        PanelTabla pa_panel8 = new PanelTabla();
+        pa_panel8.setId("pa_panel8");//nombre id
+        pa_panel8.setPanelTabla(tab_tabla8);
+        
     //*******************************AGREGA PESTAÑANAS*********************************************//
         tab_tabulador.agregarTab("ACTIVIDAD VINCULACION", pa_panel1);
         tab_tabulador.agregarTab("EJES ESTRATEGICOS", pa_panel2);
@@ -202,11 +217,38 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabulador.agregarTab("ALUMNOS PARTICIPANTES", pa_panel5);
         tab_tabulador.agregarTab("OBEJTIVOS", pa_panel6);
         tab_tabulador.agregarTab("ACTIVIDADES/RESULTADOS", pa_panel7);
+        tab_tabulador.agregarTab("ANEXOS", pa_panel8);
             
         Division div_division = new Division();
         div_division.dividir2(pat_panel, tab_tabulador, "50%", "H");
         agregarComponente(div_division);
+        
+        Boton bot_anular = new Boton();
+        bot_anular.setIcon("ui-icon-search");
+        bot_anular.setValue("IMPRIMIR REPORTE");
+        bot_anular.setMetodo("imprimir");
+        bar_botones.agregarComponente(bot_anular);
+        
+         vipdf_proforma.setId("vipdf_proforma");
+         vipdf_proforma.setTitle("REPORTE PROYECTO DE VINCULACIÓN");
+        agregarComponente(vipdf_proforma);
      }
+     
+     public void imprimir(){
+        String usuario=utilitario.getVariable("NICK");
+        if (tab_tabla.getValorSeleccionado() != null) {
+                        ///////////AQUI ABRE EL REPORTE
+                        Map parametros = new HashMap();
+                        parametros.put("pide_proyecto", Integer.parseInt(tab_tabla.getValor("ide_ytipro")));
+                         parametros.put("nombre", usuario);
+                        //System.out.println(" " + str_titulos);
+                        vipdf_proforma.setVisualizarPDF("rep_titulacion/rep_vinculacion.jasper", parametros);
+                        vipdf_proforma.dibujar();
+                        utilitario.addUpdate("vipdf_proforma");
+        } else {
+            utilitario.agregarMensajeInfo("Seleccione una Solititud de proforma", "");
+        }
+    }
         public void filtroComboPeriodoAcademico(){
          tab_tabla.setCondicion("ide_ystpea="+com_periodo_academico.getValue());
          tab_tabla.ejecutarSql();
@@ -246,6 +288,9 @@ public class ProyectoVinculacion extends Pantalla {
              else if(tab_tabla7.isFocus()){
                 tab_tabla7.insertar();
              }
+             else if(tab_tabla8.isFocus()){
+                tab_tabla8.insertar();
+             }
          }
     }
 
@@ -258,9 +303,10 @@ public class ProyectoVinculacion extends Pantalla {
                         if(tab_tabla4.guardar()){
                           if(tab_tabla5.guardar()){
                             if(tab_tabla6.guardar()){
-                                if(tab_tabla7.guardar()){    
+                                if(tab_tabla7.guardar()){
+                                    if(tab_tabla8.guardar()){
                                     guardarPantalla();
-                                }}}}}}}
+                                }}}}}}}}
         }
     }
 
@@ -330,6 +376,22 @@ public class ProyectoVinculacion extends Pantalla {
 
     public void setTab_tabla7(Tabla tab_tabla7) {
         this.tab_tabla7 = tab_tabla7;
+    }
+
+    public Tabla getTab_tabla8() {
+        return tab_tabla8;
+    }
+
+    public void setTab_tabla8(Tabla tab_tabla8) {
+        this.tab_tabla8 = tab_tabla8;
+    }
+
+    public VisualizarPDF getVipdf_proforma() {
+        return vipdf_proforma;
+    }
+
+    public void setVipdf_proforma(VisualizarPDF vipdf_proforma) {
+        this.vipdf_proforma = vipdf_proforma;
     }
     
 }
