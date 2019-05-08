@@ -203,6 +203,8 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla8.setId("tab_tabla8");// todo objeto instanciado poner id 
         tab_tabla8.setIdCompleto("tab_tabulador:tab_tabla8");
         tab_tabla8.setTabla("yavirac_titu_anexo","ide_ytianx",8);  // nom bdd
+        tab_tabla8.getColumna("archivo_ytianx").setUpload();
+
         tab_tabla8.dibujar();
         
         PanelTabla pa_panel8 = new PanelTabla();
