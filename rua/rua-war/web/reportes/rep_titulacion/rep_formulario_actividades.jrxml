@@ -20,7 +20,7 @@ left join yavirac_stror_mension e on a.ide_ystmen=e.ide_ystmen
 left join yavirac_titu_empresa f on a.ide_ytiemp=f.ide_ytiemp
 left join yavirac_titu_persona_empresa g on f.ide_ytiemp=g.ide_ytiemp
 left join yavirac_titu_tipo_per_vinc h on g.ide_ytitpv=h.ide_ytitpv
-where a.ide_ytipro = $P{pide_proyecto} ]]>
+where a.ide_ytipro = $P{pide_proyecto}]]>
 	</queryString>
 	<field name="ide_ytipro" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -119,7 +119,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Top" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 					</textElement>
@@ -133,7 +133,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" tabStopWidth="40"/>
 					</textElement>
@@ -147,7 +147,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" tabStopWidth="40"/>
 					</textElement>
@@ -161,7 +161,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" tabStopWidth="40"/>
 					</textElement>
@@ -259,7 +259,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<textElement verticalAlignment="Top">
 						<font size="9" isBold="true"/>
 						<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 					</textElement>
@@ -273,7 +273,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 						<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 					</textElement>
@@ -287,7 +287,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 						<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 					</textElement>
@@ -301,7 +301,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 					</textElement>
@@ -315,7 +315,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 					</textElement>
@@ -333,7 +333,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 					</textElement>
-					<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["    "]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -354,7 +354,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -382,7 +382,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -396,7 +396,7 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -408,12 +408,14 @@ where a.ide_ytipro = $P{pide_proyecto} ]]>
 		<band height="80">
 			<subreport isUsingCache="true">
 				<reportElement uuid="07595784-78b5-4df5-8db8-ff7a00377db3" x="0" y="0" width="555" height="79"/>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_formulario_detalle.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_formulario_detalle.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>

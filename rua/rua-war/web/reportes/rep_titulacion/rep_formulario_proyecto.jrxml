@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_formulario" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="40" topMargin="20" bottomMargin="20" uuid="808d6a52-7c68-4c26-ac7a-9d00e2fd20d6">
 	<property name="ireport.zoom" value="1.1000000000000085"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="152"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+	<property name="ireport.y" value="175"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\JHONPRODUCER\\Documents\\GitHub\\code\\trunk\\rua\\rua-war\\web\\reportes"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pide_proyecto" class="java.lang.Integer">
@@ -160,7 +160,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="2" spacingAfter="2" tabStopWidth="40"/>
 				</textElement>
@@ -188,7 +188,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
@@ -202,7 +202,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
@@ -224,11 +224,14 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 			</staticText>
 			<subreport>
 				<reportElement uuid="d134bc51-9995-459c-a5d3-2bd2016b6773" x="0" y="68" width="350" height="46"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_linea_investigacion.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_linea_investigacion.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="114" width="555" height="14"/>
@@ -238,7 +241,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -252,7 +255,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -266,7 +269,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -280,7 +283,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -291,7 +294,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<box>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -305,7 +308,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -319,7 +322,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -333,7 +336,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 					<paragraph leftIndent="5" rightIndent="5"/>
 				</textElement>
@@ -389,7 +392,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 					<paragraph leftIndent="5" rightIndent="5"/>
 				</textElement>
@@ -512,27 +515,36 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 			</line>
 			<subreport>
 				<reportElement uuid="1692544a-7106-4756-96fe-a7f7991bd618" stretchType="RelativeToBandHeight" x="0" y="248" width="185" height="8"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_actividad_vinculacion.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_actividad_vinculacion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement uuid="d9865042-2ef5-43a2-9c4a-a8fcf9ca7733" stretchType="RelativeToBandHeight" x="185" y="248" width="185" height="8" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_eje_estratejicos.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_eje_estratejicos.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement uuid="b5f04e43-e551-4f94-b996-d2ed513c25ab" stretchType="RelativeToBandHeight" x="370" y="248" width="185" height="8" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_area_aplicacion.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_area_aplicacion.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</pageHeader>
@@ -578,7 +590,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -592,7 +604,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -620,7 +632,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
@@ -635,12 +647,14 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 		<band height="47" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="4f10ba92-6bdc-4319-bc0a-05161283ca85" x="0" y="42" width="555" height="5"/>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_formulario_actividades.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_formulario_actividades.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="14" width="278" height="14"/>

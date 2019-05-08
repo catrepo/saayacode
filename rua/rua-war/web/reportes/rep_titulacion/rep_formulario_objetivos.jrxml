@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.3636363636363644"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\JHONPRODUCER\\Documents\\GitHub\\code\\trunk\\rua\\rua-war\\web\\reportes"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pide_proyecto" class="java.lang.Integer">
@@ -18,8 +18,7 @@ left join yavirac_titu_indicador d on b.ide_ytiind=d.ide_ytiind
 left join yavirac_titu_medios_verifica e on b.ide_ytimev=e.ide_ytimev
 where a.ide_ytipro = $P{pide_proyecto}
 group by ide_ytipoo,detalle_ytitio,detalle_ytiind,detalle_ytimev,c.ide_ytitio
-order by ide_ytipoo,ide_ytitio
-]]>
+order by ide_ytipoo,ide_ytitio]]>
 	</queryString>
 	<field name="ide_ytipoo" class="java.lang.Long"/>
 	<field name="ide_ytitio" class="java.lang.Long"/>
@@ -49,7 +48,7 @@ order by ide_ytipoo,ide_ytitio
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement verticalAlignment="Top">
 					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="false"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="5" spacingAfter="5"/>
 				</textElement>
@@ -63,7 +62,7 @@ order by ide_ytipoo,ide_ytitio
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement verticalAlignment="Top">
 					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="false"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="5" spacingAfter="5"/>
 				</textElement>
@@ -77,7 +76,7 @@ order by ide_ytipoo,ide_ytitio
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement verticalAlignment="Top">
 					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="false"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="5" spacingAfter="5"/>
 				</textElement>
@@ -101,14 +100,16 @@ order by ide_ytipoo,ide_ytitio
 	</detail>
 	<summary>
 		<band height="41" splitType="Stretch">
-			<subreport>
+			<subreport runToBottom="true">
 				<reportElement uuid="8466d29d-c5cb-46cb-8928-6071c32eff1e" x="0" y="0" width="555" height="41"/>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_formulario_actividad_resultado.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_formulario_actividad_resultado.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>

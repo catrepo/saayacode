@@ -3,8 +3,8 @@
 	<property name="ireport.zoom" value="1.0245201830476058"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\JHONPRODUCER\\Documents\\GitHub\\code\\trunk\\rua\\rua-war\\web\\reportes"]]></defaultValueExpression>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["http://localhost:8080/rua-war/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pide_proyecto" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -47,7 +47,7 @@ where ide_ytipro = $P{pide_proyecto}]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="5" tabStopWidth="40">
 							<tabStop position="0" alignment="Left"/>
@@ -86,7 +86,7 @@ where ide_ytipro = $P{pide_proyecto}]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="5" tabStopWidth="40">
 							<tabStop position="0" alignment="Left"/>
@@ -125,7 +125,7 @@ where ide_ytipro = $P{pide_proyecto}]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="5" tabStopWidth="40">
 							<tabStop position="0" alignment="Left"/>
@@ -164,7 +164,7 @@ where ide_ytipro = $P{pide_proyecto}]]>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<textElement verticalAlignment="Middle" markup="html">
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="5" tabStopWidth="40">
 							<tabStop position="0" alignment="Left"/>
@@ -197,12 +197,14 @@ where ide_ytipro = $P{pide_proyecto}]]>
 		<band height="59" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="c33e76b8-afdb-4808-ab4c-063cfb8c04d8" x="0" y="39" width="555" height="20"/>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/rep_titulacion/rep_formulario_objetivos.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_formulario_objetivos.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="0" width="555" height="14" backcolor="#FFFFFF"/>

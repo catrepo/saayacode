@@ -48,7 +48,7 @@ order by ide_ytipar,ide_ytitio]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement verticalAlignment="Top">
 					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="false"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="5" spacingAfter="5"/>
 				</textElement>
@@ -62,7 +62,7 @@ order by ide_ytipar,ide_ytitio]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement verticalAlignment="Top">
 					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="false"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="5" spacingAfter="5"/>
 				</textElement>
@@ -90,7 +90,7 @@ order by ide_ytipar,ide_ytitio]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement verticalAlignment="Top">
 					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="false"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="5" spacingAfter="5"/>
 				</textElement>
