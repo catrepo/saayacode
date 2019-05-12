@@ -18,7 +18,7 @@
 	<queryString>
 		<![CDATA[select ide_ytipro,a.ide_ystmen,descripcion_ystmen,detalle_proyecto_ytipro,nombre_comercial_ytiemp,nombre_ytipee,
 e.nombre_ypedpe||' '||e.apellido_ypedpe as elaborado,f.nombre_ypedpe||' '||f.apellido_ypedpe as revisado,
-g.nombre_ypedpe||' '||g.apellido_ypedpe as aprovado
+g.nombre_ypedpe||' '||g.apellido_ypedpe as aprovado,secuencial_ytipro
 from yavirac_titu_proyecto a
 left join yavirac_stror_mension b on a.ide_ystmen=b.ide_ystmen
 left join yavirac_titu_empresa c on a.ide_ytiemp=c.ide_ytiemp
@@ -37,6 +37,7 @@ where ide_ytipro =$P{pide_proyecto}]]>
 	<field name="elaborado" class="java.lang.String"/>
 	<field name="revisado" class="java.lang.String"/>
 	<field name="aprovado" class="java.lang.String"/>
+	<field name="secuencial_ytipro" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -50,7 +51,7 @@ where ide_ytipro =$P{pide_proyecto}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["VS- ITSY- AS -001-2018"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{secuencial_ytipro}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="e8d48945-f5fd-4e0b-b38e-c75b1449ac8c" x="277" y="30" width="146" height="20"/>

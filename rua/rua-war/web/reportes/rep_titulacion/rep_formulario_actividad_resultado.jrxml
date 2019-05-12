@@ -76,7 +76,7 @@ order by ide_ytipar,ide_ytitio]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="9" isBold="true"/>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="2" tabStopWidth="40"/>
 				</textElement>
