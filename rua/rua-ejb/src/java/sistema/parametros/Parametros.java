@@ -68,6 +68,10 @@ public class Parametros {
          * NOTAS MODULO =7
          */
         lis_parametros.add(new Parametro("7", "p_tipo_eva_examen", "Indica el tipo de evaluación de examen para verificar si tiene recuperacion de examen", "2", "yavirac_nota_actividad_evaluac", "ide_ynoace", "descripcion_ynoace"));
+ /*
+         * TITULACION MODULO =8
+         */
+        lis_parametros.add(new Parametro("8", "p_secuencial_vinculacion", "Indica el el secuencial para el formato proyecto vincualcion", "2", "yavirac_stror_modulo_secuencial", "ide_ystmos", "abreviatura_ystmos"));
         
    
       

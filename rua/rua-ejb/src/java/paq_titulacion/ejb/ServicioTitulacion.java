@@ -175,7 +175,25 @@ sql="select ide_ytitiv, descripcion_ytitiv from yavirac_titu_tipos_vinculacion "
 return sql;
 }
 
-
-
+public String getObjetivoProyectoVinculacion() {
+String sql="";
+sql="select IDE_YTIOBI,detalle_ytitio as tipo,detalle_ytiind as indicador,detalle_ytimev as verificacion\n" +
+"from yavirac_titu_objetivo_indica_me b\n" +
+"left join yavirac_titu_tipo_objetivo c on b.ide_ytitio=c.ide_ytitio\n" +
+"left join yavirac_titu_indicador d on b.ide_ytiind=d.ide_ytiind\n" +
+"left join yavirac_titu_medios_verifica e on b.ide_ytimev=e.ide_ytimev\n" +
+"order by detalle_ytitio desc,detalle_ytiind,detalle_ytimev";
+return sql;
+}
+public String getResultadoActividades() {
+String sql="";
+sql="select IDE_YTITIA,c.ide_ytitio,detalle_ytitio as tipo,detalle_ytiacr as indicador,detalle_ytimev as verificacion\n" +
+"from yavirac_titu_tipo_activi_resul b\n" +
+"left join yavirac_titu_tipo_objetivo c on b.ide_ytitio=c.ide_ytitio\n" +
+"left join yavirac_titu_medios_verifica e on b.ide_ytimev=e.ide_ytimev\n" +
+"left join yavirac_titu_actividad_resulta d on b.ide_ytiacr=d.ide_ytiacr\n" +
+"order by detalle_ytitio";
+return sql;
+}
 }
 
