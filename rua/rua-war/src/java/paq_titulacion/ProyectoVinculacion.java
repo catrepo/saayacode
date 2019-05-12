@@ -5,6 +5,7 @@
  */
 package paq_titulacion;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
 import framework.componentes.Combo;
 import framework.componentes.Division;
@@ -185,6 +186,8 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla6.setId("tab_tabla6");// todo objeto instanciado poner id 
         tab_tabla6.setIdCompleto("tab_tabulador:tab_tabla6");
         tab_tabla6.setTabla("yavirac_titu_pro_objetivo","ide_ytipoo",6);  // nom bdd
+        tab_tabla6.getColumna("IDE_YTIOBI").setCombo(ser_titulacion.getObjetivoProyectoVinculacion());
+        tab_tabla6.getColumna("IDE_YTIOBI").setAutoCompletar();
         tab_tabla6.dibujar();
         
         PanelTabla pa_panel6 = new PanelTabla();
@@ -194,6 +197,8 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla7.setId("tab_tabla7");// todo objeto instanciado poner id 
         tab_tabla7.setIdCompleto("tab_tabulador:tab_tabla7");
         tab_tabla7.setTabla("yavirac_titu_pro_act_resul","ide_ytipar",7);  // nom bdd
+        tab_tabla7.getColumna("IDE_YTITIA").setCombo(ser_titulacion.getResultadoActividades());
+        tab_tabla7.getColumna("IDE_YTITIA").setAutoCompletar();
         tab_tabla7.dibujar();
         
         PanelTabla pa_panel7 = new PanelTabla();
@@ -270,6 +275,8 @@ public class ProyectoVinculacion extends Pantalla {
              if(tab_tabla.isFocus()){
             tab_tabla.insertar();
             tab_tabla.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
+                 TablaGenerica tab_secue=utilitario.consultar(ser_periodoacademico.getcodigoSecuencial(utilitario.getVariable("p_secuencial_vinculacion")));
+            tab_tabla.setValor("secuencial_ytipro", tab_secue.getValor("nuevo_secuencial"));
              }
              else if(tab_tabla1.isFocus()){
                 tab_tabla1.insertar();
@@ -309,6 +316,10 @@ public class ProyectoVinculacion extends Pantalla {
                             if(tab_tabla6.guardar()){
                                 if(tab_tabla7.guardar()){
                                     if(tab_tabla8.guardar()){
+                                        if(tab_tabla.isFilaInsertada())
+                                        {
+                                           utilitario.getConexion().ejecutarSql(ser_periodoacademico.getActualizarSecuencial(utilitario.getVariable("p_secuencial_vinculacion")));
+                                        }
                                     guardarPantalla();
                                 }}}}}}}}
         }
