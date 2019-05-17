@@ -263,7 +263,7 @@ public class ProyectoVinculacion extends Pantalla {
                         parametros.put("pide_parroquia", tab_parroquia.getValor("descripcion_ystdip"));
                         parametros.put("pide_proyecto", Integer.parseInt(tab_tabla.getValor("ide_ytipro")));
                          parametros.put("nombre", usuario);
-                        System.out.println(" paramteros " + parametros);
+                        //System.out.println(" paramteros " + parametros);
                         vipdf_proforma.setVisualizarPDF("rep_titulacion/rep_vinculacion.jasper", parametros);
                         vipdf_proforma.dibujar();
                         utilitario.addUpdate("vipdf_proforma");
