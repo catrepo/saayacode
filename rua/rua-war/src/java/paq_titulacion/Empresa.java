@@ -70,6 +70,8 @@ public class Empresa extends Pantalla {
         tab_empresa.getColumna("ide_ytiten").setLongitud(100);
         tab_empresa.getColumna("ide_ytitie").setLongitud(100);
         tab_empresa.getColumna("ide_ytiace").setLongitud(100);
+        tab_empresa.getColumna("ruc_ytiemp").setMascara("9999999999999");
+        tab_empresa.getColumna("ruc_ytiemp").isFormatoNumero();
                 tab_empresa.getColumna("logo_tipo_ytiemp").setUpload();
         tab_empresa.getColumna("logo_tipo_ytiemp").setImagen();
         tab_empresa.dibujar();
