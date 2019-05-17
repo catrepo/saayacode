@@ -9,6 +9,9 @@
 	<parameter name="pide_proyecto" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pide_provincia" class="java.lang.String"/>
+	<parameter name="pide_canton" class="java.lang.String"/>
+	<parameter name="pide_parroquia" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select a.ide_ytipro,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,detalle_ytifua as funcion,descripcion_ystmen,nombre_comercial_ytiemp,
 direccion_ytiemp,beneficiario_directo_ytipro,beneficiario_indirecto_ytipro,nombre_ytipee,descripcion_ytitpv as cargo
@@ -67,7 +70,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 						<font size="9" isBold="true"/>
 						<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 					</textElement>
-					<text><![CDATA[Canton]]></text>
+					<text><![CDATA[Cantón]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="225" y="14" width="110" height="14"/>
@@ -127,7 +130,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="225" y="28" width="110" height="35"/>
-					<box>
+					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -137,11 +140,11 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 						<font size="9"/>
 						<paragraph lineSpacing="Single" tabStopWidth="40"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{doc_identidad_yaldap}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pide_provincia}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="445" y="28" width="110" height="35"/>
-					<box>
+					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -151,11 +154,11 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 						<font size="9"/>
 						<paragraph lineSpacing="Single" tabStopWidth="40"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{doc_identidad_yaldap}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pide_parroquia}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="335" y="28" width="110" height="35"/>
-					<box>
+					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -165,7 +168,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 						<font size="9"/>
 						<paragraph lineSpacing="Single" tabStopWidth="40"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{doc_identidad_yaldap}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pide_canton}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="185" y="63" width="185" height="14"/>

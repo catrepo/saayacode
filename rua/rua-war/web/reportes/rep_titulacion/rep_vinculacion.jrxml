@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_portada_proyecto" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="808d6a52-7c68-4c26-ac7a-9d00e2fd20d6">
 	<property name="ireport.zoom" value="1.0000000000000007"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="17"/>
+	<property name="ireport.y" value="518"/>
 	<parameter name="ide_sucu" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,6 +15,9 @@
 	<parameter name="pide_proyecto" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pide_provincia" class="java.lang.String"/>
+	<parameter name="pide_canton" class="java.lang.String"/>
+	<parameter name="pide_parroquia" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ide_ytipro,a.ide_ystmen,descripcion_ystmen,detalle_proyecto_ytipro,nombre_comercial_ytiemp,nombre_ytipee,
 e.nombre_ypedpe||' '||e.apellido_ypedpe as elaborado,f.nombre_ypedpe||' '||f.apellido_ypedpe as revisado,
@@ -247,6 +250,21 @@ where ide_ytipro =$P{pide_proyecto}]]>
 				<reportElement uuid="7d336f05-b094-4fe7-b4a4-7624e6c1c85d" x="0" y="704" width="523" height="28"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pide_parroquia">
+					<subreportParameterExpression><![CDATA[$P{pide_parroquia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ide_empr">
+					<subreportParameterExpression><![CDATA[$P{ide_empr}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ide_sucu">
+					<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pide_canton">
+					<subreportParameterExpression><![CDATA[$P{pide_canton}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pide_provincia">
+					<subreportParameterExpression><![CDATA[$P{pide_provincia}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>

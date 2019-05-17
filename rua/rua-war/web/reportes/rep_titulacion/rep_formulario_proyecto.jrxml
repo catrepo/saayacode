@@ -2,13 +2,16 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_formulario" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="40" topMargin="20" bottomMargin="20" uuid="808d6a52-7c68-4c26-ac7a-9d00e2fd20d6">
 	<property name="ireport.zoom" value="1.1000000000000085"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="175"/>
+	<property name="ireport.y" value="174"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\JHONPRODUCER\\Documents\\GitHub\\code\\trunk\\rua\\rua-war\\web\\reportes"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pide_proyecto" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pide_provincia" class="java.lang.String"/>
+	<parameter name="pide_canton" class="java.lang.String"/>
+	<parameter name="pide_parroquia" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select a.ide_ytipro,detalle_proyecto_ytipro,secuencial_ytipro,detalle_yticam as campo,objeto_proyecto_ytipro,descripcion_ystmen as carrera,
 ciclo_ytipro,detalle_ysttfe,e.descripcion_ystdip as provincia,f.descripcion_ystdip as canton,g.descripcion_ystdip as parroquia,plazo_ytipro,
@@ -649,6 +652,15 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<reportElement uuid="4f10ba92-6bdc-4319-bc0a-05161283ca85" x="0" y="42" width="555" height="5"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pide_parroquia">
+					<subreportParameterExpression><![CDATA[$P{pide_parroquia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pide_canton">
+					<subreportParameterExpression><![CDATA[$P{pide_canton}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pide_provincia">
+					<subreportParameterExpression><![CDATA[$P{pide_provincia}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pide_proyecto">
 					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
