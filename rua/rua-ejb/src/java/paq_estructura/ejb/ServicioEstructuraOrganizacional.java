@@ -384,6 +384,9 @@ public class ServicioEstructuraOrganizacional {
         if (tipo.equals("1")) {
             sql += " where ide_ysttdp in ('" + condicion + "') ";
         }
+        if (tipo.equals("2")) {
+            sql += " where ide_ystdip in (" + condicion + ") ";
+        }
         sql += " order by descripcion_ystdip";
         return sql;
     }
