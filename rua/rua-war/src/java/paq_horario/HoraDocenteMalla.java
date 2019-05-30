@@ -95,10 +95,17 @@ public class HoraDocenteMalla extends Pantalla {
         aut_alumno.setId("aut_alumno");
         aut_alumno.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
         aut_alumno.setSize(75);
-        aut_alumno.setMetodoChange("selecionoAutocompletar");
+        //aut_alumno.setMetodoChange("selecionoAutocompletar");
         bar_botones.agregarComponente(new Etiqueta("Docente"));
         bar_botones.agregarComponente(aut_alumno);
 
+        //boton registrar notas
+        Boton bot_consultar = new Boton();
+        bot_consultar.setValue("Consultar");
+        bot_consultar.setIcon("ui-icon-note");//set icono Registrar///
+        bot_consultar.setMetodo("selecionoAutocompletar");
+        bar_botones.agregarBoton(bot_consultar);
+        
         //boton registrar notas
         Boton bot_registrar = new Boton();
         bot_registrar.setValue("Inscribir Alumnos");
@@ -109,8 +116,6 @@ public class HoraDocenteMalla extends Pantalla {
     }
 
     public void selecionoAutocompletar() {
-       
-
             tab_docente_malla.setCondicion("ide_ystpea=" + com_periodo_academico.getValue() + " and ide_ypedpe=" + aut_alumno.getValor());
             tab_docente_malla.ejecutarSql();
             utilitario.addUpdate("tab_docente_malla");
