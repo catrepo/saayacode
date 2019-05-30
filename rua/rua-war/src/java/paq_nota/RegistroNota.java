@@ -124,6 +124,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ystmal").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ynopae").setAutoCompletar();
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
+            tab_cabecera_nota.getColumna("ide_ynopae").setMetodoChange("bloquearRegistroNota");
             tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_cabecera_nota.getColumna("detalle_ynocan").setLectura(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
@@ -131,6 +132,8 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
             tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
+           
+            
             tab_cabecera_nota.setRows(5);
             tab_cabecera_nota.dibujar();
 
@@ -199,6 +202,16 @@ public class RegistroNota extends Pantalla {
     String documento = "";
     String ide_docente = "";
 
+    public void bloquearRegistroNota() {
+        if(tab_detalle_nota.getValor("bloqueo_ynodet").equals(true)){
+            tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
+        }else{
+            tab_detalle_nota.getColumna("nota_ynodet").setLectura(false);
+        }
+        System.out.println("Metodo bloquear");
+        utilitario.agregarMensajeInfo("Mensaje,", "Estoy en metodo bloquear");
+    }
+
     public void registrarNota() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Periodo Academico para Generar nota");
@@ -266,6 +279,8 @@ public class RegistroNota extends Pantalla {
         utilitario.addUpdate("com_materia_docente");
 
     }
+    
+   
 
     public void validarNotaEvaluDacion(AjaxBehaviorEvent evt) {
         tab_detalle_nota.modificar(evt);

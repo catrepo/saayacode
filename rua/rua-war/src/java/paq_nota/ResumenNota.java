@@ -272,9 +272,9 @@ public class ResumenNota extends Pantalla {
                 }
 
             }
-            notaTotal();
-            totalSegundoNivel();
-            totalTercerNivel();
+            notaTotalActividades();
+            notaTotalParcial();
+            notaFinal();
             //utilitario.addUpdate("tab_resumen_nota");
             tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
 
@@ -282,7 +282,7 @@ public class ResumenNota extends Pantalla {
 
     }
 
-    public void notaTotal() {
+    public void notaTotalActividades() {
 
         String cod = com_materia_docente.getValue() + "";
         TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
@@ -309,7 +309,7 @@ public class ResumenNota extends Pantalla {
 
     }
 
-    public void totalSegundoNivel() {
+    public void notaTotalParcial() {
         String cod = com_materia_docente.getValue() + "";
         TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
         TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPadreSegundoNivel("2", "true"));
@@ -323,7 +323,7 @@ public class ResumenNota extends Pantalla {
         }
     }
         
-    public void totalTercerNivel() {
+    public void notaFinal() {
         TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPadreSegundoNivel("1", "true"));
         for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
             for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
@@ -335,6 +335,7 @@ public class ResumenNota extends Pantalla {
         }
         tab_resumen_nota.guardar();
         guardarPantalla();
+        utilitario.agregarMensajeInfo("Mensaje", "Se calculo correctamente las notas");
     }
 
     public Combo getCom_periodo_academico() {
