@@ -65,6 +65,7 @@ public class PesoNota extends Pantalla {
         tab_detalle_peso_actividad.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         tab_detalle_peso_actividad.getColumna("ide_ynodpn").setNombreVisual("CODIGO");
         tab_detalle_peso_actividad.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
+        tab_detalle_peso_actividad.getColumna("ide_ynoace").setUnico(true);
         tab_detalle_peso_actividad.dibujar();
 
         PanelTabla pat_detalle_peso = new PanelTabla();

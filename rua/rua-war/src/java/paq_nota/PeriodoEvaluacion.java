@@ -53,6 +53,7 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_periodo_evaluacion.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         tab_periodo_evaluacion.getColumna("ide_ynopee").setNombreVisual("CÓDIGO");
         tab_periodo_evaluacion.getColumna("ide_ynotie").setNombreVisual("TIPO DE EVALUACIÓN");
+        tab_periodo_evaluacion.getColumna("ide_ynotie").setUnico(true);
         tab_periodo_evaluacion.getColumna("ide_ystpea").setVisible(false);
         tab_periodo_evaluacion.dibujar();
 
@@ -66,7 +67,9 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
         tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
+        tab_actividad_evaluacion.getColumna("ide_ynoace").setUnico(true);
         tab_actividad_evaluacion.getColumna("orden_ynopae").setVisible(false);
+        tab_actividad_evaluacion.getColumna("lectura_ynopae").setVisible(false);
         tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
         tab_actividad_evaluacion.getColumna("activo_ynopae").setValorDefecto("false");
         tab_actividad_evaluacion.dibujar();
@@ -76,7 +79,7 @@ public class PeriodoEvaluacion extends Pantalla {
         pa_actividad_evaluacion.setPanelTabla(tab_actividad_evaluacion);
 
         Division div_periodo_evaluacion = new Division();
-        div_periodo_evaluacion.dividir2(pa_periodo_evaluacion, pa_actividad_evaluacion, "50%", "h");
+        div_periodo_evaluacion.dividir2(pa_periodo_evaluacion, pa_actividad_evaluacion, "40%", "h");
         agregarComponente(div_periodo_evaluacion);
 
     }
