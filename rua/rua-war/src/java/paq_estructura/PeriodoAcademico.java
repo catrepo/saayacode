@@ -7,6 +7,7 @@ package paq_estructura;
 
 import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
+import framework.componentes.Confirmar;
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.SeleccionTabla;
@@ -23,9 +24,49 @@ public class PeriodoAcademico extends Pantalla {
 
     Tabla tab_periodo_academic = new Tabla(); // importar tabla 
     private SeleccionTabla sel_periodo_acedemico = new SeleccionTabla();
+    private Confirmar con_confirma = new Confirmar();
 
     @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
+
+    public PeriodoAcademico() {
+
+        //boton registrar notas
+        Boton bot_nota = new Boton();
+        bot_nota.setValue("CERRAR PERIODO");
+        bot_nota.setIcon("ui-icon-note");//set icono Registrar///
+        bot_nota.setMetodo("cerrarPeriodo");
+        bar_botones.agregarBoton(bot_nota);
+
+        //tab_periodo_academic.setIdCompleto("tab_tabulador:tab_periodo_academic");
+        tab_periodo_academic.setId("tab_periodo_academic");  // todo objeto instanciado poner id 
+        tab_periodo_academic.setTabla("yavirac_stror_periodo_academic", "ide_ystpea", 1);    // nom bdd
+        tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
+        tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
+        tab_periodo_academic.getColumna("nota_evaluacion_ystpea").setNombreVisual("NOTA EVALUACIÓN");
+        tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setValorDefecto("false");
+        //*****************
+        tab_periodo_academic.dibujar();
+
+        PanelTabla pa_periodoacademico = new PanelTabla();
+        pa_periodoacademico.setId("pa_periodoacademico"); // nombre de i
+        pa_periodoacademico.setPanelTabla(tab_periodo_academic);
+
+        ///// tabuladores
+        Division div_periodo_academico = new Division();
+        div_periodo_academico.setId("div_actividad_docente");
+        div_periodo_academico.dividir1(pa_periodoacademico);
+        agregarComponente(div_periodo_academico);
+
+        //CONFIRMAR
+        con_confirma.setId("con_confirma");
+        con_confirma.setMessage("Está seguro que desea cerrar el periodo academico");
+        con_confirma.setTitle("CERRAR PERIODO ACADEMICO");
+        con_confirma.getBot_aceptar().setValue("Si");
+        con_confirma.getBot_cancelar().setValue("No");
+        agregarComponente(con_confirma);
+
+    }
 
     private static final String ORIGINAL
             = "ÁáÉéÍíÓóÚúÑñÜü";
@@ -62,29 +103,15 @@ public class PeriodoAcademico extends Pantalla {
         //
     }
 
-    public PeriodoAcademico() {
-       
-
-        //tab_periodo_academic.setIdCompleto("tab_tabulador:tab_periodo_academic");
-        tab_periodo_academic.setId("tab_periodo_academic");  // todo objeto instanciado poner id 
-        tab_periodo_academic.setTabla("yavirac_stror_periodo_academic", "ide_ystpea", 1);    // nom bdd
-        tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
-        tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
-        tab_periodo_academic.getColumna("nota_evaluacion_ystpea").setNombreVisual("NOTA EVALUACIÓN");
-        tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setValorDefecto("false");
-        //*****************
-        tab_periodo_academic.dibujar();
-
-        PanelTabla pa_periodoacademico = new PanelTabla();
-        pa_periodoacademico.setId("pa_periodoacademico"); // nombre de i
-        pa_periodoacademico.setPanelTabla(tab_periodo_academic);
-
-        ///// tabuladores
-        Division div_periodo_academico = new Division();
-        div_periodo_academico.setId("div_actividad_docente");
-        div_periodo_academico.dividir1(pa_periodoacademico);
-        agregarComponente(div_periodo_academico);
-
+    public void cerrarPeriodo() {
+        con_confirma.getBot_aceptar().setMetodo("confirmarCerrarPeriodo");
+        utilitario.addUpdate("con_confirma");
+        con_confirma.dibujar();
+    }
+    
+    public void confirmarCerrarPeriodo(){
+        utilitario.agregarMensajeError("Mensaje", "PRUEBA FINALIZADA");
+        con_confirma.cerrar();
     }
 
     @Override
@@ -96,6 +123,14 @@ public class PeriodoAcademico extends Pantalla {
     String anio = "";
     String limite = "";
     String generar = "";
+
+    public Confirmar getCon_confirma() {
+        return con_confirma;
+    }
+
+    public void setCon_confirma(Confirmar con_confirma) {
+        this.con_confirma = con_confirma;
+    }
 
     @Override
     public void guardar() {
@@ -113,8 +148,8 @@ public class PeriodoAcademico extends Pantalla {
             utilitario.addUpdateTabla(tab_periodo_academic, "tabla_notas_ystpea", "");
         }*/
         if (tab_periodo_academic.guardar()) {
-            
-                    guardarPantalla();
+
+            guardarPantalla();
         }
         guardarPantalla();
 
