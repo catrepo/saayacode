@@ -212,7 +212,7 @@ public class ReporteNota extends Pantalla {
         } else {
             utilitario.agregarMensajeInfo("Mensaje,", "Seleccione un reporte de la lista de reportes");
         }
-        calcularNota();
+        
     }
 
     public void generarPDF() {

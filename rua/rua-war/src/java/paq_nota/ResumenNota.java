@@ -88,7 +88,7 @@ public class ResumenNota extends Pantalla {
             bot_nota.setIcon("ui-icon-note");//set icono Registrar///
             bot_nota.setMetodo("calcularNota");
             bar_botones.agregarBoton(bot_nota);
-            
+
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
 
@@ -113,7 +113,7 @@ public class ResumenNota extends Pantalla {
             //TABLA RESUMEN NOTA
             tab_resumen_nota.setId("tab_resumen_nota");
             tab_resumen_nota.setTabla("yavirac_nota_alumno_resumen", "ide_ynoalr", 2);
-            tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas("true,false")); 
+            tab_resumen_nota.getColumna("ide_ynopen").setCombo(ser_notas.getPesoNotas("true,false"));
             tab_resumen_nota.getColumna("ide_ynopen").setLectura(true);
             tab_resumen_nota.getColumna("nota_ynoalr").setLectura(true);
             tab_resumen_nota.getColumna("porcentaje_evaluacion_ynoalr").setLectura(true);
@@ -237,7 +237,7 @@ public class ResumenNota extends Pantalla {
     }
 
     public void calcularNota() {
-                
+
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
             return;
@@ -248,22 +248,20 @@ public class ResumenNota extends Pantalla {
             String cod = com_materia_docente.getValue() + "";
             TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
             TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true", tab_consulta.getValor("ide_ysttfe")));
+            System.out.println(" <<<<<<<<<<<<<<<<< TAB PESO >>>>>>>>>>>>>>>>>");
+            tab_peso.imprimirSql();
             for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
                 TablaGenerica tab_detalle = utilitario.consultar(ser_notas.getPesoDetalleNota(tab_peso.getValor(i, "ide_ynopen")));
                 for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
                     utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumen(com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ystmen"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_consulta.getValor("ide_ystmal"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_peso.getValor(i, "ide_ynopen")));
                     utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
-                    
                     for (int k = 0; k < tab_detalle.getTotalFilas(); k++) {
-
                         TablaGenerica tab_resumen = utilitario.consultar(ser_notas.getImportarSumaNotas("2", "1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
                                 tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor(i, "ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_consulta.getValor("ide_ysttfe"), tab_detalle.getValor(k, "ide_ynoace")));
                         if (tab_resumen.getTotalFilas() > 0) {
                             TablaGenerica tab_porciento = utilitario.consultar(ser_notas.getPorcientoParametroEvaluacion(tab_resumen.getValor("notas"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_resumen.getValor("ide_ynoace")));
-
                             //INSERTAR TABLA RESUMEN
                             TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_resumen", "ide_ynores"));
-
                             utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabResumen(tab_mximo.getValor("maximo"), com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ystmen"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_ypedpe"),
                                     tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_resumen.getValor("ide_ynopae"), tab_consulta.getValor("ide_ystmal"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_peso.getValor(i, "ide_ynopen"),
                                     tab_resumen.getValor("notas"), tab_porciento.getValor("porcentaje"), tab_resumen.getValor("recuperacion_ynodet")));
@@ -275,7 +273,7 @@ public class ResumenNota extends Pantalla {
             notaTotalActividades();
             notaTotalParcial();
             notaFinal();
-            //utilitario.addUpdate("tab_resumen_nota");
+            utilitario.addUpdate("tab_resumen_nota");
             tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
 
         }
@@ -316,21 +314,21 @@ public class ResumenNota extends Pantalla {
         for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
             for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
                 utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
-                TablaGenerica tab_segundoNivel = utilitario.consultar(ser_notas.getConsultarNotaTotalSegundoNivel(tab_peso.getValor(i, "ide_ynopen"), com_periodo_academico.getValue().toString(), tab_peso.getValor(i,"ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap")));
+                TablaGenerica tab_segundoNivel = utilitario.consultar(ser_notas.getConsultarNotaTotalSegundoNivel(tab_peso.getValor(i, "ide_ynopen"), com_periodo_academico.getValue().toString(), tab_peso.getValor(i, "ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap")));
                 TablaGenerica tab_codigo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_alumno_resumen", "ide_ynoalr"));
                 utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabAlumnoResumen(tab_codigo.getValor("maximo"), tab_peso.getValor(i, "ide_ynopen"), tab_docente_alumno.getValor(j, "ide_ypemda"), tab_segundoNivel.getValor("total"), tab_peso.getValor(i, "peso_ynopen")));
             }
         }
     }
-        
+
     public void notaFinal() {
-        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPadreSegundoNivel("1", "true"));
+        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPadreTercerNivel("1", "true"));
         for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
             for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
                 utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
                 TablaGenerica tab_tercerNivel = utilitario.consultar(ser_notas.getConsultarNotaTotalTercerNivel(tab_peso.getValor(i, "ide_ynopen"), com_periodo_academico.getValue().toString(), tab_docente_alumno.getValor(j, "ide_yaldap")));
                 TablaGenerica tab_codigo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_alumno_resumen", "ide_ynoalr"));
-                utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabAlumnoResumen(tab_codigo.getValor("maximo"), tab_peso.getValor(i,"ide_ynopen"), tab_docente_alumno.getValor(j, "ide_ypemda"), tab_tercerNivel.getValor("total"), tab_peso.getValor(i,"peso_ynopen")));
+                utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabAlumnoResumen(tab_codigo.getValor("maximo"), tab_peso.getValor(i, "ide_ynopen"), tab_docente_alumno.getValor(j, "ide_ypemda"), tab_tercerNivel.getValor("total"), tab_peso.getValor(i, "peso_ynopen")));
             }
         }
         tab_resumen_nota.guardar();
