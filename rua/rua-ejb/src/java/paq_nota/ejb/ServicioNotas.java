@@ -539,4 +539,10 @@ public class ServicioNotas {
         sql += "select ide_ynotie,descripcion_ynotie,bloquear_ynotie from yavirac_nota_tipo_evaluacion  where bloquear_ynotie in (" + activo + ")";
         return sql;
     }
+    
+     public String getCerrarPeriodoAcademico(String codigo) {
+        String sql = "";
+        sql = "update yavirac_stror_periodo_academic set activo_ystpea=false where ide_ystpea=" + codigo+" ";
+        return sql;
+    }
 }
