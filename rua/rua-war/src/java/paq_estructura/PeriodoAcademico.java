@@ -44,6 +44,8 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
         tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
         tab_periodo_academic.getColumna("nota_evaluacion_ystpea").setNombreVisual("NOTA EVALUACIÓN");
+        tab_periodo_academic.getColumna("activo_ystpea").setLectura(true);
+        tab_periodo_academic.getColumna("activo_ystpea").setValorDefecto("true");
         tab_periodo_academic.getColumna("aplica_recuperacion_ystpea").setValorDefecto("false");
         //*****************
         tab_periodo_academic.dibujar();
@@ -104,14 +106,20 @@ public class PeriodoAcademico extends Pantalla {
     }
 
     public void cerrarPeriodo() {
-        con_confirma.getBot_aceptar().setMetodo("confirmarCerrarPeriodo");
-        utilitario.addUpdate("con_confirma");
-        con_confirma.dibujar();
+        if (tab_periodo_academic.getValor("activo_ystpea").equals("false")) {
+            utilitario.agregarMensajeInfo("Mensaje,", "El periodo academico esta cerrado");
+        } else {
+            con_confirma.getBot_aceptar().setMetodo("confirmarCerrarPeriodo");
+            utilitario.addUpdate("con_confirma");
+            con_confirma.dibujar();
+        }
     }
-    
-    public void confirmarCerrarPeriodo(){
-        utilitario.agregarMensajeError("Mensaje", "PRUEBA FINALIZADA");
+
+    public void confirmarCerrarPeriodo() {
+        utilitario.getConexion().ejecutarSql(ser_notas.getCerrarPeriodoAcademico(tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "ide_ystpea")));
+        utilitario.agregarMensajeInfo("Mensaje,", "PRUEBA FINALIZADA");
         con_confirma.cerrar();
+        utilitario.addUpdate("tab_periodo_academic");
     }
 
     @Override
