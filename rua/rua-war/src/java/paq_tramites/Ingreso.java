@@ -147,6 +147,10 @@ public class Ingreso extends Pantalla{
         tab_asignacion.setId("tab_asignacion");
         tab_asignacion.setIdCompleto("tab_tabulador:tab_asignacion");
         tab_asignacion.setTabla("yavirac_tra_asignacion", "ide_ytrasi", 2);
+        tab_asignacion.getColumna("ide_ystard").setCombo(ser_estructura_organizacional.getAreaDepartamento(docente));
+        tab_asignacion.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
+        
+        
         tab_asignacion.dibujar();
         
         PanelTabla pat_asignacion = new PanelTabla();
