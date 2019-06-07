@@ -390,5 +390,10 @@ public class ServicioEstructuraOrganizacional {
         sql += " order by descripcion_ystdip";
         return sql;
     }
-
+    
+    public String getAreaDepartamento(String activo) {
+        String sql = "";
+        sql = "select ide_ystard, descripcion_ysttad, descripcion_ystard from yavirac_stror_tipo_area_depar b,yavirac_stror_area_departament a where a.ide_ysttad = b.ide_ysttad;";
+        return sql;
+    }
 }
