@@ -527,6 +527,12 @@ public class ServicioNotas {
         return sql;
     }
 
+    public String getCerrarPeriodoAcademico(String codigo) {
+        String sql = "";
+        sql = "update yavirac_stror_periodo_academic set activo_ystpea=false where ide_ystpea=" + codigo + " ";
+        return sql;
+    }
+
     /**
      * Retorna el Tipo de Evaluacion
      *
@@ -534,15 +540,45 @@ public class ServicioNotas {
      * sea true, false, o ambos.
      * @return sql del tipo de evaluacion
      */
-    public String getParcialBloqueado(String activo) {
+    public String getBloquearParcial(String codigo) {
         String sql = "";
-        sql += "select ide_ynotie,descripcion_ynotie,bloquear_ynotie from yavirac_nota_tipo_evaluacion  where bloquear_ynotie in (" + activo + ")";
+        sql += "update yavirac_nota_tipo_evaluacion set\n"
+                + "bloquear_ynotie=true\n"
+                + "where ide_ynotie=" + codigo + " ";
+        System.out.println("<<<<< Impimiendo"+sql); 
         return sql;
     }
-    
-     public String getCerrarPeriodoAcademico(String codigo) {
+
+    /**
+     * Retorna el Tipo de Evaluacion
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya
+     * sea true, false, o ambos.
+     * @return sql del tipo de evaluacion
+     */
+    public String getDesbloquearParcial(String codigo) {
         String sql = "";
-        sql = "update yavirac_stror_periodo_academic set activo_ystpea=false where ide_ystpea=" + codigo+" ";
+        sql += "update yavirac_nota_tipo_evaluacion set\n"
+                + "bloquear_ynotie=false\n"
+                + "where ide_ynotie=" + codigo + " ";
         return sql;
     }
+
+    public String getBloquearActividad(String codigo) {
+        String sql = "";
+        sql += "update  yavirac_nota_periodo_activ_eva set\n"
+                + "lectura_ynopae=true\n"
+                + "where ide_ynopee=" + codigo + " ";
+        System.out.println("<<<<< Impimiendo"+sql);
+        return sql;
+    }
+
+    public String getDesbloquearActividad(String codigo) {
+        String sql = "";
+        sql += "update  yavirac_nota_periodo_activ_eva set\n"
+                + "lectura_ynopae=false\n"
+                + "where ide_ynopee=" + codigo + " ";
+        return sql;
+    }
+
 }
