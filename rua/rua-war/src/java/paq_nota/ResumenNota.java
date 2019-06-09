@@ -62,6 +62,7 @@ public class ResumenNota extends Pantalla {
             bar_botones.getBot_fin().setRendered(false);
             bar_botones.getBot_siguiente().setRendered(false);
             bar_botones.getBot_inicio().setRendered(false);
+            bar_botones.getBot_guardar().setRendered(false);
 
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));

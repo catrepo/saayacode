@@ -19,6 +19,7 @@ import framework.componentes.Texto;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_asistencia.ejb.ServicioAsistencia;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -66,10 +67,10 @@ public class RegistroNota extends Pantalla {
 
             bar_botones.getBot_insertar().setRendered(false);
             bar_botones.getBot_eliminar().setRendered(false);
-            bar_botones.getBot_atras().setRendered(false);
-            bar_botones.getBot_fin().setRendered(false);
-            bar_botones.getBot_siguiente().setRendered(false);
-            bar_botones.getBot_inicio().setRendered(false);
+            //bar_botones.getBot_atras().setRendered(false);
+            //bar_botones.getBot_fin().setRendered(false);
+            //bar_botones.getBot_siguiente().setRendered(false);
+            //bar_botones.getBot_inicio().setRendered(false);
 
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
@@ -132,8 +133,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
             tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
-           
-            
+            tab_cabecera_nota.onSelect("bloquearRegistroNota");
             tab_cabecera_nota.setRows(5);
             tab_cabecera_nota.dibujar();
 
@@ -152,6 +152,7 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
+            tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
             tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
             tab_detalle_nota.getColumna("recuperacion_ynodet").setValorDefecto("false");
@@ -203,13 +204,14 @@ public class RegistroNota extends Pantalla {
     String ide_docente = "";
 
     public void bloquearRegistroNota() {
-        if(tab_detalle_nota.getValor("bloqueo_ynodet").equals(true)){
-            tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
-        }else{
-            tab_detalle_nota.getColumna("nota_ynodet").setLectura(false);
+        TablaGenerica tab_detalle = utilitario.consultar("select ide_ynodet,nota_ynodet,bloqueo_ynodet from yavirac_nota_detalle_nota");
+        tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
+            System.out.println("Metodo bloquear");
+            utilitario.agregarMensajeInfo("Mensaje,", "Estoy en metodo bloquear");
+        if (tab_detalle.getValor("bloqueo_ynodet").equals("true")) {
+            
         }
-        System.out.println("Metodo bloquear");
-        utilitario.agregarMensajeInfo("Mensaje,", "Estoy en metodo bloquear");
+
     }
 
     public void registrarNota() {
@@ -279,8 +281,6 @@ public class RegistroNota extends Pantalla {
         utilitario.addUpdate("com_materia_docente");
 
     }
-    
-   
 
     public void validarNotaEvaluDacion(AjaxBehaviorEvent evt) {
         tab_detalle_nota.modificar(evt);

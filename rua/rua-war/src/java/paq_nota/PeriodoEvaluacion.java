@@ -29,6 +29,7 @@ public class PeriodoEvaluacion extends Pantalla {
     private Tabla tab_actividad_evaluacion = new Tabla();
     private Etiqueta eti_parcial = new Etiqueta();
     private Confirmar con_confirma = new Confirmar();
+    private Confirmar con_confirma2 = new Confirmar();
 
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -50,14 +51,14 @@ public class PeriodoEvaluacion extends Pantalla {
 
         Boton bot_bloquear = new Boton();
         bot_bloquear.setValue("Bloquear Parcial");
-        bot_bloquear.setIcon("ui-icon-cancel");
+        bot_bloquear.setIcon("ui-icon-locked");
         bot_bloquear.setMetodo("bloquearParcial");
         bar_botones.agregarBoton(bot_bloquear);
 
         Boton bot_desbloquear = new Boton();
         bot_desbloquear.setValue("Desbloquear Parcial");
-        bot_desbloquear.setIcon("ui-icon-cancel");
-        bot_desbloquear.setMetodo("bloquearParcial");
+        bot_desbloquear.setIcon("ui-icon-unlocked");
+        bot_desbloquear.setMetodo("desbloquearParcial");
         bar_botones.agregarBoton(bot_desbloquear);
 
         //TABLA 1
@@ -105,6 +106,13 @@ public class PeriodoEvaluacion extends Pantalla {
         con_confirma.getBot_cancelar().setValue("No");
         agregarComponente(con_confirma);
 
+        con_confirma2.setId("con_confirma2");
+        con_confirma2.setMessage("Está seguro que desea desbloquear el registro de notas del " + eti_parcial);
+        con_confirma2.setTitle("DESBLOQUEAR REGISTRO DE NOTAS");
+        con_confirma2.getBot_aceptar().setValue("Si");
+        con_confirma2.getBot_cancelar().setValue("No");
+        agregarComponente(con_confirma2);
+
     }
 
     public void filtroComboPeriodoAcademico() {
@@ -131,13 +139,32 @@ public class PeriodoEvaluacion extends Pantalla {
     }
 
     public void confirmarBloqueo() {
-        utilitario.getConexion().ejecutarSql("update  yavirac_nota_periodo_activ_eva set\n"
-                + " lectura_ynopae=true\n"
-                + "where ide_ynopee=" + tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee") + "");
+        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearParcial(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie")));
+        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearActividad(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
         con_confirma.cerrar();
-        utilitario.addUpdate("tab_actividad_evaluacion");
         utilitario.agregarMensajeInfo("Mensaje,", "Parcial bloqueado correctamente");
+        utilitario.addUpdate("tab_periodo_evaluacion,tab_actividad_evaluacion");
+    }
 
+    public void desbloquearParcial() {
+
+        if (com_periodo_academico.getValue() == null) {
+            utilitario.agregarMensajeInfo("Mensaje,", "Seleccione el periodo académico");
+        } else if (tab_actividad_evaluacion.getValor("lectura_ynopae").equals("false")) {
+            utilitario.agregarMensajeInfo("Mensaje,", "El parcial se encuentra desbloqueado");
+        } else {
+            con_confirma2.getBot_aceptar().setMetodo("confirmarDesbloqueo");
+            utilitario.addUpdate("con_confirma,eti_parcial");
+            con_confirma2.dibujar();
+        }
+    }
+
+    public void confirmarDesbloqueo() {
+        utilitario.getConexion().ejecutarSql(ser_notas.getDesbloquearParcial(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie")));
+        utilitario.getConexion().ejecutarSql(ser_notas.getDesbloquearActividad(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
+        con_confirma2.cerrar();
+        utilitario.addUpdate("tab_periodo_evaluacion,tab_actividad_evaluacion");
+        utilitario.agregarMensajeInfo("Mensaje,", "Parcial desbloqueado correctamente");
     }
 
     public void limpiar() {
