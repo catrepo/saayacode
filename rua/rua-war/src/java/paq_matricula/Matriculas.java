@@ -18,6 +18,7 @@ import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_horarios.ejb.ServiciosHorarios;
 import paq_matricula.ejb.ServicioMatriculas;
+import paq_nota.ejb.ServicioNotas;
 import paq_personal.ejb.ServicioPersonal;
 import persistencia.Conexion;
 import sistema.aplicacion.Pantalla;
@@ -37,6 +38,8 @@ public class Matriculas extends Pantalla {
     private Conexion conOracle = new Conexion();
 
     @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -46,6 +49,8 @@ public class Matriculas extends Pantalla {
     private final ServicioMatriculas ser_matricula = (ServicioMatriculas) utilitario.instanciarEJB(ServicioMatriculas.class);
     @EJB
     private final ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
+    @EJB
+    private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
 
     public Matriculas() {//constructor
 
@@ -219,7 +224,16 @@ public class Matriculas extends Pantalla {
             vipdf_comprobante.setTitle("CERTIFICADO DE MATRICULA");
             agregarComponente(vipdf_comprobante);
         } else {
-            utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el registro de Matriculas. Consulte con el Administrador");
+            utilitario.agregarNotificacionInfo("ADVERTENCIA", "EL usuario ingresado no registra permisos para el registro de Matriculas. Consulte con el Administrador");
+        }
+    }
+
+    public void registrarRecordAcademico() {
+        TablaGenerica tab_consulta = utilitario.consultar("select * from yavirac_nota_cab_rec_acad  where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap"));
+        if (tab_consulta.getTotalFilas() > 0) {
+        } else {
+            TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_cab_rec_acad", "ide_ynocra"));
+            utilitario.getConexion().ejecutarSql(ser_notas.getInsertarCabeceraRecordAcademico(tab_mximo.getValor("maximo"), tab_matriculas.getValor("ide_yaldap"), tab_matriculas.getValor("ide_ystmen"), tab_matriculas.getValor("fecha_ymamat"), tab_matriculas.getValor("fecha_ymamat")));
         }
     }
 
@@ -413,6 +427,7 @@ public class Matriculas extends Pantalla {
         if (tab_matriculas.guardar()) {
             if (tab_documento_entregado.guardar()) {
                 if (tab_registro_credito.guardar()) {
+                    registrarRecordAcademico();
                     guardarPantalla();
                 }
             }
