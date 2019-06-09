@@ -178,9 +178,9 @@ public class ReporteNota extends Pantalla {
             if (com_periodo_academico.getValue() != null) {
                 if (lis_materia.getSeleccionados() != "") {
                     materia = lis_materia.getSeleccionados();
-                    if (lis_materia.getSeleccionados() != "") {
+                    if (lis_actividad.getSeleccionados() != "") {
                         actividad = lis_actividad.getSeleccionados();
-                        if (lis_materia.getSeleccionados() != "") {
+                        if (lis_parcial.getSeleccionados() != "") {
                             parcial = lis_parcial.getSeleccionados();
                             generarPDF();
                         } else {

@@ -43,7 +43,6 @@ public class RegistroNota extends Pantalla {
     private Tabla tab_detalle_nota = new Tabla();
     private Tabla tab_cabecera_nota = new Tabla();
     private Dialogo dia_dialogo = new Dialogo();
-    private Dialogo dia_calcular = new Dialogo();
     private final Combo com_actividad = new Combo();
     private Texto tex_detalle = new Texto();
     private Calendario cal_fecha_calificacion = new Calendario();
@@ -98,12 +97,7 @@ public class RegistroNota extends Pantalla {
             bot_nota.setMetodo("registrarNota");
             bar_botones.agregarBoton(bot_nota);
 
-            //calculo de notas finales
-            Boton bot_calcular = new Boton();
-            bot_calcular.setValue("Reportes");
-            bot_calcular.setIcon("ui-icon-note");//set icono Registrar///
-            bot_calcular.setMetodo("calcularNota");
-            bar_botones.agregarBoton(bot_calcular);
+            
 
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
@@ -133,6 +127,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
             tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
+            //tab_cabecera_nota.o
             tab_cabecera_nota.onSelect("bloquearRegistroNota");
             tab_cabecera_nota.setRows(5);
             tab_cabecera_nota.dibujar();
@@ -152,7 +147,7 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
-            tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
+            //tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
             tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
             tab_detalle_nota.getColumna("recuperacion_ynodet").setValorDefecto("false");
@@ -204,14 +199,27 @@ public class RegistroNota extends Pantalla {
     String ide_docente = "";
 
     public void bloquearRegistroNota() {
-        TablaGenerica tab_detalle = utilitario.consultar("select ide_ynodet,nota_ynodet,bloqueo_ynodet from yavirac_nota_detalle_nota");
-        tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
-            System.out.println("Metodo bloquear");
-            utilitario.agregarMensajeInfo("Mensaje,", "Estoy en metodo bloquear");
-        if (tab_detalle.getValor("bloqueo_ynodet").equals("true")) {
+        tab_detalle_nota.setCondicion("ide_ynocan="+tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"));
+       tab_detalle_nota.ejecutarSql();
+       
+        utilitario.agregarMensaje("ESTOY", docente);
+        /*boolean boo = true;
+        if (tab_detalle_nota.getTotalFilas() > 0) {
+            if (tab_detalle_nota.getValor("bloqueo_ynodet").equals("true")) {
+               /* for (int i = 0; i < tab_detalle_nota.getTotalFilas(); i++) {
+                    tab_detalle_nota.getColumna("nota_ynodet").setLectura(boo);
+                }
+                utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
+            } else if(tab_detalle_nota.getValor("bloqueo_ynodet").equals("false")){
+                /*for (int i = 0; i < tab_detalle_nota.getTotalFilas(); i++) {
+                    tab_detalle_nota.getFilas().get(i).setLectura(false);
+                }
+                utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
+            }
             
+            utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
         }
-
+        */
     }
 
     public void registrarNota() {
@@ -232,10 +240,6 @@ public class RegistroNota extends Pantalla {
 
             abrirDialogo();
         }
-    }
-
-    public void calcularNota() {
-        utilitario.agregarMensajeError("Error", docente);
     }
 
     private boolean TienePerfilNota() {
@@ -347,10 +351,6 @@ public class RegistroNota extends Pantalla {
         cal_fecha_calificacion.limpiar();
     }
 
-    public void abrirDialogoCalcular() {
-        dia_calcular.dibujar();
-    }
-
     public void mostrarNota() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Periodo Académico");
@@ -411,6 +411,7 @@ public class RegistroNota extends Pantalla {
             tex_detalle.limpiar();
             cal_fecha_calificacion.limpiar();
             dia_dialogo.cerrar();
+            tab_detalle_nota.actualizar();
         }
 
     }
@@ -561,14 +562,6 @@ public class RegistroNota extends Pantalla {
 
     public void setEti_notificacion(Etiqueta eti_notificacion) {
         this.eti_notificacion = eti_notificacion;
-    }
-
-    public Dialogo getDia_calcular() {
-        return dia_calcular;
-    }
-
-    public void setDia_calcular(Dialogo dia_calcular) {
-        this.dia_calcular = dia_calcular;
     }
 
 }

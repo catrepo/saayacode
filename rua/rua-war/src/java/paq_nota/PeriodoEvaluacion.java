@@ -5,6 +5,7 @@
  */
 package paq_nota;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
 import framework.componentes.Combo;
 import framework.componentes.Confirmar;
@@ -30,6 +31,7 @@ public class PeriodoEvaluacion extends Pantalla {
     private Etiqueta eti_parcial = new Etiqueta();
     private Confirmar con_confirma = new Confirmar();
     private Confirmar con_confirma2 = new Confirmar();
+    String parcial="";
 
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -84,10 +86,9 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
         tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
         tab_actividad_evaluacion.getColumna("ide_ynoace").setUnico(true);
-        tab_actividad_evaluacion.getColumna("orden_ynopae").setVisible(false);
-        //tab_actividad_evaluacion.getColumna("lectura_ynopae").setVisible(false);
+        tab_actividad_evaluacion.getColumna("activo_ynopae").setLectura(true);
         tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
-        tab_actividad_evaluacion.getColumna("activo_ynopae").setValorDefecto("false");
+        tab_actividad_evaluacion.getColumna("activo_ynopae").setValorDefecto("true");
         tab_actividad_evaluacion.dibujar();
 
         PanelTabla pa_actividad_evaluacion = new PanelTabla();
@@ -126,11 +127,13 @@ public class PeriodoEvaluacion extends Pantalla {
     }
 
     public void bloquearParcial() {
-
+        TablaGenerica tab_consulta=utilitario.consultar("select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion where ide_ynotie="+tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"));
+        eti_parcial.setValue(""+tab_consulta.getValor("descripcion_ynotie"));
+        //parcial=""+tab_consulta.getValor("descripcion_ynotie");
         if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeInfo("Mensaje,", "Seleccione el periodo académico");
-        } else if (tab_actividad_evaluacion.getValor("lectura_ynopae").equals("true")) {
-            utilitario.agregarMensajeInfo("Mensaje,", "El parcial esta bloqueado");
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
+        } else if (tab_actividad_evaluacion.getValor("activo_ynopae").equals("false")) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "El parcial ya se encuentra bloqueado");
         } else {
             con_confirma.getBot_aceptar().setMetodo("confirmarBloqueo");
             utilitario.addUpdate("con_confirma,eti_parcial");
@@ -142,16 +145,17 @@ public class PeriodoEvaluacion extends Pantalla {
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearParcial(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie")));
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearActividad(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
         con_confirma.cerrar();
-        utilitario.agregarMensajeInfo("Mensaje,", "Parcial bloqueado correctamente");
-        utilitario.addUpdate("tab_periodo_evaluacion,tab_actividad_evaluacion");
+        utilitario.agregarMensaje("SUCCESSFULL,", "Parcial bloqueado correctamente");
+        tab_actividad_evaluacion.actualizar();
+        
     }
 
     public void desbloquearParcial() {
 
         if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeInfo("Mensaje,", "Seleccione el periodo académico");
-        } else if (tab_actividad_evaluacion.getValor("lectura_ynopae").equals("false")) {
-            utilitario.agregarMensajeInfo("Mensaje,", "El parcial se encuentra desbloqueado");
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
+        } else if (tab_actividad_evaluacion.getValor("activo_ynopae").equals("true")) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "El parcial se encuentra desbloqueado");
         } else {
             con_confirma2.getBot_aceptar().setMetodo("confirmarDesbloqueo");
             utilitario.addUpdate("con_confirma,eti_parcial");
@@ -163,8 +167,8 @@ public class PeriodoEvaluacion extends Pantalla {
         utilitario.getConexion().ejecutarSql(ser_notas.getDesbloquearParcial(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie")));
         utilitario.getConexion().ejecutarSql(ser_notas.getDesbloquearActividad(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
         con_confirma2.cerrar();
-        utilitario.addUpdate("tab_periodo_evaluacion,tab_actividad_evaluacion");
-        utilitario.agregarMensajeInfo("Mensaje,", "Parcial desbloqueado correctamente");
+        utilitario.agregarMensaje("SUCCESSFULL,", "Parcial desbloqueado correctamente");
+        tab_actividad_evaluacion.actualizar();
     }
 
     public void limpiar() {
