@@ -545,7 +545,7 @@ public class ServicioNotas {
         sql += "update yavirac_nota_tipo_evaluacion set\n"
                 + "bloquear_ynotie=true\n"
                 + "where ide_ynotie=" + codigo + " ";
-        System.out.println("<<<<< Impimiendo"+sql); 
+        System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
@@ -567,17 +567,24 @@ public class ServicioNotas {
     public String getBloquearActividad(String codigo) {
         String sql = "";
         sql += "update  yavirac_nota_periodo_activ_eva set\n"
-                + "lectura_ynopae=true\n"
+                + "activo_ynopae=false\n"
                 + "where ide_ynopee=" + codigo + " ";
-        System.out.println("<<<<< Impimiendo"+sql);
+        System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
     public String getDesbloquearActividad(String codigo) {
         String sql = "";
         sql += "update  yavirac_nota_periodo_activ_eva set\n"
-                + "lectura_ynopae=false\n"
+                + "activo_ynopae=true\n"
                 + "where ide_ynopee=" + codigo + " ";
+        return sql;
+    }
+
+    public String getInsertarCabeceraRecordAcademico(String codigo,String alumno,String mension,String fecha_inico,String fecha_fin) {
+        String sql = "";
+        sql += "insert into yavirac_nota_cab_rec_acad(ide_ynocra, ide_yaldap, ide_ystmen, fecha_inicio_ynocra, fecha_fin_ynocra)\n"
+                + "values ("+codigo+", "+alumno+", "+mension+", '"+fecha_inico+"', '"+fecha_fin+"')";
         return sql;
     }
 
