@@ -231,9 +231,16 @@ public class Matriculas extends Pantalla {
     public void registrarRecordAcademico() {
         TablaGenerica tab_consulta = utilitario.consultar("select * from yavirac_nota_cab_rec_acad  where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap"));
         if (tab_consulta.getTotalFilas() > 0) {
+            if (tab_matriculas.getValor("ide_ystnie").equals(utilitario.getVariable("p_nivel_inicio"))) {
+                utilitario.getConexion().ejecutarSql("update yavirac_nota_cab_rec_acad set fecha_inicio_ynocra='"+tab_matriculas.getValor("fecha_ymamat")+"' where ide_yaldap="+tab_matriculas.getValor("ide_yaldap"));
+            } else if (tab_matriculas.getValor("ide_ystnie").equals(utilitario.getVariable("p_nivel_fin"))) {
+                utilitario.getConexion().ejecutarSql("update yavirac_nota_cab_rec_acad set fecha_fin_ynocra='"+tab_matriculas.getValor("fecha_ymamat")+"' where ide_yaldap="+tab_matriculas.getValor("ide_yaldap"));
+            }
         } else {
-            TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_cab_rec_acad", "ide_ynocra"));
+
+            /*TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_cab_rec_acad", "ide_ynocra"));
             utilitario.getConexion().ejecutarSql(ser_notas.getInsertarCabeceraRecordAcademico(tab_mximo.getValor("maximo"), tab_matriculas.getValor("ide_yaldap"), tab_matriculas.getValor("ide_ystmen"), tab_matriculas.getValor("fecha_ymamat"), tab_matriculas.getValor("fecha_ymamat")));
+             */
         }
     }
 
