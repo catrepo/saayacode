@@ -32,18 +32,18 @@ public class Parametros {
         lis_parametros.add(new Parametro("0", "p_tipo_canton", "Indica tipo canton para recragar cantones", "2", "yavirac_stror_tipo_divisio_po", "ide_ysttdp", "descripcion_ysttdp"));
 
 
-       /*
+        /*
          * ESTRUCTURA MODULO =2
          */
         lis_parametros.add(new Parametro("2", "p_gth_tipo_documento_cedula", "Indica el tipo de documento cedula", "1", "yavirac_stror_docu_identidad", "ide_ystdoi", "descripcion_ystdoi"));
         lis_parametros.add(new Parametro("2", "p_gth_tipo_documento_ruc", "Indica la el tipo documento de ruc", "2", "yavirac_stror_docu_identidad", "ide_ystdoi", "descripcion_ystdoi"));
         lis_parametros.add(new Parametro("2", "p_menu_reportes", "la opcion para reportes", "2", "sis_opcion", "ide_opci", "nom_opci"));
 
-       /*
+        /*
          * INSCRIPCION MODULO =3
          */
         lis_parametros.add(new Parametro("3", "p_documento_inscripcion", "Indica que los documentos son para inscripciones", "2", "yavirac_stror_requerido_para", "ide_ystrep", "descripcion_ystrep"));
-       /*
+        /*
          * MATRICULAS MODULO =4
          */
         lis_parametros.add(new Parametro("4", "p_documento_matricula", "Indica que los documentos son para matriculas", "2", "yavirac_stror_requerido_para", "ide_ystrep", "descripcion_ystrep"));
@@ -59,23 +59,27 @@ public class Parametros {
          */
         lis_parametros.add(new Parametro("6", "p_secuencial_interno", "Indica el nuemro secuecnial para tramites internos", "2", "yavirac_tra_secuencial", "ide_ytrsec", "detalle_ytrsec"));
         lis_parametros.add(new Parametro("6", "p_entidad_yavirac", "Indica el tipo entidad yavirac para tramites internos", "2", "yavirac_tra_tipo_entidad", "ide_ytrtie", "nombre_ytrtie"));
- /*
+        /*
          * TRAMITES MODULO =7
          */
         lis_parametros.add(new Parametro("7", "p_proyecto_tipo_prac", "Indica el proyecto de tipo practica", "1", "yavirac_titu_tipos_vinculacion", "ide_ytitiv", "descripcion_ytitiv"));
-      
+
         /*
          * NOTAS MODULO =7
          */
         lis_parametros.add(new Parametro("7", "p_tipo_eva_examen", "Indica el tipo de evaluación de examen para verificar si tiene recuperacion de examen", "2", "yavirac_nota_actividad_evaluac", "ide_ynoace", "descripcion_ynoace"));
- /*
+        lis_parametros.add(new Parametro("7", "p_menu_rep_nota", "Indica los reportes que tiene el modulo notas", "2", "sis_opcion", "ide_opci", "nom_opci"));
+        lis_parametros.add(new Parametro("7", "p_estado_cursando", "Indica el estado del record academico", "2", "yavirac_nota_estado_nota", "ide_ynoest", "detalle_ynoest"));
+        lis_parametros.add(new Parametro("7", "p_estado_aprobado", "Indica el estado de aprovacion de materia del record academico", "2", "yavirac_nota_estado_nota", "ide_ynoest", "detalle_ynoest"));
+        lis_parametros.add(new Parametro("7", "p_estado_reprobado", "Indica el estado que reprueba una materia", "2", "yavirac_nota_estado_nota", "ide_ynoest", "detalle_ynoest"));
+        lis_parametros.add(new Parametro("7", "p_nivel_inicio", "Indica el nivel inicial de la carrera", "2", "yavirac_stror_nivel_educacion", "ide_ystnie", "descripcion_ystnie"));
+        lis_parametros.add(new Parametro("7", "p_nivel_fin", "Indica el nivel final de laa carrera", "2", "yavirac_stror_nivel_educacion", "ide_ystnie", "descripcion_ystnie"));
+        
+        /*
          * TITULACION MODULO =8
          */
         lis_parametros.add(new Parametro("8", "p_secuencial_vinculacion", "Indica el el secuencial para el formato proyecto vincualcion", "2", "yavirac_stror_modulo_secuencial", "ide_ystmos", "abreviatura_ystmos"));
-        
-   
-      
-        
+
 //////////////////////////////////////////////////////////////////////
         return lis_parametros;
     }
