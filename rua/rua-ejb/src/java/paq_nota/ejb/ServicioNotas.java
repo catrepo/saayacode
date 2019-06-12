@@ -324,14 +324,14 @@ public class ServicioNotas {
 
     public String getPesoNota(String nivel, String estado, String formacion) {
         String sql = "";
-        /*sql += "select ide_ynopen,ide_ysttfe,ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota\n"
+        sql += "select ide_ynopen,ide_ysttfe,ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota\n"
                 + "where nivel_ynopen in (" + nivel + ") and bloqueo_ynopen in(" + estado + ") and ide_ysttfe in (" + formacion + ")";
-         */
+        /*
         sql += "select ide_ynopen,ide_ysttfe,a.ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen,bloquear_ynotie\n"
                 + "from yavirac_nota_peso_nota a\n"
                 + "left join yavirac_nota_tipo_evaluacion b on a.ide_ynotie=b.ide_ynotie \n"
                 + "where nivel_ynopen in (" + nivel + ") and bloqueo_ynopen in(" + estado + ") and ide_ysttfe in (" + formacion + ") and bloquear_ynotie= false";
-        return sql;
+        */return sql;
     }
 
     public String getPesoDetalleNota(String codigo) {
@@ -476,10 +476,8 @@ public class ServicioNotas {
 
     public String getPadreSegundoNivel(String nivel, String estado) {
         String sql = "";
-        sql += "select ide_ynopen,ide_ysttfe,a.ide_ynotie,peso_ynopen,nivel_ynopen,bloqueo_ynopen,bloquear_ynotie\n"
-                + "from yavirac_nota_peso_nota a\n"
-                + "left join yavirac_nota_tipo_evaluacion b on a.ide_ynotie=b.ide_ynotie \n"
-                + "where nivel_ynopen in (" + nivel + ") and bloqueo_ynopen in(" + estado + ") and bloquear_ynotie= false";
+        sql += "select ide_ynopen,ide_ysttfe,ide_ynotie,detalle_ynopen,peso_ynopen,nivel_ynopen,bloqueo_ynopen from yavirac_nota_peso_nota\n"
+                + "where nivel_ynopen in (" + nivel + ") and bloqueo_ynopen in(" + estado + ")";
         return sql;
 
     }
@@ -540,52 +538,32 @@ public class ServicioNotas {
      * sea true, false, o ambos.
      * @return sql del tipo de evaluacion
      */
-    public String getBloquearParcial(String codigo) {
+    public String getBloquearParcial(String estado,String parcial,String periodo) {
         String sql = "";
-        sql += "update yavirac_nota_tipo_evaluacion set\n"
-                + "bloquear_ynotie=true\n"
-                + "where ide_ynotie=" + codigo + " ";
+        sql += "update	yavirac_nota_peso_nota set bloqueo_ynopen="+estado+" where ide_ynotie="+parcial+" and ide_ystpea="+periodo+"";
         System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
-    /**
-     * Retorna el Tipo de Evaluacion
-     *
-     * @param activo.- permite el ingreso del paramtero activo para filtrar ya
-     * sea true, false, o ambos.
-     * @return sql del tipo de evaluacion
-     */
-    public String getDesbloquearParcial(String codigo) {
-        String sql = "";
-        sql += "update yavirac_nota_tipo_evaluacion set\n"
-                + "bloquear_ynotie=false\n"
-                + "where ide_ynotie=" + codigo + " ";
-        return sql;
-    }
-
-    public String getBloquearActividad(String codigo) {
+    public String getBloquearActividad(String estado,String codigo) {
         String sql = "";
         sql += "update  yavirac_nota_periodo_activ_eva set\n"
-                + "activo_ynopae=false\n"
+                + "activo_ynopae="+estado+"\n"
                 + "where ide_ynopee=" + codigo + " ";
         System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
-    public String getDesbloquearActividad(String codigo) {
+    public String getEstadoNota() {
         String sql = "";
-        sql += "update  yavirac_nota_periodo_activ_eva set\n"
-                + "activo_ynopae=true\n"
-                + "where ide_ynopee=" + codigo + " ";
+        sql += "select ide_ynoest,detalle_ynoest from yavirac_nota_estado_nota  ";
         return sql;
     }
 
-    public String getInsertarCabeceraRecordAcademico(String codigo,String alumno,String mension,String fecha_inico,String fecha_fin) {
+    public String getInsertarCabeceraRecordAcademico(String codigo, String alumno, String mension, String fecha_inico) {
         String sql = "";
-        sql += "insert into yavirac_nota_cab_rec_acad(ide_ynocra, ide_yaldap, ide_ystmen, fecha_inicio_ynocra, fecha_fin_ynocra)\n"
-                + "values ("+codigo+", "+alumno+", "+mension+", '"+fecha_inico+"', '"+fecha_fin+"')";
+        sql += "insert into yavirac_nota_cab_rec_acad(ide_ynocra, ide_yaldap, ide_ystmen, fecha_inicio_ynocra)\n"
+                + "values (" + codigo + ", " + alumno + ", " + mension + ", '" + fecha_inico + "')";
         return sql;
     }
-
 }
