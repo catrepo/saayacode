@@ -66,10 +66,10 @@ public class RegistroNota extends Pantalla {
 
             bar_botones.getBot_insertar().setRendered(false);
             bar_botones.getBot_eliminar().setRendered(false);
-            //bar_botones.getBot_atras().setRendered(false);
-            //bar_botones.getBot_fin().setRendered(false);
-            //bar_botones.getBot_siguiente().setRendered(false);
-            //bar_botones.getBot_inicio().setRendered(false);
+            bar_botones.getBot_atras().setRendered(false);
+            bar_botones.getBot_fin().setRendered(false);
+            bar_botones.getBot_siguiente().setRendered(false);
+            bar_botones.getBot_inicio().setRendered(false);
 
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
@@ -97,8 +97,6 @@ public class RegistroNota extends Pantalla {
             bot_nota.setMetodo("registrarNota");
             bar_botones.agregarBoton(bot_nota);
 
-            
-
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
             eti_notificacion.setId("eti_notificacion");
@@ -119,7 +117,6 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ystmal").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ynopae").setAutoCompletar();
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
-            tab_cabecera_nota.getColumna("ide_ynopae").setMetodoChange("bloquearRegistroNota");
             tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_cabecera_nota.getColumna("detalle_ynocan").setLectura(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
@@ -127,9 +124,10 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
             tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
-            //tab_cabecera_nota.o
-            tab_cabecera_nota.onSelect("bloquearRegistroNota");
+            //tab_cabecera_nota.getColumnas().
             tab_cabecera_nota.setRows(5);
+            //tab_cabecera_nota.setTipoFormulario(true);
+            //tab_cabecera_nota.getGrid().setColumns(8);
             tab_cabecera_nota.dibujar();
 
             PanelTabla pa_cabecera_nota = new PanelTabla();
@@ -188,6 +186,7 @@ public class RegistroNota extends Pantalla {
             dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
             dia_dialogo.setDialogo(gri_cuerpo);
             agregarComponente(dia_dialogo);
+            bloquearNota();
 
         } else {
             utilitario.agregarNotificacionInfo("Mensaje,", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
@@ -198,28 +197,18 @@ public class RegistroNota extends Pantalla {
     String documento = "";
     String ide_docente = "";
 
-    public void bloquearRegistroNota() {
-        tab_detalle_nota.setCondicion("ide_ynocan="+tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"));
-       tab_detalle_nota.ejecutarSql();
-       
-        utilitario.agregarMensaje("ESTOY", docente);
-        /*boolean boo = true;
-        if (tab_detalle_nota.getTotalFilas() > 0) {
-            if (tab_detalle_nota.getValor("bloqueo_ynodet").equals("true")) {
-               /* for (int i = 0; i < tab_detalle_nota.getTotalFilas(); i++) {
-                    tab_detalle_nota.getColumna("nota_ynodet").setLectura(boo);
-                }
-                utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
-            } else if(tab_detalle_nota.getValor("bloqueo_ynodet").equals("false")){
-                /*for (int i = 0; i < tab_detalle_nota.getTotalFilas(); i++) {
-                    tab_detalle_nota.getFilas().get(i).setLectura(false);
-                }
-                utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
-            }
-            
-            utilitario.addUpdate("tab_cabecera_nota,tab_detalle_nota");
+    public void bloquearNota() {
+        Tabla tabla_foco=utilitario.getTablaisFocus();
+        if(tabla_foco != null){
+        tabla_foco.inicio();
         }
-        */
+        if (tab_cabecera_nota.isFocus() && tab_cabecera_nota.getTotalFilas() > 0) {
+            activarCampoDetalleNota(true);
+        }
+    }
+
+    public void activarCampoDetalleNota(boolean estado) {
+        tab_detalle_nota.getColumna("nota_ynodet").setLectura(estado);
     }
 
     public void registrarNota() {

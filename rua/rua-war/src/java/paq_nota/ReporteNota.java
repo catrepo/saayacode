@@ -15,7 +15,6 @@ import framework.componentes.Grid;
 import framework.componentes.Imagen;
 import framework.componentes.ListaSeleccion;
 import framework.componentes.Reporte;
-import framework.componentes.Tabla;
 import framework.componentes.VisualizarPDF;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +62,7 @@ public class ReporteNota extends Pantalla {
 
             bar_botones.agregarComponente(new Etiqueta("Lista de Reportes"));
             com_reportes.setId("com_reportes");
-            com_reportes.setCombo(ser_estructura.getListaReportes(utilitario.getVariable("p_menu_reportes")));
+            com_reportes.setCombo(ser_estructura.getListaReportes(utilitario.getVariable("p_menu_rep_nota")));
             bar_botones.agregarComponente(com_reportes);
 
             bar_botones.agregarComponente(new Etiqueta("Periodo Académico "));
@@ -96,20 +95,12 @@ public class ReporteNota extends Pantalla {
             Grid gri_formulario = new Grid();
             gri_formulario.setColumns(4);
 
-            /*  lis_materia.setListaSeleccion("select a.ide_ypemad,detalle_ystmat,descripcion_ystnie,detalle_yhogra,d.descripcion_ystjor,detalle_ysttfe\n"
-                    + "from yavirac_perso_malla_docente a,(select ide_ystmal, detalle_ystmat, descripcion_ystnie,detalle_ysttfe from yavirac_stror_malla a,yavirac_stror_nivel_educacion b,yavirac_stror_materia c,\n"
-                    + "yavirac_stror_mension d,yavirac_stror_tipo_for_educaci e where a.ide_ystnie = b.ide_ystnie and a.ide_ystmat = c.ide_ystmat and a.ide_ystmen=d.ide_ystmen and d.ide_ysttfe=e.ide_ysttfe) b, \n"
-                    + "yavirac_hora_grupo_academic c,yavirac_stror_jornada  d\n"
-                    + "where a.ide_ystmal = b.ide_ystmal and a.ide_yhogra= c.ide_yhogra and ide_ystpea =2 and ide_ypedpe =" + ide_docente + " \n"
-                    + "and a.ide_ystjor= d.ide_ystjor \n"
-                    + "order by descripcion_ystnie,detalle_ystmat,descripcion_ystjor");
-             */
             lis_materia.setId("lis_materia");
             lis_materia.setListaSeleccion(ser_asistencia.getMateriaNivelDocente("-1", "2"));
             lis_materia.setLayout("pageDirection");
-            lis_actividad.setListaSeleccion("select ide_ynoace,descripcion_ynoace from yavirac_nota_actividad_evaluac");
+            lis_actividad.setListaSeleccion(ser_notas.getActividadEvaluacion("true,false"));
             lis_actividad.setLayout("pageDirection");
-            lis_parcial.setListaSeleccion("select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion");
+            lis_parcial.setListaSeleccion(ser_notas.getTipoEvaluacion("true,false"));
             lis_parcial.setLayout("pageDirection");
 
             Espacio esp = new Espacio();

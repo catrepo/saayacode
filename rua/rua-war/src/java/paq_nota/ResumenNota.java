@@ -323,7 +323,7 @@ public class ResumenNota extends Pantalla {
     }
 
     public void notaFinal() {
-        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPadreTercerNivel("1", "true"));
+        TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPadreSegundoNivel("1", "true"));
         for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
             for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
                 utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
