@@ -62,7 +62,7 @@ public class PeriodoAcademico extends Pantalla {
 
         //CONFIRMAR
         con_confirma.setId("con_confirma");
-        con_confirma.setMessage("Está seguro que desea cerrar el periodo academico");
+        con_confirma.setMessage("Está seguro que desea cerrar este periodo");
         con_confirma.setTitle("CERRAR PERIODO ACADEMICO");
         con_confirma.getBot_aceptar().setValue("Si");
         con_confirma.getBot_cancelar().setValue("No");
