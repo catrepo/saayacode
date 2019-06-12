@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="28" bottomMargin="28" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
-	<property name="ireport.zoom" value="1.948717100000002"/>
-	<property name="ireport.x" value="200"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="34" bottomMargin="34" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
+	<property name="ireport.zoom" value="1.331000000000002"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="ide_yaldap" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_sucu" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_empr" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["http://localhost:8080/rua-war"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select a.ide_ynocra,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,descripcion_ystmen,fecha_inicio_ynocra,fecha_fin_ynocra,detalle_ysttfe,
 b.ide_ystmal,f.ide_ystnie,descripcion_ystnie,detalle_ystmat,codigo_mate_ynodra, num_creditos_ynodra,extract(year from fecha_inicio_ystpea)||'-'||extract(year from fecha_final_ystpea) as periodo,
@@ -17,10 +29,11 @@ left join yavirac_stror_malla f on b.ide_ystmal=f.ide_ystmal
 left join yavirac_stror_nivel_educacion g on f.ide_ystnie=g.ide_ystnie
 left join yavirac_stror_materia h on f.ide_ystmat=h.ide_ystmat
 left join yavirac_stror_periodo_academic i on b.ide_ystpea=i.ide_ystpea
-left join yavirac_matri_numero_matricula j on b.ide_ymanum=b.ide_ymanum
+left join yavirac_matri_numero_matricula j on b.ide_ymanum=j.ide_ymanum
 left join yavirac_nota_estado_nota k on b.ide_ynoest=k.ide_ynoest
 left join yavirac_matri_tipo_reg_credito l on b.ide_ymatrc=l.ide_ymatrc
-where a.ide_yaldap=43
+where a.ide_yaldap=$P!{ide_yaldap}
+order by ide_ystnie
 ]]>
 	</queryString>
 	<field name="ide_ynocra" class="java.lang.Long"/>
@@ -58,89 +71,89 @@ where a.ide_yaldap=43
 	<group name="nivel">
 		<groupExpression><![CDATA[$F{ide_ystnie}]]></groupExpression>
 		<groupHeader>
-			<band height="38">
+			<band height="41">
 				<textField>
-					<reportElement uuid="dabcc480-25cb-405c-b2a3-e6c211f9bdc6" x="0" y="0" width="100" height="11"/>
+					<reportElement uuid="dabcc480-25cb-405c-b2a3-e6c211f9bdc6" x="0" y="3" width="100" height="11"/>
 					<textElement>
-						<font size="8" isBold="true" isUnderline="false"/>
+						<font size="7" isBold="true" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystnie}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="16" width="20" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="19" width="20" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Nº.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="20" y="16" width="43" height="11"/>
-					<textElement textAlignment="Justified" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="20" y="19" width="43" height="11"/>
+					<textElement verticalAlignment="Middle">
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Código]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="63" y="16" width="135" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="63" y="19" width="135" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Materia]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="198" y="16" width="40" height="22"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="198" y="19" width="40" height="22"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Nº Créditos]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="238" y="16" width="50" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="238" y="19" width="45" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Período]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="288" y="16" width="43" height="22"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="283" y="19" width="40" height="22"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Nº Matricula]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="331" y="16" width="45" height="11"/>
-					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="323" y="19" width="46" height="11"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Calificación]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="376" y="16" width="50" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="369" y="19" width="50" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Estado]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="426" y="16" width="71" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="419" y="19" width="65" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Tipo Aprobación]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="497" y="16" width="58" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="484" y="19" width="71" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Resolución]]></text>
@@ -155,184 +168,194 @@ where a.ide_yaldap=43
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20" splitType="Stretch">
+		<band height="136" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="ab3fd77c-3610-4fbc-86b4-4bbfaf4eca70" x="0" y="0" width="555" height="20"/>
+				<reportElement uuid="ab3fd77c-3610-4fbc-86b4-4bbfaf4eca70" x="0" y="44" width="555" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[RECORD ACADÉMICO]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="71" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="11" width="152" height="11"/>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="77" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DOCUMENTO DE IDENTIFICACIÓN:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="22" width="152" height="11"/>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="88" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CARRERA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="33" width="152" height="11"/>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="99" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MODALIDAD:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="44" width="152" height="11"/>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="110" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA INICIO CARRERA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="55" width="152" height="11"/>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="121" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA CONCLUSIÓN DE ESTUDIOS:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="11" width="403" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="77" width="403" height="11"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{doc_identidad_yaldap}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="22" width="403" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="88" width="403" height="11"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion_ystmen}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="33" width="403" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="99" width="403" height="11"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_ysttfe}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="44" width="403" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="110" width="403" height="11"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_ynocra}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="55" width="403" height="11"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="121" width="403" height="11"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{fecha_fin_ynocra} == null ? "*Fecha pendiente de revision" : $F{fecha_fin_ynocra} )]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="0" width="152" height="11"/>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="66" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ALUMNO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="0" width="403" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="66" width="403" height="11"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement uuid="5c358811-9cf4-4919-a875-6de7b531417d" x="0" y="0" width="555" height="42"/>
+				<subreportParameter name="ide_sucu">
+					<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ide_empr">
+					<subreportParameterExpression><![CDATA[$P{ide_empr}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera_record.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="11" splitType="Stretch">
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="0" y="0" width="20" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="0" y="0" width="20" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{numeracion}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="20" y="0" width="43" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="20" y="0" width="43" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigo_mate_ynodra}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="63" y="0" width="135" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="63" y="0" width="135" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{detalle_ystmat} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{detalle_ystmat}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="198" y="0" width="40" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="198" y="0" width="40" height="11"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{num_creditos_ynodra}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="238" y="0" width="50" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="238" y="0" width="45" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{periodo}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="288" y="0" width="43" height="11" isRemoveLineWhenBlank="true"/>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="283" y="0" width="40" height="11" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{abreviatura_ymanum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="331" y="0" width="45" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="323" y="0" width="46" height="11"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nota_ynodra}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="376" y="0" width="50" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="369" y="0" width="50" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_ynoest}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="426" y="0" width="71" height="11"/>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="419" y="0" width="65" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_ymatrc}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="497" y="0" width="58" height="11" isRemoveLineWhenBlank="true"/>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="484" y="0" width="71" height="11" isRemoveLineWhenBlank="true"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{observacion_ynodra}]]></textFieldExpression>
@@ -350,14 +373,14 @@ where a.ide_yaldap=43
 			<staticText>
 				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="4" width="152" height="11"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL MATERIAS:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="4" width="50" height="11"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
