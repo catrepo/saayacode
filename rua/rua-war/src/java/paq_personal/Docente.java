@@ -15,6 +15,7 @@ import framework.componentes.Grid;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import javax.ejb.EJB;
+import paq_asistencia.ejb.ServicioAsistencia;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_nota.ejb.ServicioNotas;
 import paq_personal.ejb.ServicioPersonal;
@@ -29,6 +30,7 @@ public class Docente extends Pantalla {
     private Tabla tab_tipo_educacion = new Tabla(); //intanciamos componente tabla
     private Tabla tab_actividad_docente = new Tabla();
     private Combo com_periodo_academico = new Combo();
+    private Combo com_materia_docente = new Combo();
     private AutoCompletar aut_alumno = new AutoCompletar();
     private Boton bot_clean = new Boton();
 
@@ -40,6 +42,8 @@ public class Docente extends Pantalla {
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     @EJB
     private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+    @EJB
+    private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
 
     public Docente() {
         aut_alumno.setId("aut_alumno");
@@ -66,7 +70,7 @@ public class Docente extends Pantalla {
         tab_tipo_educacion.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
         //crear formularios
         tab_tipo_educacion.setTipoFormulario(true);//para que se haga un formulario
-        tab_tipo_educacion.getGrid().setColumns(6);//numero de columnas del formulario
+        tab_tipo_educacion.getGrid().setColumns(8);//numero de columnas del formulario
         //*****************************************************************************
         tab_tipo_educacion.getColumna("ide_ypedpe").setNombreVisual("CÓDIGO");
         tab_tipo_educacion.getColumna("ide_ysttis").setNombreVisual("TIPO SANGRE");
@@ -96,20 +100,28 @@ public class Docente extends Pantalla {
         pat_tipo_educacion.setId("pat_tipo_educacion");
         pat_tipo_educacion.setPanelTabla(tab_tipo_educacion);
 
-        //GRID
+           //GRID
         Grid gri_cuerpo = new Grid();
-        gri_cuerpo.setColumns(2);
+        gri_cuerpo.setColumns(4);
         gri_cuerpo.setWidth("100%");
         gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
 
+        
+        com_periodo_academico.setId("com_periodo_academico");
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
+        com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
+        
+        com_materia_docente.setId("com_materia_docente");
+        com_materia_docente.setMetodo("mostrarResumen");
+        com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente("-1", "2"));
+        
         gri_cuerpo.getChildren().add(new Etiqueta("Periodo Academico "));
-        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
-        com_periodo_academico.setMetodo("mostrarActividad");
         gri_cuerpo.getChildren().add(com_periodo_academico);
+        gri_cuerpo.getChildren().add(new Etiqueta("Curso"));
+        gri_cuerpo.getChildren().add(com_materia_docente);
 
         //TABLA ACTIVIDAD DOCENTE
         tab_actividad_docente.setId("tab_actividad_docente");
-        //tab_actividad_docente.setIdCompleto("tab_tabulador:tab_actividad_docente");
         tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 2);
         tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
         tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("PERIODO ACTIVIDAD EVALUACIÓN");
@@ -117,16 +129,24 @@ public class Docente extends Pantalla {
         tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
         tab_actividad_docente.getColumna("ide_ypedpe").setNombreVisual("DOCENTE");
         tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual(" % EVALUACIÓN");
+        tab_actividad_docente.getColumna("ide_ypedpe").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystmal").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystmen").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystnie").setVisible(false);
+        tab_actividad_docente.getColumna("ide_yhogra").setVisible(false);
+        tab_actividad_docente.getColumna("ide_ystjor").setVisible(false);
         tab_actividad_docente.setHeader(gri_cuerpo);
         tab_actividad_docente.dibujar();
         limpiar();
         PanelTabla pa_actividad_docente = new PanelTabla();
         pa_actividad_docente.setId("pa_actividad_docente");
         pa_actividad_docente.setPanelTabla(tab_actividad_docente);
-        
+
         Division div_tipo_educacion = new Division();
-        div_tipo_educacion.dividir2(pat_tipo_educacion, pa_actividad_docente, "50%", "h");
+        div_tipo_educacion.dividir2(pat_tipo_educacion, pa_actividad_docente, "40%", "h");
         agregarComponente(div_tipo_educacion);
+        
+     
     }
 
     public void selecionoAutocompletar() {
@@ -136,7 +156,41 @@ public class Docente extends Pantalla {
         utilitario.addUpdate("tab_tipo_educacion");
     }
 
+    public void filtroComboPeriodoAcademico() {
+        if (aut_alumno.getValue() == null) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Por favor, Seleccione o ingrese el docente");
+            return;
+        } else {
+            System.out.println("periodo " + com_periodo_academico.getValue() + " docente " + aut_alumno.getValor());
+            com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), aut_alumno.getValor()));
+            //utilitario.addUpdate("com_materia_docente");
+            utilitario.addUpdate("com_materia_docente");
+        }
+    }
+    
     public void mostrarActividad() {
+        if (com_periodo_academico.getValue() == null) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Por Favor, Seleccione el Periodo Académico");
+            return;
+        } else {
+            String cod = com_materia_docente.getValue() + "";
+            TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
+            String mension = tab_consuta.getValor("ide_ystmen");
+            TablaGenerica tab_formacion = utilitario.consultar(ser_notas.getFormacion(mension));
+            tab_actividad_docente.setCondicion("ide_ypedpe=" + tab_consuta.getValor("ide_ypedpe") + "and ide_ystmal=" + tab_consuta.getValor("ide_ystmal")
+                    + " and ide_ystnie=" + tab_consuta.getValor("ide_ystnie") + " and ide_yhogra=" + tab_consuta.getValor("ide_yhogra")
+                    + " and ide_ystjor=" + tab_consuta.getValor("ide_ystjor") + "and ide_ystmen=" + tab_consuta.getValor("ide_ystmen")
+                    + " and ide_ynopae in (select ide_ynopae from yavirac_nota_periodo_activ_eva where ide_ynopee in "
+                    + "(select ide_ynopee from yavirac_nota_periodo_evaluacio where ide_ystpea=" + com_periodo_academico.getValue() + ") "
+                    + " and ide_ynoace in (select ide_ynoace from yavirac_nota_actividad_evaluac where ide_ynoace in \n"
+                    + "(select ide_ynoace from yavirac_nota_actividad_tipo_for where ide_ysttfe=" + tab_formacion.getValor("ide_ysttfe") + ")))");
+            tab_actividad_docente.ejecutarSql();
+            tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true,false", tab_formacion.getValor("ide_ysttfe")));
+
+        }
+    }
+    
+    public void mostrarActivida() {
         if (aut_alumno.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Por favor, Seleccione o ingrese el docente");
             return;
@@ -206,14 +260,6 @@ public class Docente extends Pantalla {
         this.tab_actividad_docente = tab_actividad_docente;
     }
 
-    public Combo getCom_periodo_academico() {
-        return com_periodo_academico;
-    }
-
-    public void setCom_periodo_academico(Combo com_periodo_academico) {
-        this.com_periodo_academico = com_periodo_academico;
-    }
-
     public AutoCompletar getAut_alumno() {
         return aut_alumno;
     }
@@ -229,5 +275,4 @@ public class Docente extends Pantalla {
     public void setBot_clean(Boton bot_clean) {
         this.bot_clean = bot_clean;
     }
-
 }
