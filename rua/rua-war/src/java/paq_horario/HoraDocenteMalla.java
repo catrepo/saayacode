@@ -59,6 +59,7 @@ public class HoraDocenteMalla extends Pantalla {
         tab_docente_malla.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_docente_malla.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
         tab_docente_malla.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());
+        tab_docente_malla.getColumna("ide_ystmal").setAutoCompletar();
         tab_docente_malla.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true"));
         tab_docente_malla.getColumna("ide_ypemad").setNombreVisual("CODIGO");
         tab_docente_malla.getColumna("ide_yhodom").setNombreVisual("CÓDIGO PRINCIPAL");
@@ -67,6 +68,9 @@ public class HoraDocenteMalla extends Pantalla {
         tab_docente_malla.getColumna("ide_ypedpe").setVisible(false);
         tab_docente_malla.getColumna("ide_ystmal").setNombreVisual("MALLA ACADÉMICA");
         tab_docente_malla.getColumna("ide_yhogra").setNombreVisual("GRUPOS / PARALELOS");
+        tab_docente_malla.getColumna("ide_ystmal").setRequerida(true);
+        tab_docente_malla.getColumna("ide_yhogra").setRequerida(true);
+        tab_docente_malla.getColumna("ide_ystjor").setRequerida(true);
         tab_docente_malla.dibujar();
         /*agregarComponente(tab_hora_dia);*/
 
@@ -174,6 +178,7 @@ public class HoraDocenteMalla extends Pantalla {
                 tab_docente_alumno.guardar();
                 guardarPantalla();
                 utilitario.addUpdate("tab_docente_alumno");
+                //utilitario.agregarMensaje("Se ", "");
             }
         }
 
