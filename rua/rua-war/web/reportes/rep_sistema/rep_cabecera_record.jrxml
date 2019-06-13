@@ -53,9 +53,9 @@ and s.ide_sucu=$P!{ide_sucu}]]>
 				<textFieldExpression><![CDATA["Teléfono: "+$F{telefono_empr}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="65239882-21c6-4dfd-b01e-2e862b9bc656" x="73" y="0" width="409" height="18"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true" pdfFontName="Courier-Bold" isPdfEmbedded="true"/>
+				<reportElement uuid="5fb974c1-e5a8-4a01-a9c9-5367327edb3c" x="73" y="0" width="409" height="18"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_empr}]]></textFieldExpression>
 			</textField>
