@@ -28,6 +28,8 @@ public class Matriculas extends Pantalla {
     private Tabla tab_matriculas = new Tabla();//instanciar tabla del framework
     private Tabla tab_documento_entregado = new Tabla();
     private Tabla tab_registro_credito = new Tabla();
+    private Tabla tab_detalle_record = new Tabla();
+    private Tabla tab_cabecera_record = new Tabla();
     private Combo com_periodo_academico = new Combo();
     private Boton bot_clean = new Boton();
     private SeleccionTabla sel_registra_alumno = new SeleccionTabla();
@@ -223,25 +225,78 @@ public class Matriculas extends Pantalla {
             vipdf_comprobante.setId("vipdf_comprobante");
             vipdf_comprobante.setTitle("CERTIFICADO DE MATRICULA");
             agregarComponente(vipdf_comprobante);
+
+            tab_detalle_record.setId("tab_detalle_record");
+            tab_detalle_record.setTabla("yavirac_nota_det_rec_acad", "ide_ynodra", 4);
+
+            tab_cabecera_record.setId("yavirac_nota_cab_rec_acad");
+            tab_cabecera_record.setTabla("yavirac_nota_det_rec_acad", "ide_ynocra", 5);
+
         } else {
             utilitario.agregarNotificacionInfo("ADVERTENCIA", "EL usuario ingresado no registra permisos para el registro de Matriculas. Consulte con el Administrador");
         }
     }
 
-    public void registrarRecordAcademico() {
+    /*public void registrarRecordAcademico() {
         TablaGenerica tab_consulta = utilitario.consultar("select * from yavirac_nota_cab_rec_acad  where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap"));
         if (tab_consulta.getTotalFilas() > 0) {
             if (tab_matriculas.getValor("ide_ystnie").equals(utilitario.getVariable("p_nivel_inicio"))) {
-                utilitario.getConexion().ejecutarSql("update yavirac_nota_cab_rec_acad set fecha_inicio_ynocra='"+tab_matriculas.getValor("fecha_ymamat")+"' where ide_yaldap="+tab_matriculas.getValor("ide_yaldap"));
-            } else if (tab_matriculas.getValor("ide_ystnie").equals(utilitario.getVariable("p_nivel_fin"))) {
-                utilitario.getConexion().ejecutarSql("update yavirac_nota_cab_rec_acad set fecha_fin_ynocra='"+tab_matriculas.getValor("fecha_ymamat")+"' where ide_yaldap="+tab_matriculas.getValor("ide_yaldap"));
+                utilitario.getConexion().ejecutarSql("update yavirac_nota_cab_rec_acad set fecha_inicio_ynocra='" + tab_matriculas.getValor("fecha_ymamat") + "' where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap"));
             }
         } else {
 
-            /*TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_cab_rec_acad", "ide_ynocra"));
-            utilitario.getConexion().ejecutarSql(ser_notas.getInsertarCabeceraRecordAcademico(tab_mximo.getValor("maximo"), tab_matriculas.getValor("ide_yaldap"), tab_matriculas.getValor("ide_ystmen"), tab_matriculas.getValor("fecha_ymamat"), tab_matriculas.getValor("fecha_ymamat")));
-             */
+            TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_cab_rec_acad", "ide_ynocra"));
+            //utilitario.getConexion().ejecutarSql(ser_notas.getInsertarCabeceraRecordAcademico(tab_mximo.getValor("maximo"), tab_matriculas.getValor("ide_yaldap"), tab_matriculas.getValor("ide_ystmen"), tab_matriculas.getValor("fecha_ymamat"), tab_matriculas.getValor("fecha_ymamat")));
+
         }
+    }*/
+    public void registrarRecordAcademico() {
+        String str_seleccionado = sel_registra_alumno.getValorSeleccionado();
+        TablaGenerica tab_cabecera = utilitario.consultar("select * from yavirac_nota_cab_rec_acad where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap") + "");
+
+        if (tab_cabecera.getTotalFilas() > 0) {
+            TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+            TablaGenerica tab_periodo = utilitario.consultar("select * from yavirac_matri_periodo_matric  where ide_ymaper=" + com_periodo_academico.getValue().toString() + "");
+
+            System.out.println("estoy en el metodo verdadero");
+            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                System.out.println("FOR 1: "+i );
+                //TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_det_rec_acad", "ide_ynodra"));
+                tab_detalle_record.insertar();
+                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                tab_detalle_record.setValor("ide_ystpea", tab_periodo.getValor("ide_ystpea"));
+                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+            }
+            tab_detalle_record.guardar();
+            guardarPantalla();
+        } else {
+            TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+            TablaGenerica tab_periodo = utilitario.consultar("select * from yavirac_matri_periodo_matric  where ide_ymaper=" + com_periodo_academico.getValue().toString() + "");
+            System.out.println("estoy en el metodo falso");
+            tab_cabecera_record.insertar();
+            tab_cabecera_record.setValor("ide_yaldap", tab_matriculas.getValor("ide_yaldap"));
+            tab_cabecera_record.setValor("ide_ystmen", tab_matriculas.getValor("ide_ystmen"));
+            tab_cabecera_record.guardar();
+            guardarPantalla();
+            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                System.out.println("FOR 1: "+i );
+                tab_detalle_record.insertar();
+                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                tab_detalle_record.setValor("ide_ystpea", tab_periodo.getValor("ide_ystpea"));
+                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+            }
+            tab_detalle_record.guardar();
+            guardarPantalla();
+        }
+
     }
 
     public void generarPDF() {
@@ -490,6 +545,22 @@ public class Matriculas extends Pantalla {
 
     public void setVipdf_comprobante(VisualizarPDF vipdf_comprobante) {
         this.vipdf_comprobante = vipdf_comprobante;
+    }
+
+    public Tabla getTab_detalle_record() {
+        return tab_detalle_record;
+    }
+
+    public void setTab_detalle_record(Tabla tab_detalle_record) {
+        this.tab_detalle_record = tab_detalle_record;
+    }
+
+    public Tabla getTab_cabecera_record() {
+        return tab_cabecera_record;
+    }
+
+    public void setTab_cabecera_record(Tabla tab_cabecera_record) {
+        this.tab_cabecera_record = tab_cabecera_record;
     }
 
 }
