@@ -50,9 +50,12 @@ public class ServicioNotas {
      * sea true, false, o ambos.
      * @return sql del tipo de evaluacion
      */
-    public String getPeriodoEvaluacion(String activo) {
+    public String getPeriodoEvaluacion(String periodo, String estado) {
         String sql = "";
-        sql += "select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion  where activo_ynotie in (" + activo + ")";
+        sql += "select ide_ynopee,descripcion_ynotie \n"
+                + "from yavirac_nota_periodo_evaluacio a\n"
+                + "left join yavirac_nota_tipo_evaluacion b on a.ide_ynotie=b.ide_ynotie\n"
+                + "where ide_ystpea="+periodo+" and activo_ynopee in (" + estado + ")";
         return sql;
     }
 
@@ -95,24 +98,7 @@ public class ServicioNotas {
         return sql;
     }
 
-    /**
-     * Retorna periodo tipo evaluacion
-     *
-     * @param codigo.- permite crear una tabla maestro segun el periodo
-     * academico.
-     * @return sql del tipo de evaluacion
-     */
-    public String getperiodotipoevaluacion(String codigo) {
-        String sql = "";
-        sql += "select pe.ide_ynopee,t.descripcion_ynotie from yavirac_stror_periodo_academic p\n"
-                + "join yavirac_nota_periodo_evaluacio pe\n"
-                + "on p.ide_ystpea=pe.ide_ystpea\n"
-                + "join yavirac_nota_tipo_evaluacion t\n"
-                + "on t.ide_ynotie = pe.ide_ynotie\n"
-                + "where p.ide_ystpea in (" + codigo + ")";
-        return sql;
-    }
-
+    
     /**
      * Retorna periodo tipo evaluacion
      *
@@ -331,7 +317,8 @@ public class ServicioNotas {
                 + "from yavirac_nota_peso_nota a\n"
                 + "left join yavirac_nota_tipo_evaluacion b on a.ide_ynotie=b.ide_ynotie \n"
                 + "where nivel_ynopen in (" + nivel + ") and bloqueo_ynopen in(" + estado + ") and ide_ysttfe in (" + formacion + ") and bloquear_ynotie= false";
-        */return sql;
+         */
+        return sql;
     }
 
     public String getPesoDetalleNota(String codigo) {
@@ -538,17 +525,17 @@ public class ServicioNotas {
      * sea true, false, o ambos.
      * @return sql del tipo de evaluacion
      */
-    public String getBloquearParcial(String estado,String parcial,String periodo) {
+    public String getBloquearParcial(String estado, String parcial, String periodo) {
         String sql = "";
-        sql += "update	yavirac_nota_peso_nota set bloqueo_ynopen="+estado+" where ide_ynotie="+parcial+" and ide_ystpea="+periodo+"";
+        sql += "update	yavirac_nota_peso_nota set bloqueo_ynopen=" + estado + " where ide_ynotie=" + parcial + " and ide_ystpea=" + periodo + "";
         System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
-    public String getBloquearActividad(String estado,String codigo) {
+    public String getBloquearActividad(String estado, String codigo) {
         String sql = "";
         sql += "update  yavirac_nota_periodo_activ_eva set\n"
-                + "activo_ynopae="+estado+"\n"
+                + "activo_ynopae=" + estado + "\n"
                 + "where ide_ynopee=" + codigo + " ";
         System.out.println("<<<<< Impimiendo" + sql);
         return sql;
