@@ -167,14 +167,14 @@ public class ReporteNota extends Pantalla {
     public void abrirListaReportes() {
         if (com_reportes.getValue() != null) {
             if (com_periodo_academico.getValue() != null) {
-                if (lis_materia.getSeleccionados() != "") {
+                /* if (lis_materia.getSeleccionados() != "") {
                     materia = lis_materia.getSeleccionados();
                     if (lis_actividad.getSeleccionados() != "") {
                         actividad = lis_actividad.getSeleccionados();
                         if (lis_parcial.getSeleccionados() != "") {
-                            parcial = lis_parcial.getSeleccionados();
-                            generarPDF();
-                        } else {
+                            parcial = lis_parcial.getSeleccionados();*/
+                generarPDF();
+                /* } else {
                             utilitario.agregarMensajeInfo("Seleccione el parcial,", "Seleccione al menos un registro");
                         }
                     } else {
@@ -182,7 +182,7 @@ public class ReporteNota extends Pantalla {
                     }
                 } else {
                     utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
-                }
+                }*/
             } else {
                 utilitario.agregarMensajeInfo("Mensaje,", "Seleccione el periodod académico");
             }
@@ -194,7 +194,6 @@ public class ReporteNota extends Pantalla {
 
     public void generarPDF() {
         TablaGenerica tab_reportes = utilitario.consultar("select * from sis_reporte where ide_repo=" + com_reportes.getValue());
-        TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
 
         String nombre_reporte = "";
         String reporte = "";
@@ -202,78 +201,128 @@ public class ReporteNota extends Pantalla {
         reporte = tab_reportes.getValor("path_repo");
 
         if (nombre_reporte.equals("Nota Final")) {
+            if (lis_materia.getSeleccionados() != "") {
+                materia = lis_materia.getSeleccionados();
 
-            Map map_parametros = new HashMap();
-            map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-            map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-            map_parametros.put("ide_ypedpe", ide_docente);
-            map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-            map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-            map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
-            vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
-            vipdf_comprobante.dibujar();
-            utilitario.addUpdate("vipdf_comprobante");
+                TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
+                Map map_parametros = new HashMap();
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
+                map_parametros.put("ide_ypedpe", ide_docente);
+                map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
+                map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
+                map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
+                vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                vipdf_comprobante.dibujar();
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
+            }
         } else if (nombre_reporte.equals("Nota Final por Parcial")) {
-
-            Map map_parametros = new HashMap();
-            map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-            map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-            map_parametros.put("ide_ypedpe", ide_docente);
-            map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-            map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-            map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
-            map_parametros.put("ide_ynotie", parcial);
-            vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
-            vipdf_comprobante.dibujar();
-            utilitario.addUpdate("vipdf_comprobante");
-
+            if (lis_materia.getSeleccionados() != "") {
+                materia = lis_materia.getSeleccionados();
+                TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
+                if (lis_parcial.getSeleccionados() != "") {
+                    parcial = lis_parcial.getSeleccionados();
+                    Map map_parametros = new HashMap();
+                    map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                    map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                    map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
+                    map_parametros.put("ide_ypedpe", ide_docente);
+                    map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
+                    map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
+                    map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
+                    map_parametros.put("ide_ynotie", parcial);
+                    vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                    vipdf_comprobante.dibujar();
+                    utilitario.addUpdate("vipdf_comprobante");
+                } else {
+                    utilitario.agregarMensajeInfo("Seleccione el parcial,", "Seleccione al menos un registro");
+                }
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
+            }
         } else if (nombre_reporte.equals("Lista Estudiantes Exonerados")) {
+            if (lis_materia.getSeleccionados() != "") {
+                materia = lis_materia.getSeleccionados();
+                TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
+                if (lis_parcial.getSeleccionados() != "") {
+                    parcial = lis_parcial.getSeleccionados();
 
-            Map map_parametros = new HashMap();
-            map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-            map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-            map_parametros.put("ide_ypedpe", ide_docente);
-            map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-            map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-            map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
-            map_parametros.put("ide_ynotie", parcial);
-            vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
-            vipdf_comprobante.dibujar();
-            utilitario.addUpdate("vipdf_comprobante");
+                    Map map_parametros = new HashMap();
+                    map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                    map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                    map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
+                    map_parametros.put("ide_ypedpe", ide_docente);
+                    map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
+                    map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
+                    map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
+                    map_parametros.put("ide_ynotie", parcial);
+                    vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                    vipdf_comprobante.dibujar();
+                    utilitario.addUpdate("vipdf_comprobante");
+                } else {
+                    utilitario.agregarMensajeInfo("Seleccione el parcial,", "Seleccione al menos un registro");
+                }
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
+            }
 
         } else if (nombre_reporte.equals("Lista Estudiantes Examen Recuperación")) {
 
-            Map map_parametros = new HashMap();
-            map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-            map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-            map_parametros.put("ide_ypedpe", ide_docente);
-            map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-            map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-            map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
-            map_parametros.put("ide_ynotie", parcial);
-            vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
-            vipdf_comprobante.dibujar();
-            utilitario.addUpdate("vipdf_comprobante");
-
+            if (lis_materia.getSeleccionados() != "") {
+                materia = lis_materia.getSeleccionados();
+                TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
+                if (lis_parcial.getSeleccionados() != "") {
+                    parcial = lis_parcial.getSeleccionados();
+                    Map map_parametros = new HashMap();
+                    map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                    map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                    map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
+                    map_parametros.put("ide_ypedpe", ide_docente);
+                    map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
+                    map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
+                    map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
+                    map_parametros.put("ide_ynotie", parcial);
+                    vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                    vipdf_comprobante.dibujar();
+                    utilitario.addUpdate("vipdf_comprobante");
+                } else {
+                    utilitario.agregarMensajeInfo("Seleccione el parcial,", "Seleccione al menos un registro");
+                }
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
+            }
         } else if (nombre_reporte.equals("Nota Final por Actividades")) {
-
-            Map map_parametros = new HashMap();
-            map_parametros.put("nombre", utilitario.getVariable("NICK"));
-            map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-            map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-            map_parametros.put("ide_ypedpe", ide_docente);
-            map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-            map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-            map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
-            map_parametros.put("ide_ynotie", parcial);
-            map_parametros.put("ide_ynoace", actividad);
-            vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
-            vipdf_comprobante.dibujar();
-            utilitario.addUpdate("vipdf_comprobante");
+            if (lis_materia.getSeleccionados() != "") {
+                materia = lis_materia.getSeleccionados();
+                if (lis_actividad.getSeleccionados() != "") {
+                    actividad = lis_actividad.getSeleccionados();
+                    TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
+                    if (lis_parcial.getSeleccionados() != "") {
+                        parcial = lis_parcial.getSeleccionados();
+                        Map map_parametros = new HashMap();
+                        map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                        map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                        map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
+                        map_parametros.put("ide_ypedpe", ide_docente);
+                        map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
+                        map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
+                        map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
+                        map_parametros.put("ide_ynotie", parcial);
+                        map_parametros.put("ide_ynoace", actividad);
+                        vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
+                        vipdf_comprobante.dibujar();
+                        utilitario.addUpdate("vipdf_comprobante");
+                    } else {
+                        utilitario.agregarMensajeInfo("Seleccione el parcial,", "Seleccione al menos un registro");
+                    }
+                } else {
+                    utilitario.agregarMensajeInfo("Seleccione la actividad de evaluación,", "Seleccione al menos un registro");
+                }
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
+            }
         }
     }
 
