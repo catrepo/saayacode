@@ -237,6 +237,55 @@ public class Matriculas extends Pantalla {
         }
     }
 
+     public void registrarRecordAcademico() {
+        String str_seleccionado = sel_registra_alumno.getValorSeleccionado();
+        TablaGenerica tab_cabecera = utilitario.consultar("select * from yavirac_nota_cab_rec_acad where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap") + "");
+
+        if (tab_cabecera.getTotalFilas() > 0) {
+            TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+            TablaGenerica tab_periodo = utilitario.consultar("select * from yavirac_matri_periodo_matric  where ide_ymaper=" + com_periodo_academico.getValue().toString() + "");
+
+            System.out.println("estoy en el metodo verdadero");
+            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                System.out.println("FOR 1: "+i );
+                //TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_det_rec_acad", "ide_ynodra"));
+                tab_detalle_record.insertar();
+                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                tab_detalle_record.setValor("ide_ystpea", tab_periodo.getValor("ide_ystpea"));
+                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+            }
+            tab_detalle_record.guardar();
+            guardarPantalla();
+        } else {
+            TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+            TablaGenerica tab_periodo = utilitario.consultar("select * from yavirac_matri_periodo_matric  where ide_ymaper=" + com_periodo_academico.getValue().toString() + "");
+            System.out.println("estoy en el metodo falso");
+            tab_cabecera_record.insertar();
+            tab_cabecera_record.setValor("ide_yaldap", tab_matriculas.getValor("ide_yaldap"));
+            tab_cabecera_record.setValor("ide_ystmen", tab_matriculas.getValor("ide_ystmen"));
+            tab_cabecera_record.guardar();
+            guardarPantalla();
+            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                System.out.println("FOR 1: "+i );
+                tab_detalle_record.insertar();
+                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                tab_detalle_record.setValor("ide_ystpea", tab_periodo.getValor("ide_ystpea"));
+                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+            }
+            tab_detalle_record.guardar();
+            guardarPantalla();
+        }
+
+    }
+    
     /*public void registrarRecordAcademico() {
         TablaGenerica tab_consulta = utilitario.consultar("select * from yavirac_nota_cab_rec_acad  where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap"));
         if (tab_consulta.getTotalFilas() > 0) {
@@ -441,6 +490,7 @@ public class Matriculas extends Pantalla {
         if (tab_matriculas.guardar()) {
             if (tab_documento_entregado.guardar()) {
                 if (tab_registro_credito.guardar()) {
+                    registrarRecordAcademico();
                     guardarPantalla();
                 }
             }
