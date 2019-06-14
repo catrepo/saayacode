@@ -55,7 +55,7 @@ public class ServicioNotas {
         sql += "select ide_ynopee,descripcion_ynotie \n"
                 + "from yavirac_nota_periodo_evaluacio a\n"
                 + "left join yavirac_nota_tipo_evaluacion b on a.ide_ynotie=b.ide_ynotie\n"
-                + "where ide_ystpea="+periodo+" and activo_ynopee in (" + estado + ")";
+                + "where ide_ystpea=" + periodo + " and activo_ynopee in (" + estado + ")";
         return sql;
     }
 
@@ -98,7 +98,6 @@ public class ServicioNotas {
         return sql;
     }
 
-    
     /**
      * Retorna periodo tipo evaluacion
      *
@@ -551,6 +550,41 @@ public class ServicioNotas {
         String sql = "";
         sql += "insert into yavirac_nota_cab_rec_acad(ide_ynocra, ide_yaldap, ide_ystmen, fecha_inicio_ynocra)\n"
                 + "values (" + codigo + ", " + alumno + ", " + mension + ", '" + fecha_inico + "')";
+        return sql;
+    }
+
+    public String getBloquearRegistroAsistencia(String codigo, String estado) {
+        String sql = "";
+        sql += "update  yavirac_nota_periodo_evaluacio set activo_ynopee=" + estado + " where ide_ynopee=" + codigo + " ";
+        return sql;
+    }
+
+    public String getLecturaAsistencia(String parcial, String estado) {
+        String sql = "";
+        sql += "update yavirac_nota_det_asistencia a\n"
+                + "set  boqueado_ynodea =" + estado + "\n"
+                + "from (\n"
+                + "select ide_ynocaa,ide_ynotie\n"
+                + "from yavirac_nota_cabe_asistencia \n"
+                + "where ide_ynotie=" + parcial + "\n"
+                + ") as b\n"
+                + "where a.ide_ynocaa=b.ide_ynocaa";
+        return sql;
+    }
+
+    public String getLecturaNota(String parcial, String estado) {
+        String sql = "";
+        sql += "update yavirac_nota_detalle_nota a\n"
+                + "set bloqueo_ynodet = "+estado+"\n"
+                + "from( \n"
+                + "select a.ide_ynocan,a.ide_ynopae,ide_ynotie \n"
+                + "from yavirac_nota_cabecera_nota  a\n"
+                + "left join yavirac_nota_detalle_nota  b on a.ide_ynocan=b.ide_ynocan\n"
+                + "left join yavirac_nota_periodo_activ_eva  c on a.ide_ynopae=c.ide_ynopae\n"
+                + "left join yavirac_nota_periodo_evaluacio d on c.ide_ynopee=d.ide_ynopee\n"
+                + "where ide_ynotie="+parcial+"\n"
+                + ") b\n"
+                + "where a.ide_ynocan=b.ide_ynocan";
         return sql;
     }
 }
