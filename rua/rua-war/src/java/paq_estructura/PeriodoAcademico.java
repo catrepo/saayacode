@@ -25,6 +25,8 @@ public class PeriodoAcademico extends Pantalla {
     Tabla tab_periodo_academic = new Tabla(); // importar tabla 
     private SeleccionTabla sel_periodo_acedemico = new SeleccionTabla();
     private Confirmar con_confirma = new Confirmar();
+    private Tabla tab_detalle_record = new Tabla();
+    private Tabla tab_cabecera_record = new Tabla();
 
     @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
@@ -67,6 +69,12 @@ public class PeriodoAcademico extends Pantalla {
         con_confirma.getBot_aceptar().setValue("Si");
         con_confirma.getBot_cancelar().setValue("No");
         agregarComponente(con_confirma);
+
+        tab_detalle_record.setId("tab_detalle_record");
+        tab_detalle_record.setTabla("yavirac_nota_det_rec_acad", "ide_ynodra", 2);
+
+        tab_cabecera_record.setId("yavirac_nota_cab_rec_acad");
+        tab_cabecera_record.setTabla("yavirac_nota_det_rec_acad", "ide_ynocra", 3);
 
     }
 
@@ -116,10 +124,88 @@ public class PeriodoAcademico extends Pantalla {
     }
 
     public void confirmarCerrarPeriodo() {
+        //registrarRecordAcademico();
         utilitario.getConexion().ejecutarSql(ser_notas.getCerrarPeriodoAcademico(tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "ide_ystpea")));
-        utilitario.agregarMensajeInfo("Mensaje,", "PRUEBA FINALIZADA");
+        utilitario.agregarMensajeInfo("SUCCESSFULL,", "Exito");
         con_confirma.cerrar();
         utilitario.addUpdate("tab_periodo_academic");
+    }
+
+    public void registrarRecordAcademico() {
+        TablaGenerica tab_matriculas = utilitario.consultar("select ide_ymamat,ide_yaldap,ide_ystmen,a.ide_ystnie,ide_ystpea \n"
+                + "from yavirac_matri_matricula a\n"
+                + "left join yavirac_matri_periodo_matric b on a.ide_ymaper=b.ide_ymaper\n"
+                + "where ide_ystpea=" + tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "ide_ystpea"));
+        TablaGenerica tab_cabecera = utilitario.consultar("select * from yavirac_nota_cab_rec_acad where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap") + "");
+
+        if (tab_matriculas.getTotalFilas() > 0) {
+            if (tab_cabecera.getTotalFilas() > 0) {
+                utilitario.getConexion().ejecutarSql("delete from yavirac_nota_det_rec_acad where ide_ystpea=" + tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "ide_ystpea"));
+                //TablaGenerica tab_alumno=utilitario.consultar("");
+                TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+                //tab
+                for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                    TablaGenerica tab_nota = utilitario.consultar("select ide_ynoalr,a.ide_ypemda,nota_ynoalr,ide_yaldap\n"
+                            + "from yavirac_nota_alumno_resumen a  \n"
+                            + "left join yavirac_nota_peso_nota  b on a.ide_ynopen=b.ide_ynopen\n"
+                            + "left join yavirac_perso_malla_docen_alum c on a.ide_ypemda=c.ide_ypemda\n"
+                            + "where nivel_ynopen=1 and ide_yaldap=" + tab_matriculas.getValor(i, "ide_yaldap"));
+                    tab_detalle_record.insertar();
+                    tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                    tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                    tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                    tab_detalle_record.setValor("ide_ystpea", tab_matriculas.getValor("ide_ystpea"));
+                    tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                    tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                    tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+                    //tab_detalle_record.setValor("nota_ynodra", tab_nota.getValor(i, "nota_ynoalr"));
+                }
+                tab_detalle_record.guardar();
+                guardarPantalla();
+            }
+            /*if (tab_cabecera.getTotalFilas() > 0) {
+            TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+            TablaGenerica tab_periodo = utilitario.consultar("select * from yavirac_matri_periodo_matric  where ide_ymaper=" + tab_periodo_academic.getValor("ide_ystpea") + "");
+
+            System.out.println("estoy en el metodo verdadero");
+            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                System.out.println("FOR 1: " + i);
+                //TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_det_rec_acad", "ide_ynodra"));
+                tab_detalle_record.insertar();
+                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                tab_detalle_record.setValor("ide_ystpea", tab_periodo.getValor("ide_ystpea"));
+                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+            }
+            tab_detalle_record.guardar();
+            guardarPantalla();
+        } else {
+            TablaGenerica tab_malla = utilitario.consultar("select * from yavirac_stror_malla  where ide_ystnie=" + tab_matriculas.getValor("ide_ystnie") + " and ide_ystmen=" + tab_matriculas.getValor("ide_ystmen") + "");
+            TablaGenerica tab_periodo = utilitario.consultar("select * from yavirac_matri_periodo_matric  where ide_ymaper=" + com_periodo_academico.getValue().toString() + "");
+            System.out.println("estoy en el metodo falso");
+            tab_cabecera_record.insertar();
+            tab_cabecera_record.setValor("ide_yaldap", tab_matriculas.getValor("ide_yaldap"));
+            tab_cabecera_record.setValor("ide_ystmen", tab_matriculas.getValor("ide_ystmen"));
+            tab_cabecera_record.guardar();
+            guardarPantalla();
+            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                System.out.println("FOR 1: " + i);
+                tab_detalle_record.insertar();
+                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
+                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                tab_detalle_record.setValor("ide_ystpea", tab_periodo.getValor("ide_ystpea"));
+                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+            }
+            tab_detalle_record.guardar();
+            guardarPantalla();
+        }*/
+        }
     }
 
     @Override
