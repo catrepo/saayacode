@@ -77,6 +77,8 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_periodo_evaluacion.getColumna("ide_ynotie").setNombreVisual("TIPO DE EVALUACIÓN");
         tab_periodo_evaluacion.getColumna("ide_ynotie").setUnico(true);
         tab_periodo_evaluacion.getColumna("ide_ystpea").setVisible(false);
+        tab_periodo_evaluacion.getColumna("activo_ynopee").setValorDefecto("true");
+        tab_periodo_evaluacion.getColumna("activo_ynopee").setLectura(true);
         tab_periodo_evaluacion.dibujar();
 
         PanelTabla pa_periodo_evaluacion = new PanelTabla();
@@ -106,21 +108,21 @@ public class PeriodoEvaluacion extends Pantalla {
 
         //CONFIRMAR
         con_confirma.setId("con_confirma");
-        con_confirma.setMessage("Está seguro que desea bloquear el registro de notas del " + parcial);
+        con_confirma.setMessage("Está seguro que desea bloquear el registro de notas y asistencia del " + parcial);
         con_confirma.setTitle("BLOQUEAR REGISTRO DE NOTAS");
         con_confirma.getBot_aceptar().setValue("Si");
         con_confirma.getBot_cancelar().setValue("No");
         agregarComponente(con_confirma);
 
         con_confirma2.setId("con_confirma2");
-        con_confirma2.setMessage("Está seguro que desea desbloquear el registro de notas del " + parcial);
+        con_confirma2.setMessage("Está seguro que desea desbloquear el registro de notas y asistencia del " );
         con_confirma2.setTitle("DESBLOQUEAR REGISTRO DE NOTAS");
         con_confirma2.getBot_aceptar().setValue("Si");
         con_confirma2.getBot_cancelar().setValue("No");
         agregarComponente(con_confirma2);
 
     }
-    
+
     public void filtroComboPeriodoAcademico() {
 
         tab_periodo_evaluacion.setCondicion("ide_ystpea=" + com_periodo_academico.getValue().toString());
@@ -130,18 +132,16 @@ public class PeriodoEvaluacion extends Pantalla {
         utilitario.addUpdate("tab_periodo_evaluacion,tab_actividad_evaluacion");
 
     }
-    
 
     public void bloquearParcial() {
-        TablaGenerica tab_consulta = utilitario.consultar("select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion where ide_ynotie=" + tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"));
-        parcial=tab_consulta.getValor("descripcion_ynotie");
-        //utilitario.addUpdate("txt_parcial");
-        //parcial=""+tab_consulta.getValor("descripcion_ynotie");
+
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
         } else if (tab_actividad_evaluacion.getValor("activo_ynopae").equals("false")) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "El parcial ya se encuentra bloqueado");
         } else {
+            TablaGenerica tab_consulta = utilitario.consultar("select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion where ide_ynotie=" + tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"));
+            parcial = tab_consulta.getValor("descripcion_ynotie");
             con_confirma.getBot_aceptar().setMetodo("confirmarBloqueo");
             utilitario.addUpdate("con_confirma,parcial");
             con_confirma.dibujar();
@@ -151,10 +151,13 @@ public class PeriodoEvaluacion extends Pantalla {
     public void confirmarBloqueo() {
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearParcial("false", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), com_periodo_academico.getValue().toString()));
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearActividad("false", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
+        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearRegistroAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee"), "false"));
+        utilitario.getConexion().ejecutarSql(ser_notas.getLecturaAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "true"));
+        utilitario.getConexion().ejecutarSql(ser_notas.getLecturaNota(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "true"));
         con_confirma.cerrar();
         utilitario.agregarMensaje("SUCCESSFULL,", "Parcial bloqueado correctamente");
         tab_actividad_evaluacion.actualizar();
-
+        tab_periodo_evaluacion.actualizar();
     }
 
     public void desbloquearParcial() {
@@ -173,9 +176,13 @@ public class PeriodoEvaluacion extends Pantalla {
     public void confirmarDesbloqueo() {
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearParcial("true", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), com_periodo_academico.getValue().toString()));
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearActividad("true", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
+        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearRegistroAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee"), "true"));
+        utilitario.getConexion().ejecutarSql(ser_notas.getLecturaAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "false"));
+        utilitario.getConexion().ejecutarSql(ser_notas.getLecturaNota(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "false"));
         con_confirma2.cerrar();
         utilitario.agregarMensaje("SUCCESSFULL,", "Parcial desbloqueado correctamente");
         tab_actividad_evaluacion.actualizar();
+        tab_periodo_evaluacion.actualizar();
     }
 
     public void limpiar() {

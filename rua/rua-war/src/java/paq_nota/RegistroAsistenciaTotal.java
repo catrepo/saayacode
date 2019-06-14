@@ -18,6 +18,8 @@ import framework.componentes.Tabla;
 import framework.componentes.Texto;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_asistencia.ejb.ServicioAsistencia;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -107,6 +109,7 @@ public class RegistroAsistenciaTotal extends Pantalla {
             tab_cabecera.getColumna("ide_ystmal").setVisible(false);
             tab_cabecera.getColumna("ide_ynotie").setLectura(true);
             tab_cabecera.getColumna("fecha_ynocaa").setLectura(true);
+            tab_cabecera.onSelect("bloquearAsistencia");
 
             tab_cabecera.dibujar();
 
@@ -121,6 +124,7 @@ public class RegistroAsistenciaTotal extends Pantalla {
             tab_detalle.getColumna("total_asistencia").setNombreVisual("TOTAL ASISTENCIA");
             tab_detalle.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle.getColumna("ide_yaldap").setLectura(true);
+            tab_detalle.getColumna("boqueado_ynodea").setVisible(false);
             tab_detalle.dibujar();
             tab_detalle.setRows(35);
             PanelTabla pa_detalle = new PanelTabla();
@@ -155,6 +159,19 @@ public class RegistroAsistenciaTotal extends Pantalla {
         } else {
             utilitario.agregarNotificacionInfo("Mensaje,", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
+    }
+
+    public void bloquearAsistencia(SelectEvent evt) {
+        tab_cabecera.seleccionarFila(evt);
+        tab_cabecera.getFilaSeleccionada().setLectura(true);
+        tab_detalle.getColumna("total_asistencia").setLectura(true);
+        utilitario.addUpdate("tab_detalle");
+        if (tab_detalle.getValor("boqueado_ynodea").equals("true")) {
+            for (int i = 0; i < tab_detalle.getTotalFilas(); i++) {
+                tab_detalle.getFila(i).setLectura(true);
+            }
+        }
+
     }
 
     public void mostrarAsistencia() {
