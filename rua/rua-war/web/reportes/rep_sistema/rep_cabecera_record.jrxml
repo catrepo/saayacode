@@ -25,7 +25,7 @@ and s.ide_sucu=$P!{ide_sucu}]]>
 	<field name="direccion_empr" class="java.lang.String"/>
 	<field name="telefono_empr" class="java.lang.String"/>
 	<field name="constitucion_empr" class="java.lang.String"/>
-	<field name="logo_empr" class="java.lang.Object"/>
+	<field name="logo_empr" class="java.io.InputStream"/>
 	<field name="contribuyenteespecial_empr" class="java.lang.String">
 		<fieldDescription><![CDATA[NUMERO DE RESOLUCION DE CONTRIBUYENTE ESPECIAL]]></fieldDescription>
 	</field>
@@ -59,6 +59,10 @@ and s.ide_sucu=$P!{ide_sucu}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_empr}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center" onErrorType="Blank">
+				<reportElement uuid="e79d8f5b-ce53-4f4d-8c67-a01e9753b6f0" x="0" y="0" width="73" height="42"/>
+				<imageExpression><![CDATA[$F{logo_empr}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 </jasperReport>
