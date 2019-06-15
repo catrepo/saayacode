@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_actividad" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4649e587-8d94-4070-af96-ab5678658e14">
-	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="132"/>
+	<import value="counter.Counter"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
 		<box>
@@ -137,8 +138,8 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 		<fieldDescription><![CDATA[El docente ingresara el peso de evaluación de cada actividad]]></fieldDescription>
 	</field>
 	<field name="docente" class="java.lang.String"/>
-	<variable name="numero" class="java.lang.String" resetType="Group" resetGroup="parcial">
-		<variableExpression><![CDATA[$F{numero}]]></variableExpression>
+	<variable name="numero" class="java.lang.Integer" resetType="Group" resetGroup="actividad" incrementType="Group" incrementGroup="alumno" calculation="Count">
+		<variableExpression><![CDATA[$V{alumno_COUNT}]]></variableExpression>
 	</variable>
 	<group name="parcial">
 		<groupExpression><![CDATA[$F{descripcion_ynotie}]]></groupExpression>
@@ -152,7 +153,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 	<group name="actividad">
 		<groupExpression><![CDATA[$F{ide_ynoace}]]></groupExpression>
 		<groupHeader>
-			<band height="136">
+			<band height="126">
 				<rectangle radius="10">
 					<reportElement uuid="b2d678cb-d894-42bf-a223-ccdc1fc15c44" x="0" y="0" width="803" height="79"/>
 				</rectangle>
@@ -185,65 +186,65 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 					<reportElement uuid="de82e190-95a7-4fb9-a28f-727bd7ac3229" x="310" y="0" width="1" height="79"/>
 				</line>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="8e013f5b-d69f-495e-8ab1-3f848e5b577b" x="486" y="113" width="315" height="14"/>
+					<reportElement uuid="8e013f5b-d69f-495e-8ab1-3f848e5b577b" x="488" y="107" width="315" height="11"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="7" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystjor}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="04e33490-a7bc-4cca-a460-fbe9d550d358" x="411" y="113" width="75" height="14"/>
+					<reportElement uuid="04e33490-a7bc-4cca-a460-fbe9d550d358" x="411" y="107" width="77" height="11"/>
 					<textElement>
-						<font size="10" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[JORNADA:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="713a13b4-e07f-455f-a32d-773fb99cebfe" x="486" y="99" width="315" height="14"/>
+					<reportElement uuid="713a13b4-e07f-455f-a32d-773fb99cebfe" x="488" y="96" width="315" height="11"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="7" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{detalle_yhogra}]]></textFieldExpression>
 				</textField>
 				<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-					<reportElement uuid="472f8026-98a3-4aeb-bf1d-d699a23ea30e" x="486" y="85" width="315" height="14"/>
+					<reportElement uuid="472f8026-98a3-4aeb-bf1d-d699a23ea30e" x="488" y="85" width="315" height="11"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="7" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{detalle_ystmat}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="f8e90658-930d-461f-9ff8-cc830d740a06" x="411" y="85" width="75" height="14"/>
+					<reportElement uuid="f8e90658-930d-461f-9ff8-cc830d740a06" x="411" y="85" width="77" height="11"/>
 					<textElement>
-						<font size="10" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[MATERIA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="374c55f6-8b94-4474-b0f4-f117b02bf86e" x="411" y="99" width="75" height="14"/>
+					<reportElement uuid="374c55f6-8b94-4474-b0f4-f117b02bf86e" x="411" y="96" width="77" height="11"/>
 					<textElement>
-						<font size="10" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PARALELO:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="31abd5ff-3163-4040-ab13-cc0cb70dea03" x="73" y="113" width="338" height="14"/>
+					<reportElement uuid="31abd5ff-3163-4040-ab13-cc0cb70dea03" x="75" y="107" width="336" height="11"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="7" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{docente}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="2993cc2e-a0bb-4fe4-8f9b-de82c36b24ef" x="73" y="85" width="338" height="14"/>
+					<reportElement uuid="2993cc2e-a0bb-4fe4-8f9b-de82c36b24ef" x="75" y="85" width="336" height="11"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="7" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystmen}]]></textFieldExpression>
 				</textField>
 				<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-					<reportElement uuid="b681dd1a-d1d9-4f49-bcc0-9e7b6a82387e" x="73" y="99" width="338" height="14"/>
+					<reportElement uuid="b681dd1a-d1d9-4f49-bcc0-9e7b6a82387e" x="75" y="96" width="336" height="11"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="7" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystnie}]]></textFieldExpression>
 				</textField>
@@ -255,23 +256,23 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 					<textFieldExpression><![CDATA[$F{descripcion_ystpea}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="751514cc-d3bb-4966-a496-078381fd82e5" x="0" y="85" width="75" height="14"/>
+					<reportElement uuid="751514cc-d3bb-4966-a496-078381fd82e5" x="0" y="85" width="75" height="11"/>
 					<textElement>
-						<font size="10" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CARRERA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="b0fa3c5e-defd-497d-83df-40bbda3b37e2" x="0" y="113" width="75" height="14"/>
+					<reportElement uuid="b0fa3c5e-defd-497d-83df-40bbda3b37e2" x="0" y="107" width="75" height="11"/>
 					<textElement>
-						<font size="10" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[DOCENTE:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="1214f4b7-0f11-4b3c-9bfc-7d28fb574cac" x="0" y="99" width="75" height="14"/>
+					<reportElement uuid="1214f4b7-0f11-4b3c-9bfc-7d28fb574cac" x="0" y="96" width="75" height="11"/>
 					<textElement>
-						<font size="10" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NIVEL:]]></text>
 				</staticText>
@@ -336,7 +337,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 										<font size="7"/>
 										<paragraph leftIndent="3" rightIndent="3"/>
 									</textElement>
-									<textFieldExpression><![CDATA["25"]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$V{contador}]]></textFieldExpression>
 								</textField>
 							</cellContents>
 						</crosstabRowHeader>
@@ -475,8 +476,8 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 					<measure name="nota_ynodetMeasure" class="java.math.BigDecimal">
 						<measureExpression><![CDATA[$F{nota_ynodet}]]></measureExpression>
 					</measure>
-					<measure name="contador" class="java.lang.String">
-						<measureExpression><![CDATA[]]></measureExpression>
+					<measure name="contador" class="java.lang.Integer">
+						<measureExpression><![CDATA[$V{numero}]]></measureExpression>
 					</measure>
 					<measure name="parametro" class="java.math.BigDecimal">
 						<measureExpression><![CDATA[$F{porciento_evaluacion_ynoacd}]]></measureExpression>
@@ -606,6 +607,15 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 					</crosstabCell>
 				</crosstab>
 			</band>
+		</groupFooter>
+	</group>
+	<group name="alumno">
+		<groupExpression><![CDATA[$F{ide_yaldap}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
 		</groupFooter>
 	</group>
 	<background>

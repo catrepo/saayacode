@@ -33,8 +33,7 @@ left join yavirac_matri_numero_matricula j on b.ide_ymanum=j.ide_ymanum
 left join yavirac_nota_estado_nota k on b.ide_ynoest=k.ide_ynoest
 left join yavirac_matri_tipo_reg_credito l on b.ide_ymatrc=l.ide_ymatrc
 where a.ide_yaldap=$P!{ide_yaldap}
-order by ide_ystnie
-]]>
+order by ide_ystnie]]>
 	</queryString>
 	<field name="ide_ynocra" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -73,7 +72,11 @@ order by ide_ystnie
 		<groupHeader>
 			<band height="41">
 				<textField>
-					<reportElement uuid="dabcc480-25cb-405c-b2a3-e6c211f9bdc6" x="0" y="3" width="100" height="11"/>
+					<reportElement uuid="dabcc480-25cb-405c-b2a3-e6c211f9bdc6" x="0" y="3" width="555" height="11"/>
+					<box>
+						<topPen lineWidth="0.75" lineColor="#0099CC"/>
+						<bottomPen lineWidth="0.75" lineColor="#0099CC"/>
+					</box>
 					<textElement>
 						<font size="7" isBold="true" isUnderline="false"/>
 					</textElement>
@@ -161,7 +164,15 @@ order by ide_ystnie
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band/>
+			<band height="13">
+				<textField>
+					<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="0" y="1" width="555" height="11"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total de creditos en el componente ----> "+$V{total}]]></textFieldExpression>
+				</textField>
+			</band>
 		</groupFooter>
 	</group>
 	<background>
