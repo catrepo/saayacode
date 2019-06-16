@@ -68,6 +68,8 @@ public class Docente extends Pantalla {
         tab_tipo_educacion.getColumna("ide_ystnac").setCombo(ser_estructura.getNacionalidad("true,false"));
         tab_tipo_educacion.getColumna("ide_ystgen").setCombo(ser_estructura.getGenero("true,false"));
         tab_tipo_educacion.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+        tab_tipo_educacion.getColumna("ide_ystard").setCombo(ser_estructura.getAreaDepartamento("true,false"));
+
         //crear formularios
         tab_tipo_educacion.setTipoFormulario(true);//para que se haga un formulario
         tab_tipo_educacion.getGrid().setColumns(8);//numero de columnas del formulario
@@ -125,8 +127,8 @@ public class Docente extends Pantalla {
         tab_actividad_docente.setTabla("yavirac_nota_actividad_docente", "ide_ynoacd", 2);
         tab_actividad_docente.getColumna("ide_ynoacd").setNombreVisual("CODIGO");
         tab_actividad_docente.getColumna("ide_ynopae").setNombreVisual("PERIODO ACTIVIDAD EVALUACIÓN");
-        tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true,false", "0"));
-        tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
+        //tab_actividad_docente.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true,false", "0"));
+        //tab_actividad_docente.getColumna("ide_ynopae").setAutoCompletar();
         tab_actividad_docente.getColumna("ide_ypedpe").setNombreVisual("DOCENTE");
         tab_actividad_docente.getColumna("porciento_evaluacion_ynoacd").setNombreVisual(" % EVALUACIÓN");
         tab_actividad_docente.getColumna("ide_ypedpe").setVisible(false);
@@ -135,9 +137,8 @@ public class Docente extends Pantalla {
         tab_actividad_docente.getColumna("ide_ystnie").setVisible(false);
         tab_actividad_docente.getColumna("ide_yhogra").setVisible(false);
         tab_actividad_docente.getColumna("ide_ystjor").setVisible(false);
-        tab_actividad_docente.setHeader(gri_cuerpo);
+        //tab_actividad_docente.setHeader(gri_cuerpo);
         tab_actividad_docente.dibujar();
-        limpiar();
         PanelTabla pa_actividad_docente = new PanelTabla();
         pa_actividad_docente.setId("pa_actividad_docente");
         pa_actividad_docente.setPanelTabla(tab_actividad_docente);
