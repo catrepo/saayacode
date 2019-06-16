@@ -20,6 +20,8 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;  
+import java.util.Date; 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -317,6 +319,18 @@ public class Utilitario extends Framework {
         return new Date(cal.getTimeInMillis());
     }
 
+     /**
+     * Date a String 
+     *
+     * @param fch
+     * @return
+     */
+    public String getDateString(Date fch) {
+        Date date = fch;  
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+                String strDate = dateFormat.format(date); 
+                return strDate;
+    }
     /**
      * Válida que un correo electrónico sea válido
      *

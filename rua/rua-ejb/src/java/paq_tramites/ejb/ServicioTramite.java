@@ -72,7 +72,7 @@ public class ServicioTramite {
      */
     public String getSqlTipoDocumentoPara(String ide) {
         String sql="";
-        sql="select ide_ytrtid,nombre_ytrtid,texto_base_ytrtid from yavirac_tra_tipo_documento where ide_ytrtid="+ide;
+        sql="select ide_ytrtid,nombre_ytrtid,texto_base_ytrtid,dias_tramite_ytrtid from yavirac_tra_tipo_documento where ide_ytrtid="+ide;
         return sql;
     }     
 }

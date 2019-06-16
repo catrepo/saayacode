@@ -396,4 +396,9 @@ public class ServicioEstructuraOrganizacional {
         sql = "select ide_ystard, descripcion_ysttad, descripcion_ystard from yavirac_stror_tipo_area_depar b,yavirac_stror_area_departament a where a.ide_ysttad = b.ide_ysttad;";
         return sql;
     }
+    public String getSumaDiasFecha(String fecha,String dias) {
+        String sql = "";
+        sql = "SELECT 1 as codigo, cast( (CAST('"+fecha+"' AS DATE) + CAST('"+dias+" days' AS INTERVAL)) as date) as fecha;";
+        return sql;
+    }    
 }

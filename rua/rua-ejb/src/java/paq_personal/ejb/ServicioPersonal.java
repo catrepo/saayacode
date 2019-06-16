@@ -40,7 +40,19 @@ public class ServicioPersonal {
         String sql="";
         sql=" select ide_ypedpe,apellido_ypedpe,nombre_ypedpe,doc_identidad_ypedpe,codigo_reloj_ypedpe from yavirac_perso_dato_personal where ide_ypedpe in ("+ide_personal+")";
         return sql;
-    }   
+    } 
+      /**
+     * Tabla de datos del personal con su area
+     *
+     * @param estado.- estado true, false
+     * @return tabla de datos
+     */
+    public String getDatoPersonalDepartamento (String estado) {
+        String sql="";
+        sql=" select ide_ypedpe,apellido_ypedpe as apellidos,nombre_ypedpe as nombres,doc_identidad_ypedpe as nro_documento ,descripcion_ystard as area,a.ide_ystard\n" +
+"from yavirac_perso_dato_personal a, yavirac_stror_area_departament b where a.ide_ystard = b.ide_ystard and activo_ystard in ("+estado+")";
+        return sql;
+    }       
     public String getTituloProfesional() {
           
         String sql="";
