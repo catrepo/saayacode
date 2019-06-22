@@ -287,7 +287,7 @@ public class ServicioNotas {
             case_nota = " nota_ynodet ";
         }
         if (tipo.equals("1")) {
-            sql += "select (sum(nota) / count(ide_ynoace)) as notas,a.ide_ystpea,a.ide_ypedpe,a.ide_ystmal,a.ide_ystnie,a.ide_yhogra,a.ide_ystjor,a.ide_ynotie,a.ide_yaldap,a.ide_ysttfe,a.ide_ynoace,a.ide_ynopae,recuperacion_ynodet\n"
+            sql += "select trunc((sum(nota) / count(ide_ynoace)),2) as notas,a.ide_ystpea,a.ide_ypedpe,a.ide_ystmal,a.ide_ystnie,a.ide_yhogra,a.ide_ystjor,a.ide_ynotie,a.ide_yaldap,a.ide_ysttfe,a.ide_ynoace,a.ide_ynopae,recuperacion_ynodet\n"
                     + "from ( ";
         }
         sql += "select " + case_nota + " as nota,\n"
@@ -304,6 +304,7 @@ public class ServicioNotas {
             sql += " ) a\n"
                     + "group by ide_ystpea,ide_ypedpe,ide_ystmal,ide_ystnie,ide_yhogra,ide_ystjor,ide_ynotie,ide_yaldap,ide_ysttfe,ide_ynoace,ide_ynopae,recuperacion_ynodet";
         }
+        
         return sql;
     }
 
@@ -386,7 +387,7 @@ public class ServicioNotas {
      */
     public String getNotaTotalTercerNivel(String recuperacion, String parametro, String periodoacademico, String mension, String nivel, String docente, String paralelo, String jornada, String malla, String alumno, String pesonota) {
         String sql = "";
-        sql += "select 1 as codigo,round(((sum(porciento_ynores)* " + parametro + ")/100),2) as notatotal,b.ide_yaldap,b.ide_ynopen\n"
+        sql += "select 1 as codigo,trunc(((sum(porciento_ynores)* " + parametro + ")/100),2) as notatotal,b.ide_yaldap,b.ide_ynopen\n"
                 + "from (\n";
         if (recuperacion.equals("1")) {
             sql += "select (sum(porciento_ynores) / count(porciento_ynores)) as porciento_ynores ,a.ide_yaldap,a.ide_ynopen from (\n";
@@ -477,7 +478,7 @@ public class ServicioNotas {
 
     public String getConsultarNotaTotalSegundoNivel(String codigo, String periodoacademico, String parcial, String alumno) {
         String sql = "";
-        sql += "select sum(nota_ynoalr) as total,ide_yaldap,yav_ide_ynopen\n"
+        sql += "select trunc(round(sum(nota_ynoalr),2),2) as total,ide_yaldap,yav_ide_ynopen\n"
                 + "from( \n"
                 + "	select a.ide_ypemda,ide_ystpea,ide_ysttfe,ide_ynotie,ide_yaldap,c.ide_ynopen,yav_ide_ynopen,b.ide_ynopen,nota_ynoalr,peso_ynopen,nivel_ynopen,detalle_ynopen\n"
                 + "	from yavirac_perso_malla_docen_alum a,yavirac_nota_alumno_resumen b,yavirac_nota_peso_nota c\n"
