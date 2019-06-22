@@ -74,6 +74,7 @@ public class Parametros {
         lis_parametros.add(new Parametro("7", "p_estado_reprobado", "Indica el estado que reprueba una materia", "2", "yavirac_nota_estado_nota", "ide_ynoest", "detalle_ynoest"));
         lis_parametros.add(new Parametro("7", "p_nivel_inicio", "Indica el nivel inicial de la carrera", "2", "yavirac_stror_nivel_educacion", "ide_ystnie", "descripcion_ystnie"));
         lis_parametros.add(new Parametro("7", "p_nivel_fin", "Indica el nivel final de laa carrera", "2", "yavirac_stror_nivel_educacion", "ide_ystnie", "descripcion_ystnie"));
+        lis_parametros.add(new Parametro("7", "p_tipo_exa_recuperacion", "Indica el tipo de examen de recuperacion", "2", "yavirac_nota_actividad_evaluac", "ide_ynoace", "descripcion_ynoace"));
         
         /*
          * TITULACION MODULO =8
