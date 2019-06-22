@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_final" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83c01137-dfa6-4289-bd90-4676110bd8cc">
 	<property name="ireport.zoom" value="1.3310000000000013"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="59"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{row_number}.equals( "SI" )]]></conditionExpression>
+			<conditionExpression><![CDATA[]]></conditionExpression>
 			<style forecolor="#FF0000">
 				<pen lineColor="#000000"/>
 			</style>
@@ -45,7 +45,11 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select row_number() over(order by ide_ynodet),(case when extract(month from fecha_inicio_ystpea)=1 then 'ENERO' when extract(month from fecha_inicio_ystpea)=2 then 'FEBRERO'
+		<![CDATA[select periodo_academico,a.ide_yaldap,descripcion_ystmen,detalle_ystmat,descripcion_ynotie,descripcion_ystnie,detalle_yhogra,descripcion_ystjor,docente,descripcion_ynoace,
+alumno,a.nota_ynodet,b.nota_ynodet as recuperacion,total_asistencia,
+(case when b.nota_ynodet >= nota_recuperacion_ystpea and total_asistencia >= nota_minima_aprobada_ystpea then 'SI' else 'NO' end) as estado
+from (
+select (case when extract(month from fecha_inicio_ystpea)=1 then 'ENERO' when extract(month from fecha_inicio_ystpea)=2 then 'FEBRERO'
 when extract(month from fecha_inicio_ystpea)=3 then 'MARZO' when extract(month from fecha_inicio_ystpea)=4 then 'ABRIL'
 when extract(month from fecha_inicio_ystpea)=5 then 'MAYO' when extract(month from fecha_inicio_ystpea)=6 then 'JUNIO'
 when extract(month from fecha_inicio_ystpea)=7 then 'JULIO' when extract(month from fecha_inicio_ystpea)=8 then 'AGOSTO'
@@ -59,7 +63,8 @@ when extract(month from fecha_final_ystpea)=9 then 'SEPTIEMBRE' when extract(mon
 when extract(month from fecha_final_ystpea)=11 then 'NOVIEMBRE' when extract(month from fecha_final_ystpea)=12 then 'DICIEMBRE'end) ||' '||
 extract(year from fecha_final_ystpea) as periodo_academico,descripcion_ystmen,detalle_ystmat,descripcion_ynotie,descripcion_ystnie,
 detalle_yhogra,descripcion_ystjor,apellido_ypedpe||' '||nombre_ypedpe as docente,apellido_yaldap||' '||nombre_yaldap as alumno,
-descripcion_ynoace,detalle_ynocan,fecha_calificacion_ynocan,nota_ynodet,recuperacion_ynodet
+descripcion_ynoace,detalle_ynocan,fecha_calificacion_ynocan,nota_ynodet,a.ide_ystpea,a.ide_ystmal,a.ide_ypedpe,a.ide_yhogra,
+a.ide_ystjor,a.ide_ystnie,d.ide_ynotie,b.ide_yaldap,g.ide_ystmen,nota_minima_aprobada_ystpea,nota_recuperacion_ystpea
 from yavirac_nota_cabecera_nota a
 left join yavirac_nota_detalle_nota b on a.ide_ynocan=b.ide_ynocan
 left join yavirac_nota_periodo_activ_eva c on a.ide_ynopae=c.ide_ynopae
@@ -77,10 +82,26 @@ left join yavirac_perso_dato_personal n on a.ide_ypedpe=n.ide_ypedpe
 left join yavirac_alum_dato_personal o on b.ide_yaldap=o.ide_yaldap
 where c.ide_ynoace=cast((select valor_para from sis_parametros where nom_para = 'p_tipo_eva_examen') as numeric) and
 a.ide_ystpea in($P!{ide_ystpea}) and a.ide_ystmal in ($P!{ide_ystmal}) and a.ide_ypedpe in($P!{ide_ypedpe}) and a.ide_yhogra in ($P!{ide_yhogra}) and a.ide_ystjor in($P!{ide_ystjor}) and a.ide_ystnie in ($P!{ide_ystnie}) and d.ide_ynotie in ($P!{ide_ynotie})
-order by descripcion_ynotie,apellido_yaldap]]>
+order by descripcion_ynotie,apellido_yaldap
+) a
+left join(
+select a.ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,a.ide_ynopae,ide_ystmal,ide_yaldap,ide_ynotie,nota_ynodet
+from yavirac_nota_cabecera_nota a
+left join yavirac_nota_detalle_nota b on a.ide_ynocan=b.ide_ynocan
+left join yavirac_nota_periodo_activ_eva c on a.ide_ynopae=c.ide_ynopae
+left join yavirac_nota_periodo_evaluacio d on c.ide_ynopee=d.ide_ynopee
+where c.ide_ynoace=cast((select valor_para from sis_parametros where nom_para = 'p_tipo_exa_recuperacion') as numeric)
+) b on a.ide_ystpea=b.ide_ystpea and a.ide_ystmen=b.ide_ystmen and a.ide_ystnie=b.ide_ystnie and a.ide_ypedpe=b.ide_ypedpe
+and a.ide_yhogra=b.ide_yhogra and a.ide_ystmal=b.ide_ystmal and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.ide_yaldap
+left join (
+select ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal,ide_ynotie,ide_yaldap,total_asistencia
+from yavirac_nota_cabe_asistencia a
+left join yavirac_nota_det_asistencia b on a.ide_ynocaa=b.ide_ynocaa
+)c on a.ide_ystpea=c.ide_ystpea and a.ide_ystmen=c.ide_ystmen and a.ide_ystnie=c.ide_ystnie and a.ide_ypedpe=c.ide_ypedpe
+and a.ide_yhogra=c.ide_yhogra and a.ide_ystmal=c.ide_ystmal and a.ide_ystjor=c.ide_ystjor and a.ide_ynotie=c.ide_ynotie and a.ide_yaldap=c.ide_yaldap]]>
 	</queryString>
-	<field name="row_number" class="java.lang.Long"/>
 	<field name="periodo_academico" class="java.lang.String"/>
+	<field name="ide_yaldap" class="java.lang.Long"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
 	<field name="detalle_ystmat" class="java.lang.String"/>
 	<field name="descripcion_ynotie" class="java.lang.String">
@@ -94,30 +115,27 @@ order by descripcion_ynotie,apellido_yaldap]]>
 		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
 	</field>
 	<field name="docente" class="java.lang.String"/>
-	<field name="alumno" class="java.lang.String"/>
 	<field name="descripcion_ynoace" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena las actividades de evaluación]]></fieldDescription>
 	</field>
-	<field name="detalle_ynocan" class="java.lang.String">
-		<fieldDescription><![CDATA[Este campo almacena el detalle de la actividad que esta calificando por ejemplo Consulta 1, exposición,etc]]></fieldDescription>
-	</field>
-	<field name="fecha_calificacion_ynocan" class="java.sql.Date">
-		<fieldDescription><![CDATA[Este campo almacena la fecha en la que se evaluó una actividad o tarea]]></fieldDescription>
-	</field>
+	<field name="alumno" class="java.lang.String"/>
 	<field name="nota_ynodet" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[Este campo almacena las notas o calificaciones individuales]]></fieldDescription>
 	</field>
-	<field name="recuperacion_ynodet" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[Este campo almacena si un estudiante debe rendir recuperación del examen]]></fieldDescription>
-	</field>
+	<field name="recuperacion" class="java.math.BigDecimal"/>
+	<field name="total_asistencia" class="java.lang.Integer"/>
+	<field name="estado" class="java.lang.String"/>
 	<variable name="numeracion" class="java.lang.Integer" resetType="Page" calculation="Count">
 		<variableExpression><![CDATA[$F{alumno}]]></variableExpression>
 		<initialValueExpression><![CDATA[1]]></initialValueExpression>
 	</variable>
+	<variable name="recuperacion" class="java.lang.Double">
+		<variableExpression><![CDATA[( $F{recuperacion}.doubleValue() != 0 ? $F{recuperacion}.doubleValue(): $F{nota_ynodet}.doubleValue() )]]></variableExpression>
+	</variable>
 	<group name="parcial" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{descripcion_ynotie}]]></groupExpression>
 		<groupHeader>
-			<band height="181">
+			<band height="183">
 				<rectangle radius="10">
 					<reportElement uuid="88a84616-f23a-4073-ab7e-b19d96d88aa9" x="0" y="0" width="555" height="80"/>
 				</rectangle>
@@ -126,7 +144,7 @@ order by descripcion_ynotie,apellido_yaldap]]>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<text><![CDATA[LISTA DE ESTUDIANTES RECUPERACIÓN DE EXAMEN]]></text>
+					<text><![CDATA[LISTA RECUPERACIÓN DE EXAMEN]]></text>
 				</staticText>
 				<subreport>
 					<reportElement uuid="4f476813-4d2c-4085-82c8-e9d72b10ee65" x="1" y="0" width="242" height="80"/>
@@ -157,91 +175,91 @@ order by descripcion_ynotie,apellido_yaldap]]>
 					<textFieldExpression><![CDATA[$F{periodo_academico}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="90" width="78" height="14"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="86" width="78" height="14"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CARRERA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="126" width="78" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="122" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NIVEL:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="104" width="78" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="100" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ASIGNATURA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="115" width="78" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="111" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[DOCENTE:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="137" width="78" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="133" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PARALELO:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="148" width="78" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="144" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[JORNADA:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="90" width="255" height="14"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="86" width="255" height="14"/>
 					<textElement verticalAlignment="Middle">
-						<font size="10"/>
+						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystmen}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="126" width="255" height="11"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="122" width="255" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystnie}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="104" width="255" height="11"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="100" width="255" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{detalle_ystmat}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="137" width="255" height="11"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="133" width="255" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{detalle_yhogra}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="115" width="255" height="11"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="78" y="111" width="255" height="11"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{docente}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="78" y="148" width="255" height="11"/>
+					<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="78" y="144" width="255" height="11"/>
 					<textElement>
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystjor}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="170" width="40" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="161" width="40" height="22"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -249,12 +267,12 @@ order by descripcion_ynotie,apellido_yaldap]]>
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[No.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="40" y="170" width="238" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="40" y="161" width="238" height="22"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -262,12 +280,12 @@ order by descripcion_ynotie,apellido_yaldap]]>
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NOMBRE DEL ESTUDIANTE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="278" y="170" width="98" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="278" y="161" width="55" height="22"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -275,12 +293,12 @@ order by descripcion_ynotie,apellido_yaldap]]>
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[CALIFICACIÓN]]></text>
+					<text><![CDATA[EXAMEN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="376" y="170" width="98" height="11"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="333" y="161" width="65" height="22"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -288,11 +306,46 @@ order by descripcion_ynotie,apellido_yaldap]]>
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[RECUPERACIÓN]]></text>
+					<text><![CDATA[TIENE RECUPERACIÓN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="398" y="161" width="61" height="22"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EXAMEN RECUPERACION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="459" y="161" width="53" height="22"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOTA FINAL]]></text>
 				</staticText>
 			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="alumno">
+		<groupExpression><![CDATA[$F{ide_yaldap}]]></groupExpression>
+		<groupHeader>
+			<band/>
 		</groupHeader>
 		<groupFooter>
 			<band/>
@@ -318,9 +371,9 @@ order by descripcion_ynotie,apellido_yaldap]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{numeracion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="40" y="0" width="238" height="11"/>
@@ -331,13 +384,13 @@ order by descripcion_ynotie,apellido_yaldap]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="278" y="0" width="98" height="11"/>
+				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="278" y="0" width="55" height="11"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -345,12 +398,12 @@ order by descripcion_ynotie,apellido_yaldap]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nota_ynodet}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="376" y="0" width="98" height="11" forecolor="#000000"/>
+				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="333" y="0" width="65" height="11" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -358,10 +411,36 @@ order by descripcion_ynotie,apellido_yaldap]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font size="8"/>
+					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{recuperacion_ynodet} != true ? "NO" : "SI" )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="398" y="0" width="61" height="11"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{recuperacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="459" y="0" width="53" height="11"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{nota_ynodet}.doubleValue()+$V{recuperacion})/2]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -370,42 +449,42 @@ order by descripcion_ynotie,apellido_yaldap]]>
 			<textField evaluationTime="Report">
 				<reportElement uuid="bdeb830c-5243-4927-9928-77a5259f055a" x="514" y="0" width="40" height="15"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="165c2a68-74dc-43bf-8d9a-ca12e0bbbc0e" x="100" y="0" width="100" height="15"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy h.mm a">
 				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="262" y="0" width="100" height="15"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="516a4a91-457d-4030-8f37-15ff62f2d5cf" x="201" y="0" width="56" height="15"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="e92d5af9-dfd5-44e6-9f59-a61c5d258d67" x="432" y="0" width="80" height="15"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="382ca1e9-dd0e-4282-b878-0c0e849990b6" x="0" y="0" width="100" height="15"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Usuario Impresión:]]></text>
 			</staticText>

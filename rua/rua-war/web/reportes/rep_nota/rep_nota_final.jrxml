@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_final" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83c01137-dfa6-4289-bd90-4676110bd8cc">
-	<property name="ireport.zoom" value="0.8250000000000014"/>
+	<property name="ireport.zoom" value="0.8250000000000015"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
@@ -32,7 +32,11 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select ide_ynoalr,b.ide_ystpea,(case when extract(month from fecha_inicio_ystpea)=1 then 'ENERO' when extract(month from fecha_inicio_ystpea)=2 then 'FEBRERO'
+		<![CDATA[select ide_ynoalr,periodo_academico,ide_ynotie,descripcion_ynotie,codigo_ystmal,detalle_ystmat,docente,descripcion_ystnie,detalle_yhogra,
+descripcion_ystjor,a.ide_yaldap,alumno,nivel_ynopen,peso_ynopen ,abreviatura_ynopen,descripcion_ystmen,nota_ynoalr,cast(total as integer),
+(case when nivel_ynopen=1 and nota_ynoalr >= nota_minima_aprobada_ystpea and total >= nota_minima_aprobada_ystpea then 'APROBADO' else 'REPROBADO' end) as estado
+from (
+select ide_ynoalr,b.ide_ystpea,nota_minima_aprobada_ystpea,(case when extract(month from fecha_inicio_ystpea)=1 then 'ENERO' when extract(month from fecha_inicio_ystpea)=2 then 'FEBRERO'
 when extract(month from fecha_inicio_ystpea)=3 then 'MARZO' when extract(month from fecha_inicio_ystpea)=4 then 'ABRIL'
 when extract(month from fecha_inicio_ystpea)=5 then 'MAYO' when extract(month from fecha_inicio_ystpea)=6 then 'JUNIO'
 when extract(month from fecha_inicio_ystpea)=7 then 'JULIO' when extract(month from fecha_inicio_ystpea)=8 then 'AGOSTO'
@@ -46,8 +50,8 @@ when extract(month from fecha_final_ystpea)=9 then 'SEPTIEMBRE' when extract(mon
 when extract(month from fecha_final_ystpea)=11 then 'NOVIEMBRE' when extract(month from fecha_final_ystpea)=12 then 'DICIEMBRE'end) ||' '||
 extract(year from fecha_final_ystpea) as periodo_academico,b.ide_ynotie,descripcion_ynotie,d.ide_ystmal,codigo_ystmal,detalle_ystmat,d.ide_ypedpe,apellido_ypedpe||' '||nombre_ypedpe as docente,
 g.ide_ystnie,descripcion_ystnie,d.ide_yhogra,detalle_yhogra,d.ide_ystjor,descripcion_ystjor,c.ide_yaldap,apellido_yaldap||' '||nombre_yaldap as alumno,
-nivel_ynopen,nota_ynoalr,peso_ynopen ,abreviatura_ynopen,(case when nivel_ynopen=1 and nota_ynoalr >= nota_minima_aprobada_ystpea then 'APROBADO' else 'REPROBADO' end) as a_r,
-descripcion_ystmen
+nivel_ynopen,nota_ynoalr,peso_ynopen ,abreviatura_ynopen,
+descripcion_ystmen,g.ide_ystmen
 from yavirac_nota_alumno_resumen a
 left join yavirac_nota_peso_nota b on a.ide_ynopen=b.ide_ynopen
 left join yavirac_perso_malla_docen_alum c on a.ide_ypemda=c.ide_ypemda
@@ -63,33 +67,34 @@ left join yavirac_stror_jornada l on d.ide_ystjor=l.ide_ystjor
 left join yavirac_alum_dato_personal m on c.ide_yaldap=m.ide_yaldap
 left join yavirac_stror_mension n on g.ide_ystmen=n.ide_ystmen
 where b.ide_ystpea in ($P!{ide_ystpea}) and d.ide_ystmal in ($P!{ide_ystmal}) and d.ide_ypedpe in ($P!{ide_ypedpe}) and d.ide_yhogra in ($P!{ide_yhogra}) and d.ide_ystjor in($P!{ide_ystjor}) and j.ide_ystnie in ($P!{ide_ystnie})
-order by apellido_yaldap,ide_ynoalr,peso_ynopen,detalle_ynopen]]>
+order by apellido_yaldap,ide_ynoalr,peso_ynopen,detalle_ynopen
+) a
+left join (
+	select (sum(total_asistencia)/2) as total,ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal,ide_yaldap
+	from yavirac_nota_cabe_asistencia a
+	left join yavirac_nota_det_asistencia b on a.ide_ynocaa=b.ide_ynocaa
+	group by ide_yaldap,ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal
+) b on  a.ide_ystpea=b.ide_ystpea and a.ide_ystmen=b.ide_ystmen and a.ide_ystnie=b.ide_ystnie and a.ide_ypedpe=b.ide_ypedpe
+and a.ide_yhogra=b.ide_yhogra and a.ide_ystmal=b.ide_ystmal
+and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap]]>
 	</queryString>
 	<field name="ide_ynoalr" class="java.lang.Long"/>
-	<field name="ide_ystpea" class="java.lang.Long">
-		<fieldDescription><![CDATA[este campo reprecenta la clave primaria de la tabla periodo academico]]></fieldDescription>
-	</field>
 	<field name="periodo_academico" class="java.lang.String"/>
 	<field name="ide_ynotie" class="java.lang.Long"/>
 	<field name="descripcion_ynotie" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>
-	<field name="ide_ystmal" class="java.lang.Long"/>
 	<field name="codigo_ystmal" class="java.lang.String">
-		<fieldDescription><![CDATA[este  campo es el codigo de la malla]]></fieldDescription>
+		<fieldDescription><![CDATA[este  campo es el codigo de la malla ]]></fieldDescription>
 	</field>
 	<field name="detalle_ystmat" class="java.lang.String"/>
-	<field name="ide_ypedpe" class="java.lang.Long"/>
 	<field name="docente" class="java.lang.String"/>
-	<field name="ide_ystnie" class="java.lang.Long"/>
 	<field name="descripcion_ystnie" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo identidica la descripcion de la tabla  nivel educacion]]></fieldDescription>
 	</field>
-	<field name="ide_yhogra" class="java.lang.Long"/>
 	<field name="detalle_yhogra" class="java.lang.String"/>
-	<field name="ide_ystjor" class="java.lang.Long"/>
 	<field name="descripcion_ystjor" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
 	</field>
 	<field name="ide_yaldap" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -99,9 +104,6 @@ Nivel 1 = nota final
 Nivel 2 =  nota final de cada parcial
 Nivel 3 = nota final de las actividades]]></fieldDescription>
 	</field>
-	<field name="nota_ynoalr" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[Este campo almacena las notas finales]]></fieldDescription>
-	</field>
 	<field name="peso_ynopen" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[Este campo almacena el peso total de cada parcia es decir el
 peso total = 100,
@@ -110,15 +112,16 @@ peso total gestion clase =35,
 peso examen15]]></fieldDescription>
 	</field>
 	<field name="abreviatura_ynopen" class="java.lang.String"/>
-	<field name="a_r" class="java.lang.String"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
-	<variable name="numeracion" class="java.lang.Integer">
-		<variableExpression><![CDATA[$V{COLUMN_COUNT}]]></variableExpression>
-		<initialValueExpression><![CDATA[1]]></initialValueExpression>
-	</variable>
-	<variable name="autoincremento" class="java.lang.Integer" resetType="Column" incrementType="Column" calculation="Count">
-		<variableExpression><![CDATA[$V{autoincremento}.bitCount( 1 )]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	<field name="nota_ynoalr" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Este campo almacena las notas finales
+]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Integer"/>
+	<field name="estado" class="java.lang.String"/>
+	<variable name="numeracion" class="java.lang.Integer" incrementType="Group" incrementGroup="estudiaante" calculation="Count">
+		<variableExpression><![CDATA[$V{estudiaante_COUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
 	<group name="alumno">
 		<groupHeader>
@@ -291,11 +294,14 @@ peso examen15]]></fieldDescription>
 					<measure name="detalle_peso" class="java.lang.String" calculation="Count">
 						<measureExpression><![CDATA[$F{abreviatura_ynopen}]]></measureExpression>
 					</measure>
-					<measure name="num" class="java.lang.Integer" calculation="Count">
-						<measureExpression><![CDATA[$F{alumno}]]></measureExpression>
+					<measure name="num" class="java.lang.Integer">
+						<measureExpression><![CDATA[$V{numeracion}]]></measureExpression>
 					</measure>
-					<measure name="nivel" class="java.lang.String" calculation="Count">
-						<measureExpression><![CDATA[$F{a_r}]]></measureExpression>
+					<measure name="estado" class="java.lang.String" calculation="Count">
+						<measureExpression><![CDATA[$F{estado}]]></measureExpression>
+					</measure>
+					<measure name="total_asistencia" class="java.lang.Integer">
+						<measureExpression><![CDATA[$F{total}]]></measureExpression>
 					</measure>
 					<crosstabCell width="63" height="10">
 						<cellContents>
@@ -326,7 +332,7 @@ peso examen15]]></fieldDescription>
 					</crosstabCell>
 					<crosstabCell width="120" height="10" columnTotalGroup="descripcion_ynotie">
 						<cellContents backcolor="#FFFFFF" mode="Transparent">
-							<textField pattern="###0">
+							<textField pattern="###0" isBlankWhenNull="true">
 								<reportElement uuid="32ecedae-5c45-4de0-aded-c4edb5d9c5ba" style="Crosstab Data Text" x="0" y="0" width="55" height="10" forecolor="#000000"/>
 								<box>
 									<pen lineWidth="0.75"/>
@@ -338,9 +344,9 @@ peso examen15]]></fieldDescription>
 								<textElement verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
-								<textFieldExpression><![CDATA["0"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{total_asistencia}]]></textFieldExpression>
 							</textField>
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="32ecedae-5c45-4de0-aded-c4edb5d9c5ba" style="Crosstab Data Text" x="55" y="0" width="65" height="10" forecolor="#000000"/>
 								<box>
 									<pen lineWidth="0.75"/>
@@ -352,7 +358,7 @@ peso examen15]]></fieldDescription>
 								<textElement verticalAlignment="Middle" markup="html">
 									<font size="7"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{nivel}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{estado}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabCell>
@@ -379,6 +385,15 @@ peso examen15]]></fieldDescription>
 					</crosstabCell>
 				</crosstab>
 			</band>
+		</groupFooter>
+	</group>
+	<group name="estudiaante">
+		<groupExpression><![CDATA[$F{ide_yaldap}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
 		</groupFooter>
 	</group>
 	<background>
@@ -638,7 +653,7 @@ peso examen15]]></fieldDescription>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FIRMA CORDINACIOÒN DE CARRERA]]></text>
+				<text><![CDATA[FIRMA CORDINACIÒN DE CARRERA]]></text>
 			</staticText>
 		</band>
 	</summary>
