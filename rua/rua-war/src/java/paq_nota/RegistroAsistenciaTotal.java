@@ -205,11 +205,11 @@ public class RegistroAsistenciaTotal extends Pantalla {
     }
 
     public void aceptarDialogo() {
-        TablaGenerica tab_parcial = utilitario.consultar("select ide_ynopee,ide_ynotie from yavirac_nota_periodo_evaluacio where ide_ynopee=" + com_parcial.getValue());
-        TablaGenerica tab_asistencia = utilitario.consultar("select * from yavirac_nota_cabe_asistencia where ide_ynotie=" + tab_parcial.getValor("ide_ynotie"));
-
         String cod = com_materia_docente.getValue() + "";
         TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
+
+        TablaGenerica tab_parcial = utilitario.consultar("select ide_ynopee,ide_ynotie from yavirac_nota_periodo_evaluacio where ide_ynopee=" + com_parcial.getValue());
+        TablaGenerica tab_asistencia = utilitario.consultar(ser_notas.getConsultaParcialAsistencia(com_periodo_academico.getValue().toString(), tab_consuta.getValor("ide_ystmen"), tab_consuta.getValor("ide_ystnie"), tab_consuta.getValor("ide_ypedpe"), tab_consuta.getValor("ide_yhogra"), tab_consuta.getValor("ide_ystjor"), tab_consuta.getValor("ide_ystmal"), tab_parcial.getValor("ide_ynotie")));
 
         if (com_parcial.getValue() == null || com_parcial.getValue().toString().isEmpty()) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el parcial");
@@ -218,12 +218,11 @@ public class RegistroAsistenciaTotal extends Pantalla {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Ya tiene registrado la asistencia para este parcial");
             return;
         } else {
-
+            
             TablaGenerica tab_malla_docente = utilitario.consultar(ser_personal.getPersonalMalla(com_materia_docente.getValue().toString()));
             String malla = tab_malla_docente.getValor("ide_ystmal");
             String grupo = tab_malla_docente.getValor("ide_yhogra");
             String jornada = tab_malla_docente.getValor("ide_ystjor");
-
             tab_cabecera.insertar();
             tab_cabecera.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
             tab_cabecera.setValor("ide_ystmen", tab_consuta.getValor("ide_ystmen"));
@@ -241,6 +240,7 @@ public class RegistroAsistenciaTotal extends Pantalla {
                 tab_detalle.insertar();
                 tab_detalle.setValor("ide_yaldap", tab_alumnos_asistencia.getValor(i, "ide_yaldap"));
                 tab_detalle.setValor("total_asistencia", "0");
+                tab_detalle.setValor("boqueado_ynodea", "false");
             }
 
             tab_cabecera.guardar();

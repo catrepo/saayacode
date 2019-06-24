@@ -167,27 +167,13 @@ public class ReporteNota extends Pantalla {
     public void abrirListaReportes() {
         if (com_reportes.getValue() != null) {
             if (com_periodo_academico.getValue() != null) {
-                /* if (lis_materia.getSeleccionados() != "") {
-                    materia = lis_materia.getSeleccionados();
-                    if (lis_actividad.getSeleccionados() != "") {
-                        actividad = lis_actividad.getSeleccionados();
-                        if (lis_parcial.getSeleccionados() != "") {
-                            parcial = lis_parcial.getSeleccionados();*/
                 generarPDF();
-                /* } else {
-                            utilitario.agregarMensajeInfo("Seleccione el parcial,", "Seleccione al menos un registro");
-                        }
-                    } else {
-                        utilitario.agregarMensajeInfo("Seleccione la actividad de evaluación,", "Seleccione al menos un registro");
-                    }
-                } else {
-                    utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
-                }*/
             } else {
                 utilitario.agregarMensajeInfo("Mensaje,", "Seleccione el periodod académico");
             }
         } else {
             utilitario.agregarMensajeInfo("Mensaje,", "Seleccione un reporte de la lista de reportes");
+
         }
 
     }
@@ -218,7 +204,7 @@ public class ReporteNota extends Pantalla {
             } else {
                 utilitario.agregarMensajeInfo("Seleccione la materia,", "Seleccione al menos un registro");
             }
-        } else if (nombre_reporte.equals("Nota Final por Parcial")) {
+        } else if (nombre_reporte.equals("Nota Final Parcial")) {
             if (lis_materia.getSeleccionados() != "") {
                 materia = lis_materia.getSeleccionados();
                 TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
