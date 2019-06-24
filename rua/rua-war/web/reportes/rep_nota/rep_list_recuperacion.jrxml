@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_final" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83c01137-dfa6-4289-bd90-4676110bd8cc">
 	<property name="ireport.zoom" value="1.3310000000000013"/>
-	<property name="ireport.x" value="59"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center">
 		<conditionalStyle>
@@ -427,7 +427,7 @@ and a.ide_yhogra=c.ide_yhogra and a.ide_ystmal=c.ide_ystmal and a.ide_ystjor=c.i
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{recuperacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $V{recuperacion} == null ? "0" : $V{recuperacion} )]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="459" y="0" width="53" height="11"/>
@@ -440,7 +440,7 @@ and a.ide_yhogra=c.ide_yhogra and a.ide_ystmal=c.ide_ystmal and a.ide_ystjor=c.i
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{nota_ynodet}.doubleValue()+$V{recuperacion})/2]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $V{recuperacion} ==  null ? ($F{nota_ynodet}.doubleValue()+$F{nota_ynodet}.doubleValue())/2 : ($F{nota_ynodet}.doubleValue()+$V{recuperacion})/2 )]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -85,7 +85,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap]]>
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>
 	<field name="codigo_ystmal" class="java.lang.String">
-		<fieldDescription><![CDATA[este  campo es el codigo de la malla ]]></fieldDescription>
+		<fieldDescription><![CDATA[este  campo es el codigo de la malla]]></fieldDescription>
 	</field>
 	<field name="detalle_ystmat" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
@@ -94,7 +94,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap]]>
 	</field>
 	<field name="detalle_yhogra" class="java.lang.String"/>
 	<field name="descripcion_ystjor" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
 	</field>
 	<field name="ide_yaldap" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -114,8 +114,7 @@ peso examen15]]></fieldDescription>
 	<field name="abreviatura_ynopen" class="java.lang.String"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
 	<field name="nota_ynoalr" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[Este campo almacena las notas finales
-]]></fieldDescription>
+		<fieldDescription><![CDATA[Este campo almacena las notas finales]]></fieldDescription>
 	</field>
 	<field name="total" class="java.lang.Integer"/>
 	<field name="estado" class="java.lang.String"/>
@@ -135,7 +134,7 @@ peso examen15]]></fieldDescription>
 						<dataset resetType="Group" resetGroup="alumno"/>
 					</crosstabDataset>
 					<crosstabHeaderCell>
-						<cellContents backcolor="#CCFFFF" mode="Opaque">
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
 							<staticText>
 								<reportElement uuid="c923254e-76a5-4f28-806d-f28bbdf68cb1" style="Crosstab Data Text" x="25" y="0" width="211" height="29"/>
 								<box>
@@ -212,9 +211,9 @@ peso examen15]]></fieldDescription>
 							<bucketExpression><![CDATA[$F{descripcion_ynotie}]]></bucketExpression>
 						</bucket>
 						<crosstabColumnHeader>
-							<cellContents backcolor="#CCFFFF" mode="Opaque">
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-									<reportElement uuid="d6dfdd5d-2d94-48e2-8516-bb468fed621b" style="Crosstab Data Text" x="0" y="0" width="63" height="15" isPrintWhenDetailOverflows="true"/>
+									<reportElement uuid="d6dfdd5d-2d94-48e2-8516-bb468fed621b" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="63" height="15" isPrintWhenDetailOverflows="true"/>
 									<box>
 										<pen lineWidth="0.75"/>
 										<topPen lineWidth="0.75"/>
@@ -230,7 +229,7 @@ peso examen15]]></fieldDescription>
 							</cellContents>
 						</crosstabColumnHeader>
 						<crosstabTotalColumnHeader>
-							<cellContents backcolor="#CCFFFF" mode="Opaque">
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<staticText>
 									<reportElement uuid="0ad3cf66-a505-4a56-9d65-ddb207e095ff" x="0" y="0" width="55" height="29" forecolor="#000000"/>
 									<box>
@@ -267,9 +266,9 @@ peso examen15]]></fieldDescription>
 							<bucketExpression><![CDATA[$F{peso_ynopen}]]></bucketExpression>
 						</bucket>
 						<crosstabColumnHeader>
-							<cellContents backcolor="#CCFFFF" mode="Opaque">
-								<textField>
-									<reportElement uuid="f7c17823-dcbf-4a2e-a0b4-df22dd6673a6" style="Crosstab Data Text" x="0" y="0" width="63" height="14"/>
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
+								<textField isStretchWithOverflow="true">
+									<reportElement uuid="f7c17823-dcbf-4a2e-a0b4-df22dd6673a6" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="63" height="14" isPrintWhenDetailOverflows="true"/>
 									<box>
 										<pen lineWidth="0.75"/>
 										<topPen lineWidth="0.75"/>
