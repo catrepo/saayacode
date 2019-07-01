@@ -391,7 +391,13 @@ public class ServicioEstructuraOrganizacional {
         return sql;
     }
     
-    public String getAreaDepartamento(String activo) {
+       /* Retorna el area departamento
+     *
+     * @param activo.- permite el ingreso del paramtero activo para filtrar ya
+     * sea true, false, o ambos.
+     * @return sql del area departamento
+     */
+    public String getAreaDepartamento(String activo) { //extraer informacion de la base de datos mediante un script
         String sql = "";
         sql = "select ide_ystard, descripcion_ysttad, descripcion_ystard from yavirac_stror_tipo_area_depar b,yavirac_stror_area_departament a where a.ide_ysttad = b.ide_ysttad;";
         return sql;
