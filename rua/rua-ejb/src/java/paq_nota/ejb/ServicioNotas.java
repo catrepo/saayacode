@@ -500,17 +500,17 @@ public class ServicioNotas {
         return sql;
     }
 
-    public String getConsultarNotaTotalTercerNivel(String codigo, String periodoacademico, String alumno,String malla,String docente,String paralelo,String jornada,String mension,String nivel) {
+    public String getConsultarNotaTotalTercerNivel(String codigo, String periodoacademico, String alumno, String malla, String docente, String paralelo, String jornada, String mension, String nivel) {
         String sql = "";
         sql += "select sum(nota_ynoalr) as total,ide_yaldap,yav_ide_ynopen\n"
                 + "from( \n"
                 + "	select a.ide_ypemda,d.ide_ystpea,ide_ysttfe,ide_ynotie,ide_yaldap,c.ide_ynopen,yav_ide_ynopen,b.ide_ynopen,nota_ynoalr,peso_ynopen,nivel_ynopen,detalle_ynopen\n"
                 + "	from yavirac_perso_malla_docen_alum a,yavirac_nota_alumno_resumen b,yavirac_nota_peso_nota c,yavirac_perso_malla_docente d,yavirac_stror_malla e\n"
                 + "	where a.ide_ypemda=b.ide_ypemda and b.ide_ynopen=c.ide_ynopen and a.ide_ypemad=d.ide_ypemad and d.ide_ystmal=e.ide_ystmal\n"
-                + "	and  d.ide_ystpea in ("+periodoacademico+") and ide_yaldap in ("+alumno+") and d.ide_ystmal in ("+malla+") and ide_ypedpe in ("+docente+") and ide_yhogra in ("+paralelo+") and ide_ystjor in ("+jornada+")\n"
-                + "	and ide_ystmen in ("+mension+") and ide_ystnie in ("+nivel+")\n"
+                + "	and  d.ide_ystpea in (" + periodoacademico + ") and ide_yaldap in (" + alumno + ") and d.ide_ystmal in (" + malla + ") and ide_ypedpe in (" + docente + ") and ide_yhogra in (" + paralelo + ") and ide_ystjor in (" + jornada + ")\n"
+                + "	and ide_ystmen in (" + mension + ") and ide_ystnie in (" + nivel + ")\n"
                 + ")a\n"
-                + "where yav_ide_ynopen in ("+codigo+")\n"
+                + "where yav_ide_ynopen in (" + codigo + ")\n"
                 + "group by ide_yaldap,yav_ide_ynopen";
         //System.out.println("NOtaFINAL <<<<<<<<<<<<<<<<<<<<<<\n" + sql);
         return sql;
@@ -597,6 +597,18 @@ public class ServicioNotas {
         String sql = "";
         sql += "select * from yavirac_nota_cabe_asistencia \n"
                 + "where ide_ystpea=" + periodo + " and ide_ystmen=" + mension + " and ide_ystnie=" + nivel + " and ide_ypedpe=" + docente + " and ide_yhogra=" + paralelo + "  and ide_ystjor=" + jornada + " and ide_ystmal=" + malla + " and ide_ynotie=" + parcial + "";
+        return sql;
+    }
+
+    public String getConsultaMatricula(String periodo, String alumno) {
+        String sql = "";
+        sql += "select ide_ymarec,d.ide_ystnie,ide_ymatrc,ide_ymanum,numero_credito_ystmal,b.ide_ystmal,e.ide_ystmat,d.ide_ystmen,ide_ysttif,codigo_ystmal,numero_horas_yastmal,detalle_ystmat,ide_ystpea \n"
+                + "from yavirac_matri_matricula a\n"
+                + "left join yavirac_matri_registro_credito b on a.ide_ymamat=b.ide_ymamat\n"
+                + "left join yavirac_matri_periodo_matric c on a.ide_ymaper=c.ide_ymaper  \n"
+                + "left join yavirac_stror_malla d on b.ide_ystmal=d.ide_ystmal\n"
+                + "left join yavirac_stror_materia e on d.ide_ystmat=e.ide_ystmat\n"
+                + "where ide_yaldap="+alumno+" and ide_ystpea="+periodo+" ";
         return sql;
     }
 }
