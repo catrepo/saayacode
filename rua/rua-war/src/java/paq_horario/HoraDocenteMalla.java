@@ -58,9 +58,15 @@ public class HoraDocenteMalla extends Pantalla {
         tab_docente_malla.getColumna("ide_ystpea").setVisible(false);
         tab_docente_malla.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_docente_malla.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
+        tab_docente_malla.getColumna("ide_yhogra").setAncho(-1);
+        tab_docente_malla.getColumna("ide_yhogra").setLongitud(-1);
         tab_docente_malla.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMalla());
-        tab_docente_malla.getColumna("ide_ystmal").setAutoCompletar();
+        //tab_docente_malla.getColumna("ide_ystmal").setAutoCompletar();
+        //tab_docente_malla.getColumna("ide_ystmal").setAncho(-1);
+        //tab_docente_malla.getColumna("ide_ystmal").setLongitud(-1);
         tab_docente_malla.getColumna("ide_ystjor").setCombo(ser_estructura_organizacional.getJornada("true"));
+        tab_docente_malla.getColumna("ide_ystjor").setAncho(-1);
+        tab_docente_malla.getColumna("ide_ystjor").setLongitud(-1);
         tab_docente_malla.getColumna("ide_ypemad").setNombreVisual("CODIGO");
         tab_docente_malla.getColumna("ide_yhodom").setNombreVisual("CÓDIGO PRINCIPAL");
         tab_docente_malla.getColumna("ide_ypedpe").setNombreVisual("PERSONAL DOCENTES");
@@ -79,13 +85,15 @@ public class HoraDocenteMalla extends Pantalla {
         pa_hora_docente_malla.setPanelTabla(tab_docente_malla);
 
         tab_docente_alumno.setId("tab_docente_alumno");   //identificador
-        tab_docente_alumno.setTabla("yavirac_perso_malla_docen_alum", "ide_ypemda", 1);
+        tab_docente_alumno.setTabla("yavirac_perso_malla_docen_alum", "ide_ypemda", 2);
+        tab_docente_alumno.setHeader("ALUMNOS MATRICULADOS");
         tab_docente_alumno.getColumna("ide_ypemda").setNombreVisual("CODIGO");
         tab_docente_alumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO/A");
         tab_docente_alumno.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
         tab_docente_alumno.getColumna("ide_yaldap").setLectura(true);
         tab_docente_alumno.getColumna("ide_ymamat").setNombreVisual("CODIGO MATRICULA");
         tab_docente_alumno.getColumna("ide_ymamat").setLectura(true);
+        tab_docente_alumno.setRows(30);
         tab_docente_alumno.dibujar();
 
         PanelTabla pa_docente_alumno = new PanelTabla();
@@ -93,12 +101,12 @@ public class HoraDocenteMalla extends Pantalla {
         pa_docente_alumno.setPanelTabla(tab_docente_alumno);
 
         Division div_hora_docente_malla = new Division();
-        div_hora_docente_malla.dividir2(pa_hora_docente_malla, pa_docente_alumno, "40%", "h");
+        div_hora_docente_malla.dividir2(pa_hora_docente_malla, pa_docente_alumno, "30%", "h");
         agregarComponente(div_hora_docente_malla);
 
         aut_alumno.setId("aut_alumno");
         aut_alumno.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
-        aut_alumno.setSize(75);
+        aut_alumno.setSize(60);
         //aut_alumno.setMetodoChange("selecionoAutocompletar");
         bar_botones.agregarComponente(new Etiqueta("Docente"));
         bar_botones.agregarComponente(aut_alumno);
@@ -106,14 +114,14 @@ public class HoraDocenteMalla extends Pantalla {
         //boton registrar notas
         Boton bot_consultar = new Boton();
         bot_consultar.setValue("Consultar");
-        bot_consultar.setIcon("ui-icon-note");//set icono Registrar///
+        bot_consultar.setIcon("ui-icon-search");//set icono Registrar///
         bot_consultar.setMetodo("selecionoAutocompletar");
         bar_botones.agregarBoton(bot_consultar);
         
         //boton registrar notas
         Boton bot_registrar = new Boton();
         bot_registrar.setValue("Inscribir Alumnos");
-        bot_registrar.setIcon("ui-icon-note");//set icono Registrar///
+        bot_registrar.setIcon("ui-icon-pencil");//set icono Registrar///
         bot_registrar.setMetodo("RegistarAlumno");
         bar_botones.agregarBoton(bot_registrar);
 
