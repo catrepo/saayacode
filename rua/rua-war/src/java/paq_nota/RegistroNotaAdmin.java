@@ -73,18 +73,17 @@ public class RegistroNotaAdmin extends Pantalla {
         bar_botones.getBot_siguiente().setRendered(false);
         bar_botones.getBot_inicio().setRendered(false);
 
+        aut_docente.setId("aut_docente");
+        aut_docente.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
+        aut_docente.setSize(35);
+        bar_botones.agregarComponente(new Etiqueta("Docente:"));
+        bar_botones.agregarComponente(aut_docente);
+
         com_periodo_academico.setId("com_periodo_academico");
         com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
         bar_botones.agregarComponente(new Etiqueta("Periodo Académico:"));
         bar_botones.agregarComponente(com_periodo_academico);
-        //com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
-
-        aut_docente.setId("aut_docente");
-        aut_docente.setAutoCompletar(ser_personal.getDatopersonal("true,false"));
-        aut_docente.setSize(50);
-        aut_docente.setMetodoChange("filtroComboPeriodoAcademico");
-        bar_botones.agregarComponente(new Etiqueta("Docente:"));
-        bar_botones.agregarComponente(aut_docente);
+        com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
 
         com_materia_docente.setId("com_materia_docente");
         com_materia_docente.setMetodo("mostrarNota");
@@ -93,6 +92,7 @@ public class RegistroNotaAdmin extends Pantalla {
         bar_botones.agregarComponente(new Etiqueta("Curso:"));
         bar_botones.agregarComponente(com_materia_docente);
 
+        //com_periodo_academico.set
         //boton limpiar
         Boton bot_limpiar = new Boton();
         bot_limpiar.setIcon("ui-icon-cancel");
@@ -164,7 +164,7 @@ public class RegistroNotaAdmin extends Pantalla {
         PanelTabla pa_detalle_nota = new PanelTabla();
         pa_detalle_nota.setId("pa_detalle_nota"); // nombre de i
         pa_detalle_nota.setPanelTabla(tab_detalle_nota);
- 
+
         ///// tabuladores
         Division div_nota = new Division();
         div_nota.setId("div_nota");
@@ -243,14 +243,9 @@ public class RegistroNotaAdmin extends Pantalla {
 
     }
 
-    public void filtroComboPeriodoAcademico(SelectEvent evt) {
-        aut_docente.onSelect(evt);
-        docente = "" + aut_docente.getValor();
-        TablaGenerica tab_consulta = utilitario.consultar(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), docente));
-        tab_consulta.imprimirSql();
-//com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), docente));
-        utilitario.addUpdate("com_materia_docente");
-
+    public void filtroComboPeriodoAcademico() {
+            com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), aut_docente.getValor()));
+            utilitario.addUpdate("com_materia_docente");
     }
 
     public void validarNotaEvaluDacion(AjaxBehaviorEvent evt) {

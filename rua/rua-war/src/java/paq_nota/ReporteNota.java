@@ -189,16 +189,17 @@ public class ReporteNota extends Pantalla {
         if (nombre_reporte.equals("Nota Final")) {
             if (lis_materia.getSeleccionados() != "") {
                 materia = lis_materia.getSeleccionados();
-
+                System.out.println("MATERIA >>>>>> " + materia);
                 TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
                 Map map_parametros = new HashMap();
-                map_parametros.put("nombre", utilitario.getVariable("NICK"));
-                map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-                map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
-                map_parametros.put("ide_ypedpe", ide_docente);
-                map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
-                map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
-                map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
+               
+                    map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                    map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                    map_parametros.put("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
+                    map_parametros.put("ide_ypedpe", ide_docente);
+                    map_parametros.put("ide_yhogra", tab_consuta.getValor("ide_yhogra"));
+                    map_parametros.put("ide_ystjor", tab_consuta.getValor("ide_ystjor"));
+                    map_parametros.put("ide_ystnie", tab_consuta.getValor("ide_ystnie"));
                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
                 vipdf_comprobante.dibujar();
             } else {
