@@ -45,6 +45,9 @@ public class PeriodoAcademico extends Pantalla {
         tab_periodo_academic.setTabla("yavirac_stror_periodo_academic", "ide_ystpea", 1);    // nom bdd
         tab_periodo_academic.setHeader("PERIODO ACADÉMICO");
         tab_periodo_academic.getColumna("ide_ystani").setCombo("yavirac_stror_anio", "ide_ystani", "descripcion_ystani", "");
+        tab_periodo_academic.getColumna("ide_ystani").setAncho(-1);
+        tab_periodo_academic.getColumna("ide_ystani").setLongitud(-1);
+        tab_periodo_academic.getColumna("ide_ystani").setNombreVisual("AÑO");
         tab_periodo_academic.getColumna("nota_evaluacion_ystpea").setNombreVisual("NOTA EVALUACIÓN");
         tab_periodo_academic.getColumna("activo_ystpea").setLectura(true);
         tab_periodo_academic.getColumna("activo_ystpea").setValorDefecto("true");
