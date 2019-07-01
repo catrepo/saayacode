@@ -17,7 +17,7 @@ import sistema.aplicacion.Utilitario;
  *
  * @author Personal
  */
-public class TipoArchivo extends Pantalla{
+public class TipoArchivo extends Pantalla{ //Desarrollo de la pantalla archivo
     
     private Tabla tab_tipoarchivo = new Tabla();
     

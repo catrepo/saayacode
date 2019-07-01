@@ -14,7 +14,7 @@ import sistema.aplicacion.Pantalla;
  *
  * @author User
  */
-public class Documento extends Pantalla{
+public class Documento extends Pantalla{ //desarrollo de la pantalla documento
 
     private Tabla tab_documento = new Tabla();
     

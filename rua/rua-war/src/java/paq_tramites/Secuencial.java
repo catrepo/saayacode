@@ -14,7 +14,7 @@ import framework.componentes.Tabla;
  *
  * @author Diego
  */
-public class Secuencial extends Pantalla {
+public class Secuencial extends Pantalla { //Desaroolo de la pantalla secuencial
 
     private Tabla tab_tabla = new Tabla();
 

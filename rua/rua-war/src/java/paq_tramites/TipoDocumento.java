@@ -17,7 +17,7 @@ import sistema.aplicacion.Utilitario;
  *
  * @author User
  */
-public class TipoDocumento extends Pantalla{
+public class TipoDocumento extends Pantalla{ //Desarrollo de la pantalla tipo documento
     
     private Tabla tab_tipodocumento = new Tabla();
     
