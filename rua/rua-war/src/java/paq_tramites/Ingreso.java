@@ -14,9 +14,12 @@ import framework.componentes.PanelTabla;
 import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
+import framework.componentes.VisualizarPDF;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.SelectEvent;
@@ -38,6 +41,8 @@ public class Ingreso extends Pantalla {
     private Tabla tab_asignacion = new Tabla();
     private SeleccionTabla sel_registra_alumno = new SeleccionTabla(); //se crea varialble para extraer datos de otra tabla
     private SeleccionTabla sel_asigna_responsable = new SeleccionTabla();
+         private VisualizarPDF vipdf_proforma = new VisualizarPDF();
+
 
     //Creacion de servicios para tulizar como variables para extraer informacion
     @EJB
@@ -67,6 +72,16 @@ public class Ingreso extends Pantalla {
             bot_asignar.setMetodo("selregistraResponsable");
             bar_botones.agregarBoton(bot_asignar);
 
+            //boton imprimir
+            Boton bot_imprimir = new Boton();
+            bot_imprimir.setValue("Imprimir Tramite");
+            bot_imprimir.setIcon("ui-icon-print");
+            bot_imprimir.setMetodo("imprimir");
+            bar_botones.agregarBoton(bot_imprimir);
+            
+            vipdf_proforma.setId("vipdf_proforma");
+         vipdf_proforma.setTitle("REPORTE SEGUIMIENTO TRAMITE");
+        agregarComponente(vipdf_proforma);
             // Desarrollo del entorno de la pantalla ingreso
             tab_ingreso.setId("tab_ingreso");
             tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
@@ -214,7 +229,22 @@ public class Ingreso extends Pantalla {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
     }
+ public void imprimir(){
+        String usuario=utilitario.getVariable("NICK");
+        if (tab_ingreso.getValorSeleccionado() != null) {
+                        ///////////AQUI ABRE EL REPORTE
+                                Map parametros = new HashMap();
 
+                        parametros.put("pide_tramite", Integer.parseInt(tab_ingreso.getValor("ide_ytring")));
+                         parametros.put("nombre", usuario);
+                        //System.out.println(" paramteros " + parametros);
+                        vipdf_proforma.setVisualizarPDF("rep_tramites/reporte_tramite.jasper", parametros);
+                        vipdf_proforma.dibujar();
+                        utilitario.addUpdate("vipdf_proforma");
+        } else {
+            utilitario.agregarMensajeInfo("Seleccione un tramite para imprimir", "");
+        }
+    }
 //desarrollo de evento en la variable texto base, en donde al seleccionar el tipo de documento se pondra el texto base
  //en su respectivo lugar y en la fecha de registro de cada documento se sumara los dias correspondientes segun la 
  //configutacion de los tipos de documebtos para saber su fecha de entrega automatica.   
@@ -409,6 +439,14 @@ public class Ingreso extends Pantalla {
 
     public void setSel_asigna_responsable(SeleccionTabla sel_asigna_responsable) {
         this.sel_asigna_responsable = sel_asigna_responsable;
+    }
+
+    public VisualizarPDF getVipdf_proforma() {
+        return vipdf_proforma;
+    }
+
+    public void setVipdf_proforma(VisualizarPDF vipdf_proforma) {
+        this.vipdf_proforma = vipdf_proforma;
     }
 
 }
