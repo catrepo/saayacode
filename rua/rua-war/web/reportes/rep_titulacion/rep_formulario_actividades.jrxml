@@ -13,7 +13,7 @@
 	<parameter name="pide_canton" class="java.lang.String"/>
 	<parameter name="pide_parroquia" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select a.ide_ytipro,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,detalle_ytifua as funcion,descripcion_ystmen,nombre_comercial_ytiemp,
+		<![CDATA[select a.ide_ytipro,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,detalle_ytifua as funcion,descripcion_ystmen,nombre_comercial_ytiemp,observacion_ytipee,
 direccion_ytiemp,beneficiario_directo_ytipro,beneficiario_indirecto_ytipro,nombre_ytipee,descripcion_ytitpv as cargo
 from yavirac_titu_proyecto a
 left join yavirac_titu_participante_est b on a.ide_ytipro=b.ide_ytipro
@@ -33,6 +33,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 	<field name="funcion" class="java.lang.String"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
 	<field name="nombre_comercial_ytiemp" class="java.lang.String"/>
+	<field name="observacion_ytipee" class="java.lang.String"/>
 	<field name="direccion_ytiemp" class="java.lang.String"/>
 	<field name="beneficiario_directo_ytipro" class="java.lang.String"/>
 	<field name="beneficiario_indirecto_ytipro" class="java.lang.String"/>
@@ -56,7 +57,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 						<font size="9" isBold="true"/>
 						<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 					</textElement>
-					<text><![CDATA[3. ORGANIZACIÓN/ INSTITUCIÓN BENEFICIARIA]]></text>
+					<text><![CDATA[6. ORGANIZACIÓN/ INSTITUCIÓN BENEFICIARIA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="335" y="14" width="110" height="14"/>
@@ -336,7 +337,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 						<font size="9"/>
 						<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 					</textElement>
-					<textFieldExpression><![CDATA["    "]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{observacion_ytipee}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -410,7 +411,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 	<summary>
 		<band height="80">
 			<subreport isUsingCache="true">
-				<reportElement uuid="07595784-78b5-4df5-8db8-ff7a00377db3" x="0" y="0" width="555" height="79"/>
+				<reportElement uuid="07595784-78b5-4df5-8db8-ff7a00377db3" x="0" y="0" width="555" height="49"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>

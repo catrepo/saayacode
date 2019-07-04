@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_formulario" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="40" topMargin="20" bottomMargin="20" uuid="808d6a52-7c68-4c26-ac7a-9d00e2fd20d6">
 	<property name="ireport.zoom" value="1.1000000000000085"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="174"/>
+	<property name="ireport.y" value="332"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\JHONPRODUCER\\Documents\\GitHub\\code\\trunk\\rua\\rua-war\\web\\reportes"]]></defaultValueExpression>
 	</parameter>
@@ -16,7 +16,7 @@
 		<![CDATA[select a.ide_ytipro,detalle_proyecto_ytipro,secuencial_ytipro,detalle_yticam as campo,objeto_proyecto_ytipro,descripcion_ystmen as carrera,
 ciclo_ytipro,detalle_ysttfe,e.descripcion_ystdip as provincia,f.descripcion_ystdip as canton,g.descripcion_ystdip as parroquia,plazo_ytipro,
 fecha_registro_ytipro,fecha_inicio_ytipro,fecha_fin_ytipro,descripcion_ytiint as frecuencia,apellido_ypedpe||' '||nombre_ypedpe as docente,
-detalle_ytifua as funcion,detalle_ytitpa as titulo ,hora_proyecto_ytiprd,descripcion_ytipro
+detalle_ytifua as funcion,detalle_ytitpa as titulo ,hora_proyecto_ytiprd,descripcion_ytipro,justificacion_ytipro,fundamentacion_ytipro,analisis_situacional_ytipro
 from yavirac_titu_proyecto a
 left join yavirac_titu_campo b on a.ide_yticam=b.ide_yticam
 left join yavirac_stror_mension c on a.ide_ystmen=c.ide_ystmen
@@ -44,10 +44,7 @@ where a.ide_ytipro = $P{pide_proyecto}]]>
 	<field name="provincia" class="java.lang.String"/>
 	<field name="canton" class="java.lang.String"/>
 	<field name="parroquia" class="java.lang.String"/>
-	<field name="plazo_ytipro" class="java.lang.Long">
-		<fieldDescription><![CDATA[este campo corresponde al numero de dias que va a durar el peroyectos
-calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
-	</field>
+	<field name="plazo_ytipro" class="java.lang.String"/>
 	<field name="fecha_registro_ytipro" class="java.sql.Date"/>
 	<field name="fecha_inicio_ytipro" class="java.sql.Date"/>
 	<field name="fecha_fin_ytipro" class="java.sql.Date"/>
@@ -57,6 +54,9 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 	<field name="titulo" class="java.lang.String"/>
 	<field name="hora_proyecto_ytiprd" class="java.lang.Long"/>
 	<field name="descripcion_ytipro" class="java.lang.String"/>
+	<field name="justificacion_ytipro" class="java.lang.String"/>
+	<field name="fundamentacion_ytipro" class="java.lang.String"/>
+	<field name="analisis_situacional_ytipro" class="java.lang.String"/>
 	<group name="descripcion">
 		<groupHeader>
 			<band height="42">
@@ -72,7 +72,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 						<font size="9" isBold="true"/>
 						<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 					</textElement>
-					<text><![CDATA[2. PARTICIPANTES]]></text>
+					<text><![CDATA[5. PARTICIPANTES]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="14" width="139" height="28"/>
@@ -140,7 +140,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="256">
+		<band height="196">
 			<staticText>
 				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="0" width="555" height="14"/>
 				<box>
@@ -183,61 +183,8 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>CODIGO: </b>"+$F{secuencial_ytipro}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" isPrintRepeatedValues="false" x="350" y="54" width="205" height="30" isPrintWhenDetailOverflows="true"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement verticalAlignment="Top" markup="html">
-					<font size="9"/>
-					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="2" spacingAfter="2"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<b>Campo: </b>"+$F{campo}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" isPrintRepeatedValues="false" x="350" y="84" width="205" height="30" isPrintWhenDetailOverflows="true"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement verticalAlignment="Top" markup="html">
-					<font size="9"/>
-					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" spacingBefore="2" spacingAfter="2"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<b>Objeto: </b>"+$F{objeto_proyecto_ytipro}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="54" width="350" height="14"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-					<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
-				</textElement>
-				<text><![CDATA[LÍNEA INVESTIGACIÓN:]]></text>
-			</staticText>
-			<subreport>
-				<reportElement uuid="d134bc51-9995-459c-a5d3-2bd2016b6773" x="0" y="68" width="350" height="46"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="pide_proyecto">
-					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_linea_investigacion.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="114" width="555" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="54" width="555" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -251,7 +198,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA["<b>Carrera: </b>"+$F{carrera}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="128" width="350" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="68" width="350" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -265,7 +212,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA["<b>Ciclo: </b>"+$F{ciclo_ytipro}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="350" y="128" width="205" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="350" y="68" width="205" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -279,7 +226,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA[$F{detalle_ysttfe}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="142" width="370" height="12"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="82" width="370" height="12"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -293,7 +240,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA["Provincia: "+$F{provincia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="154" width="370" height="12"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="94" width="370" height="12"/>
 				<box>
 					<rightPen lineWidth="0.75"/>
 				</box>
@@ -304,7 +251,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA["Cantón: "+$F{canton}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="166" width="370" height="12"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="106" width="370" height="12"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.75"/>
@@ -318,7 +265,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA["Parroquia: "+$F{parroquia}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="178" width="370" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="118" width="370" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -332,7 +279,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA[$F{plazo_ytipro}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="0" y="178" width="185" height="14"/>
+				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="0" y="118" width="185" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -346,7 +293,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[PLAZO DE EJECUCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="0" y="142" width="185" height="36"/>
+				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="0" y="82" width="185" height="36"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -360,7 +307,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[COBERTURA Y LOCALIZACIÓN]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="192" width="70" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="132" width="70" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -374,7 +321,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA[$F{fecha_registro_ytipro}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="335" y="192" width="70" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="335" y="132" width="70" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -388,7 +335,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_ytipro}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="255" y="192" width="80" height="14"/>
+				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="255" y="132" width="80" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -402,7 +349,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[FECHA INICIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="405" y="192" width="80" height="14"/>
+				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="405" y="132" width="80" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -416,7 +363,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[FECHA FINAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="0" y="192" width="185" height="14"/>
+				<reportElement uuid="0601bd40-cc5a-42da-ba00-3c18724a4d66" x="0" y="132" width="185" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -430,7 +377,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[FECHA DE PRESENTACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="206" width="185" height="14"/>
+				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="146" width="185" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -444,7 +391,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[FRECUENCIA DE LAS ACTIVIDADES]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="206" width="370" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="185" y="146" width="370" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -458,7 +405,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<textFieldExpression><![CDATA[$F{frecuencia}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="220" width="185" height="28"/>
+				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="160" width="185" height="28"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -472,7 +419,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<text><![CDATA[Actividad de vinculación]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="185" y="220" width="185" height="28"/>
+				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="185" y="160" width="185" height="28"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -483,10 +430,10 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<font size="9" isBold="true"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 				</textElement>
-				<text><![CDATA[Ejes estratégicos de vinculación con la colectividad]]></text>
+				<text><![CDATA[Sectores de intervención]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="370" y="220" width="185" height="28"/>
+				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="370" y="160" width="185" height="28"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -497,10 +444,10 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<font size="9" isBold="true"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 				</textElement>
-				<text><![CDATA[Áreas de aplicación de los proyectos de vinculación]]></text>
+				<text><![CDATA[Ejés estratégicos de vinculación con la colectividad]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="485" y="192" width="70" height="14"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="485" y="132" width="70" height="14"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -513,11 +460,8 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_fin_ytipro}]]></textFieldExpression>
 			</textField>
-			<line direction="BottomUp">
-				<reportElement uuid="1fa876b7-d5dc-4cb4-a62b-13063bd59b09" x="0" y="54" width="1" height="60"/>
-			</line>
 			<subreport>
-				<reportElement uuid="1692544a-7106-4756-96fe-a7f7991bd618" stretchType="RelativeToBandHeight" x="0" y="248" width="185" height="8"/>
+				<reportElement uuid="1692544a-7106-4756-96fe-a7f7991bd618" stretchType="RelativeToBandHeight" x="0" y="188" width="185" height="8"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -528,7 +472,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_actividad_vinculacion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="d9865042-2ef5-43a2-9c4a-a8fcf9ca7733" stretchType="RelativeToBandHeight" x="185" y="248" width="185" height="8" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="d9865042-2ef5-43a2-9c4a-a8fcf9ca7733" stretchType="RelativeToBandHeight" x="185" y="188" width="185" height="8" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -539,7 +483,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_eje_estratejicos.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="b5f04e43-e551-4f94-b996-d2ed513c25ab" stretchType="RelativeToBandHeight" x="370" y="248" width="185" height="8" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="b5f04e43-e551-4f94-b996-d2ed513c25ab" stretchType="RelativeToBandHeight" x="370" y="188" width="185" height="8" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -552,7 +496,7 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="38">
+		<band height="241">
 			<staticText>
 				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="0" width="555" height="14"/>
 				<box>
@@ -565,10 +509,10 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<font size="9" isBold="true"/>
 					<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
 				</textElement>
-				<text><![CDATA[DESCRIPCION GENERAL  DEL PROYECTO.]]></text>
+				<text><![CDATA[2. DESCRIPCION GENERAL  DEL PROYECTO.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="14" width="555" height="24" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="14" width="555" height="77" isPrintWhenDetailOverflows="true"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -580,6 +524,62 @@ calculado entre la fecha de inicio y la fecha fin]]></fieldDescription>
 					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion_ytipro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8261c59d-5b9a-4c5d-a018-af42112e34d1" x="0" y="91" width="555" height="14"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+					<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
+				</textElement>
+				<text><![CDATA[3. ANÁLISIS SITUACIONAL (DIAGNOSTICO)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="862068ba-46e2-4060-9b32-ff081db972af" x="0" y="105" width="555" height="74" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font size="9"/>
+					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{analisis_situacional_ytipro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="16ba7133-b49e-41a1-a500-3059936ec1a4" x="0" y="179" width="555" height="14"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+					<paragraph leftIndent="5" rightIndent="5" spacingBefore="1" spacingAfter="1"/>
+				</textElement>
+				<text><![CDATA[4. JUSTIFICACIÓN]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="93a39ca4-ab6f-4046-a2b0-51578a7ffc33" x="0" y="193" width="555" height="48" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font size="9"/>
+					<paragraph lineSpacing="Single" leftIndent="5" rightIndent="5" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{justificacion_ytipro}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_portada_proyecto" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="808d6a52-7c68-4c26-ac7a-9d00e2fd20d6">
 	<property name="ireport.zoom" value="1.0000000000000007"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="518"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="ide_sucu" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -49,203 +49,66 @@ where ide_ytipro =$P{pide_proyecto}]]>
 	</title>
 	<pageHeader>
 		<band height="50" splitType="Stretch">
-			<textField>
-				<reportElement uuid="e1d221e0-dfee-45a3-8f65-3c0b7d5620d0" x="423" y="30" width="132" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{secuencial_ytipro}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement uuid="e8d48945-f5fd-4e0b-b38e-c75b1449ac8c" x="277" y="30" width="146" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<reportElement uuid="e8d48945-f5fd-4e0b-b38e-c75b1449ac8c" x="131" y="1" width="248" height="49"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CÓDIGO DEL PROYECTO: ]]></text>
+				<text><![CDATA[INSTITUTO TECNOLÓGICO SUPERIOR
+" YAVIRAC"
+Quito - Ecuador]]></text>
 			</staticText>
+			<image>
+				<reportElement uuid="81115987-0e14-4f8f-9c94-4192c5a4fc9c" x="455" y="0" width="100" height="50"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/imagenes/logoinstituto.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="16d21240-cb9c-4c3c-b48e-5609b96ac269" x="0" y="0" width="100" height="50"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/imagenes/senecyt.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="732" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="5fbb0a65-0142-4719-8878-6fca47fc262f" x="0" y="242" width="555" height="20"/>
+				<reportElement uuid="5fbb0a65-0142-4719-8878-6fca47fc262f" x="0" y="200" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[VINCULACIÓN CON LA SOCIEDAD]]></text>
+				<text><![CDATA[DEPARTAMENTO DE VINCULACIÓN CON LA SOCIEDAD]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="282" width="555" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="20" y="238" width="535" height="20"/>
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>CARRERA: </b>"+$F{descripcion_ystmen}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="323" width="555" height="64"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="20" y="258" width="535" height="64"/>
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>NOMBRE DEL PROYECTO : </b>"+$F{detalle_proyecto_ytipro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="402" width="555" height="40"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="20" y="322" width="535" height="40"/>
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<b>INSTITUCIÓN BENEFICIARIA: </b>"+$F{nombre_comercial_ytiemp}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<b>COORDINADOR DE CARRERA: </b>"+$F{revisado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="0" y="462" width="555" height="30"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+				<reportElement uuid="81043930-4ef5-4c23-b045-e81c55038da4" x="20" y="362" width="535" height="30"/>
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<b>COORDINADOR INSTITUCIÓN BENEFICIARIA: </b>"+$F{nombre_ytipee}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<b>AUTOR: </b>"+$F{elaborado}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement uuid="3616d6fa-adbd-4797-a40e-2c1fcd846f32" x="0" y="554" width="555" height="150"/>
-			</rectangle>
-			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="0" y="554" width="185" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Elaborado por:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="185" y="554" width="185" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Revisado por:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="da8bebfa-4804-47c8-a41c-332ae7cd1322" x="370" y="554" width="185" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Autorizado por:]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="6e263c75-9633-450e-9558-4b0ce605ca77" x="0" y="664" width="185" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{elaborado}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="6e263c75-9633-450e-9558-4b0ce605ca77" x="185" y="664" width="185" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{revisado}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="6e263c75-9633-450e-9558-4b0ce605ca77" x="370" y="664" width="185" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{aprovado}]]></textFieldExpression>
-			</textField>
-			<subreport>
-				<reportElement uuid="bf05e50f-d2ab-41f6-b1dd-220c98d2176c" x="0" y="0" width="555" height="231"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="ide_empr">
-					<subreportParameterExpression><![CDATA[$P{ide_empr}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="ide_sucu">
-					<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="pide_proyecto">
-					<subreportParameterExpression><![CDATA[$P{pide_proyecto}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera_proyecto.jasper"]]></subreportExpression>
-			</subreport>
-			<staticText>
-				<reportElement uuid="38ff2c0a-ea1e-464a-b40f-f948306121c7" x="0" y="684" width="185" height="20"/>
-				<box>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Docente de Vinculación]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="38ff2c0a-ea1e-464a-b40f-f948306121c7" x="185" y="684" width="185" height="20"/>
-				<box>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Coordinadora de la Carrera]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="38ff2c0a-ea1e-464a-b40f-f948306121c7" x="370" y="684" width="185" height="20"/>
-				<box>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Director del Instituto]]></text>
-			</staticText>
-			<line direction="BottomUp">
-				<reportElement uuid="9c692174-5898-4d59-8ac8-e312267ad533" x="185" y="574" width="1" height="90"/>
-			</line>
-			<line direction="BottomUp">
-				<reportElement uuid="9c692174-5898-4d59-8ac8-e312267ad533" x="370" y="574" width="1" height="90"/>
-			</line>
 			<subreport>
 				<reportElement uuid="7d336f05-b094-4fe7-b4a4-7624e6c1c85d" x="0" y="704" width="523" height="28"/>
 				<subreportParameter name="SUBREPORT_DIR">
@@ -272,18 +135,54 @@ where ide_ytipro =$P{pide_proyecto}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_titulacion/rep_formulario_proyecto.jasper"]]></subreportExpression>
 			</subreport>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ed05707e-4e44-4bc5-9912-6d4f30e0084c" x="131" y="46" width="248" height="49"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO TECNOLÓGICO SUPERIOR
+" YAVIRAC"
+]]></text>
+			</staticText>
 			<textField>
-				<reportElement uuid="62cb98bd-c2ea-4595-9e45-65e1c9e5deb5" x="0" y="0" width="555" height="20"/>
+				<reportElement uuid="cf01f59d-f559-4ca4-8cc9-9343ac2952a7" x="20" y="392" width="535" height="30"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font size="11"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>INSTITUCIÓN  BENEFICIARIA: </b>"+$F{nombre_comercial_ytiemp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d9d50100-75c2-4c44-b8f3-2edd4eb5a23e" x="20" y="482" width="535" height="20"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font size="11"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>CODIGO DEL PROYECTO: </b>"+$F{secuencial_ytipro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6eb0056c-ab8a-4dc5-9967-85f94bfe6578" x="20" y="422" width="535" height="30"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font size="11"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>COORDINADORES DE LA INSTITUCION BENEFICIARIA: </b>"+$F{nombre_ytipee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="62cb98bd-c2ea-4595-9e45-65e1c9e5deb5" x="0" y="684" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["QUITO - ECUADOR"]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement uuid="086be0b6-19f0-49b7-b6eb-0b1b2d5f97e8" x="199" y="107" width="125" height="80"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/imagenes/logoinstituto.png"]]></imageExpression>
+			</image>
 		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>
