@@ -19,7 +19,7 @@ public class ActividadVinculacion extends Pantalla {
     public ActividadVinculacion(){
         tab_actividad_vincula.setId("tab_actividad_vincula");
         tab_actividad_vincula.setTabla("yavirac_titu_actividad_vincula","ide_ytiacv",1);
-        tab_actividad_vincula.setHeader("actividad vincula");
+        tab_actividad_vincula.setHeader("actividad vinculación");
         tab_actividad_vincula.dibujar ();
         
         PanelTabla pat_line= new PanelTabla();

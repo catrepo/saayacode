@@ -74,6 +74,9 @@ public class ProyectoVinculacion extends Pantalla {
         tab_tabla.getColumna("IDE_YSTTFE").setCombo(ser_periodoacademico.getTipoFormacionEducativa("true,false"));
         tab_tabla.getColumna("ide_ytipee").setCombo(ser_titulacion.getSqlPersonaEmpresa());
          tab_tabla.getColumna("ide_ytipee").setAutoCompletar();
+          tab_tabla.getColumna("objeto_proyecto_ytipro").setVisible(false);
+          tab_tabla.getColumna("IDE_YTICAM").setVisible(false);
+          tab_tabla.getColumna("yav_ide_ypedpe2").setVisible(false);
         tab_tabla.getColumna("ide_ytipee").setNombreVisual("RESPONSABLE EMPRESA");
         tab_tabla.getColumna("ide_ytipro").setNombreVisual("CODIGO DE PROYECTO");
         tab_tabla.getColumna("fecha_registro_ytipro").setNombreVisual("FECHA DE REGISTRO");

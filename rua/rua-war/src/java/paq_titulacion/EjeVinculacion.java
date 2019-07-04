@@ -20,7 +20,7 @@ public class EjeVinculacion extends Pantalla{
     
         tab_eje_vinculacion.setId("tab_eje_vinculacion");
         tab_eje_vinculacion.setTabla("yavirac_titu_eje_vinculacion","ide_ytiejv",1);
-        tab_eje_vinculacion.setHeader("Eje Vinculacion");
+        tab_eje_vinculacion.setHeader("Sectores de intervención");
         tab_eje_vinculacion.dibujar();
         
         
