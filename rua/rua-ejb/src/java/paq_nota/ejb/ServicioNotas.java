@@ -5,9 +5,11 @@
  */
 package paq_nota.ejb;
 
+import framework.aplicacion.TablaGenerica;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import sistema.aplicacion.Utilitario;
 
 /**
  *
@@ -16,6 +18,8 @@ import javax.ejb.Stateless;
 @Stateless
 
 public class ServicioNotas {
+
+    private final Utilitario utilitario = new Utilitario();
 
     /**
      * Retorna el Tipo de Evaluacion
@@ -608,7 +612,73 @@ public class ServicioNotas {
                 + "left join yavirac_matri_periodo_matric c on a.ide_ymaper=c.ide_ymaper  \n"
                 + "left join yavirac_stror_malla d on b.ide_ystmal=d.ide_ystmal\n"
                 + "left join yavirac_stror_materia e on d.ide_ystmat=e.ide_ystmat\n"
-                + "where ide_yaldap="+alumno+" and ide_ystpea="+periodo+" ";
+                + "where ide_yaldap=" + alumno + " and ide_ystpea=" + periodo + " ";
+        return sql;
+    }
+
+    public String getEstudiantesMatriculados(String periodo) {
+        String sql = "";
+        sql += "select a.ide_ymamat,b.ide_ystpea,ide_yaldap,ide_ystmen,ide_ystmal \n"
+                + "from yavirac_matri_matricula a\n"
+                + "left join yavirac_matri_periodo_matric b on a.ide_ymaper=b.ide_ymaper\n"
+                + "left join yavirac_stror_periodo_academic c on b.ide_ystpea=c.ide_ystpea\n"
+                + "left join yavirac_matri_registro_credito d on a.ide_ymamat=d.ide_ymamat\n"
+                + "where b.ide_ystpea=" + periodo + "\n"
+                + "order by ide_yaldap";
+        return sql;
+    }
+
+    public String getConsultaNotaRecord(String periodo, String alumno, String malla, String mension) {
+        String sql = "";
+        sql += "select ide_ynoalr,a.ide_ystpea,a.ide_ystmen,a.ide_ystnie,a.ide_ypedpe,a.ide_yhogra,a.ide_ystjor,a.ide_ystmal,a.ide_yaldap,nota_minima_aprobada_ystpea,nota_ynoalr,total,\n"
+                + "(case when nota_ynoalr >= nota_minima_aprobada_ystpea and total >= nota_minima_aprobada_ystpea then \n"
+                + "cast((select valor_para from sis_parametros where nom_para = 'p_estado_aprobado') as numeric)\n"
+                + "else cast((select valor_para from sis_parametros where nom_para = 'p_estado_reprobado') as numeric) end ) as estado\n"
+                + "from (\n"
+                + "select ide_ynoalr,nivel_ynopen,a.ide_ynopen,d.ide_ystpea,ide_yaldap,d.ide_ystmal,ide_yhogra,ide_ystjor,ide_ystmen,ide_ystnie,ide_ypedpe,nota_ynoalr,nota_minima_aprobada_ystpea\n"
+                + "from yavirac_nota_alumno_resumen a\n"
+                + "left join yavirac_nota_peso_nota b on a.ide_ynopen=b.ide_ynopen\n"
+                + "left  join yavirac_perso_malla_docen_alum c on a.ide_ypemda=c.ide_ypemda  \n"
+                + "left join yavirac_perso_malla_docente d on c.ide_ypemad=d.ide_ypemad\n"
+                + "left join yavirac_stror_malla e on d.ide_ystmal=e.ide_ystmal\n"
+                + "left join yavirac_stror_periodo_academic f on d.ide_ystpea=f.ide_ystpea\n"
+                + ") a\n"
+                + "left join (\n"
+                + "select sum(total_asistencia) as total,ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal,ide_yaldap\n"
+                + "from yavirac_nota_cabe_asistencia a\n"
+                + "left join yavirac_nota_det_asistencia b on a.ide_ynocaa=b.ide_ynocaa\n"
+                + "group by ide_yaldap,ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal\n"
+                + ")  b on  a.ide_ystpea=b.ide_ystpea and a.ide_ystmen=b.ide_ystmen and a.ide_ystnie=b.ide_ystnie and a.ide_ypedpe=b.ide_ypedpe\n"
+                + "and a.ide_yhogra=b.ide_yhogra and a.ide_ystmal=b.ide_ystmal and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap\n"
+                + "where nivel_ynopen=1 and a.ide_yaldap=" + alumno + " and a.ide_ystpea=" + periodo + " and a.ide_ystmal=" + malla + " and a.ide_ystmen=" + mension + " \n"
+                + "order by ide_yaldap";
+        return sql;
+    }
+
+    public String getConsultaRecord(String periodo, String alumno, String malla, String mension) {
+        String sql = "";
+        sql += "select a.ide_ynocra,ide_ynodra,ide_yaldap,ide_ystmen,ide_ystmat,ide_ystpea,ide_ystmal,ide_ynoest,nota_ynodra \n"
+                + "from yavirac_nota_cab_rec_acad a\n"
+                + "left join yavirac_nota_det_rec_acad b on a.ide_ynocra=b.ide_ynocra \n"
+                + "where ide_yaldap=" + alumno + " and ide_ystpea=" + periodo + " and ide_ystmal=" + malla + " and ide_ystmen=" + mension + "";
+        return sql;
+    }
+
+    public String getConsultaTablaAutorizacion(String codigo) {
+        String sql = "";
+        sql += "select ide_ynodau,ide_yaldap,ide_ystpea,ide_ystmal,c.ide_ypedpe,ide_yhogra,ide_ystjor \n"
+                + "from yavirac_nota_detalle_autorizac a\n"
+                + "left join yavirac_nota_detalle_nota b on a.ide_ynodet=b.ide_ynodet\n"
+                + "left join yavirac_nota_cabecera_nota c on b.ide_ynocan=c.ide_ynocan\n"
+                + "where ide_ynodau="+codigo+"";
+        return sql;
+    }
+
+    public String getConsultaMallaDocente(String periodo,String malla,String docente,String horario,String jornada) {
+        String sql = "";
+        sql += "select ide_ypemad,ide_ystpea,ide_ystmal,ide_ypedpe,ide_yhogra,ide_ystjor \n"
+                + "from yavirac_perso_malla_docente \n"
+                + "where ide_ystpea="+periodo+" and ide_ystmal="+malla+" and ide_ypedpe="+docente+" and ide_yhogra="+horario+" and ide_ystjor="+jornada+"";
         return sql;
     }
 }
