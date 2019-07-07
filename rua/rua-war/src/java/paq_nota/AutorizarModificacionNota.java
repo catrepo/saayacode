@@ -155,10 +155,13 @@ public class AutorizarModificacionNota extends Pantalla {
         tab_detalle_autorizacion.getColumna("ide_ynoest").setCombo(ser_notas.getEstadoNota());
         tab_detalle_autorizacion.getColumna("ide_ynoest").setLongitud(-1);
         tab_detalle_autorizacion.getColumna("ide_ynoest").setAncho(-1);
+        tab_detalle_autorizacion.getColumna("ide_ynoest").setValorDefecto(utilitario.getVariable("p_estado_autorizado"));
+        tab_detalle_autorizacion.getColumna("ide_ynoest").setLectura(true);
+        tab_detalle_autorizacion.getColumna("nota_ynodau").setValorDefecto("0");
         tab_detalle_autorizacion.getColumna("fecha_autorizacion_ynodau").setLectura(true);
         tab_detalle_autorizacion.getColumna("nota_anterior_ynodau").setLectura(true);
         tab_detalle_autorizacion.getColumna("ide_ypedpe").setVisible(false);
-        tab_detalle_autorizacion.getColumna("fecha_registro_ynodau").setVisible(false);
+        tab_detalle_autorizacion.getColumna("fecha_registro_ynodau").setLectura(true);
         tab_detalle_autorizacion.dibujar();
         
         PanelTabla pa_detalle_autorizacion = new PanelTabla();
@@ -169,7 +172,7 @@ public class AutorizarModificacionNota extends Pantalla {
         Division div_nota = new Division();
         div_nota.setId("div_nota");
         //div_nota.dividir1(pa_detalle_nota);
-        div_nota.dividir3(pa_cabecera_nota, pa_detalle_nota, pa_detalle_autorizacion, "30%", "20%", "h");
+        div_nota.dividir3(pa_cabecera_nota, pa_detalle_nota, pa_detalle_autorizacion, "20%", "30%", "h");
         agregarComponente(div_nota);
         
     }
