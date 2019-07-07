@@ -50,7 +50,7 @@ public class ModificarNota extends Pantalla {
             bar_botones.getBot_guardar().setRendered(false);
 
             tab_detalle_autorizacion.setId("tab_detalle_autorizacion");
-            tab_detalle_autorizacion.setTabla("yavirac_nota_detalle_autorizac", "ide_ynodau", 3);
+            tab_detalle_autorizacion.setTabla("yavirac_nota_detalle_autorizac", "ide_ynodau", 1);
             tab_detalle_autorizacion.setHeader("AUTORIZAR MODIFICAR NOTA");
             tab_detalle_autorizacion.setCondicion("ide_ypedpe=" + ide_docente + " and ide_ynoest=" + utilitario.getVariable("p_estado_autorizado"));
             //tab_detalle_autorizacion.ejecutarValorPadre("ide_ynodet=ide_ynodet");
@@ -95,7 +95,7 @@ public class ModificarNota extends Pantalla {
             pa_detalle_nota.setPanelTabla(tab_detalle_nota);
 
             tab_cabecera_nota.setId("tab_cabecera_nota");  // todo objeto instanciado poner id 
-            tab_cabecera_nota.setTabla("yavirac_nota_cabecera_nota", "ide_ynocan", 1);    // nom bdd
+            tab_cabecera_nota.setTabla("yavirac_nota_cabecera_nota", "ide_ynocan", 3);    // nom bdd
             tab_cabecera_nota.setHeader("ACTIVIDADES");
             tab_cabecera_nota.setCondicionBuscar("ide_ynocan=" + tab_detalle_nota.getValor("ide_ynocan"));
             //tab_cabecera_nota.setCondicion("ide_ynocan=-1");
