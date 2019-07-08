@@ -2,9 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_tramite" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e368094e-63fd-4d88-8328-9ca32dff3b58">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="82"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="pide_tramite" class="java.lang.Integer"/>
 	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["http://localhost:8080/inspectoria"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select a.ide_ytring, a.numero_sec_ytring, b.nombre_yaldap, b.apellido_yaldap, b.doc_identidad_yaldap, a.fecha_documento_ytring, a.hora_ytring, a.fecha_entrega_ytring, c.nombre_ytrtid, c.dias_tramite_ytrtid
 from yavirac_tra_ingreso a, yavirac_alum_dato_personal b, yavirac_tra_tipo_documento c
@@ -64,7 +67,7 @@ and a.ide_ytring=$P{pide_tramite}]]>
 			</staticText>
 			<image>
 				<reportElement uuid="643c757a-399d-4fa1-b2aa-e508bc5db089" x="43" y="0" width="145" height="55"/>
-				<imageExpression><![CDATA["C:\\Users\\Hnos Tello Ronquillo\\Desktop\\logoya.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "/imagenes/logoinstituto.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -250,7 +253,7 @@ and a.ide_ytring=$P{pide_tramite}]]>
 			</staticText>
 			<image>
 				<reportElement uuid="c92e9836-6800-4fe2-a0f7-35df11240bbd" x="37" y="0" width="134" height="65"/>
-				<imageExpression><![CDATA["C:\\Users\\Hnos Tello Ronquillo\\Desktop\\logoya.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "/imagenes/logoinstituto.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>
