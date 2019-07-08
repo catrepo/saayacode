@@ -37,7 +37,7 @@ import sistema.aplicacion.Utilitario;
  *
  * @author Personal
  */
-public class Ingreso extends Pantalla {
+public class IngresoExterno extends Pantalla {
 
     private Tabla tab_ingreso = new Tabla(); //Esta linea se creo las variables que se ulizaran
     private Tabla tab_anexo = new Tabla();
@@ -58,16 +58,9 @@ public class Ingreso extends Pantalla {
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
 
     //Desarrollo de la pantalla Ingreso
-    public Ingreso() {
+    public IngresoExterno() {
         if (tienePerfilSecretaria()) {
 
-            //bar_botones.getBot_insertar().setRendered(false);
-            //BOTON REGISTRO DE ALUMNOS
-            Boton bot_registroAlumno = new Boton(); //Creacion de un nuevo objeto
-            bot_registroAlumno.setValue("Listado Alumnos"); //Asignacion de informacion a un botón
-            bot_registroAlumno.setIcon("ui-icon-note"); //Asignando icono al botón
-            bot_registroAlumno.setMetodo("selregistraAlumno"); //Asignacion de metodo para la extracion de informacion
-            bar_botones.agregarBoton(bot_registroAlumno); 
             //boton para asiganar trammites
             Boton bot_asignar = new Boton();
             bot_asignar.setValue("Asignar Tramite");
@@ -98,7 +91,6 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("fecha_entrega_ytring").setNombreVisual("FECHA DE ENTREGA");
             tab_ingreso.getColumna("fecha_entrega_ytring").setOrden(8);
             tab_ingreso.getColumna("cedula_ytring").setNombreVisual("CÉDULA DE IDENTIDAD");
-            tab_ingreso.getColumna("cedula_ytring").setVisible(false);
             tab_ingreso.getColumna("fecha_conclusion_ytring").setNombreVisual("FECHA DE CONCLUSIÓN");
             tab_ingreso.getColumna("fecha_conclusion_ytring").setOrden(17);
             tab_ingreso.getColumna("fecha_documento_ytring").setNombreVisual("FECHA DE DOCUMENTO");
@@ -114,9 +106,8 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("estado_ytring").setNombreVisual("ESTADO");
             tab_ingreso.getColumna("estado_ytring").setOrden(6);
             tab_ingreso.getColumna("procedencia_ytring").setNombreVisual("PROCEDENCIA");
-            tab_ingreso.getColumna("procedencia_ytring").setVisible(false);
             tab_ingreso.getColumna("ide_yaldap").setNombreVisual("ESTUDIANTE");
-            tab_ingreso.getColumna("ide_yaldap").setOrden(3);
+            tab_ingreso.getColumna("ide_yaldap").setLectura(true);
             tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
             //tab_ingreso.getColumna("ide_ypede").setOrden(14);
 
@@ -126,7 +117,6 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
             tab_ingreso.getColumna("ide_ypedpe").setAutoCompletar();
             tab_ingreso.getColumna("ide_ypedpe").setLectura(true); // Se asigna que sera de modo de lectura, no puede hacer cambios
-            tab_ingreso.getColumna("ide_ytrtie").setLectura(true);
             tab_ingreso.getColumna("fecha_documento_ytring").setValorDefecto(utilitario.getFechaActual());
             tab_ingreso.getColumna("hora_ytring").setValorDefecto(utilitario.getHoraActual()); //Se asigna que sera la hora
             tab_ingreso.getColumna("fecha_documento_ytring").setEtiqueta();  //Se asigna que el campo es de tipo etiqueta
@@ -146,9 +136,9 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("numero_sec_ytring").setEtiqueta();
             tab_ingreso.getColumna("numero_sec_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
             //tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
-            tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setValorDefecto("1");
+            tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setValorDefecto("2");
             tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setVisible(false);
-            tab_ingreso.setHeader("REGISTRO DOCUMENTAL INTERNO");
+            tab_ingreso.setHeader("REGISTRO DOCUMENTAL EXTRENO");
             tab_ingreso.agregarRelacion(tab_asignacion); //Se agrega rekacion con las dos variables creadas
             //tab_ingreso.agregarRelacion(tab_anexo);
             tab_ingreso.setTipoFormulario(true); //se asigna el tipo de formulario

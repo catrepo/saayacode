@@ -6,11 +6,13 @@
 package paq_tramites;
 
 import framework.aplicacion.TablaGenerica;
+import framework.componentes.AreaTexto;
 import framework.componentes.Barra; //Estas lineas son para importar objetos que se utilizaran en el desarrollo
 import framework.componentes.Boton;
 import framework.componentes.Dialogo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
+import framework.componentes.Grid;
 import framework.componentes.Grupo;
 import framework.componentes.PanelTabla;
 import framework.componentes.SeleccionTabla;
@@ -37,16 +39,20 @@ import sistema.aplicacion.Utilitario;
  *
  * @author Personal
  */
-public class Ingreso extends Pantalla {
+public class Seguimiento extends Pantalla {
 
     private Tabla tab_ingreso = new Tabla(); //Esta linea se creo las variables que se ulizaran
     private Tabla tab_anexo = new Tabla();
     private Tabla tab_asignacion = new Tabla();
+    private Tabla tab_seguimiento= new Tabla();
     private SeleccionTabla sel_registra_alumno = new SeleccionTabla(); //se crea varialble para extraer datos de otra tabla
     private SeleccionTabla sel_asigna_responsable = new SeleccionTabla();
          private VisualizarPDF vipdf_proforma = new VisualizarPDF();
     private Dialogo dia_anexos= new Dialogo();
-
+    private Dialogo dia_reasigna= new Dialogo();
+    private Dialogo dia_conlcusion= new Dialogo();
+    private AreaTexto are_conclusion = new AreaTexto();
+    private AreaTexto are_reasigna = new AreaTexto();
     //Creacion de servicios para tulizar como variables para extraer informacion
     @EJB
     private final ServicioTramite ser_tramite = (ServicioTramite) utilitario.instanciarEJB(ServicioTramite.class);
@@ -58,47 +64,41 @@ public class Ingreso extends Pantalla {
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
 
     //Desarrollo de la pantalla Ingreso
-    public Ingreso() {
+    public Seguimiento() {
+        bar_botones.getBot_insertar().setRendered(false);
         if (tienePerfilSecretaria()) {
 
-            //bar_botones.getBot_insertar().setRendered(false);
-            //BOTON REGISTRO DE ALUMNOS
-            Boton bot_registroAlumno = new Boton(); //Creacion de un nuevo objeto
-            bot_registroAlumno.setValue("Listado Alumnos"); //Asignacion de informacion a un botón
-            bot_registroAlumno.setIcon("ui-icon-note"); //Asignando icono al botón
-            bot_registroAlumno.setMetodo("selregistraAlumno"); //Asignacion de metodo para la extracion de informacion
-            bar_botones.agregarBoton(bot_registroAlumno); 
             //boton para asiganar trammites
-            Boton bot_asignar = new Boton();
-            bot_asignar.setValue("Asignar Tramite");
-            bot_asignar.setIcon("ui-icon-note");
-            bot_asignar.setMetodo("selregistraResponsable");
-            bar_botones.agregarBoton(bot_asignar);
+            Boton bot_concluir = new Boton();
+            bot_concluir.setValue("Conluir Tramite");
+            bot_concluir.setIcon("ui-icon-note");
+            bot_concluir.setMetodo("registrarConclusion");
+            bar_botones.agregarBoton(bot_concluir);
 
             //boton imprimir
-            Boton bot_imprimir = new Boton();
-            bot_imprimir.setValue("Imprimir Tramite");
-            bot_imprimir.setIcon("ui-icon-print");
-            bot_imprimir.setMetodo("imprimir");
-            bar_botones.agregarBoton(bot_imprimir);
+            Boton bot_reasignar = new Boton();
+            bot_reasignar.setValue("Reasignar Tramite");
+            bot_reasignar.setIcon("ui-icon-note");
+            bot_reasignar.setMetodo("registrarReasignacion");
+            bar_botones.agregarBoton(bot_reasignar);
             
-            
-        
             // Desarrollo del entorno de la pantalla ingreso
             tab_ingreso.setId("tab_ingreso");
             tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
+            tab_ingreso.setCondicion("estado_ytring in ('ASIGNADO','REASIGNADO') and ide_ytring in(select ide_ytring from yavirac_tra_asignacion  where ide_ypedpe="+ide_docente+")");
             tab_ingreso.getColumna("ide_ytring").setVisible(false);
             tab_ingreso.setCampoOrden("ide_ytring desc");
             tab_ingreso.getColumna("numero_sec_ytring").setOrden(0); // Asignacion de orden de los campos
             tab_ingreso.getColumna("numero_sec_ytring").setNombreVisual("NRO DE TRÁMITE"); 
             tab_ingreso.getColumna("ide_ytrtid").setNombreVisual("TIPO DE DOCUMENTO");
             tab_ingreso.getColumna("ide_ytrtid").setOrden(12);
+            tab_ingreso.getColumna("ide_ytrtid").setLectura(true);
             tab_ingreso.getColumna("asunto_ytring").setNombreVisual("ASUNTO"); //Asignacion de nombre que se mostrara en pantalla
             tab_ingreso.getColumna("asunto_ytring").setOrden(15);
             tab_ingreso.getColumna("fecha_entrega_ytring").setNombreVisual("FECHA DE ENTREGA");
             tab_ingreso.getColumna("fecha_entrega_ytring").setOrden(8);
             tab_ingreso.getColumna("cedula_ytring").setNombreVisual("CÉDULA DE IDENTIDAD");
-            tab_ingreso.getColumna("cedula_ytring").setVisible(false);
+            tab_ingreso.getColumna("cedula_ytring").setEtiqueta();
             tab_ingreso.getColumna("fecha_conclusion_ytring").setNombreVisual("FECHA DE CONCLUSIÓN");
             tab_ingreso.getColumna("fecha_conclusion_ytring").setOrden(17);
             tab_ingreso.getColumna("fecha_documento_ytring").setNombreVisual("FECHA DE DOCUMENTO");
@@ -114,9 +114,8 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("estado_ytring").setNombreVisual("ESTADO");
             tab_ingreso.getColumna("estado_ytring").setOrden(6);
             tab_ingreso.getColumna("procedencia_ytring").setNombreVisual("PROCEDENCIA");
-            tab_ingreso.getColumna("procedencia_ytring").setVisible(false);
-            tab_ingreso.getColumna("ide_yaldap").setNombreVisual("ESTUDIANTE");
-            tab_ingreso.getColumna("ide_yaldap").setOrden(3);
+            tab_ingreso.getColumna("procedencia_ytring").setEtiqueta();
+            tab_ingreso.getColumna("ide_yaldap").setVisible(false);
             tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
             //tab_ingreso.getColumna("ide_ypede").setOrden(14);
 
@@ -147,8 +146,11 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("numero_sec_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
             //tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
             tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setValorDefecto("1");
-            tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setVisible(false);
-            tab_ingreso.setHeader("REGISTRO DOCUMENTAL INTERNO");
+            tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setCombo(ser_tramite.tipoTramite());
+            tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setLectura(true);
+            tab_ingreso.getColumna("asunto_ytring").setLectura(true);
+            tab_ingreso.getColumna("observaciones_ytring").setLectura(true);
+            tab_ingreso.setHeader("SEGUIMIENTO DE TRAMITES ASIGNADOS - USUARIO: "+docente);
             tab_ingreso.agregarRelacion(tab_asignacion); //Se agrega rekacion con las dos variables creadas
             //tab_ingreso.agregarRelacion(tab_anexo);
             tab_ingreso.setTipoFormulario(true); //se asigna el tipo de formulario
@@ -167,7 +169,6 @@ public class Ingreso extends Pantalla {
             tab_asignacion.getColumna("ide_ypedpe").setAutoCompletar();
             tab_asignacion.getColumna("ide_ystard").setEstilo("width=20px;"); //tamaño
             tab_asignacion.getColumna("ide_ypedpe").setLongitud(20);
-
             tab_asignacion.getColumna("ide_ystard").setLectura(true);
             tab_asignacion.getColumna("ide_ypedpe").setLectura(true);
             tab_asignacion.getColumna("fecha_asignacion_ytrasi").setLectura(true);
@@ -177,48 +178,70 @@ public class Ingreso extends Pantalla {
             tab_asignacion.getColumna("numero_sec_ytrasi").setLectura(true);
             tab_asignacion.getColumna("numero_sec_ytrasi").setVisible(false);
             tab_asignacion.getColumna("tipo_ytrasi").setValorDefecto("1");
-
             tab_asignacion.setTableStyleClass("width=80%;");
+            tab_asignacion.setTipoFormulario(true);
+            tab_asignacion.getGrid().setColumns(6);
+            tab_asignacion.agregarRelacion(tab_seguimiento);
             tab_asignacion.dibujar();
 
             PanelTabla pat_asignacion = new PanelTabla();
             pat_asignacion.setId("pat_asignacion");
             pat_asignacion.setPanelTabla(tab_asignacion);
-
-            tab_anexo.setId("tab_anexo");
-            tab_anexo.setIdCompleto("tab_tabulador:tab_anexo");
-            tab_anexo.setTabla("yavirac_tra_anexo", "ide_ytrane", 3);
-            tab_anexo.getColumna("archivo_ytrane").setUpload();
-            tab_anexo.dibujar();
-
-            PanelTabla pat_anexo = new PanelTabla();
-            pat_anexo.setId("pat_anexo");
-            pat_anexo.setPanelTabla(tab_anexo);
-
-            /// tabulado
-            Tabulador tab_tabulador = new Tabulador();
-            tab_tabulador.setId("tab_tabulador");
-
-            tab_tabulador.agregarTab("ASIGNACION TRAMITE", pat_asignacion); //creacion de pestañas en la pantalla
-            tab_tabulador.agregarTab("ANEXOS", pat_anexo);
+            
+            tab_seguimiento.setId("tab_seguimiento");
+            tab_seguimiento.setTabla("yavirac_tra_seguimiento", "ide_ytrseg", 5);
+            tab_seguimiento.getColumna("sumilla_ytrseg").setVisible(false);
+            tab_seguimiento.getColumna("ide_ypedpe").setVisible(false);
+            tab_seguimiento.getColumna("fecha_ytrseg").setLectura(true);
+            tab_seguimiento.getColumna("hora_ytrseg").setLectura(true);
+            tab_seguimiento.getColumna("estado_seguimiento_ytrseg").setLectura(true);
+            tab_seguimiento.getColumna("reasignado_ytrseg").setLectura(true);
+            tab_seguimiento.setTipoFormulario(true);
+            tab_seguimiento.getGrid().setColumns(6);
+            tab_seguimiento.dibujar();
+            
+            PanelTabla pat_seguimiento = new PanelTabla();
+            pat_seguimiento.setId("pat_seguimiento");
+            pat_seguimiento.setPanelTabla(tab_seguimiento);
 
             Division div_ingreso = new Division();
             div_ingreso.setId("div_ingreso");
-            div_ingreso.dividir2(pat_ingreso, pat_asignacion, "50%", "H"); //division de la pantalla en dos partes
-
+            div_ingreso.dividir3(pat_ingreso, pat_asignacion,pat_seguimiento,"45%", "40%", "H"); //division de la pantalla en dos partes
             agregarComponente(div_ingreso);
+            
+            //dialogo conclusion
+            dia_conlcusion.setId("dia_conlcusion");
+            dia_conlcusion.setTitle("CONCLUIR TRAMITE");
+            dia_conlcusion.setWidth("45%");
+            dia_conlcusion.setHeight("25%");
+            are_conclusion.setId("are_conclusion");
+            are_conclusion.setCols(80);
+            Etiqueta eti_conclusion= new Etiqueta("REGISTRE CONCLUSIONES:");
+            Grid gri_cuerpo = new Grid();
+            gri_cuerpo.setColumns(1);
+            gri_cuerpo.getChildren().add(eti_conclusion);
+            gri_cuerpo.getChildren().add(are_conclusion);
+            dia_conlcusion.getBot_aceptar().setMetodo("aceptarConclusion");
+            dia_conlcusion.setDialogo(gri_cuerpo);
+            agregarComponente(dia_conlcusion);
+            
+            //dialogo reasiganción
+            dia_reasigna.setId("dia_reasigna");
+            dia_reasigna.setTitle("REASIGNACIÓN DEL TRAMITE");
+            dia_reasigna.setWidth("45%");
+            dia_reasigna.setHeight("25%");
+            are_reasigna.setId("are_reasigna");
+            are_reasigna.setCols(80);
+            Etiqueta eti_reasigna= new Etiqueta("REGISTRE DETALLE REASIGNACION:");
+            Grid gri_cuerpo_reasigna = new Grid();
+            gri_cuerpo_reasigna.setColumns(1);
+            gri_cuerpo_reasigna.getChildren().add(eti_reasigna);
+            gri_cuerpo_reasigna.getChildren().add(are_reasigna);
+            dia_reasigna.getBot_aceptar().setMetodo("aceptarReasigna");
+            dia_reasigna.setDialogo(gri_cuerpo_reasigna);
+            agregarComponente(dia_reasigna);
 
-            //PANTALLA INGRESA ALUMNO
-            sel_registra_alumno.setId("sel_registra_alumno");
-            sel_registra_alumno.setTitle("SELECCIONE EL ALUMNO");
-            sel_registra_alumno.getBot_aceptar().setMetodo("registraAlumno");
-            sel_registra_alumno.setSeleccionTabla(ser_alumno.getDatosAlumnos("null"), "ide_yaldap");
-            sel_registra_alumno.getTab_seleccion().getColumna("apellido_yaldap").setFiltro(true);
-            sel_registra_alumno.getTab_seleccion().getColumna("nombre_yaldap").setFiltro(true);
-            sel_registra_alumno.setRadio();
-            agregarComponente(sel_registra_alumno);
-
-            //PANTALLA REGISTRA ALUMNO
+            //PANTALLA REGISTRA RESPONSABLE
             sel_asigna_responsable.setId("sel_asigna_responsable");
             sel_asigna_responsable.setTitle("SELECCIONE EL RESPONSABLE DE ASIGNACION");
             sel_asigna_responsable.getBot_aceptar().setMetodo("registraResponsable");
@@ -227,36 +250,18 @@ public class Ingreso extends Pantalla {
             sel_asigna_responsable.getTab_seleccion().getColumna("nombres").setFiltro(true);
             sel_asigna_responsable.getTab_seleccion().getColumna("ide_ystard").setVisible(false);
             sel_asigna_responsable.setRadio();
-            agregarComponente(sel_asigna_responsable);
-           /* 
-            //boton imprimir
-            Boton bot_anexo = new Boton();
-            bot_anexo.setValue("Recibir Anexos");
-            bot_anexo.setIcon("ui-icon-print");
-            bot_anexo.setMetodo("recibir");
-            bar_botones.agregarBoton(bot_anexo);
-         */   
-            vipdf_proforma.setId("vipdf_proforma");
-         vipdf_proforma.setTitle("REPORTE SEGUIMIENTO TRAMITE");
-        agregarComponente(vipdf_proforma);
-        
-        // creo dialogo para crear modalidad
-        dia_anexos.setId("dia_anexos");
-        dia_anexos.setTitle("Documentos Anexos");
-        dia_anexos.setWidth("40%");
-        dia_anexos.setHeight("18%");
-        dia_anexos.getBot_aceptar().setMetodo("aceptarModalidad");
-        
-        dia_anexos.setDialogo(pat_anexo);
-        agregarComponente(dia_anexos);
+            agregarComponente(sel_asigna_responsable);            
 
         } else {
-            utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para registrar el Tramite. Consulte con el Administrador");
+            utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos dar seguimiento al los tramites. Consulte con el Administrador");
         }
     }
-    public void recibir(){
-        dia_anexos.dibujar();
+    public void registrarConclusion(){
+        dia_conlcusion.dibujar();
     }
+    public void registrarReasignacion(){
+        dia_reasigna.dibujar();
+    }    
  public void imprimir(){
         String usuario=utilitario.getVariable("NICK");
         if (tab_ingreso.getValorSeleccionado() != null) {
@@ -274,16 +279,7 @@ public class Ingreso extends Pantalla {
         }
     }
 //desarrollo de evento en la variable texto base, en donde al seleccionar el tipo de documento se pondra el texto base
- //en su respectivo lugar y en la fecha de registro de cada documento se sumara los dias correspondientes segun la 
- //configutacion de los tipos de documebtos para saber su fecha de entrega automatica.   
-    public void textoBase(AjaxBehaviorEvent evt) {
-        TablaGenerica tab_texto_base = utilitario.consultar(ser_tramite.getSqlTipoDocumentoPara(tab_ingreso.getValor("ide_ytrtid")));
-        TablaGenerica tab_fecha = utilitario.consultar(ser_estructura_organizacional.getSumaDiasFecha(tab_ingreso.getValor("fecha_documento_ytring"), tab_texto_base.getValor("dias_tramite_ytrtid")));
-        String fecha=tab_fecha.getValor("fecha");
-        tab_ingreso.setValor("asunto_ytring", tab_texto_base.getValor("texto_base_ytrtid"));
-        tab_ingreso.setValor("fecha_entrega_ytring", fecha);
-        utilitario.addUpdateTabla(tab_ingreso, "asunto_ytring,fecha_entrega_ytring", "");
-    }
+
     String docente = "";
     String documento = "";
     String ide_docente = "";
@@ -308,63 +304,58 @@ public class Ingreso extends Pantalla {
         }
     }
 
-//desarrollo del registro de alumno 
-    public void registraAlumno() {
-        String str_seleccionado = sel_registra_alumno.getValorSeleccionado();
-        if (str_seleccionado != null) {
-            //Inserto los cleintes seleccionados en la tabla  
-            if (tab_ingreso.isFilaInsertada() == false) {
-                //Controla que si ya esta insertada no vuelva a insertar
-                tab_ingreso.insertar();
-            }
-            TablaGenerica tab_secuencial = utilitario.consultar(ser_tramite.getSqlSecuencial(utilitario.getVariable("p_secuencial_interno")));
-            TablaGenerica tab_procedencia = utilitario.consultar(ser_alumno.getDatosAlumnosCodigo(str_seleccionado));
-            tab_ingreso.setValor("ide_ypedpe", ide_docente);
-            tab_ingreso.setValor("procedencia_ytring", tab_procedencia.getValor("apellido_yaldap") + " " + tab_procedencia.getValor("nombre_yaldap"));
-            tab_ingreso.setValor("cedula_ytring", tab_procedencia.getValor("doc_identidad_yaldap"));
-            tab_ingreso.setValor("ide_yaldap", str_seleccionado);
-            tab_ingreso.setValor("estado_ytring", "REGISTRADO");
-            tab_ingreso.setValor("ide_ytrtie", utilitario.getVariable("p_entidad_yavirac"));
-            tab_ingreso.setValor("numero_sec_ytring", tab_secuencial.getValor("detalle_ytrsec") + "-" + tab_secuencial.getValor("secuencial"));
-            tab_ingreso.modificar(tab_ingreso.getFilaActual());//para que haga el update
 
-            sel_registra_alumno.cerrar();
-            utilitario.addUpdate("tab_pre_inscrip");
-        } else {
-            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
-        }
-    }
-
-    public void selregistraAlumno() {
-        sel_registra_alumno.getTab_seleccion().setSql(ser_alumno.getDatosAlumnos("true"));
-        sel_registra_alumno.getTab_seleccion().ejecutarSql();
-        sel_registra_alumno.dibujar();
+    public void aceptarConclusion() {
         
-
-    }
-
-    public void registraResponsable() {
-        String str_seleccionado = sel_asigna_responsable.getValorSeleccionado();
-        if (str_seleccionado != null) {
-            tab_asignacion.insertar();
-            tab_asignacion.setValor("ide_ystard", sel_asigna_responsable.getTab_seleccion().getValor(sel_asigna_responsable.getTab_seleccion().getFilaSeleccionada().getIndice(),"ide_ystard"));
-            tab_asignacion.setValor("ide_ypedpe", sel_asigna_responsable.getTab_seleccion().getValor(sel_asigna_responsable.getTab_seleccion().getFilaSeleccionada().getIndice(),"ide_ypedpe"));
-            tab_asignacion.setValor("fecha_asignacion_ytrasi",utilitario.getFechaActual());
-            tab_asignacion.setValor("hora_ingreso_ytrasi",utilitario.getHoraActual());
-            tab_asignacion.setValor("estado_ytrasi","ASIGNADO");
-            tab_ingreso.setValor("estado_ytring", "ASIGNADO");
-            sel_asigna_responsable.cerrar();
-            utilitario.addUpdate("tab_asignacion");
+        if (!are_conclusion.getValue().equals("")) {
+            tab_seguimiento.insertar();
+            tab_seguimiento.setValor("ide_ypedpe", ide_docente);
+            tab_seguimiento.setValor("fecha_ytrseg",utilitario.getFechaActual());
+            tab_seguimiento.setValor("hora_ytrseg",utilitario.getHoraActual());
+            tab_seguimiento.setValor("detalle_seguimiento_ytrseg",are_conclusion.getValue().toString());
+            tab_seguimiento.setValor("estado_seguimiento_ytrseg","CONCLUIDO");
+            tab_seguimiento.setValor("reasignado_ytrseg","false");
+            tab_ingreso.setValor("estado_ytring", "CONCLUIDO");
+            tab_ingreso.setValor("fecha_conclusion_ytring", utilitario.getFechaActual());
+            tab_asignacion.setValor("estado_ytrasi", "CONCLUIDO");
+            utilitario.addUpdate("tab_seguimiento");
             tab_ingreso.modificar(tab_ingreso.getFilaActual());//para que haga el update
-            utilitario.addUpdateTabla(tab_ingreso, "estado_ytring", "");
+            utilitario.addUpdateTabla(tab_ingreso, "estado_ytring,fecha_conclusion_ytring", "");
+            tab_asignacion.modificar(tab_asignacion.getFilaActual());//para que haga el update
+            utilitario.addUpdateTabla(tab_asignacion, "estado_ytrasi", "");
+            dia_conlcusion.cerrar();
             
         } else {
-            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
+            utilitario.agregarMensajeInfo("Debe registrar las conclusiones del trámite", "");
         }
+      
     }
-
+public void aceptarReasigna() {
+        
+        if (!are_reasigna.getValue().equals("")) {
+            tab_seguimiento.insertar();
+            tab_seguimiento.setValor("ide_ypedpe", ide_docente);
+            tab_seguimiento.setValor("fecha_ytrseg",utilitario.getFechaActual());
+            tab_seguimiento.setValor("hora_ytrseg",utilitario.getHoraActual());
+            tab_seguimiento.setValor("detalle_seguimiento_ytrseg",are_reasigna.getValue().toString());
+            tab_seguimiento.setValor("estado_seguimiento_ytrseg","REASIGNADO");
+            tab_seguimiento.setValor("reasignado_ytrseg","true");
+            tab_ingreso.setValor("estado_ytring", "REASIGNADO");
+            tab_ingreso.setValor("fecha_conclusion_ytring", utilitario.getFechaActual());
+            tab_asignacion.setValor("estado_ytrasi", "CONCLUIDO");
+            utilitario.addUpdate("tab_seguimiento");
+            tab_ingreso.modificar(tab_ingreso.getFilaActual());//para que haga el update
+            utilitario.addUpdateTabla(tab_ingreso, "estado_ytring,fecha_conclusion_ytring", "");
+            tab_asignacion.modificar(tab_asignacion.getFilaActual());//para que haga el update
+            utilitario.addUpdateTabla(tab_asignacion, "estado_ytrasi", "");
+            dia_reasigna.cerrar();
+            
+        } else {
+            utilitario.agregarMensajeInfo("Debe registrar las conclusiones del trámite", "");
+        }
+      
+    }
     public void selregistraResponsable() {
-        System.out.println("responsable "+tab_ingreso.getValor("ide_ytring"));
         if (tab_ingreso.getValor("ide_ytring")==null) {
                 //Controla que si ya esta insertada no vuelva a insertar
                 utilitario.agregarMensajeError("Registre el Tramite", "EL tramite no se encuentra guardado");
@@ -375,41 +366,55 @@ public class Ingreso extends Pantalla {
         sel_asigna_responsable.dibujar();
         }
     }
+    public void registraResponsable() {
+        String str_seleccionado = sel_asigna_responsable.getValorSeleccionado();
+        if (str_seleccionado != null) {
+            tab_asignacion.insertar();
+            tab_asignacion.setValor("ide_ystard", sel_asigna_responsable.getTab_seleccion().getValor(sel_asigna_responsable.getTab_seleccion().getFilaSeleccionada().getIndice(),"ide_ystard"));
+            tab_asignacion.setValor("ide_ypedpe", sel_asigna_responsable.getTab_seleccion().getValor(sel_asigna_responsable.getTab_seleccion().getFilaSeleccionada().getIndice(),"ide_ypedpe"));
+            tab_asignacion.setValor("fecha_asignacion_ytrasi",utilitario.getFechaActual());
+            tab_asignacion.setValor("hora_ingreso_ytrasi",utilitario.getHoraActual());
+            tab_asignacion.setValor("estado_ytrasi","REASIGNADO");
+            sel_asigna_responsable.cerrar();
+            utilitario.addUpdate("tab_asignacion");
+            tab_asignacion.guardar();
+            guardarPantalla();
+            tab_ingreso.ejecutarSql();
+       tab_asignacion.ejecutarValorForanea(tab_ingreso.getValorSeleccionado());
+       tab_seguimiento.ejecutarValorForanea(tab_ingreso.getValorSeleccionado()); 
+
+            
+        } else {
+            utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
+        }
+    }
 
     @Override
     public void insertar() { //al registrar un nuevo registro primero se debe seleccionar el estudiante
-        if (tab_ingreso.isFocus()) {
-            utilitario.agregarMensajeInfo("Seleccione el Almuno", "Para registrar un tramite, seleccione el Alumno");
-            /*
-         tab_ingreso.insertar();
-         tab_ingreso.insertar();
-         tab_ingreso.setValor("ide_ypedpe", ide_docente);
-             */
-        } else if (tab_asignacion.isFocus()) {
-            tab_asignacion.insertar();
-        } else if (tab_anexo.isFocus()) {
-            tab_anexo.insertar();
-        }
     }
 
     @Override
     public void guardar() {
         if (tab_ingreso.guardar()) {
-            if(tab_ingreso.isFilaInsertada()){
-                TablaGenerica tab_secuencuial= utilitario.consultar(ser_tramite.getSqlSecuencial(utilitario.getVariable("p_secuencial_interno")));
-                utilitario.getConexion().ejecutarSql(ser_tramite.getUpdateSecuencial(utilitario.getVariable("p_secuencial_interno"), tab_secuencuial.getValor("secuencial")));
-            }
             if (tab_asignacion.guardar()) {
-                if (tab_anexo.guardar());
+                if (tab_seguimiento.guardar());
             }
         }
         guardarPantalla();
-
+        if(tab_seguimiento.getValor("estado_seguimiento_ytrseg").equals("REASIGNADO")){
+            sel_asigna_responsable.dibujar();
+        }
+        else{
+          tab_ingreso.ejecutarSql();
+       tab_asignacion.ejecutarValorForanea(tab_ingreso.getValorSeleccionado());
+       tab_seguimiento.ejecutarValorForanea(tab_ingreso.getValorSeleccionado());  
+        
+    }
     }
 
     @Override
     public void eliminar() {
-        utilitario.getTablaisFocus().eliminar();
+        tab_seguimiento.eliminar();
     }
 
     public Tabla getTab_ingreso() {
@@ -490,6 +495,30 @@ public class Ingreso extends Pantalla {
 
     public void setDia_anexos(Dialogo dia_anexos) {
         this.dia_anexos = dia_anexos;
+    }
+
+    public Tabla getTab_seguimiento() {
+        return tab_seguimiento;
+    }
+
+    public void setTab_seguimiento(Tabla tab_seguimiento) {
+        this.tab_seguimiento = tab_seguimiento;
+    }
+
+    public Dialogo getDia_reasigna() {
+        return dia_reasigna;
+    }
+
+    public void setDia_reasigna(Dialogo dia_reasigna) {
+        this.dia_reasigna = dia_reasigna;
+    }
+
+    public Dialogo getDia_conlcusion() {
+        return dia_conlcusion;
+    }
+
+    public void setDia_conlcusion(Dialogo dia_conlcusion) {
+        this.dia_conlcusion = dia_conlcusion;
     }
 
 }
