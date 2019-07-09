@@ -57,6 +57,7 @@ public class Parametros {
         /*
          * TRAMITES MODULO =6
          */
+        lis_parametros.add(new Parametro("6", "p_secuencial_externo", "Indica el nuemro secuecnial para tramites internos", "2", "yavirac_tra_secuencial", "ide_ytrsec", "detalle_ytrsec"));
         lis_parametros.add(new Parametro("6", "p_secuencial_interno", "Indica el nuemro secuecnial para tramites internos", "2", "yavirac_tra_secuencial", "ide_ytrsec", "detalle_ytrsec"));
         lis_parametros.add(new Parametro("6", "p_entidad_yavirac", "Indica el tipo entidad yavirac para tramites internos", "2", "yavirac_tra_tipo_entidad", "ide_ytrtie", "nombre_ytrtie"));
         /*
