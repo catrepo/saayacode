@@ -87,6 +87,7 @@ public class Ingreso extends Pantalla {
             // Desarrollo del entorno de la pantalla ingreso
             tab_ingreso.setId("tab_ingreso");
             tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
+            tab_ingreso.setCondicion("tipo_tramite_ytring=1");
             tab_ingreso.getColumna("ide_ytring").setVisible(false);
             tab_ingreso.setCampoOrden("ide_ytring desc");
             tab_ingreso.getColumna("numero_sec_ytring").setOrden(0); // Asignacion de orden de los campos

@@ -85,7 +85,7 @@ public class Seguimiento extends Pantalla {
             // Desarrollo del entorno de la pantalla ingreso
             tab_ingreso.setId("tab_ingreso");
             tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
-            tab_ingreso.setCondicion("estado_ytring in ('ASIGNADO','REASIGNADO') and ide_ytring in(select ide_ytring from yavirac_tra_asignacion  where ide_ypedpe="+ide_docente+")");
+            tab_ingreso.setCondicion("estado_ytring in ('ASIGNADO','REASIGNADO') and ide_ytring in(select ide_ytring from yavirac_tra_asignacion  where ide_ypedpe="+ide_docente+" and estado_ytrasi in ('ASIGNADO','REASIGNADO'))");
             tab_ingreso.getColumna("ide_ytring").setVisible(false);
             tab_ingreso.setCampoOrden("ide_ytring desc");
             tab_ingreso.getColumna("numero_sec_ytring").setOrden(0); // Asignacion de orden de los campos
@@ -163,6 +163,7 @@ public class Seguimiento extends Pantalla {
 
             tab_asignacion.setId("tab_asignacion");
             tab_asignacion.setTabla("yavirac_tra_asignacion", "ide_ytrasi", 2);
+            tab_asignacion.setCondicion("estado_ytrasi in ('ASIGNADO','REASIGNADO')");
             tab_asignacion.getColumna("ide_ystard").setCombo(ser_estructura_organizacional.getAreaDepartamento("true,false"));
             tab_asignacion.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false")); //se asigna para que sea combo y poder elegir datos
             tab_asignacion.getColumna("ide_ystard").setAutoCompletar();

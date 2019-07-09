@@ -80,6 +80,7 @@ public class IngresoExterno extends Pantalla {
             // Desarrollo del entorno de la pantalla ingreso
             tab_ingreso.setId("tab_ingreso");
             tab_ingreso.setTabla("yavirac_tra_ingreso", "ide_ytring", 1);
+            tab_ingreso.setCondicion("tipo_tramite_ytring=2");
             tab_ingreso.getColumna("ide_ytring").setVisible(false);
             tab_ingreso.setCampoOrden("ide_ytring desc");
             tab_ingreso.getColumna("numero_sec_ytring").setOrden(0); // Asignacion de orden de los campos
@@ -369,25 +370,20 @@ public class IngresoExterno extends Pantalla {
     @Override
     public void insertar() { //al registrar un nuevo registro primero se debe seleccionar el estudiante
         if (tab_ingreso.isFocus()) {
-            utilitario.agregarMensajeInfo("Seleccione el Almuno", "Para registrar un tramite, seleccione el Alumno");
-            /*
          tab_ingreso.insertar();
-         tab_ingreso.insertar();
-         tab_ingreso.setValor("ide_ypedpe", ide_docente);
-             */
-        } else if (tab_asignacion.isFocus()) {
-            tab_asignacion.insertar();
-        } else if (tab_anexo.isFocus()) {
-            tab_anexo.insertar();
-        }
+        TablaGenerica tab_secuencial = utilitario.consultar(ser_tramite.getSqlSecuencial(utilitario.getVariable("p_secuencial_externo")));
+        tab_ingreso.setValor("numero_sec_ytring", tab_secuencial.getValor("detalle_ytrsec") + "-" + tab_secuencial.getValor("secuencial"));
+        tab_ingreso.setValor("ide_ypedpe", ide_docente);
+         
+        } 
     }
 
     @Override
     public void guardar() {
         if (tab_ingreso.guardar()) {
             if(tab_ingreso.isFilaInsertada()){
-                TablaGenerica tab_secuencuial= utilitario.consultar(ser_tramite.getSqlSecuencial(utilitario.getVariable("p_secuencial_interno")));
-                utilitario.getConexion().ejecutarSql(ser_tramite.getUpdateSecuencial(utilitario.getVariable("p_secuencial_interno"), tab_secuencuial.getValor("secuencial")));
+                TablaGenerica tab_secuencuial= utilitario.consultar(ser_tramite.getSqlSecuencial(utilitario.getVariable("p_secuencial_externo")));
+                utilitario.getConexion().ejecutarSql(ser_tramite.getUpdateSecuencial(utilitario.getVariable("p_secuencial_externo"), tab_secuencuial.getValor("secuencial")));
             }
             if (tab_asignacion.guardar()) {
                 if (tab_anexo.guardar());
