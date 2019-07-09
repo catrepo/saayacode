@@ -107,11 +107,8 @@ public class IngresoExterno extends Pantalla {
             tab_ingreso.getColumna("estado_ytring").setNombreVisual("ESTADO");
             tab_ingreso.getColumna("estado_ytring").setOrden(6);
             tab_ingreso.getColumna("procedencia_ytring").setNombreVisual("PROCEDENCIA");
-            tab_ingreso.getColumna("ide_yaldap").setNombreVisual("ESTUDIANTE");
-            tab_ingreso.getColumna("ide_yaldap").setLectura(true);
+            tab_ingreso.getColumna("ide_yaldap").setVisible(false);
             tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
-            //tab_ingreso.getColumna("ide_ypede").setOrden(14);
-
             tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad()); // Asignacion de metodo combo
             tab_ingreso.getColumna("ide_ytrtid").setCombo(ser_tramite.getSqlTipoDocumento());
             tab_ingreso.getColumna("ide_ytrtid").setMetodoChange("textoBase");
@@ -133,7 +130,6 @@ public class IngresoExterno extends Pantalla {
 
             tab_ingreso.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_ingreso.getColumna("ide_yaldap").setAutoCompletar();
-            tab_ingreso.getColumna("ide_yaldap").setLectura(true);
             tab_ingreso.getColumna("numero_sec_ytring").setEtiqueta();
             tab_ingreso.getColumna("numero_sec_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:red");
             //tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
