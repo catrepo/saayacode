@@ -390,8 +390,8 @@ public class ServicioEstructuraOrganizacional {
         sql += " order by descripcion_ystdip";
         return sql;
     }
-    
-       /* Retorna el area departamento
+
+    /* Retorna el area departamento
      *
      * @param activo.- permite el ingreso del paramtero activo para filtrar ya
      * sea true, false, o ambos.
@@ -402,9 +402,24 @@ public class ServicioEstructuraOrganizacional {
         sql = "select ide_ystard, descripcion_ysttad, descripcion_ystard from yavirac_stror_tipo_area_depar b,yavirac_stror_area_departament a where a.ide_ysttad = b.ide_ysttad;";
         return sql;
     }
-    public String getSumaDiasFecha(String fecha,String dias) {
+
+    public String getSumaDiasFecha(String fecha, String dias) {
         String sql = "";
-        sql = "SELECT 1 as codigo, cast( (CAST('"+fecha+"' AS DATE) + CAST('"+dias+" days' AS INTERVAL)) as date) as fecha;";
+        sql = "SELECT 1 as codigo, cast( (CAST('" + fecha + "' AS DATE) + CAST('" + dias + " days' AS INTERVAL)) as date) as fecha;";
         return sql;
-    }    
+    }
+
+    public String getMallaDocente() {
+        String sql = "";
+        sql = "select a.ide_ystmal,detalle_ystmat,descripcion_ystnie,detalle_yhogra,descripcion_ystjor,detalle_ysttfe\n"
+                + "from yavirac_perso_malla_docente a\n"
+                + "left join yavirac_stror_malla b on a.ide_ystmal=b.ide_ystmal\n"
+                + "left join yavirac_stror_materia c on b.ide_ystmat=c.ide_ystmat\n"
+                + "left join yavirac_stror_nivel_educacion d on b.ide_ystnie=d.ide_ystnie\n"
+                + "left join yavirac_hora_grupo_academic e on a.ide_yhogra=e.ide_yhogra\n"
+                + "left join yavirac_stror_jornada f on a.ide_ystjor=f.ide_ystjor\n"
+                + "left join yavirac_stror_mension g on b.ide_ystmen=g.ide_ystmen \n"
+                + "left join yavirac_stror_tipo_for_educaci h on g.ide_ysttfe=h.ide_ysttfe";
+        return sql;
+    }
 }
