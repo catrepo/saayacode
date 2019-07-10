@@ -125,11 +125,19 @@ public class RecordAcademico extends Pantalla {
         div_record.dividir2(pa_cabecera, pa_detalle, "15%", "h");
         agregarComponente(div_record);
 
+        bar_botones.agregarSeparador();
+        
         Boton bot_nota = new Boton();
         bot_nota.setValue("Imprimir");
         bot_nota.setIcon("ui-icon-print");
         bot_nota.setMetodo("generarPDF");
         bar_botones.agregarBoton(bot_nota);
+        
+        Boton bot_record_detalle = new Boton();
+        bot_record_detalle.setValue("Imprimir Record Detallado");
+        bot_record_detalle.setIcon("ui-icon-print");
+        bot_record_detalle.setMetodo("generarPDF");
+        bar_botones.agregarBoton(bot_record_detalle);
 
         vipdf_record.setId("vipdf_record");
         vipdf_record.setTitle("RECORD ACADEMICO");

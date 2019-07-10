@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_horarios.ejb.ServiciosHorarios;
 import paq_nota.ejb.ServicioNotas;
 import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
@@ -40,6 +41,8 @@ public class ModificarNota extends Pantalla {
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
+    @EJB
+    private final ServiciosHorarios ser_horarios = (ServiciosHorarios) utilitario.instanciarEJB(ServiciosHorarios.class);
 
     public ModificarNota() {
 
@@ -56,16 +59,20 @@ public class ModificarNota extends Pantalla {
             //tab_detalle_autorizacion.ejecutarValorPadre("ide_ynodet=ide_ynodet");
             //tab_detalle_autorizacion.agregarRelacion(tab_detalle_nota);
             tab_detalle_autorizacion.getColumna("ide_ynoest").setCombo(ser_notas.getEstadoNota());
-            tab_detalle_autorizacion.getColumna("ide_ynoest").setLongitud(-1);
-            tab_detalle_autorizacion.getColumna("ide_ynoest").setAncho(-1);
+            tab_detalle_autorizacion.getColumna("ide_ynoest").setVisible(false);
             tab_detalle_autorizacion.getColumna("num_autorizacion_ynodau").setLectura(true);
             tab_detalle_autorizacion.getColumna("observacion_ynodau").setLectura(true);
             tab_detalle_autorizacion.getColumna("fecha_autorizacion_ynodau").setLectura(true);
             tab_detalle_autorizacion.getColumna("nota_anterior_ynodau").setLectura(true);
             tab_detalle_autorizacion.getColumna("ide_ypedpe").setVisible(false);
             tab_detalle_autorizacion.getColumna("fecha_registro_ynodau").setVisible(false);
-
             tab_detalle_autorizacion.onSelect("filtroRelacion");
+            tab_detalle_autorizacion.getColumna("ide_ynodau").setNombreVisual("CODIGO");
+            tab_detalle_autorizacion.getColumna("num_autorizacion_ynodau").setNombreVisual("NUMERO AUTORIZACION");
+            tab_detalle_autorizacion.getColumna("observacion_ynodau").setNombreVisual("OBSERVACION");
+            tab_detalle_autorizacion.getColumna("fecha_autorizacion_ynodau").setNombreVisual("FECHA AUTORIZACION");
+            tab_detalle_autorizacion.getColumna("nota_anterior_ynodau").setNombreVisual("NOTA ANTERIOR");
+            tab_detalle_autorizacion.getColumna("nota_ynodau").setNombreVisual("NOTA");
             tab_detalle_autorizacion.dibujar();
 
             PanelTabla pa_detalle_autorizacion = new PanelTabla();
@@ -107,7 +114,8 @@ public class ModificarNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ypedpe").setVisible(false);
             tab_cabecera_nota.getColumna("ide_yhogra").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ystjor").setVisible(false);
-            tab_cabecera_nota.getColumna("ide_ystmal").setVisible(false);
+            tab_cabecera_nota.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMallaDocente());
+            tab_cabecera_nota.getColumna("ide_ystmal").setLectura(true);
             tab_cabecera_nota.getColumna("ide_ynopae").setAutoCompletar();
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
             tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
@@ -115,8 +123,6 @@ public class ModificarNota extends Pantalla {
             tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setLectura(true);
             tab_cabecera_nota.getColumna("fecha_calificacion_ynocan").setNombreVisual("FECHA CALIFICACIÓN");
-            tab_cabecera_nota.getColumna("ide_ynopae").setFiltro(true);
-            tab_cabecera_nota.getColumna("detalle_ynocan").setFiltro(true);
             tab_cabecera_nota.setRows(5);
             tab_cabecera_nota.dibujar();
 
@@ -131,7 +137,7 @@ public class ModificarNota extends Pantalla {
             agregarComponente(div_nota);
 
             Boton bot_aprobar = new Boton();
-            bot_aprobar.setValue("Aprobar");
+            bot_aprobar.setValue("Aprobar Cambio");
             bot_aprobar.setIcon("ui-icon-note");
             bot_aprobar.setMetodo("aprobarCambios");
             bar_botones.agregarBoton(bot_aprobar);
@@ -181,7 +187,7 @@ public class ModificarNota extends Pantalla {
         //ACTUALIZO LA NOTA 
         utilitario.getConexion().ejecutarSql(ser_notas.getActualizarNota(tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "ide_ynodet"), tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "nota_ynodau")));
         //ACTUALIZO EL ESTADO DE AUTORIZADO A REGISTRADO
-        utilitario.getConexion().ejecutarSql(ser_notas.getActualizarEstadoModificarNota(tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "ide_ynodau"), utilitario.getVariable("p_estado_registrado"),tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "nota_ynodau"),utilitario.getFechaActual()));
+        utilitario.getConexion().ejecutarSql(ser_notas.getActualizarEstadoModificarNota(tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "ide_ynodau"), utilitario.getVariable("p_estado_registrado"), tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "nota_ynodau"), utilitario.getFechaActual()));
         //COMIENZA EL METODO DE RECALCULAR NOTA
         TablaGenerica tab_autorizacion = utilitario.consultar(ser_notas.getConsultaTablaAutorizacion(tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "ide_ynodau")));
         //tab_autorizacion.imprimirSql();
