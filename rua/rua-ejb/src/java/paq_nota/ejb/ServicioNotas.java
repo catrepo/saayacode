@@ -666,19 +666,38 @@ public class ServicioNotas {
 
     public String getConsultaTablaAutorizacion(String codigo) {
         String sql = "";
-        sql += "select ide_ynodau,ide_yaldap,ide_ystpea,ide_ystmal,c.ide_ypedpe,ide_yhogra,ide_ystjor \n"
+        sql += "select ide_ynodau,a.ide_ynodet,ide_yaldap,ide_ystpea,ide_ystmal,c.ide_ypedpe,ide_yhogra,ide_ystjor \n"
                 + "from yavirac_nota_detalle_autorizac a\n"
                 + "left join yavirac_nota_detalle_nota b on a.ide_ynodet=b.ide_ynodet\n"
                 + "left join yavirac_nota_cabecera_nota c on b.ide_ynocan=c.ide_ynocan\n"
-                + "where ide_ynodau="+codigo+"";
+                + "where ide_ynodau=" + codigo + "";
         return sql;
     }
 
-    public String getConsultaMallaDocente(String periodo,String malla,String docente,String horario,String jornada) {
+    public String getConsultaMallaDocente(String periodo, String malla, String docente, String horario, String jornada) {
         String sql = "";
         sql += "select ide_ypemad,ide_ystpea,ide_ystmal,ide_ypedpe,ide_yhogra,ide_ystjor \n"
                 + "from yavirac_perso_malla_docente \n"
-                + "where ide_ystpea="+periodo+" and ide_ystmal="+malla+" and ide_ypedpe="+docente+" and ide_yhogra="+horario+" and ide_ystjor="+jornada+"";
+                + "where ide_ystpea=" + periodo + " and ide_ystmal=" + malla + " and ide_ypedpe=" + docente + " and ide_yhogra=" + horario + " and ide_ystjor=" + jornada + "";
+        return sql;
+    }
+
+    public String getActualizarNota(String codigo, String nota) {
+        String sql = "";
+        sql += " update yavirac_nota_detalle_nota  set nota_ynodet=" + nota + " where ide_ynodet=" + codigo + "";
+        return sql;
+    }
+
+    public String getActualizarEstadoModificarNota(String codigo, String estado,String nota,String fecha) {
+        String sql = "";
+        sql += "update yavirac_nota_detalle_autorizac set ide_ynoest="+estado+",nota_ynodau="+nota+", fecha_registro_ynodau='"+fecha+"' where ide_ynodau="+codigo+"";
+        return sql;
+    }
+
+    public String getConsultaMallaDocenteAlumno(String codigo, String alumno) {
+        String sql = "";
+        sql += " select * from yavirac_perso_malla_docen_alum  \n"
+                + "where ide_ypemad="+codigo+" and ide_yaldap="+alumno+"";
         return sql;
     }
 }
