@@ -536,7 +536,7 @@ public class ServicioNotas {
     public String getBloquearParcial(String estado, String parcial, String periodo) {
         String sql = "";
         sql += "update	yavirac_nota_peso_nota set bloqueo_ynopen=" + estado + " where ide_ynotie=" + parcial + " and ide_ystpea=" + periodo + "";
-        System.out.println("<<<<< Impimiendo" + sql);
+        //System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
@@ -545,7 +545,7 @@ public class ServicioNotas {
         sql += "update  yavirac_nota_periodo_activ_eva set\n"
                 + "activo_ynopae=" + estado + "\n"
                 + "where ide_ynopee=" + codigo + " ";
-        System.out.println("<<<<< Impimiendo" + sql);
+        //System.out.println("<<<<< Impimiendo" + sql);
         return sql;
     }
 
