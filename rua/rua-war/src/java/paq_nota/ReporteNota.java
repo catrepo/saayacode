@@ -189,7 +189,7 @@ public class ReporteNota extends Pantalla {
         if (nombre_reporte.equals("Nota Final")) {
             if (lis_materia.getSeleccionados() != "") {
                 materia = lis_materia.getSeleccionados();
-                System.out.println("MATERIA >>>>>> " + materia);
+                //System.out.println("MATERIA >>>>>> " + materia);
                 TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
                 Map map_parametros = new HashMap();
                

@@ -10,6 +10,7 @@ import framework.componentes.Boton;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
 import framework.componentes.PanelTabla;
+import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
 import framework.componentes.VisualizarPDF;
 import java.util.HashMap;
@@ -31,7 +32,8 @@ public class RecordAcademico extends Pantalla {
     private Tabla tab_detalle = new Tabla();
     private AutoCompletar aut_alumno = new AutoCompletar();
     private VisualizarPDF vipdf_record = new VisualizarPDF();
-
+    private VisualizarPDF vipdf_detalle = new VisualizarPDF();
+    private SeleccionTabla sel_tab = new SeleccionTabla();
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
@@ -45,7 +47,7 @@ public class RecordAcademico extends Pantalla {
 
         bar_botones.getBot_insertar().setRendered(false);
         bar_botones.getBot_eliminar().setRendered(false);
-               
+
         aut_alumno.setId("aut_alumno");
         aut_alumno.setAutoCompletar(ser_alumno.getDatosAlumnos("true,false"));
         aut_alumno.setSize(75);
@@ -126,23 +128,69 @@ public class RecordAcademico extends Pantalla {
         agregarComponente(div_record);
 
         bar_botones.agregarSeparador();
-        
+
+        Boton bot_limpiar = new Boton();
+        bot_limpiar.setIcon("ui-icon-cancel");
+        bot_limpiar.setMetodo("limpiar");
+        bar_botones.agregarBoton(bot_limpiar);
+
+        bar_botones.agregarSeparador();
+
         Boton bot_nota = new Boton();
-        bot_nota.setValue("Imprimir");
+        bot_nota.setValue("Record Académico");
         bot_nota.setIcon("ui-icon-print");
         bot_nota.setMetodo("generarPDF");
         bar_botones.agregarBoton(bot_nota);
-        
+
         Boton bot_record_detalle = new Boton();
-        bot_record_detalle.setValue("Imprimir Record Detallado");
+        bot_record_detalle.setValue("Record Académico Detallado");
         bot_record_detalle.setIcon("ui-icon-print");
-        bot_record_detalle.setMetodo("generarPDF");
+        bot_record_detalle.setMetodo("abrirReporte");
         bar_botones.agregarBoton(bot_record_detalle);
 
         vipdf_record.setId("vipdf_record");
         vipdf_record.setTitle("RECORD ACADEMICO");
         agregarComponente(vipdf_record);
 
+        sel_tab.setId("sel_tab");
+        sel_tab.setSeleccionTabla(ser_estructura.getPeriodoAcademico("true,false"), "ide_ystpea");
+        sel_tab.getBot_aceptar().setMetodo("aceptarReporte");
+        agregarComponente(sel_tab);
+
+        vipdf_detalle.setId("vipdf_detalle");
+        vipdf_detalle.setTitle("RECORD ACADEMICO DETALLADO");
+        agregarComponente(vipdf_detalle);
+
+    }
+    String periodo = "";
+
+    public void abrirReporte() {
+        if (aut_alumno.getValue() != null) {
+            sel_tab.dibujar();
+        } else {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione un alumno");
+        }
+    }
+
+    public void aceptarReporte() {
+        if (sel_tab.getSeleccionados() != "") {
+            periodo = sel_tab.getSeleccionados();
+            Map map_parametros = new HashMap();
+            map_parametros.put("ide_ystpea", periodo);
+            map_parametros.put("ide_yaldap", Integer.parseInt(aut_alumno.getValor()));
+            vipdf_detalle.setVisualizarPDF("rep_nota/rep_record_academico_detallado.jasper", map_parametros);
+            vipdf_detalle.dibujar();
+            utilitario.addUpdate("vipdf_detalle");
+            sel_tab.cerrar();
+        } else {
+            utilitario.agregarMensajeInfo("ADEVRTENCIA,", "Seleccione al menos un datos");
+        }
+    }
+
+    public void limpiar() {
+        aut_alumno.limpiar();
+        tab_cabecera.limpiar();
+        tab_detalle.limpiar();
     }
 
     public void generarPDF() {
@@ -209,6 +257,22 @@ public class RecordAcademico extends Pantalla {
 
     public void setVipdf_record(VisualizarPDF vipdf_record) {
         this.vipdf_record = vipdf_record;
+    }
+
+    public VisualizarPDF getVipdf_detalle() {
+        return vipdf_detalle;
+    }
+
+    public void setVipdf_detalle(VisualizarPDF vipdf_detalle) {
+        this.vipdf_detalle = vipdf_detalle;
+    }
+
+    public SeleccionTabla getSel_tab() {
+        return sel_tab;
+    }
+
+    public void setSel_tab(SeleccionTabla sel_tab) {
+        this.sel_tab = sel_tab;
     }
 
 }

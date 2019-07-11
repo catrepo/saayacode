@@ -249,7 +249,7 @@ public class ResumenNota extends Pantalla {
             String cod = com_materia_docente.getValue() + "";
             TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
             TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true", tab_consulta.getValor("ide_ysttfe")));
-            System.out.println(" <<<<<<<<<<<<<<<<< TAB PESO >>>>>>>>>>>>>>>>>");
+            //System.out.println(" <<<<<<<<<<<<<<<<< TAB PESO >>>>>>>>>>>>>>>>>");
             tab_peso.imprimirSql();
             if (tab_peso.getTotalFilas() > 0) {
                 for (int i = 0; i < tab_peso.getTotalFilas(); i++) {

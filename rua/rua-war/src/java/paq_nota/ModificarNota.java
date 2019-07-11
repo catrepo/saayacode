@@ -14,6 +14,7 @@ import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -32,6 +33,7 @@ public class ModificarNota extends Pantalla {
     private Tabla tab_detalle_nota = new Tabla();
     private Tabla tab_cabecera_nota = new Tabla();
     private Confirmar con_confirma = new Confirmar();
+    private Etiqueta eti_alumno = new Etiqueta();
 
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -56,8 +58,7 @@ public class ModificarNota extends Pantalla {
             tab_detalle_autorizacion.setTabla("yavirac_nota_detalle_autorizac", "ide_ynodau", 1);
             tab_detalle_autorizacion.setHeader("AUTORIZAR MODIFICAR NOTA");
             tab_detalle_autorizacion.setCondicion("ide_ypedpe=" + ide_docente + " and ide_ynoest=" + utilitario.getVariable("p_estado_autorizado"));
-            //tab_detalle_autorizacion.ejecutarValorPadre("ide_ynodet=ide_ynodet");
-            //tab_detalle_autorizacion.agregarRelacion(tab_detalle_nota);
+            tab_detalle_autorizacion.getColumna("ide_ynodet").setVisible(false);
             tab_detalle_autorizacion.getColumna("ide_ynoest").setCombo(ser_notas.getEstadoNota());
             tab_detalle_autorizacion.getColumna("ide_ynoest").setVisible(false);
             tab_detalle_autorizacion.getColumna("num_autorizacion_ynodau").setLectura(true);
@@ -73,6 +74,7 @@ public class ModificarNota extends Pantalla {
             tab_detalle_autorizacion.getColumna("fecha_autorizacion_ynodau").setNombreVisual("FECHA AUTORIZACION");
             tab_detalle_autorizacion.getColumna("nota_anterior_ynodau").setNombreVisual("NOTA ANTERIOR");
             tab_detalle_autorizacion.getColumna("nota_ynodau").setNombreVisual("NOTA");
+            tab_detalle_autorizacion.getColumna("nota_ynodau").setMetodoChange("validarNota");
             tab_detalle_autorizacion.dibujar();
 
             PanelTabla pa_detalle_autorizacion = new PanelTabla();
@@ -81,8 +83,8 @@ public class ModificarNota extends Pantalla {
 
             tab_detalle_nota.setId("tab_detalle_nota");
             tab_detalle_nota.setTabla("yavirac_nota_detalle_nota", "ide_ynodet", 2);
-            //tab_detalle_nota.agregarRelacion(tab_detalle_autorizacion);
-            tab_detalle_nota.setCondicionBuscar("ide_ynodet=" + tab_detalle_autorizacion.getValor("ide_ynodet"));
+            tab_detalle_nota.setCondicion("ide_ynodet=" + tab_detalle_autorizacion.getValor("ide_ynodet"));
+            tab_detalle_nota.getColumna("ide_ynocan").setVisible(false);
             tab_detalle_nota.setHeader("DETALLE NOTA");
             tab_detalle_nota.getColumna("ide_ynodet").setNombreVisual("CODIGO");
             tab_detalle_nota.getColumna("ide_yaldap").setNombreVisual("ALUMNO/A");
@@ -104,8 +106,9 @@ public class ModificarNota extends Pantalla {
             tab_cabecera_nota.setId("tab_cabecera_nota");  // todo objeto instanciado poner id 
             tab_cabecera_nota.setTabla("yavirac_nota_cabecera_nota", "ide_ynocan", 3);    // nom bdd
             tab_cabecera_nota.setHeader("ACTIVIDADES");
-            tab_cabecera_nota.setCondicionBuscar("ide_ynocan=" + tab_detalle_nota.getValor("ide_ynocan"));
-            //tab_cabecera_nota.setCondicion("ide_ynocan=-1");
+            //tab_cabecera_nota.setCondicionBuscar("ide_ynocan=" + tab_detalle_nota.getValor("ide_ynocan"));
+            tab_cabecera_nota.setCondicion("ide_ynocan=" + tab_detalle_nota.getValor("ide_ynocan"));
+            //tab_cabecera_nota.agregarRelacion(tab_detalle_nota);
             tab_cabecera_nota.getColumna("ide_ynocan").setNombreVisual("CODIGO");
             tab_cabecera_nota.getColumna("ide_ynopae").setCombo(ser_notas.getPeriodoActividadEvaluacion("0", "0", "true,false", "0"));
             tab_cabecera_nota.getColumna("ide_ystpea").setVisible(false);
@@ -116,8 +119,11 @@ public class ModificarNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ystjor").setVisible(false);
             tab_cabecera_nota.getColumna("ide_ystmal").setCombo(ser_estructura_organizacional.getMallaDocente());
             tab_cabecera_nota.getColumna("ide_ystmal").setLectura(true);
+            tab_cabecera_nota.getColumna("ide_ystmal").setNombreVisual("MATERIA");
             tab_cabecera_nota.getColumna("ide_ynopae").setAutoCompletar();
             tab_cabecera_nota.getColumna("ide_ynopae").setLectura(true);
+            tab_cabecera_nota.getColumna("ide_ynopae").setAncho(-1);
+            tab_cabecera_nota.getColumna("ide_ynopae").setLongitud(-1);
             tab_cabecera_nota.getColumna("ide_ynopae").setNombreVisual("ACTIVIDAD EVALUACIÓN");
             tab_cabecera_nota.getColumna("detalle_ynocan").setLectura(true);
             tab_cabecera_nota.getColumna("detalle_ynocan").setNombreVisual("DETALLE");
@@ -133,7 +139,6 @@ public class ModificarNota extends Pantalla {
             Division div_nota = new Division();
             div_nota.setId("div_nota");
             div_nota.dividir3(pa_detalle_autorizacion, pa_detalle_nota, pa_cabecera_nota, "50%", "30%", "H");
-            ///div_nota.dividir2(pa_detalle_autorizacion, pa_detalle_nota, "50%", "H");
             agregarComponente(div_nota);
 
             Boton bot_aprobar = new Boton();
@@ -144,8 +149,8 @@ public class ModificarNota extends Pantalla {
 
             //CONFIRMAR
             con_confirma.setId("con_confirma");
-            con_confirma.setMessage("Está seguro que desea guardar los cambios y enviar a recalcular las notas del estuadiante\n" + alumno);
             con_confirma.setTitle("GUARDAR MODIFICACIONES");
+            con_confirma.setMessage("Está seguro que desea guardar los cambios y enviar a recalcular las notas del estuadiante\n" + eti_alumno);
             con_confirma.getBot_aceptar().setValue("Si");
             con_confirma.getBot_cancelar().setValue("No");
             agregarComponente(con_confirma);
@@ -157,12 +162,18 @@ public class ModificarNota extends Pantalla {
     String alumno = "";
 
     public void aprobarCambios() {
-        TablaGenerica tab_alumno = utilitario.consultar(ser_alumno.getDatosAlumnosCodigo(tab_detalle_nota.getValor("ide_yaldap").toString()));
-        alumno = tab_alumno.getValor("apellido_yaldap") + " " + tab_alumno.getValor("nombre_yaldap");
-        System.out.println("ALUMNO: ====>>" + alumno);
-        con_confirma.dibujar();
-        utilitario.addUpdate("alumno");
-        con_confirma.getBot_aceptar().setMetodo("calcularNota");
+        if (tab_detalle_autorizacion.getTotalFilas() > 0) {
+            TablaGenerica tab_alumno = utilitario.consultar(ser_alumno.getDatosAlumnosCodigo(tab_detalle_nota.getValor("ide_yaldap").toString()));
+            alumno = tab_alumno.getValor("apellido_yaldap") + " " + tab_alumno.getValor("nombre_yaldap");
+            System.out.println("ALUMNO: ====>>" + alumno);
+
+            con_confirma.dibujar();
+            con_confirma.getBot_aceptar().setMetodo("calcularNota");
+            eti_alumno.setValue("JHON GUACHO" + alumno);
+            utilitario.addUpdate("eti_alumno");
+        }else{
+        utilitario.agregarMensajeInfo("ADVERTENCIA,", "No tiene notas para modificar");
+        }
     }
 
     public void confirmarAprobar() {
@@ -171,15 +182,34 @@ public class ModificarNota extends Pantalla {
 
     public void filtroRelacion(SelectEvent evt) {
         tab_detalle_autorizacion.seleccionarFila(evt);
-        System.out.println("1.- " + tab_detalle_autorizacion.getValor("ide_ynodet"));
-        System.out.println("2.- " + tab_detalle_nota.getValor("ide_ynocan"));
         tab_detalle_nota.setCondicion("ide_ynodet=" + tab_detalle_autorizacion.getValor("ide_ynodet"));
-        tab_cabecera_nota.setCondicion("ide_ynocan=" + tab_detalle_nota.getValor(tab_detalle_nota.getFilaActual(), "ide_ynocan"));
         tab_detalle_nota.actualizar();
+        tab_cabecera_nota.setCondicion("ide_ynocan=" + tab_detalle_nota.getValor("ide_ynocan"));
         tab_cabecera_nota.actualizar();
     }
 
-    public void actualizarNota() {
+    public void validarNota(AjaxBehaviorEvent evt) {
+        tab_detalle_autorizacion.modificar(evt);
+        TablaGenerica tab_autorizacion = utilitario.consultar(ser_notas.getConsultaTablaAutorizacion(tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "ide_ynodau")));
+        String nota = tab_detalle_autorizacion.getValor("nota_ynodau");
+        TablaGenerica tab_consuta = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(tab_autorizacion.getValor("ide_ystpea"), "true,false", "0"));
+        String notaglobal = tab_consuta.getValor("nota_evaluacion_ystpea");
+        Double notaevaluacion = Double.parseDouble(notaglobal);
+        Double notaactividad = Double.parseDouble(nota);
+
+        if (notaactividad < 0) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones menores a 0");
+            tab_detalle_autorizacion.setValor("nota_ynodau", "0");
+            utilitario.addUpdate("tab_detalle_autorizacion");
+            return;
+        } else if (notaactividad > notaevaluacion) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones mayores a " + notaevaluacion);
+            tab_detalle_autorizacion.setValor("nota_ynodau", "0");
+            utilitario.addUpdate("tab_detalle_autorizacion");
+            return;
+        }
+
+        utilitario.addUpdate("tab_detalle_nota");
 
     }
 
@@ -360,5 +390,4 @@ public class ModificarNota extends Pantalla {
     public void setCon_confirma(Confirmar con_confirma) {
         this.con_confirma = con_confirma;
     }
-
 }
