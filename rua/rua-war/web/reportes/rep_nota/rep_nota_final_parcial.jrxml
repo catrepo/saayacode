@@ -13,6 +13,27 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["http://localhost:8080/rua-war"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ide_ystpea" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_ystmal" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_ypedpe" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_ynotie" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_yhogra" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_ystjor" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_ystnie" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select periodo_academico,a.ide_ynotie,detalle_ynopen,descripcion_ynotie,codigo_ystmal,detalle_ystmat,docente,descripcion_ystnie,detalle_yhogra,
 descripcion_ystjor,a.ide_yaldap,alumno,nivel_ynopen,peso_ynopen ,abreviatura_ynopen,descripcion_ystmen,nota_ynoalr,total_asistencia
@@ -49,7 +70,7 @@ left join yavirac_hora_grupo_academic l on c.ide_yhogra=l.ide_yhogra
 left join yavirac_stror_jornada m on c.ide_ystjor=m.ide_ystjor
 left join yavirac_stror_mension  n on h.ide_ystmen=n.ide_ystmen
 left join yavirac_stror_periodo_academic o on c.ide_ystpea=o.ide_ystpea
-where e.ide_ystpea=2 and c.ide_ystmal in (475) and c.ide_ypedpe in (70) and e.ide_ynotie in (1,2) and c.ide_yhogra in (1) and c.ide_ystjor in (4) and h.ide_ystnie in (6)
+where e.ide_ystpea=$P!{ide_ystpea} and c.ide_ystmal in ($P!{ide_ystmal}) and c.ide_ypedpe in ($P!{ide_ypedpe}) and e.ide_ynotie in ($P!{ide_ynotie}) and c.ide_yhogra in ($P!{ide_yhogra}) and c.ide_ystjor in ($P!{ide_ystjor}) and h.ide_ystnie in ($P!{ide_ystnie})
 order by e.ide_ynotie,apellido_yaldap
 ) a
 left join(
@@ -100,7 +121,7 @@ peso examen15]]></fieldDescription>
 	<field name="nota_ynoalr" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[Este campo almacena las notas finales]]></fieldDescription>
 	</field>
-	<field name="total_asistencia" class="java.lang.Integer"/>
+	<field name="total_asistencia" class="java.math.BigDecimal"/>
 	<variable name="grupo_alumno" class="java.lang.Integer" resetType="Group" resetGroup="parcial" incrementType="Group" incrementGroup="alumno" calculation="Count">
 		<variableExpression><![CDATA[$V{alumno_COUNT}]]></variableExpression>
 	</variable>
@@ -399,14 +420,14 @@ peso examen15]]></fieldDescription>
 							<cellContents/>
 						</crosstabTotalRowHeader>
 					</rowGroup>
-					<columnGroup name="descripcion_ynotie" height="15" totalPosition="End">
+					<columnGroup name="descripcion_ynotie" height="15" totalPosition="End" headerPosition="Stretch">
 						<bucket class="java.lang.String">
 							<bucketExpression><![CDATA[$F{descripcion_ynotie}]]></bucketExpression>
 						</bucket>
 						<crosstabColumnHeader>
 							<cellContents backcolor="#F0F8FF" mode="Opaque">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement uuid="de7cd6b0-1bc6-4b4a-b54b-4027036ba829" style="Crosstab Data Text" x="0" y="0" width="65" height="15" isPrintWhenDetailOverflows="true"/>
+									<reportElement uuid="de7cd6b0-1bc6-4b4a-b54b-4027036ba829" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="65" height="15" isPrintWhenDetailOverflows="true"/>
 									<box>
 										<topPen lineWidth="0.75"/>
 										<leftPen lineWidth="0.75"/>
