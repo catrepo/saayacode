@@ -37,7 +37,6 @@ public class ResumenNota extends Pantalla {
     private Tabla tab_resumen_nota = new Tabla();
     private Tabla tab_docente_alumno = new Tabla();
     private Tabla tab_nota_resumen = new Tabla();
-    private Dialogo dia_dialogo = new Dialogo();
     private Combo com_resumen = new Combo();
 
     @EJB
@@ -137,26 +136,6 @@ public class ResumenNota extends Pantalla {
             div_resumen_nota.dividir2(pa_docente_alumno, pa_resumen_nota, "60%", "h");
             agregarComponente(div_resumen_nota);
 
-            //DIALOGO
-            dia_dialogo.setId("dia_dialogo");
-            dia_dialogo.setTitle("PRUEBA");
-            dia_dialogo.setWidth("40%");
-            dia_dialogo.setHeight("40%");
-
-            dia_dialogo.setResizable(false);
-
-            Grid gri_cuerpo = new Grid();
-            gri_cuerpo.setColumns(2);
-            gri_cuerpo.setWidth("100%");
-            gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
-
-            gri_cuerpo.getChildren().add(new Etiqueta("Seleccione el parcial"));
-            com_resumen.setCombo(ser_notas.getPeriodoEvaResumen("1"));
-            gri_cuerpo.getChildren().add(com_resumen);
-            dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
-            dia_dialogo.setDialogo(gri_cuerpo);
-            agregarComponente(dia_dialogo);
-
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
@@ -211,19 +190,6 @@ public class ResumenNota extends Pantalla {
 
     }
 
-    public void abrirDialogo() {
-        if (com_periodo_academico.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
-            return;
-        } else if (com_materia_docente.getValue() == null) {
-            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el curso");
-            return;
-        } else {
-            dia_dialogo.dibujar();
-            com_resumen.setCombo(ser_notas.getPeriodoEvaResumen(com_periodo_academico.getValue().toString()));
-        }
-    }
-
     public void mostrarResumen() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Académico");
@@ -248,39 +214,43 @@ public class ResumenNota extends Pantalla {
         } else {
             String cod = com_materia_docente.getValue() + "";
             TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
+            TablaGenerica tab_consulta2 = utilitario.consultar("select * from yavirac_perso_malla_docen_alum  where ide_ypemad = " + tab_consulta.getValor("ide_ypemad"));
             TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true", tab_consulta.getValor("ide_ysttfe")));
             //System.out.println(" <<<<<<<<<<<<<<<<< TAB PESO >>>>>>>>>>>>>>>>>");
             tab_peso.imprimirSql();
-            if (tab_peso.getTotalFilas() > 0) {
-                for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
-                    TablaGenerica tab_detalle = utilitario.consultar(ser_notas.getPesoDetalleNota(tab_peso.getValor(i, "ide_ynopen")));
-                    for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
-                        utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumen(com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ystmen"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_consulta.getValor("ide_ystmal"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_peso.getValor(i, "ide_ynopen")));
-                        utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
-                        for (int k = 0; k < tab_detalle.getTotalFilas(); k++) {
-                            TablaGenerica tab_resumen = utilitario.consultar(ser_notas.getImportarSumaNotas("2", "1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
-                                    tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor(i, "ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_consulta.getValor("ide_ysttfe"), tab_detalle.getValor(k, "ide_ynoace")));
-                            if (tab_resumen.getTotalFilas() > 0) {
-                                TablaGenerica tab_porciento = utilitario.consultar(ser_notas.getPorcientoParametroEvaluacion(tab_resumen.getValor("notas"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_resumen.getValor("ide_ynoace")));
-                                //INSERTAR TABLA RESUMEN
-                                TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_resumen", "ide_ynores"));
-                                utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabResumen(tab_mximo.getValor("maximo"), com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ystmen"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_ypedpe"),
-                                        tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_resumen.getValor("ide_ynopae"), tab_consulta.getValor("ide_ystmal"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_peso.getValor(i, "ide_ynopen"),
-                                        tab_resumen.getValor("notas"), tab_porciento.getValor("porcentaje"), tab_resumen.getValor("recuperacion_ynodet")));
+            if (tab_consulta2.getTotalFilas() > 0) {
+                if (tab_peso.getTotalFilas() > 0) {
+                    for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
+                        TablaGenerica tab_detalle = utilitario.consultar(ser_notas.getPesoDetalleNota(tab_peso.getValor(i, "ide_ynopen")));
+                        for (int j = 0; j < tab_docente_alumno.getTotalFilas(); j++) {
+                            utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumen(com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ystmen"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_consulta.getValor("ide_ystmal"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_peso.getValor(i, "ide_ynopen")));
+                            utilitario.getConexion().ejecutarSql(ser_notas.getActualizarTablaResumenNota(tab_docente_alumno.getValor(j, "ide_ypemda"), tab_peso.getValor(i, "ide_ynopen")));
+                            for (int k = 0; k < tab_detalle.getTotalFilas(); k++) {
+                                TablaGenerica tab_resumen = utilitario.consultar(ser_notas.getImportarSumaNotas("2", "1", com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"),
+                                        tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_peso.getValor(i, "ide_ynotie"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_consulta.getValor("ide_ysttfe"), tab_detalle.getValor(k, "ide_ynoace")));
+                                if (tab_resumen.getTotalFilas() > 0) {
+                                    TablaGenerica tab_porciento = utilitario.consultar(ser_notas.getPorcientoParametroEvaluacion(tab_resumen.getValor("notas"), tab_consulta.getValor("ide_ypedpe"), tab_consulta.getValor("ide_ystmal"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_resumen.getValor("ide_ynoace")));
+                                    //INSERTAR TABLA RESUMEN
+                                    TablaGenerica tab_mximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_nota_resumen", "ide_ynores"));
+                                    utilitario.getConexion().ejecutarSql(ser_notas.getInsertarTabResumen(tab_mximo.getValor("maximo"), com_periodo_academico.getValue().toString(), tab_consulta.getValor("ide_ystmen"), tab_consulta.getValor("ide_ystnie"), tab_consulta.getValor("ide_ypedpe"),
+                                            tab_consulta.getValor("ide_yhogra"), tab_consulta.getValor("ide_ystjor"), tab_resumen.getValor("ide_ynopae"), tab_consulta.getValor("ide_ystmal"), tab_docente_alumno.getValor(j, "ide_yaldap"), tab_peso.getValor(i, "ide_ynopen"),
+                                            tab_resumen.getValor("notas"), tab_porciento.getValor("porcentaje"), tab_resumen.getValor("recuperacion_ynodet")));
+                                }
                             }
                         }
+
                     }
-
+                    notaTotalActividades();
+                    notaTotalParcial();
+                    notaFinal();
+                    utilitario.addUpdate("tab_resumen_nota");
+                    tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
+                } else {
+                    utilitario.agregarNotificacionInfo("ADVERTENCIA NO PUEDE REALIZAR LOS CALCULOS,", "Los parciales ya se encuentrar bloqueados pongase en contacto con el administrador");
                 }
-                notaTotalActividades();
-                notaTotalParcial();
-                notaFinal();
-                utilitario.addUpdate("tab_resumen_nota");
-                tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
             } else {
-                utilitario.agregarNotificacionInfo("ADVERTENCIA,", "No puede calcular las notas totales pongase en contacto con el administrador");
+                utilitario.agregarNotificacionInfo("ADVERTENCIA NO PUEDE REALIZAR LOS CALCULOS,", "No tiene registrados alumnos pongase en contacto con el administrador");
             }
-
         }
 
     }
@@ -405,14 +375,6 @@ public class ResumenNota extends Pantalla {
 
     public void setTab_resumen_nota(Tabla tab_resumen_nota) {
         this.tab_resumen_nota = tab_resumen_nota;
-    }
-
-    public Dialogo getDia_dialogo() {
-        return dia_dialogo;
-    }
-
-    public void setDia_dialogo(Dialogo dia_dialogo) {
-        this.dia_dialogo = dia_dialogo;
     }
 
     public Combo getCom_resumen() {

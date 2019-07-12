@@ -115,7 +115,7 @@ public class PeriodoEvaluacion extends Pantalla {
         agregarComponente(con_confirma);
 
         con_confirma2.setId("con_confirma2");
-        con_confirma2.setMessage("Está seguro que desea desbloquear el registro de notas y asistencia del " );
+        con_confirma2.setMessage("Está seguro que desea desbloquear el registro de notas y asistencia del ");
         con_confirma2.setTitle("DESBLOQUEAR REGISTRO DE NOTAS");
         con_confirma2.getBot_aceptar().setValue("Si");
         con_confirma2.getBot_cancelar().setValue("No");
@@ -127,10 +127,7 @@ public class PeriodoEvaluacion extends Pantalla {
 
         tab_periodo_evaluacion.setCondicion("ide_ystpea=" + com_periodo_academico.getValue().toString());
         tab_periodo_evaluacion.ejecutarSql();
-        tab_actividad_evaluacion.setCondicion("ide_ynopee=" + tab_periodo_evaluacion.getCampoPrimaria());
-        tab_actividad_evaluacion.ejecutarSql();
-        utilitario.addUpdate("tab_periodo_evaluacion,tab_actividad_evaluacion");
-
+        tab_actividad_evaluacion.ejecutarValorForanea(tab_periodo_evaluacion.getValorSeleccionado());
     }
 
     public void bloquearParcial() {
