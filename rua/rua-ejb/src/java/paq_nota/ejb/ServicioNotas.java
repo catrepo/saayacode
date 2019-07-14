@@ -126,13 +126,15 @@ public class ServicioNotas {
      */
     public String getPeriodoActividadEvaluacion(String periodoacademico, String tipo, String estado, String formacion) {
         String sql = "";
-        sql += "select  ide_ynopae,b.descripcion_ynoace,d.descripcion_ynotie,detalle_ysttfe\n"
+        sql += "select  ide_ynopae,b.descripcion_ynoace,' '||''||d.descripcion_ynotie,' '||''||detalle_ysttfe\n"
                 + "from  yavirac_nota_periodo_activ_eva a,yavirac_nota_actividad_evaluac b,yavirac_nota_periodo_evaluacio c,yavirac_nota_tipo_evaluacion d,\n"
                 + "yavirac_nota_actividad_tipo_for e,yavirac_stror_tipo_for_educaci f \n"
                 + "where a.ide_ynoace = b.ide_ynoace and c.ide_ynopee = a.ide_ynopee and d.ide_ynotie = c.ide_ynotie and e.ide_ynoace=b.ide_ynoace and e.ide_ysttfe=f.ide_ysttfe \n"
-                + "and activo_ynopae in (" + estado + ") ";
+                + "and activo_ynopae in (" + estado + ") \n";
+
         if (tipo.equals("1")) {
-            sql += " and c.ide_ystpea in (" + periodoacademico + ") and f.ide_ysttfe in (" + formacion + ")";
+            sql += " and c.ide_ystpea in (" + periodoacademico + ") and f.ide_ysttfe in (" + formacion + ")"
+                    + "order by d.ide_ynotie,descripcion_ynoace";
         }
         return sql;
     }
@@ -390,7 +392,7 @@ public class ServicioNotas {
      */
     public String getNotaTotalTercerNivel(String recuperacion, String parametro, String periodoacademico, String mension, String nivel, String docente, String paralelo, String jornada, String malla, String alumno, String pesonota) {
         String sql = "";
-        sql += "select 1 as codigo,trunc(((sum(porciento_ynores)* " + parametro + ")/100),2) as notatotal,b.ide_yaldap,b.ide_ynopen\n"
+        sql += "select 1 as codigo,round(((sum(porciento_ynores)* " + parametro + ")/100),2) as notatotal,b.ide_yaldap,b.ide_ynopen\n"
                 + "from (\n";
         if (recuperacion.equals("1")) {
             sql += "select (sum(porciento_ynores) / count(porciento_ynores)) as porciento_ynores ,a.ide_yaldap,a.ide_ynopen from (\n";
@@ -493,6 +495,7 @@ public class ServicioNotas {
                 + ")a\n"
                 + "where yav_ide_ynopen in (" + codigo + ")\n"
                 + "group by ide_yaldap,yav_ide_ynopen";
+        //System.out.println("SQl "+sql);
         return sql;
     }
 
@@ -604,15 +607,15 @@ public class ServicioNotas {
         return sql;
     }
 
-    public String getConsultaMatricula(String periodo, String alumno) {
+    public String getConsultaMatricula(String codigo_matricula) {
         String sql = "";
-        sql += "select ide_ymarec,d.ide_ystnie,ide_ymatrc,ide_ymanum,numero_credito_ystmal,b.ide_ystmal,e.ide_ystmat,d.ide_ystmen,ide_ysttif,codigo_ystmal,numero_horas_yastmal,detalle_ystmat,ide_ystpea \n"
+        sql += "select ide_ymarec,d.ide_ystnie,ide_ymatrc,ide_ymanum,numero_credito_ystmal,b.ide_ystmal,e.ide_ystmat,d.ide_ystmen,ide_ysttif,codigo_ystmal,numero_horas_yastmal,detalle_ystmat,ide_ystpea,observacion_ymarec\n"
                 + "from yavirac_matri_matricula a\n"
                 + "left join yavirac_matri_registro_credito b on a.ide_ymamat=b.ide_ymamat\n"
                 + "left join yavirac_matri_periodo_matric c on a.ide_ymaper=c.ide_ymaper  \n"
                 + "left join yavirac_stror_malla d on b.ide_ystmal=d.ide_ystmal\n"
                 + "left join yavirac_stror_materia e on d.ide_ystmat=e.ide_ystmat\n"
-                + "where ide_yaldap=" + alumno + " and ide_ystpea=" + periodo + " ";
+                + "where a.ide_ymamat="+codigo_matricula+" ";
         return sql;
     }
 
@@ -688,16 +691,16 @@ public class ServicioNotas {
         return sql;
     }
 
-    public String getActualizarEstadoModificarNota(String codigo, String estado,String nota,String fecha) {
+    public String getActualizarEstadoModificarNota(String codigo, String estado, String nota, String fecha) {
         String sql = "";
-        sql += "update yavirac_nota_detalle_autorizac set ide_ynoest="+estado+",nota_ynodau="+nota+", fecha_registro_ynodau='"+fecha+"' where ide_ynodau="+codigo+"";
+        sql += "update yavirac_nota_detalle_autorizac set ide_ynoest=" + estado + ",nota_ynodau=" + nota + ", fecha_registro_ynodau='" + fecha + "' where ide_ynodau=" + codigo + "";
         return sql;
     }
 
     public String getConsultaMallaDocenteAlumno(String codigo, String alumno) {
         String sql = "";
         sql += " select * from yavirac_perso_malla_docen_alum  \n"
-                + "where ide_ypemad="+codigo+" and ide_yaldap="+alumno+"";
+                + "where ide_ypemad=" + codigo + " and ide_yaldap=" + alumno + "";
         return sql;
     }
 }
