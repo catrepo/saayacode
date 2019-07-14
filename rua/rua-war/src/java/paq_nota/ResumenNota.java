@@ -310,7 +310,7 @@ public class ResumenNota extends Pantalla {
         }
         tab_resumen_nota.guardar();
         guardarPantalla();
-        utilitario.agregarMensajeInfo("Mensaje", "Se calculo correctamente las notas");
+        utilitario.agregarMensaje("SUCCESFUL", "Se calculo correctamente las notas");
     }
 
     public Combo getCom_periodo_academico() {

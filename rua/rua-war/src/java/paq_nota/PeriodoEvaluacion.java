@@ -92,7 +92,7 @@ public class PeriodoEvaluacion extends Pantalla {
         tab_actividad_evaluacion.getColumna("ide_ynoace").setCombo(ser_notas.getActividadEvaluacion("true,false"));
         tab_actividad_evaluacion.getColumna("ide_ynopae").setNombreVisual("CÓDIGO");
         tab_actividad_evaluacion.getColumna("ide_ynoace").setNombreVisual("ACTIVIDAD EVALUACIÓN");
-        tab_actividad_evaluacion.getColumna("ide_ynoace").setUnico(true);
+        //tab_actividad_evaluacion.getColumna("ide_ynoace").setUnico(true);
         tab_actividad_evaluacion.getColumna("activo_ynopae").setLectura(true);
         tab_actividad_evaluacion.getColumna("activo_ynopae").setNombreVisual("ACTIVO");
         tab_actividad_evaluacion.getColumna("activo_ynopae").setValorDefecto("true");
@@ -131,7 +131,7 @@ public class PeriodoEvaluacion extends Pantalla {
     }
 
     public void bloquearParcial() {
-
+        
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
         } else if (tab_actividad_evaluacion.getValor("activo_ynopae").equals("false")) {
