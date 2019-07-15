@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="34" bottomMargin="34" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
 	<property name="ireport.zoom" value="1.331000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="24"/>
 	<parameter name="ide_yaldap" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -20,7 +20,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select i.ide_ystpea,a.ide_ynocra,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,descripcion_ystmen,fecha_inicio_ynocra,fecha_fin_ynocra,detalle_ysttfe,
-b.ide_ystmal,f.ide_ystnie,descripcion_ystnie,detalle_ystmat,codigo_mate_ynodra, num_creditos_ynodra,extract(year from fecha_inicio_ystpea)||'-'||extract(year from fecha_final_ystpea) as periodo,
+b.ide_ystmal,f.ide_ystnie,descripcion_ystnie,detalle_ystmat,codigo_mate_ynodra, num_creditos_ynodra,descripcion_ystpea,fecha_inicio_ystpea,fecha_final_ystpea,extract(year from fecha_inicio_ystpea)||'-'||extract(year from fecha_final_ystpea) as periodo,
 abreviatura_ymanum,
 b.ide_ymanum,nota_ynodra,detalle_ynoest,detalle_ymatrc,observacion_ynodra
 from yavirac_nota_cab_rec_acad a
@@ -36,7 +36,7 @@ left join yavirac_matri_numero_matricula j on b.ide_ymanum=j.ide_ymanum
 left join yavirac_nota_estado_nota k on b.ide_ynoest=k.ide_ynoest
 left join yavirac_matri_tipo_reg_credito l on b.ide_ymatrc=l.ide_ymatrc
 where a.ide_yaldap=$P!{ide_yaldap} and i.ide_ystpea in ($P!{ide_ystpea})
-order by i.ide_ystpea,ide_ystnie ]]>
+order by i.ide_ystpea,ide_ystnie]]>
 	</queryString>
 	<field name="ide_ystpea" class="java.lang.Long">
 		<fieldDescription><![CDATA[este campo reprecenta la clave primaria de la tabla periodo academico]]></fieldDescription>
@@ -60,6 +60,15 @@ order by i.ide_ystpea,ide_ystnie ]]>
 	<field name="detalle_ystmat" class="java.lang.String"/>
 	<field name="codigo_mate_ynodra" class="java.lang.String"/>
 	<field name="num_creditos_ynodra" class="java.lang.Long"/>
+	<field name="descripcion_ystpea" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo permite gusrdar informacion del periodo de inico y final del año lectivo]]></fieldDescription>
+	</field>
+	<field name="fecha_inicio_ystpea" class="java.sql.Date">
+		<fieldDescription><![CDATA[esta campo permite visualizar el preriodo  de inico academico]]></fieldDescription>
+	</field>
+	<field name="fecha_final_ystpea" class="java.sql.Date">
+		<fieldDescription><![CDATA[este campo permite visualizar el perioso final academico]]></fieldDescription>
+	</field>
 	<field name="periodo" class="java.lang.String"/>
 	<field name="abreviatura_ymanum" class="java.lang.String"/>
 	<field name="ide_ymanum" class="java.lang.Long"/>
@@ -67,7 +76,7 @@ order by i.ide_ystpea,ide_ystnie ]]>
 	<field name="detalle_ynoest" class="java.lang.String"/>
 	<field name="detalle_ymatrc" class="java.lang.String"/>
 	<field name="observacion_ynodra" class="java.lang.String"/>
-	<variable name="numeracion" class="java.lang.Integer" resetType="Group" resetGroup="periodo" calculation="Count">
+	<variable name="numeracion" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Count">
 		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
 	</variable>
 	<variable name="total" class="java.lang.Integer" calculation="Count">
@@ -80,13 +89,13 @@ order by i.ide_ystpea,ide_ystnie ]]>
 				<textField>
 					<reportElement uuid="dabcc480-25cb-405c-b2a3-e6c211f9bdc6" x="0" y="3" width="555" height="11"/>
 					<box>
-						<topPen lineWidth="0.75" lineColor="#0099CC"/>
-						<bottomPen lineWidth="0.75" lineColor="#0099CC"/>
+						<topPen lineWidth="0.75" lineColor="#000000"/>
+						<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					</box>
 					<textElement>
 						<font size="7" isBold="true" isUnderline="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA["PERIODO ACADEMICO ---> "+$F{periodo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["PERIODO ACADEMICO: "+$F{descripcion_ystpea}+"      FECHA INICIO: "+$F{fecha_inicio_ystpea}+"       FECHA FIN: "+$F{fecha_final_ystpea}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -183,7 +192,7 @@ order by i.ide_ystpea,ide_ystnie ]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="51"/>
+			<band/>
 		</groupFooter>
 	</group>
 	<background>

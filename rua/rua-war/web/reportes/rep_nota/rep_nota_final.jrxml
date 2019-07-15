@@ -331,7 +331,7 @@ peso examen15]]></fieldDescription>
 					</crosstabCell>
 					<crosstabCell width="120" height="10" columnTotalGroup="descripcion_ynotie">
 						<cellContents backcolor="#FFFFFF" mode="Transparent">
-							<textField pattern="###0" isBlankWhenNull="true">
+							<textField pattern="###0.00" isBlankWhenNull="true">
 								<reportElement uuid="32ecedae-5c45-4de0-aded-c4edb5d9c5ba" style="Crosstab Data Text" x="0" y="0" width="55" height="10" forecolor="#000000"/>
 								<box>
 									<pen lineWidth="0.75"/>

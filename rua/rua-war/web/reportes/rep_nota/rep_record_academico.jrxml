@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="34" bottomMargin="34" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
-	<property name="ireport.zoom" value="1.331000000000002"/>
+	<property name="ireport.zoom" value="2.357947691000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="259"/>
 	<parameter name="ide_yaldap" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -64,8 +64,8 @@ order by ide_ystnie]]>
 	<variable name="numeracion" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Count">
 		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
 	</variable>
-	<variable name="total" class="java.lang.Integer" calculation="Count">
-		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
+	<variable name="total" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Count">
+		<variableExpression><![CDATA[$F{num_creditos_ynodra}]]></variableExpression>
 	</variable>
 	<group name="nivel">
 		<groupExpression><![CDATA[$F{ide_ystnie}]]></groupExpression>
@@ -122,7 +122,7 @@ order by ide_ystnie]]>
 					<text><![CDATA[Período]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="283" y="19" width="40" height="22"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="283" y="19" width="38" height="22"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
@@ -130,7 +130,7 @@ order by ide_ystnie]]>
 					<text><![CDATA[Nº Matricula]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="323" y="19" width="46" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="321" y="19" width="46" height="11"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
@@ -138,7 +138,7 @@ order by ide_ystnie]]>
 					<text><![CDATA[Calificación]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="369" y="19" width="50" height="11"/>
+					<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="367" y="19" width="52" height="11"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 						<paragraph leftIndent="3" rightIndent="3"/>
@@ -164,15 +164,7 @@ order by ide_ystnie]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="13">
-				<textField>
-					<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="0" y="1" width="555" height="11"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Total de creditos en el componente ----> "+$V{total}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band/>
 		</groupFooter>
 	</group>
 	<background>
@@ -332,7 +324,7 @@ order by ide_ystnie]]>
 				<textFieldExpression><![CDATA[$F{periodo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="283" y="0" width="40" height="11" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="283" y="0" width="38" height="11" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
@@ -340,7 +332,7 @@ order by ide_ystnie]]>
 				<textFieldExpression><![CDATA[$F{abreviatura_ymanum}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="323" y="0" width="46" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="321" y="0" width="46" height="11"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
@@ -348,7 +340,7 @@ order by ide_ystnie]]>
 				<textFieldExpression><![CDATA[$F{nota_ynodra}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="369" y="0" width="50" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="367" y="0" width="52" height="11"/>
 				<textElement>
 					<font size="7"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
@@ -377,7 +369,22 @@ order by ide_ystnie]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e92d5af9-dfd5-44e6-9f59-a61c5d258d67" x="394" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="bdeb830c-5243-4927-9928-77a5259f055a" x="484" y="0" width="40" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="24" splitType="Stretch">

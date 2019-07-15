@@ -101,7 +101,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.i
 	</field>
 	<field name="detalle_yhogra" class="java.lang.String"/>
 	<field name="descripcion_ystjor" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
 	</field>
 	<field name="alumno" class="java.lang.String"/>
 	<field name="nivel_ynopen" class="java.lang.Long">
@@ -119,8 +119,7 @@ peso examen15]]></fieldDescription>
 	</field>
 	<field name="docente" class="java.lang.String"/>
 	<field name="nota_ynoalr" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[Este campo almacena las notas finales
-]]></fieldDescription>
+		<fieldDescription><![CDATA[Este campo almacena las notas finales]]></fieldDescription>
 	</field>
 	<field name="total_asistencia" class="java.lang.Integer"/>
 	<field name="estado" class="java.lang.String"/>
@@ -379,7 +378,7 @@ peso examen15]]></fieldDescription>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nota_ynoalr}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0">
+			<textField pattern="#,##0.00">
 				<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="333" y="0" width="55" height="11" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.75"/>
