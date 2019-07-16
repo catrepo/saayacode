@@ -703,4 +703,10 @@ public class ServicioNotas {
                 + "where ide_ypemad=" + codigo + " and ide_yaldap=" + alumno + "";
         return sql;
     }
+    
+     public String getConsultaCabeceraRecord(String alumno, String mension) {
+        String sql = "";
+        sql += "select * from yavirac_nota_cab_rec_acad where ide_yaldap="+alumno+" and ide_ystmen="+mension+"";
+        return sql;
+    }
 }
