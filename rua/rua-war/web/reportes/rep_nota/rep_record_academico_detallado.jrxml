@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="34" bottomMargin="34" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
-	<property name="ireport.zoom" value="1.331000000000002"/>
+	<property name="ireport.zoom" value="1.9487171000000034"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="24"/>
+	<property name="ireport.y" value="128"/>
 	<parameter name="ide_yaldap" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -16,6 +16,9 @@
 		<defaultValueExpression><![CDATA["http://localhost:8080/rua-war"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ide_ystpea" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ide_ystmen" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -35,8 +38,8 @@ left join yavirac_stror_periodo_academic i on b.ide_ystpea=i.ide_ystpea
 left join yavirac_matri_numero_matricula j on b.ide_ymanum=j.ide_ymanum
 left join yavirac_nota_estado_nota k on b.ide_ynoest=k.ide_ynoest
 left join yavirac_matri_tipo_reg_credito l on b.ide_ymatrc=l.ide_ymatrc
-where a.ide_yaldap=$P!{ide_yaldap} and i.ide_ystpea in ($P!{ide_ystpea})
-order by i.ide_ystpea,ide_ystnie]]>
+where a.ide_yaldap=$P!{ide_yaldap} and i.ide_ystpea in ($P!{ide_ystpea}) and a.ide_ystmen=$P!{ide_ystmen}
+order by i.ide_ystpea,ide_ystnie,b.ide_ystmal]]>
 	</queryString>
 	<field name="ide_ystpea" class="java.lang.Long">
 		<fieldDescription><![CDATA[este campo reprecenta la clave primaria de la tabla periodo academico]]></fieldDescription>
@@ -92,7 +95,7 @@ order by i.ide_ystpea,ide_ystnie]]>
 						<topPen lineWidth="0.75" lineColor="#000000"/>
 						<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					</box>
-					<textElement>
+					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["PERIODO ACADEMICO: "+$F{descripcion_ystpea}+"      FECHA INICIO: "+$F{fecha_inicio_ystpea}+"       FECHA FIN: "+$F{fecha_final_ystpea}]]></textFieldExpression>
@@ -389,7 +392,22 @@ order by i.ide_ystpea,ide_ystnie]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="10" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="bdeb830c-5243-4927-9928-77a5259f055a" x="495" y="0" width="60" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e92d5af9-dfd5-44e6-9f59-a61c5d258d67" x="415" y="0" width="80" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

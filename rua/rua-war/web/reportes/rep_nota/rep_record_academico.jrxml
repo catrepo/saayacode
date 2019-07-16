@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="34" bottomMargin="34" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
-	<property name="ireport.zoom" value="2.357947691000006"/>
+	<property name="ireport.zoom" value="2.3579476910000063"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="259"/>
+	<property name="ireport.y" value="300"/>
 	<parameter name="ide_yaldap" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,11 +15,13 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["http://localhost:8080/rua-war"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ide_ystmen" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select a.ide_ynocra,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,descripcion_ystmen,fecha_inicio_ynocra,fecha_fin_ynocra,detalle_ysttfe,
 b.ide_ystmal,f.ide_ystnie,descripcion_ystnie,detalle_ystmat,codigo_mate_ynodra, num_creditos_ynodra,extract(year from fecha_inicio_ystpea)||'-'||extract(year from fecha_final_ystpea) as periodo,
-abreviatura_ymanum,
-b.ide_ymanum,nota_ynodra,detalle_ynoest,detalle_ymatrc,observacion_ynodra
+abreviatura_ymanum,nota_ynodra,detalle_ynoest,detalle_ymatrc,observacion_ynodra
 from yavirac_nota_cab_rec_acad a
 left join yavirac_nota_det_rec_acad b on a.ide_ynocra=b.ide_ynocra
 left join yavirac_alum_dato_personal c on a.ide_yaldap=c.ide_yaldap
@@ -32,8 +34,14 @@ left join yavirac_stror_periodo_academic i on b.ide_ystpea=i.ide_ystpea
 left join yavirac_matri_numero_matricula j on b.ide_ymanum=j.ide_ymanum
 left join yavirac_nota_estado_nota k on b.ide_ynoest=k.ide_ynoest
 left join yavirac_matri_tipo_reg_credito l on b.ide_ymatrc=l.ide_ymatrc
-where a.ide_yaldap=$P!{ide_yaldap}
-order by ide_ystnie]]>
+right join (
+select max(a.ide_ymanum) as ide_max,ide_ystmal,ide_ynocra,ide_ystmat
+from yavirac_nota_det_rec_acad a,yavirac_matri_numero_matricula b
+where a.ide_ymanum=b.ide_ymanum
+group by ide_ystmal,ide_ynocra,ide_ystmat
+) m on b.ide_ymanum=m.ide_max and b.ide_ystmal=m.ide_ystmal and b.ide_ynocra=m.ide_ynocra and b.ide_ystmat=m.ide_ystmat
+where a.ide_yaldap =$P!{ide_yaldap} and a.ide_ystmen =$P!{ide_ystmen}
+order by ide_ystnie,ide_ystmal]]>
 	</queryString>
 	<field name="ide_ynocra" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -56,7 +64,6 @@ order by ide_ystnie]]>
 	<field name="num_creditos_ynodra" class="java.lang.Long"/>
 	<field name="periodo" class="java.lang.String"/>
 	<field name="abreviatura_ymanum" class="java.lang.String"/>
-	<field name="ide_ymanum" class="java.lang.Long"/>
 	<field name="nota_ynodra" class="java.math.BigDecimal"/>
 	<field name="detalle_ynoest" class="java.lang.String"/>
 	<field name="detalle_ymatrc" class="java.lang.String"/>
@@ -64,8 +71,8 @@ order by ide_ystnie]]>
 	<variable name="numeracion" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Count">
 		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
 	</variable>
-	<variable name="total" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Count">
-		<variableExpression><![CDATA[$F{num_creditos_ynodra}]]></variableExpression>
+	<variable name="total" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
 	</variable>
 	<group name="nivel">
 		<groupExpression><![CDATA[$F{ide_ystnie}]]></groupExpression>
@@ -77,7 +84,7 @@ order by ide_ystnie]]>
 						<topPen lineWidth="0.75" lineColor="#0099CC"/>
 						<bottomPen lineWidth="0.75" lineColor="#0099CC"/>
 					</box>
-					<textElement>
+					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystnie}]]></textFieldExpression>
@@ -369,16 +376,16 @@ order by ide_ystnie]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="12" splitType="Stretch">
+		<band height="10" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e92d5af9-dfd5-44e6-9f59-a61c5d258d67" x="394" y="0" width="80" height="12"/>
+				<reportElement uuid="e92d5af9-dfd5-44e6-9f59-a61c5d258d67" x="415" y="0" width="80" height="10"/>
 				<textElement textAlignment="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="bdeb830c-5243-4927-9928-77a5259f055a" x="484" y="0" width="40" height="11"/>
+				<reportElement uuid="bdeb830c-5243-4927-9928-77a5259f055a" x="495" y="0" width="60" height="10"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
@@ -387,21 +394,21 @@ order by ide_ystnie]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="24" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="4" width="152" height="11"/>
-				<textElement verticalAlignment="Middle">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[TOTAL MATERIAS:]]></text>
-			</staticText>
+		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="152" y="4" width="50" height="11"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="77" y="3" width="50" height="11"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="75eaf09f-8432-4fc9-9b28-c401f81ed957" x="0" y="3" width="77" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL MATERIAS:]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>
