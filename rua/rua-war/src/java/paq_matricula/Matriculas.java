@@ -146,7 +146,11 @@ public class Matriculas extends Pantalla {
             tab_registro_credito.setTabla("yavirac_matri_registro_credito", "ide_ymarec", 3);  // nombre de la base de datos ii la clave primaria
             tab_registro_credito.setHeader("REGISTRO DE CREDITOS");
             tab_registro_credito.getColumna("ide_ymatrc").setCombo(ser_matricula.getTipoRegitroCredito());
+            tab_registro_credito.getColumna("ide_ymatrc").setAncho(-1);
+            tab_registro_credito.getColumna("ide_ymatrc").setLongitud(-1);
             tab_registro_credito.getColumna("ide_ymanum").setCombo(ser_matricula.getNumeroMatricula());
+            tab_registro_credito.getColumna("ide_ymanum").setAncho(-1);
+            tab_registro_credito.getColumna("ide_ymanum").setLongitud(-1);
             tab_registro_credito.getColumna("ide_ystmal").setCombo(ser_estructura.getMalla());
             tab_registro_credito.getColumna("ide_ystmal").setAutoCompletar();
             //***************************************************************************
@@ -158,8 +162,12 @@ public class Matriculas extends Pantalla {
             tab_registro_credito.getColumna("numero_de_creditos_ymarcm").setNombreVisual("NUMERO CRÉDITO");
             tab_registro_credito.getColumna("observacion_ymarec").setNombreVisual("OBSERVACIÓN");
             tab_registro_credito.getColumna("ide_yhogra").setCombo(ser_horarios.getGrupoAcademico());
+            tab_registro_credito.getColumna("ide_yhogra").setAncho(-1);
+            tab_registro_credito.getColumna("ide_yhogra").setLongitud(-1);
             tab_registro_credito.getColumna("ide_yhogra").setNombreVisual("PARALELO");
             tab_registro_credito.getColumna("ide_ystjor").setCombo(ser_estructura.getJornada("true,false"));
+            tab_registro_credito.getColumna("ide_ystjor").setAncho(-1);
+            tab_registro_credito.getColumna("ide_ystjor").setLongitud(-1);
             tab_registro_credito.getColumna("ide_ystjor").setNombreVisual("JORNADA");
             tab_registro_credito.dibujar();//dibuja la tabla
 
@@ -243,16 +251,15 @@ public class Matriculas extends Pantalla {
         tab_cabecera_record.limpiar();
         tab_detalle_record.limpiar();
 
-        TablaGenerica tab_cabecera = utilitario.consultar("select * from yavirac_nota_cab_rec_acad where ide_yaldap=" + tab_matriculas.getValor("ide_yaldap") + "");
+        TablaGenerica tab_cabecera = utilitario.consultar(ser_notas.getConsultaCabeceraRecord(tab_matriculas.getValor("ide_yaldap"), tab_matriculas.getValor("ide_ystmen")));
         TablaGenerica tab_malla = utilitario.consultar(ser_notas.getConsultaMatricula(tab_matriculas.getValor("ide_ymamat")));
-        tab_malla.imprimirSql();
+        //tab_malla.imprimirSql();
 
         if (tab_cabecera.getTotalFilas() > 0) {
 
-            System.out.println("METODO VERDADERO");
-
+            //System.out.println("METODO VERDADERO");
             for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
-                System.out.println("FOR 1: " + i);
+                //System.out.println("FOR 1: " + i);
                 tab_detalle_record.insertar();
                 tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
                 tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
@@ -269,19 +276,18 @@ public class Matriculas extends Pantalla {
             tab_detalle_record.guardar();
         } else {
 
-            System.out.println("METODO FALSO");
-
+            //System.out.println("METODO FALSO");
             //INSERTANDO CAABECERA RECORD ACADEMICO
             tab_cabecera_record.insertar();
             tab_cabecera_record.setValor("ide_yaldap", tab_matriculas.getValor("ide_yaldap"));
             tab_cabecera_record.setValor("ide_ystmen", tab_matriculas.getValor("ide_ystmen"));
+            tab_cabecera_record.setValor("fecha_inicio_ynocra", tab_matriculas.getValor("fecha_ymamat"));
             tab_cabecera_record.guardar();
 
-            System.out.println("CABECERA CREADO ID " + tab_cabecera_record.getValor("ide_ynocra"));
-
+            //System.out.println("CABECERA CREADO ID " + tab_cabecera_record.getValor("ide_ynocra"));
             //INSERTANDO DETALLE RECORD ACADEMICO
             for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
-                System.out.println("FOR 2: " + i);
+                //System.out.println("FOR 2: " + i);
                 tab_detalle_record.insertar();
                 tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
                 tab_detalle_record.setValor("ide_ynocra", tab_cabecera_record.getValor("ide_ynocra"));
