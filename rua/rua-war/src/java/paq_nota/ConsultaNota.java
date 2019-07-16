@@ -98,15 +98,7 @@ public class ConsultaNota extends Pantalla {
         Boton bot_limpiar = new Boton();
         bot_limpiar.setIcon("ui-icon-cancel");
         bot_limpiar.setMetodo("limpiar");
-        //bar_botones.agregarBoton(bot_limpiar);
-
-        //boton registrar notas
-        Boton bot_nota = new Boton();
-        bot_nota.setValue("Registrar");
-        bot_nota.setTitle("Registrar Nota");
-        bot_nota.setIcon("ui-icon-note");//set icono Registrar///
-        bot_nota.setMetodo("registrarNota");
-        //bar_botones.agregarBoton(bot_nota);
+        bar_botones.agregarBoton(bot_limpiar);
 
         eti_docente.setStyle("font-size: 16px;font-weight: bold");
         eti_docente.setValue("Docente: " + docente);
@@ -156,6 +148,7 @@ public class ConsultaNota extends Pantalla {
         tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
         tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
         tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
+        tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
         tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
         tab_detalle_nota.getColumna("recuperacion_ynodet").setVisible(false);
         tab_detalle_nota.getColumna("recuperacion_ynodet").setValorDefecto("false");
@@ -252,10 +245,15 @@ public class ConsultaNota extends Pantalla {
         tab_cabecera_nota.limpiar();
         tab_detalle_nota.limpiar();
     }
-    
+
     public void filtroComboPeriodoAcademico() {
+        if (ide_docente.equals("")) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccion un docente");
+            com_periodo_academico.limpiar();
+        } else {
             com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), ide_docente));
             utilitario.addUpdate("com_materia_docente");
+        }
     }
 
     public void validarNotaEvaluDacion(AjaxBehaviorEvent evt) {
@@ -314,6 +312,7 @@ public class ConsultaNota extends Pantalla {
         tab_detalle_nota.limpiar();
         com_materia_docente.setValue("");
         com_periodo_academico.setValue("");
+        aut_docente.limpiar();
         utilitario.addUpdate(" tab_cabecera_nota,tab_detalle_nota,com_materia_docente,com_periodo_academico");
     }
 

@@ -351,7 +351,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.setCondicion("ide_ystpea =" + com_periodo_academico.getValue() + " and ide_ystnie=" + tab_consuta.getValor("ide_ystnie") + " and ide_yhogra=" + tab_consuta.getValor("ide_yhogra") + " and ide_ystjor=" + tab_consuta.getValor("ide_ystjor") + " and ide_ypedpe=" + tab_consuta.getValor("ide_ypedpe") + " and ide_ystmal=" + tab_consuta.getValor("ide_ystmal"));
             tab_cabecera_nota.ejecutarSql();
             tab_detalle_nota.ejecutarValorForanea(tab_cabecera_nota.getValorSeleccionado());
-            
+            tab_cabecera_nota.getColumna("ide_ystpea").setOnClick(cod);
         }
     }
     

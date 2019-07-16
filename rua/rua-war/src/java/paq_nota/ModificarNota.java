@@ -56,7 +56,7 @@ public class ModificarNota extends Pantalla {
 
             tab_detalle_autorizacion.setId("tab_detalle_autorizacion");
             tab_detalle_autorizacion.setTabla("yavirac_nota_detalle_autorizac", "ide_ynodau", 1);
-            tab_detalle_autorizacion.setHeader("AUTORIZAR MODIFICAR NOTA");
+            tab_detalle_autorizacion.setHeader("NOTAS AUTORIZADAS PARA MODIFICAR");
             tab_detalle_autorizacion.setCondicion("ide_ypedpe=" + ide_docente + " and ide_ynoest=" + utilitario.getVariable("p_estado_autorizado"));
             tab_detalle_autorizacion.getColumna("ide_ynodet").setVisible(false);
             tab_detalle_autorizacion.getColumna("ide_ynoest").setCombo(ser_notas.getEstadoNota());
@@ -171,13 +171,14 @@ public class ModificarNota extends Pantalla {
             con_confirma.getBot_aceptar().setMetodo("calcularNota");
             eti_alumno.setValue("JHON GUACHO" + alumno);
             utilitario.addUpdate("eti_alumno");
-        }else{
-        utilitario.agregarMensajeInfo("ADVERTENCIA,", "No tiene notas para modificar");
+        } else {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No tiene notas para modificar");
         }
     }
 
     public void confirmarAprobar() {
         calcularNota();
+        actualizarNotaRecordAcademico();
     }
 
     public void filtroRelacion(SelectEvent evt) {
@@ -213,17 +214,16 @@ public class ModificarNota extends Pantalla {
 
     }
 
-    /*public void actualizarNotaRecordAcademico() {
-        TablaGenerica tab_matriculados = utilitario.consultar(ser_notas.getEstudiantesMatriculados(tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "ide_ystpea")));
-        for (int i = 1; i < tab_matriculados.getTotalFilas(); i++) {
-            TablaGenerica tab_record = utilitario.consultar(ser_notas.getConsultaRecord(tab_matriculados.getValor("ide_ystpea"), tab_matriculados.getValor(i, "ide_yaldap"), tab_matriculados.getValor(i, "ide_ystmal"), tab_matriculados.getValor(i, "ide_ystmen")));
-            if (tab_record.getTotalFilas() > 0) {
-                TablaGenerica tab_nota = utilitario.consultar(ser_notas.getConsultaNotaRecord(tab_matriculados.getValor("ide_ystpea"), tab_matriculados.getValor(i, "ide_yaldap"), tab_matriculados.getValor(i, "ide_ystmal"), tab_matriculados.getValor(i, "ide_ystmen")));
-                utilitario.getConexion().ejecutarSql("update yavirac_nota_det_rec_acad set ide_ynoest="+tab_nota.getValor("estado")+",nota_ynodra="+tab_nota.getValor("nota_ynoalr")+" where ide_ynodra="+tab_record.getValor("ide_ynodra"));
-            }
+    public void actualizarNotaRecordAcademico() {
+
+        TablaGenerica tab_record = utilitario.consultar(ser_notas.getConsultaRecord(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(),"ide_ystpea"), tab_detalle_nota.getValor(tab_detalle_nota.getFilaActual(),"ide_yaldap"), tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(),"ide_ystmal"), tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(),"ide_ystmen")));
+        if (tab_record.getTotalFilas() > 0) {
+            TablaGenerica tab_nota = utilitario.consultar(ser_notas.getConsultaNotaRecord(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(),"ide_ystpea"), tab_detalle_nota.getValor(tab_detalle_nota.getFilaActual(), "ide_yaldap"), tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ystmal"), tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ystmen")));
+            utilitario.getConexion().ejecutarSql("update yavirac_nota_det_rec_acad set ide_ynoest=" + tab_nota.getValor("estado") + ",nota_ynodra=" + tab_nota.getValor("nota_ynoalr") + " where ide_ynodra=" + tab_record.getValor("ide_ynodra"));
         }
-    }*/
-    
+
+    }
+
     public void calcularNota() {
         //ACTUALIZO LA NOTA 
         utilitario.getConexion().ejecutarSql(ser_notas.getActualizarNota(tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "ide_ynodet"), tab_detalle_autorizacion.getValor(tab_detalle_autorizacion.getFilaActual(), "nota_ynodau")));

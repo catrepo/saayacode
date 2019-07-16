@@ -7,8 +7,11 @@ package paq_nota;
 
 import framework.componentes.AutoCompletar;
 import framework.componentes.Boton;
+import framework.componentes.Calendario;
+import framework.componentes.Dialogo;
 import framework.componentes.Division;
 import framework.componentes.Etiqueta;
+import framework.componentes.Grid;
 import framework.componentes.PanelTabla;
 import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
@@ -34,6 +37,9 @@ public class RecordAcademico extends Pantalla {
     private VisualizarPDF vipdf_record = new VisualizarPDF();
     private VisualizarPDF vipdf_detalle = new VisualizarPDF();
     private SeleccionTabla sel_tab = new SeleccionTabla();
+    private Calendario cal_fecha = new Calendario();
+    private Dialogo dia_dialogo = new Dialogo();
+
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
@@ -85,6 +91,16 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("ide_ymatrc").setCombo(ser_matricula.getTipoRegitroCredito());
         tab_detalle.getColumna("ide_ymanum").setCombo(ser_matricula.getNumeroMatricula());
         tab_detalle.getColumna("ide_ystmal").setCombo(ser_estructura.getMalla());
+
+        tab_detalle.getColumna("ide_ystpea").setAutoCompletar();
+        tab_detalle.getColumna("ide_ystmal").setAutoCompletar();
+        tab_detalle.getColumna("ide_ynoest").setLectura(true);
+        tab_detalle.getColumna("ide_ystpea").setLectura(true);
+        tab_detalle.getColumna("ide_ymatrc").setLectura(true);
+        tab_detalle.getColumna("ide_ymanum").setLectura(true);
+        tab_detalle.getColumna("ide_ystmal").setLectura(true);
+        tab_detalle.getColumna("codigo_mate_ynodra").setLectura(true);
+        tab_detalle.getColumna("num_creditos_ynodra").setLectura(true);
         tab_detalle.getColumna("ide_ynoest").setAncho(-1);
         tab_detalle.getColumna("ide_ynoest").setLongitud(-1);
         tab_detalle.getColumna("ide_ystpea").setAncho(-1);
@@ -95,15 +111,6 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("ide_ymanum").setLongitud(-1);
         tab_detalle.getColumna("ide_ystmal").setAncho(-1);
         tab_detalle.getColumna("ide_ystmal").setLongitud(-1);
-        tab_detalle.getColumna("ide_ystpea").setAutoCompletar();
-        tab_detalle.getColumna("ide_ystmal").setAutoCompletar();
-        tab_detalle.getColumna("ide_ynoest").setLectura(true);
-        tab_detalle.getColumna("ide_ystpea").setLectura(true);
-        tab_detalle.getColumna("ide_ymatrc").setLectura(true);
-        tab_detalle.getColumna("ide_ymanum").setLectura(true);
-        tab_detalle.getColumna("ide_ystmal").setLectura(true);
-        tab_detalle.getColumna("codigo_mate_ynodra").setLectura(true);
-        tab_detalle.getColumna("num_creditos_ynodra").setLectura(true);
         tab_detalle.getColumna("nota_ynodra").setLectura(true);
         tab_detalle.getColumna("ide_ynodra").setNombreVisual("CODIGO");
         tab_detalle.getColumna("ide_ynoest").setNombreVisual("ESTADO");
@@ -115,7 +122,8 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("num_creditos_ynodra").setNombreVisual("N° CRÉDITOS");
         tab_detalle.getColumna("nota_ynodra").setNombreVisual("CALIFICACIÓN");
         tab_detalle.getColumna("observacion_ynodra").setNombreVisual("OBSERVACIÓN");
-        tab_detalle.setRows(15);
+        tab_detalle.getColumna("observacion_ynodra").setLectura(true);
+        tab_detalle.setRows(20);
         tab_detalle.dibujar();
 
         PanelTabla pa_detalle = new PanelTabla();
@@ -148,6 +156,16 @@ public class RecordAcademico extends Pantalla {
         bot_record_detalle.setMetodo("abrirReporte");
         bar_botones.agregarBoton(bot_record_detalle);
 
+        bar_botones.agregarSeparador();
+
+        Boton bot_fecha = new Boton();
+        bot_fecha.setId("bot_fecha");
+        bot_fecha.setValue("Cambiar Fecha");
+        bot_fecha.setTitle("Actualizar Fecha Fin de Carrera");
+        bot_fecha.setIcon(" ui-icon-calculator");
+        bot_fecha.setMetodo("actualizarFecha");
+        bar_botones.agregarBoton(bot_fecha);
+
         vipdf_record.setId("vipdf_record");
         vipdf_record.setTitle("RECORD ACADEMICO");
         agregarComponente(vipdf_record);
@@ -161,12 +179,66 @@ public class RecordAcademico extends Pantalla {
         vipdf_detalle.setTitle("RECORD ACADEMICO DETALLADO");
         agregarComponente(vipdf_detalle);
 
+        dia_dialogo.setId("dia_dialogo");
+        dia_dialogo.setTitle("ACTUALIZAR LA FECHA");
+        dia_dialogo.setWidth("25%");
+        dia_dialogo.setHeight("25%");
+        dia_dialogo.setResizable(false);
+
+        Grid gri_cuerpo = new Grid();
+        gri_cuerpo.setColumns(1);
+        gri_cuerpo.setWidth("100%");
+        gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
+        gri_cuerpo.getChildren().clear();
+        Etiqueta eti_mensaje = new Etiqueta();
+        eti_mensaje.setValue("Actualizar la  fecha de culminación de la carrera");
+        eti_mensaje.setStyle("font-size: 14px;border: none;text-shadow: 0px 2px 3px #ccc;background: none;");
+
+        Grid gru_cuerpo = new Grid();
+        gru_cuerpo.setColumns(2);
+        gru_cuerpo.getChildren().add(new Etiqueta("FECHA CULMINACIÓN: "));
+        gru_cuerpo.getChildren().add(cal_fecha);
+        gri_cuerpo.getChildren().add(eti_mensaje);
+        gri_cuerpo.getChildren().add(gru_cuerpo);
+        dia_dialogo.getBot_aceptar().setMetodo("confirmarFecha");
+        dia_dialogo.setDialogo(gri_cuerpo);
+        agregarComponente(dia_dialogo);
+
     }
     String periodo = "";
 
+    public void actualizarFecha() {
+        if (aut_alumno.getValue() != null) {
+            if (tab_cabecera.getTotalFilas() > 0) {
+                cal_fecha.limpiar();
+                dia_dialogo.dibujar();
+            } else {
+                utilitario.agregarMensajeInfo("ADVERTENCIA,", "El estudiante no se encuentra registrado en ninguna carrera");
+            }
+        } else {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione un alumno");
+        }
+    }
+
+    public void confirmarFecha() {
+        if (cal_fecha.getValue() == null || cal_fecha.getValue().toString().isEmpty()) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Ingrese la fecha de culminación de carrera");
+            return;
+        } else {
+            utilitario.getConexion().ejecutarSql(ser_notas.getActualizarFechaFinRecord(cal_fecha.getFecha(), aut_alumno.getValor(), tab_cabecera.getValor(tab_cabecera.getFilaActual(), "ide_ystmen")));
+            utilitario.agregarMensaje("SUCESSFUL,", "Se actualizo la fecha correctamente");
+            tab_cabecera.actualizar();
+            dia_dialogo.cerrar();
+        }
+    }
+
     public void abrirReporte() {
         if (aut_alumno.getValue() != null) {
-            sel_tab.dibujar();
+            if (tab_cabecera.getTotalFilas() > 0) {
+                sel_tab.dibujar();
+            } else {
+                utilitario.agregarMensajeInfo("ADVERTENCIA,", "El estudiante no se encuentra registrado en ninguna carrera");
+            }
         } else {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione un alumno");
         }
@@ -178,6 +250,7 @@ public class RecordAcademico extends Pantalla {
             Map map_parametros = new HashMap();
             map_parametros.put("ide_ystpea", periodo);
             map_parametros.put("ide_yaldap", Integer.parseInt(aut_alumno.getValor()));
+            map_parametros.put("ide_ystmen", Integer.parseInt(tab_cabecera.getValor(tab_cabecera.getFilaActual(), "ide_ystmen")));
             vipdf_detalle.setVisualizarPDF("rep_nota/rep_record_academico_detallado.jasper", map_parametros);
             vipdf_detalle.dibujar();
             utilitario.addUpdate("vipdf_detalle");
@@ -195,11 +268,16 @@ public class RecordAcademico extends Pantalla {
 
     public void generarPDF() {
         if (aut_alumno.getValue() != null) {
-            Map map_parametros = new HashMap();
-            map_parametros.put("ide_yaldap", Integer.parseInt(aut_alumno.getValor()));
-            vipdf_record.setVisualizarPDF("rep_nota/rep_record_academico.jasper", map_parametros);
-            vipdf_record.dibujar();
-            utilitario.addUpdate("vipdf_record");
+            if (tab_cabecera.getTotalFilas() > 0) {
+                Map map_parametros = new HashMap();
+                map_parametros.put("ide_yaldap", Integer.parseInt(aut_alumno.getValor()));
+                map_parametros.put("ide_ystmen", Integer.parseInt(tab_cabecera.getValor(tab_cabecera.getFilaActual(), "ide_ystmen")));
+                vipdf_record.setVisualizarPDF("rep_nota/rep_record_academico.jasper", map_parametros);
+                vipdf_record.dibujar();
+                utilitario.addUpdate("vipdf_record");
+            } else {
+                utilitario.agregarMensajeInfo("ADVERTENCIA,", "El estudiante no se encuentra registrado en ninguna carrera");
+            }
         } else {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione un alumno");
         }
