@@ -10,6 +10,7 @@ import framework.componentes.Boton;
 import framework.componentes.Calendario;
 import framework.componentes.Dialogo;
 import framework.componentes.Division;
+import framework.componentes.Espacio;
 import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
 import framework.componentes.PanelTabla;
@@ -193,12 +194,14 @@ public class RecordAcademico extends Pantalla {
         Etiqueta eti_mensaje = new Etiqueta();
         eti_mensaje.setValue("Actualizar la  fecha de culminación de la carrera");
         eti_mensaje.setStyle("font-size: 14px;border: none;text-shadow: 0px 2px 3px #ccc;background: none;");
-
+        Espacio esp = new Espacio();
         Grid gru_cuerpo = new Grid();
         gru_cuerpo.setColumns(2);
+        
         gru_cuerpo.getChildren().add(new Etiqueta("FECHA CULMINACIÓN: "));
         gru_cuerpo.getChildren().add(cal_fecha);
         gri_cuerpo.getChildren().add(eti_mensaje);
+        gri_cuerpo.getChildren().add(esp);
         gri_cuerpo.getChildren().add(gru_cuerpo);
         dia_dialogo.getBot_aceptar().setMetodo("confirmarFecha");
         dia_dialogo.setDialogo(gri_cuerpo);

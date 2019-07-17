@@ -67,7 +67,7 @@ public class ReporteNota extends Pantalla {
 
             bar_botones.agregarComponente(new Etiqueta("Periodo Académico "));
             com_periodo_academico.setId("com_periodo_academico");
-            com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
+            com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
             bar_botones.agregarComponente(com_periodo_academico);
 
