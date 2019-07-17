@@ -488,7 +488,7 @@ peso examen15]]></fieldDescription>
 					<measure name="abreviatura" class="java.lang.String">
 						<measureExpression><![CDATA[$F{abreviatura_ynopen}]]></measureExpression>
 					</measure>
-					<measure name="asistencia" class="java.lang.Integer">
+					<measure name="asistencia" class="java.math.BigDecimal">
 						<measureExpression><![CDATA[$F{total_asistencia}]]></measureExpression>
 					</measure>
 					<measure name="numeracion" class="java.lang.Integer">
@@ -522,7 +522,7 @@ peso examen15]]></fieldDescription>
 					</crosstabCell>
 					<crosstabCell width="65" height="10" columnTotalGroup="descripcion_ynotie">
 						<cellContents backcolor="#FFFFFF" mode="Opaque">
-							<textField>
+							<textField pattern="###0.00">
 								<reportElement uuid="a687c3e2-2f4c-4912-a1cd-dd7b8d555ff7" style="Crosstab Data Text" x="0" y="0" width="65" height="10" forecolor="#000000"/>
 								<box>
 									<topPen lineWidth="0.75"/>

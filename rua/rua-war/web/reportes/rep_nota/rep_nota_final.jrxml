@@ -33,7 +33,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select ide_ynoalr,periodo_academico,ide_ynotie,descripcion_ynotie,codigo_ystmal,detalle_ystmat,docente,descripcion_ystnie,detalle_yhogra,
-descripcion_ystjor,a.ide_yaldap,alumno,nivel_ynopen,peso_ynopen ,abreviatura_ynopen,descripcion_ystmen,nota_ynoalr,cast(total as integer),
+descripcion_ystjor,a.ide_yaldap,alumno,nivel_ynopen,peso_ynopen ,abreviatura_ynopen,descripcion_ystmen,nota_ynoalr,cast(total as double precision),
 (case when nivel_ynopen=1 and nota_ynoalr >= nota_minima_aprobada_ystpea and total >= nota_minima_aprobada_ystpea then 'APROBADO' else 'REPROBADO' end) as estado
 from (
 select ide_ynoalr,b.ide_ystpea,nota_minima_aprobada_ystpea,(case when extract(month from fecha_inicio_ystpea)=1 then 'ENERO' when extract(month from fecha_inicio_ystpea)=2 then 'FEBRERO'
@@ -85,7 +85,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap]]>
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>
 	<field name="codigo_ystmal" class="java.lang.String">
-		<fieldDescription><![CDATA[este  campo es el codigo de la malla]]></fieldDescription>
+		<fieldDescription><![CDATA[este  campo es el codigo de la malla ]]></fieldDescription>
 	</field>
 	<field name="detalle_ystmat" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
@@ -94,7 +94,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap]]>
 	</field>
 	<field name="detalle_yhogra" class="java.lang.String"/>
 	<field name="descripcion_ystjor" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
 	</field>
 	<field name="ide_yaldap" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -114,9 +114,10 @@ peso examen15]]></fieldDescription>
 	<field name="abreviatura_ynopen" class="java.lang.String"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
 	<field name="nota_ynoalr" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[Este campo almacena las notas finales]]></fieldDescription>
+		<fieldDescription><![CDATA[Este campo almacena las notas finales
+]]></fieldDescription>
 	</field>
-	<field name="total" class="java.lang.Integer"/>
+	<field name="total" class="java.lang.Double"/>
 	<field name="estado" class="java.lang.String"/>
 	<variable name="numeracion" class="java.lang.Integer" incrementType="Group" incrementGroup="estudiaante" calculation="Count">
 		<variableExpression><![CDATA[$V{estudiaante_COUNT}]]></variableExpression>
@@ -299,7 +300,7 @@ peso examen15]]></fieldDescription>
 					<measure name="estado" class="java.lang.String" calculation="Count">
 						<measureExpression><![CDATA[$F{estado}]]></measureExpression>
 					</measure>
-					<measure name="total_asistencia" class="java.lang.Integer">
+					<measure name="total_asistencia" class="java.lang.Double">
 						<measureExpression><![CDATA[$F{total}]]></measureExpression>
 					</measure>
 					<crosstabCell width="63" height="10">
