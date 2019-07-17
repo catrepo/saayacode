@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_actividad" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4649e587-8d94-4070-af96-ab5678658e14">
 	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="132"/>
+	<property name="ireport.y" value="89"/>
 	<import value="counter.Counter"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
@@ -141,7 +141,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 	<variable name="numero" class="java.lang.Integer" resetType="Group" resetGroup="actividad" incrementType="Group" incrementGroup="alumno" calculation="Count">
 		<variableExpression><![CDATA[$V{alumno_COUNT}]]></variableExpression>
 	</variable>
-	<group name="parcial">
+	<group name="parcial" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{descripcion_ynotie}]]></groupExpression>
 		<groupHeader>
 			<band/>
@@ -150,7 +150,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 			<band/>
 		</groupFooter>
 	</group>
-	<group name="actividad">
+	<group name="actividad" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{ide_ynoace}]]></groupExpression>
 		<groupHeader>
 			<band height="126">
