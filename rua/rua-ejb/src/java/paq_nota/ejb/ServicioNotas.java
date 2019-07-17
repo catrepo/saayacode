@@ -615,7 +615,7 @@ public class ServicioNotas {
                 + "left join yavirac_matri_periodo_matric c on a.ide_ymaper=c.ide_ymaper  \n"
                 + "left join yavirac_stror_malla d on b.ide_ystmal=d.ide_ystmal\n"
                 + "left join yavirac_stror_materia e on d.ide_ystmat=e.ide_ystmat\n"
-                + "where a.ide_ymamat="+codigo_matricula+" ";
+                + "where a.ide_ymamat=" + codigo_matricula + " ";
         return sql;
     }
 
@@ -703,10 +703,16 @@ public class ServicioNotas {
                 + "where ide_ypemad=" + codigo + " and ide_yaldap=" + alumno + "";
         return sql;
     }
-    
-     public String getConsultaCabeceraRecord(String alumno, String mension) {
+
+    public String getConsultaCabeceraRecord(String alumno, String mension) {
         String sql = "";
-        sql += "select * from yavirac_nota_cab_rec_acad where ide_yaldap="+alumno+" and ide_ystmen="+mension+"";
+        sql += "select * from yavirac_nota_cab_rec_acad where ide_yaldap=" + alumno + " and ide_ystmen=" + mension + "";
+        return sql;
+    }
+
+    public String getActualizarFechaFinRecord(String fecha,String alumno, String mension) {
+        String sql = "";
+        sql += "update yavirac_nota_cab_rec_acad  set fecha_fin_ynocra='"+fecha+"' where ide_yaldap="+alumno+" and ide_ystmen=" + mension + "";
         return sql;
     }
 }
