@@ -97,11 +97,11 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("ide_ystmal").setAutoCompletar();
         tab_detalle.getColumna("ide_ynoest").setLectura(true);
         tab_detalle.getColumna("ide_ystpea").setLectura(true);
-        tab_detalle.getColumna("ide_ymatrc").setLectura(true);
+        tab_detalle.getColumna("ide_ymatrc").setVisible(false);
         tab_detalle.getColumna("ide_ymanum").setLectura(true);
         tab_detalle.getColumna("ide_ystmal").setLectura(true);
-        tab_detalle.getColumna("codigo_mate_ynodra").setLectura(true);
-        tab_detalle.getColumna("num_creditos_ynodra").setLectura(true);
+        tab_detalle.getColumna("codigo_mate_ynodra").setVisible(false);
+        tab_detalle.getColumna("num_creditos_ynodra").setVisible(false);
         tab_detalle.getColumna("ide_ynoest").setAncho(-1);
         tab_detalle.getColumna("ide_ynoest").setLongitud(-1);
         tab_detalle.getColumna("ide_ystpea").setAncho(-1);
@@ -112,7 +112,6 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("ide_ymanum").setLongitud(-1);
         tab_detalle.getColumna("ide_ystmal").setAncho(-1);
         tab_detalle.getColumna("ide_ystmal").setLongitud(-1);
-        tab_detalle.getColumna("nota_ynodra").setLectura(true);
         tab_detalle.getColumna("ide_ynodra").setNombreVisual("CODIGO");
         tab_detalle.getColumna("ide_ynoest").setNombreVisual("ESTADO");
         tab_detalle.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADÉMICO");
@@ -123,8 +122,7 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("num_creditos_ynodra").setNombreVisual("N° CRÉDITOS");
         tab_detalle.getColumna("nota_ynodra").setNombreVisual("CALIFICACIÓN");
         tab_detalle.getColumna("observacion_ynodra").setNombreVisual("OBSERVACIÓN");
-        tab_detalle.getColumna("observacion_ynodra").setLectura(true);
-        tab_detalle.setRows(20);
+        tab_detalle.setRows(12);
         tab_detalle.dibujar();
 
         PanelTabla pa_detalle = new PanelTabla();
