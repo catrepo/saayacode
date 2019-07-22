@@ -137,7 +137,7 @@ peso examen15]]></fieldDescription>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<text><![CDATA[REPORTE NNOTA FINAL]]></text>
+					<text><![CDATA[REPORTE NOTA FINAL]]></text>
 				</staticText>
 				<line direction="BottomUp">
 					<reportElement uuid="b41ea93f-2d60-4c42-8b74-9796f0310186" x="275" y="0" width="1" height="80"/>
