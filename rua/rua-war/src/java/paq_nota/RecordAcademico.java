@@ -144,13 +144,13 @@ public class RecordAcademico extends Pantalla {
         bar_botones.agregarSeparador();
 
         Boton bot_nota = new Boton();
-        bot_nota.setValue("Record Académico");
+        bot_nota.setValue("Record General");
         bot_nota.setIcon("ui-icon-print");
         bot_nota.setMetodo("generarPDF");
         bar_botones.agregarBoton(bot_nota);
 
         Boton bot_record_detalle = new Boton();
-        bot_record_detalle.setValue("Record Académico Detallado");
+        bot_record_detalle.setValue("Record Detallado");
         bot_record_detalle.setIcon("ui-icon-print");
         bot_record_detalle.setMetodo("abrirReporte");
         bar_botones.agregarBoton(bot_record_detalle);
