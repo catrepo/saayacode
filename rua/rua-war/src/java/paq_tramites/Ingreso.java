@@ -118,7 +118,10 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("procedencia_ytring").setVisible(false);
             tab_ingreso.getColumna("ide_yaldap").setNombreVisual("ESTUDIANTE");
             tab_ingreso.getColumna("ide_yaldap").setOrden(3);
+            tab_ingreso.getColumna("ide_ypedpe").setNombreVisual("RESPONSABLE");
             tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
+            
+            
             //tab_ingreso.getColumna("ide_ypede").setOrden(14);
 
             tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad()); // Asignacion de metodo combo
@@ -186,22 +189,22 @@ public class Ingreso extends Pantalla {
             pat_asignacion.setId("pat_asignacion");
             pat_asignacion.setPanelTabla(tab_asignacion);
 
-            tab_anexo.setId("tab_anexo");
-            tab_anexo.setIdCompleto("tab_tabulador:tab_anexo");
-            tab_anexo.setTabla("yavirac_tra_anexo", "ide_ytrane", 3);
-            tab_anexo.getColumna("archivo_ytrane").setUpload();
-            tab_anexo.dibujar();
+            //tab_anexo.setId("tab_anexo");
+            //tab_anexo.setIdCompleto("tab_tabulador:tab_anexo");
+            //tab_anexo.setTabla("yavirac_tra_anexo", "ide_ytrane", 3);
+            //tab_anexo.getColumna("archivo_ytrane").setUpload();
+            //tab_anexo.dibujar();
 
-            PanelTabla pat_anexo = new PanelTabla();
-            pat_anexo.setId("pat_anexo");
-            pat_anexo.setPanelTabla(tab_anexo);
+            //PanelTabla pat_anexo = new PanelTabla();
+            //pat_anexo.setId("pat_anexo");
+            //pat_anexo.setPanelTabla(tab_anexo);
 
             /// tabulado
             Tabulador tab_tabulador = new Tabulador();
             tab_tabulador.setId("tab_tabulador");
 
             tab_tabulador.agregarTab("ASIGNACION TRAMITE", pat_asignacion); //creacion de pestañas en la pantalla
-            tab_tabulador.agregarTab("ANEXOS", pat_anexo);
+            //tab_tabulador.agregarTab("ANEXOS", pat_anexo);
 
             Division div_ingreso = new Division();
             div_ingreso.setId("div_ingreso");
@@ -242,22 +245,22 @@ public class Ingreso extends Pantalla {
         agregarComponente(vipdf_proforma);
         
         // creo dialogo para crear modalidad
-        dia_anexos.setId("dia_anexos");
-        dia_anexos.setTitle("Documentos Anexos");
-        dia_anexos.setWidth("40%");
-        dia_anexos.setHeight("18%");
-        dia_anexos.getBot_aceptar().setMetodo("aceptarModalidad");
+        //dia_anexos.setId("dia_anexos");
+        //dia_anexos.setTitle("Documentos Anexos");
+        //dia_anexos.setWidth("40%");
+        //dia_anexos.setHeight("18%");
+        //dia_anexos.getBot_aceptar().setMetodo("aceptarModalidad");
         
-        dia_anexos.setDialogo(pat_anexo);
-        agregarComponente(dia_anexos);
+        //dia_anexos.setDialogo(pat_anexo);
+        //agregarComponente(dia_anexos);
 
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para registrar el Tramite. Consulte con el Administrador");
         }
     }
-    public void recibir(){
-        dia_anexos.dibujar();
-    }
+    //public void recibir(){
+        //dia_anexos.dibujar();
+    //}
  public void imprimir(){
         String usuario=utilitario.getVariable("NICK");
         if (tab_ingreso.getValorSeleccionado() != null) {
