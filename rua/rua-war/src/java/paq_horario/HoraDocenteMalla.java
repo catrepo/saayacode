@@ -117,7 +117,7 @@ public class HoraDocenteMalla extends Pantalla {
         bot_consultar.setIcon("ui-icon-search");//set icono Registrar///
         bot_consultar.setMetodo("selecionoAutocompletar");
         bar_botones.agregarBoton(bot_consultar);
-        
+
         //boton registrar notas
         Boton bot_registrar = new Boton();
         bot_registrar.setValue("Inscribir Alumnos");
@@ -128,10 +128,10 @@ public class HoraDocenteMalla extends Pantalla {
     }
 
     public void selecionoAutocompletar() {
-            tab_docente_malla.setCondicion("ide_ystpea=" + com_periodo_academico.getValue() + " and ide_ypedpe=" + aut_alumno.getValor());
-            tab_docente_malla.ejecutarSql();
-            utilitario.addUpdate("tab_docente_malla");
-       
+        tab_docente_malla.setCondicion("ide_ystpea=" + com_periodo_academico.getValue() + " and ide_ypedpe=" + aut_alumno.getValor());
+        tab_docente_malla.ejecutarSql();
+        utilitario.addUpdate("tab_docente_malla");
+
     }
 
     public void filtroComboPeriodoAcademnico() {
@@ -167,9 +167,9 @@ public class HoraDocenteMalla extends Pantalla {
         } else if (aut_alumno.getValor() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Docente");
             return;
-        } else {
+        } else if (tab_docente_malla.getTotalFilas() > 0) {
             TablaGenerica tab_matriculados = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(tab_docente_malla.getValor(tab_docente_malla.getFilaActual(), "ide_ystmal"), tab_docente_malla.getValor(tab_docente_malla.getFilaActual(), "ide_yhogra"), com_periodo_academico.getValue().toString(), tab_docente_malla.getValor(tab_docente_malla.getFilaActual(), "ide_ystjor")));
-            System.out.println("codigo " + codigo);
+            //System.out.println("codigo " + codigo);
             if (tab_matriculados.getTotalFilas() > 0) {
                 for (int i = 0; i < tab_matriculados.getTotalFilas(); i++) {
                     TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getConsultaAlumnos(codigo, tab_matriculados.getValor(i, "ide_yaldap")));
@@ -187,7 +187,11 @@ public class HoraDocenteMalla extends Pantalla {
                 guardarPantalla();
                 utilitario.addUpdate("tab_docente_alumno");
                 //utilitario.agregarMensaje("Se ", "");
+            } else {
+                utilitario.agregarMensajeInfo("ADVERTENCIA,", "No tiene estudiantes matriculados para esta materia,paralelo y jornada");
             }
+        } else {
+             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Asigne uan materia,paralelo y jornada al docente seleccionado");
         }
 
     }
