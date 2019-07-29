@@ -271,7 +271,7 @@ public class Matriculas extends Pantalla {
                 tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
                 tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
                 tab_detalle_record.setValor("nota_ynodra", "0");
-                tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
+                //tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
             }
             tab_detalle_record.guardar();
         } else {
@@ -299,7 +299,7 @@ public class Matriculas extends Pantalla {
                 tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
                 tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
                 tab_detalle_record.setValor("nota_ynodra", "0");
-                tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
+                //tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
             }
             tab_detalle_record.guardar();
         }
