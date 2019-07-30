@@ -160,7 +160,7 @@ public class HoraDocenteMalla extends Pantalla {
     }
 
     public void RegistarAlumno() {
-        String codigo = tab_docente_malla.getFilaSeleccionada().getRowKey();
+        
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione Periodo Académico");
             return;
@@ -168,6 +168,7 @@ public class HoraDocenteMalla extends Pantalla {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Docente");
             return;
         } else if (tab_docente_malla.getTotalFilas() > 0) {
+            String codigo = tab_docente_malla.getFilaSeleccionada().getRowKey();
             TablaGenerica tab_matriculados = utilitario.consultar(ser_matricula.getAlumnosMallaGrupo(tab_docente_malla.getValor(tab_docente_malla.getFilaActual(), "ide_ystmal"), tab_docente_malla.getValor(tab_docente_malla.getFilaActual(), "ide_yhogra"), com_periodo_academico.getValue().toString(), tab_docente_malla.getValor(tab_docente_malla.getFilaActual(), "ide_ystjor")));
             //System.out.println("codigo " + codigo);
             if (tab_matriculados.getTotalFilas() > 0) {
@@ -188,10 +189,10 @@ public class HoraDocenteMalla extends Pantalla {
                 utilitario.addUpdate("tab_docente_alumno");
                 //utilitario.agregarMensaje("Se ", "");
             } else {
-                utilitario.agregarMensajeInfo("ADVERTENCIA,", "No tiene estudiantes matriculados para esta materia,paralelo y jornada");
+                utilitario.agregarMensajeInfo("ADVERTENCIA,", "No tiene estudiantes matriculados para esta materia, paralelo y jornada");
             }
         } else {
-             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Asigne uan materia,paralelo y jornada al docente seleccionado");
+             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Asigne uan materia, paralelo y jornada al docente seleccionado");
         }
 
     }
