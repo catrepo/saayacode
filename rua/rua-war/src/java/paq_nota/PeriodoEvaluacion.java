@@ -134,7 +134,7 @@ public class PeriodoEvaluacion extends Pantalla {
         
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
-        } else if (tab_actividad_evaluacion.getValor("activo_ynopae").equals("false")) {
+        } else if (tab_periodo_evaluacion.getValor("activo_ynopee").equals("true")) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "El parcial ya se encuentra bloqueado");
         } else {
             TablaGenerica tab_consulta = utilitario.consultar("select ide_ynotie,descripcion_ynotie from yavirac_nota_tipo_evaluacion where ide_ynotie=" + tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"));
@@ -148,7 +148,7 @@ public class PeriodoEvaluacion extends Pantalla {
     public void confirmarBloqueo() {
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearParcial("false", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), com_periodo_academico.getValue().toString()));
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearActividad("false", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
-        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearRegistroAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee"), "false"));
+        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearRegistroAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee"), "true"));
         utilitario.getConexion().ejecutarSql(ser_notas.getLecturaAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "true"));
         utilitario.getConexion().ejecutarSql(ser_notas.getLecturaNota(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "true"));
         con_confirma.cerrar();
@@ -161,7 +161,7 @@ public class PeriodoEvaluacion extends Pantalla {
 
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
-        } else if (tab_actividad_evaluacion.getValor("activo_ynopae").equals("true")) {
+        } else if (tab_periodo_evaluacion.getValor("activo_ynopee").equals("false")) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "El parcial se encuentra desbloqueado");
         } else {
             con_confirma2.getBot_aceptar().setMetodo("confirmarDesbloqueo");
@@ -173,7 +173,7 @@ public class PeriodoEvaluacion extends Pantalla {
     public void confirmarDesbloqueo() {
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearParcial("true", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), com_periodo_academico.getValue().toString()));
         utilitario.getConexion().ejecutarSql(ser_notas.getBloquearActividad("true", tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee")));
-        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearRegistroAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee"), "true"));
+        utilitario.getConexion().ejecutarSql(ser_notas.getBloquearRegistroAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynopee"), "false"));
         utilitario.getConexion().ejecutarSql(ser_notas.getLecturaAsistencia(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "false"));
         utilitario.getConexion().ejecutarSql(ser_notas.getLecturaNota(tab_periodo_evaluacion.getValor(tab_periodo_evaluacion.getFilaActual(), "ide_ynotie"), "false"));
         con_confirma2.cerrar();

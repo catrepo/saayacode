@@ -180,7 +180,9 @@ public class RegistroNota extends Pantalla {
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
             gri_cuerpo.getChildren().add(com_actividad);
             gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA: "));
+            tex_detalle.setId("tex_detalle");
             gri_cuerpo.getChildren().add(tex_detalle);
+            
             tex_detalle.setMaxlength(50);
             tex_detalle.setSize(60);
             gri_cuerpo.getChildren().add(new Etiqueta("FECHA CALIFICACIÓN: "));
@@ -339,6 +341,7 @@ public class RegistroNota extends Pantalla {
         dia_dialogo.dibujar();
         tex_detalle.limpiar();
         cal_fecha_calificacion.limpiar();
+        cal_fecha_calificacion.setFechaActual();
     }
     
     public void mostrarNota() {

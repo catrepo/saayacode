@@ -95,7 +95,7 @@ public class RecordAcademico extends Pantalla {
 
         tab_detalle.getColumna("ide_ystpea").setAutoCompletar();
         tab_detalle.getColumna("ide_ystmal").setAutoCompletar();
-        tab_detalle.getColumna("ide_ynoest").setLectura(true);
+        //tab_detalle.getColumna("ide_ynoest").setLectura(true);
         tab_detalle.getColumna("ide_ystpea").setLectura(true);
         tab_detalle.getColumna("ide_ymatrc").setVisible(false);
         tab_detalle.getColumna("ide_ymanum").setLectura(true);
