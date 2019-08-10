@@ -2,8 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_actividad" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4649e587-8d94-4070-af96-ab5678658e14">
 	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="89"/>
-	<import value="counter.Counter"/>
+	<property name="ireport.y" value="128"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
 		<box>
@@ -35,8 +34,8 @@
 	<parameter name="ide_empr" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\JHONPRODUCER\\Documents\\GitHub\\code\\trunk\\rua\\rua-war\\web"]]></defaultValueExpression>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["http://localhost:8080/rua-war"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ide_ystpea" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -63,81 +62,89 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select ROW_NUMBER() OVER(order by b.ide_ynodet) as numero,a.ide_ynocan,b.ide_yaldap,ide_ynodet,descripcion_ystpea,descripcion_ystmen,descripcion_ystnie,detalle_yhogra,descripcion_ystjor,
-ide_ynoace,descripcion_ynoace,descripcion_ynotie,detalle_ystmat,
-apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,fecha_calificacion_ynocan,a.detalle_ynocan,nota_ynodet,porciento_evaluacion_ynoacd,
-apellido_ypedpe||' '||nombre_ypedpe as docente
-from (
-select ide_ynocan,a.ide_ystjor,a.ide_ystpea,a.ide_ynopae,a.ide_ystmen,a.ide_ystnie,a.ide_yhogra,a.ide_ystmal,a.ide_ypedpe,j.ide_ynotie,h.ide_ynoace
-,descripcion_ystpea,descripcion_ystmen,descripcion_ystnie,apellido_ypedpe||' '||nombre_ypedpe as docente,detalle_yhogra,descripcion_ystjor,
-descripcion_ynoace,descripcion_ynotie,detalle_ystmat,detalle_ynocan,fecha_calificacion_ynocan
-from yavirac_nota_cabecera_nota a,yavirac_stror_periodo_academic b,yavirac_stror_mension c,yavirac_stror_nivel_educacion d,yavirac_perso_dato_personal e,
-yavirac_hora_grupo_academic f,yavirac_stror_jornada g,yavirac_nota_periodo_activ_eva h,yavirac_nota_actividad_evaluac i,yavirac_nota_periodo_evaluacio j,
-yavirac_nota_tipo_evaluacion k,yavirac_stror_malla l,yavirac_stror_materia m
-where a.ide_ystpea=b.ide_ystpea
-and a.ide_ystmen=c.ide_ystmen
-and a.ide_ystnie=d.ide_ystnie
-and a.ide_ypedpe=e.ide_ypedpe
-and a.ide_yhogra=f.ide_yhogra
-and a.ide_ystjor=g.ide_ystjor
-and a.ide_ynopae=h.ide_ynopae
-and h.ide_ynoace=i.ide_ynoace
-and h.ide_ynopee=j.ide_ynopee
-and j.ide_ynotie=k.ide_ynotie
-and a.ide_ystmal=l.ide_ystmal
-and l.ide_ystmat=m.ide_ystmat
-) a
-join yavirac_nota_detalle_nota  b  on a.ide_ynocan=b.ide_ynocan
-join yavirac_alum_dato_personal c on b.ide_yaldap=c.ide_yaldap
-left join yavirac_nota_actividad_docente d on a.ide_ynopae=d.ide_ynopae
-left join yavirac_perso_dato_personal e on a.ide_ypedpe=e.ide_ypedpe
+		<![CDATA[select a.ide_ystpea,descripcion_ystpea,a.ide_ystmen,descripcion_ystmen,a.ide_ystnie,descripcion_ystnie,a.ide_ypedpe,apellido_ypedpe||' '||nombre_ypedpe as docente,
+a.ide_yhogra,detalle_yhogra,a.ide_ystjor,descripcion_ystjor,a.ide_ynopae,i.ide_ynoace,descripcion_ynoace,j.ide_ynotie,descripcion_ynotie,
+a.ide_ystmal,m.ide_ystmat,detalle_ystmat,detalle_ynocan,fecha_calificacion_ynocan,b.ide_yaldap,apellido_yaldap||' '||nombre_yaldap as alumno,nota_ynodet,
+porciento_evaluacion_ynoacd,nota_ynores, porciento_ynores
+from yavirac_nota_cabecera_nota a
+left join yavirac_nota_detalle_nota b on a.ide_ynocan=b.ide_ynocan
+left join yavirac_stror_periodo_academic c on a.ide_ystpea=c.ide_ystpea
+left join yavirac_stror_mension d on a.ide_ystmen=d.ide_ystmen
+left join yavirac_stror_nivel_educacion e on a.ide_ystnie=e.ide_ystnie
+left join yavirac_perso_dato_personal f on a.ide_ypedpe=f.ide_ypedpe
+left join yavirac_hora_grupo_academic g on a.ide_yhogra=g.ide_yhogra
+left join yavirac_stror_jornada h on a.ide_ystjor=h.ide_ystjor
+left join yavirac_nota_periodo_activ_eva i on a.ide_ynopae=i.ide_ynopae
+left join yavirac_nota_periodo_evaluacio j on i.ide_ynopee=j.ide_ynopee
+left join yavirac_nota_actividad_evaluac k on i.ide_ynoace=k.ide_ynoace
+left join yavirac_nota_tipo_evaluacion l on j.ide_ynotie=l.ide_ynotie
+left join yavirac_stror_malla m on a.ide_ystmal=m.ide_ystmal
+left join yavirac_stror_materia n on m.ide_ystmat=n.ide_ystmat
+left join yavirac_alum_dato_personal o on b.ide_yaldap=o.ide_yaldap
+left join yavirac_nota_actividad_docente p on  a.ide_ynopae=p.ide_ynopae and a.ide_ypedpe=p.ide_ypedpe and a.ide_ystmal=p.ide_ystmal
+and a.ide_ystmen=p.ide_ystmen and a.ide_ystnie=p.ide_ystnie and a.ide_yhogra=p.ide_yhogra and a.ide_ystjor=p.ide_ystjor
+left join (
+select ide_ynores, a.ide_ystpea, ide_ystmen, ide_ystnie, ide_ypedpe, ide_yhogra,ide_ystjor, ide_ynopae, ide_ystmal, ide_yaldap,
+a.ide_ynopen, nota_ynores, porciento_ynores
+from yavirac_nota_resumen a,yavirac_nota_peso_nota b
+where a.ide_ynopen=b.ide_ynopen and nivel_ynopen=3
+) q on a.ide_ystpea=q.ide_ystpea and a.ide_ystmen=q.ide_ystmen and a.ide_ystnie=q.ide_ystnie and a.ide_ypedpe=q.ide_ypedpe and a.ide_yhogra=q.ide_yhogra
+and a.ide_ystjor=q.ide_ystjor and a.ide_ynopae=q.ide_ynopae and a.ide_ystmal=q.ide_ystmal and b.ide_yaldap=q.ide_yaldap
 where a.ide_ystpea in($P!{ide_ystpea}) and a.ide_ystnie in ($P!{ide_ystnie}) and a.ide_yhogra in($P!{ide_yhogra}) and a.ide_ystmal in ($P!{ide_ystmal}) and a.ide_ypedpe in ($P!{ide_ypedpe}) and a.ide_ystjor in ($P!{ide_ystjor})
-and a.ide_ynotie in ($P!{ide_ynotie}) and a.ide_ynoace in($P!{ide_ynoace})
-group by ide_ynotie,ide_ynoace,a.ide_ynocan,ide_ynodet,descripcion_ystpea,descripcion_ystmen,descripcion_ystnie,detalle_yhogra,descripcion_ystjor,
-descripcion_ynoace,b.ide_yaldap,descripcion_ynotie,detalle_ystmat,apellido_yaldap,nombre_yaldap,doc_identidad_yaldap,fecha_calificacion_ynocan,a.detalle_ynocan,nota_ynodet,
-porciento_evaluacion_ynoacd,apellido_ypedpe,nombre_ypedpe
-order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
+and j.ide_ynotie in ($P!{ide_ynotie}) and i.ide_ynoace in($P!{ide_ynoace})]]>
 	</queryString>
-	<field name="numero" class="java.lang.Long"/>
-	<field name="ide_ynocan" class="java.lang.Long"/>
-	<field name="ide_yaldap" class="java.lang.Long"/>
-	<field name="ide_ynodet" class="java.lang.Long"/>
+	<field name="ide_ystpea" class="java.lang.Long">
+		<fieldDescription><![CDATA[este campo reprecenta la clave primaria de la tabla periodo academico]]></fieldDescription>
+	</field>
 	<field name="descripcion_ystpea" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo permite gusrdar informacion del periodo de inico y final del año lectivo]]></fieldDescription>
 	</field>
+	<field name="ide_ystmen" class="java.lang.Long"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
+	<field name="ide_ystnie" class="java.lang.Long"/>
 	<field name="descripcion_ystnie" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo identidica la descripcion de la tabla  nivel educacion]]></fieldDescription>
 	</field>
+	<field name="ide_ypedpe" class="java.lang.Long"/>
+	<field name="docente" class="java.lang.String"/>
+	<field name="ide_yhogra" class="java.lang.Long"/>
 	<field name="detalle_yhogra" class="java.lang.String"/>
+	<field name="ide_ystjor" class="java.lang.Long"/>
 	<field name="descripcion_ystjor" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
 	</field>
+	<field name="ide_ynopae" class="java.lang.Long"/>
 	<field name="ide_ynoace" class="java.lang.Long"/>
 	<field name="descripcion_ynoace" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena las actividades de evaluación]]></fieldDescription>
 	</field>
+	<field name="ide_ynotie" class="java.lang.Long"/>
 	<field name="descripcion_ynotie" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>
+	<field name="ide_ystmal" class="java.lang.Long"/>
+	<field name="ide_ystmat" class="java.lang.Long"/>
 	<field name="detalle_ystmat" class="java.lang.String"/>
-	<field name="alumno" class="java.lang.String"/>
-	<field name="doc_identidad_yaldap" class="java.lang.String">
-		<fieldDescription><![CDATA[Este campo nos indicara el documento de identidad del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
-	</field>
-	<field name="fecha_calificacion_ynocan" class="java.sql.Date">
-		<fieldDescription><![CDATA[Este campo almacena la fecha en la que se evaluó una actividad o tarea]]></fieldDescription>
-	</field>
 	<field name="detalle_ynocan" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena el detalle de la actividad que esta calificando por ejemplo Consulta 1, exposición,etc]]></fieldDescription>
 	</field>
+	<field name="fecha_calificacion_ynocan" class="java.sql.Date">
+		<fieldDescription><![CDATA[Este campo almacena la fecha en la que se evaluó una actividad o tarea ]]></fieldDescription>
+	</field>
+	<field name="ide_yaldap" class="java.lang.Long"/>
+	<field name="alumno" class="java.lang.String"/>
 	<field name="nota_ynodet" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[Este campo almacena las notas o calificaciones individuales]]></fieldDescription>
 	</field>
 	<field name="porciento_evaluacion_ynoacd" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[El docente ingresara el peso de evaluación de cada actividad]]></fieldDescription>
+		<fieldDescription><![CDATA[El docente ingresara el peso de evaluación de cada actividad ]]></fieldDescription>
 	</field>
-	<field name="docente" class="java.lang.String"/>
+	<field name="nota_ynores" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Este campo almacena las notas totales]]></fieldDescription>
+	</field>
+	<field name="porciento_ynores" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Este campo almacena el porcentaje total que configuro el docente]]></fieldDescription>
+	</field>
 	<variable name="numero" class="java.lang.Integer" resetType="Group" resetGroup="actividad" incrementType="Group" incrementGroup="alumno" calculation="Count">
 		<variableExpression><![CDATA[$V{alumno_COUNT}]]></variableExpression>
 	</variable>
@@ -430,7 +437,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 									<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 										<font size="6" isBold="true"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$V{parametro}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$V{parametro_docente}]]></textFieldExpression>
 								</textField>
 								<staticText>
 									<reportElement uuid="304e3196-3f28-4689-8b90-ae2be2e69d4e" x="58" y="0" width="58" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -487,6 +494,15 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 					</measure>
 					<measure name="promedio" class="java.lang.Double" calculation="Average">
 						<measureExpression><![CDATA[$F{nota_ynodet}]]></measureExpression>
+					</measure>
+					<measure name="total_acumulado" class="java.math.BigDecimal">
+						<measureExpression><![CDATA[$F{nota_ynores}]]></measureExpression>
+					</measure>
+					<measure name="parametro_docente" class="java.math.BigDecimal">
+						<measureExpression><![CDATA[$F{porciento_evaluacion_ynoacd}]]></measureExpression>
+					</measure>
+					<measure name="promedio_finl" class="java.math.BigDecimal">
+						<measureExpression><![CDATA[$F{porciento_ynores}]]></measureExpression>
 					</measure>
 					<crosstabCell width="58" height="12">
 						<cellContents>
@@ -572,7 +588,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="3"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{promedio}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{total_acumulado}]]></textFieldExpression>
 							</textField>
 							<textField pattern="#,##0.00">
 								<reportElement uuid="d1081e33-705f-4f48-a47b-11f63ce63213" style="Crosstab Data Text" x="58" y="0" width="58" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -580,7 +596,7 @@ order by ide_ynotie,ide_ynoace,apellido_yaldap]]>
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="3"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{promedio} * $V{parametro}.doubleValue()]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{promedio_finl}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabCell>
