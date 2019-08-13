@@ -253,45 +253,15 @@ public class Matriculas extends Pantalla {
         TablaGenerica tab_cabecera = utilitario.consultar(ser_notas.getConsultaCabeceraRecord(tab_matriculas.getValor("ide_yaldap"), tab_matriculas.getValor("ide_ystmen")));
         TablaGenerica tab_malla = utilitario.consultar(ser_notas.getConsultaMatricula(tab_matriculas.getValor("ide_ymamat")));
         //tab_malla.imprimirSql();
+        if (tab_registro_credito.getTotalFilas() > 0) {
+            if (tab_cabecera.getTotalFilas() > 0) {
 
-        if (tab_cabecera.getTotalFilas() > 0) {
-
-            //System.out.println("METODO VERDADERO");
-            for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
-                //System.out.println("FOR 1: " + i);
-                tab_detalle_record.insertar();
-                tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
-                tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
-                tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
-                tab_detalle_record.setValor("ide_ystpea", tab_malla.getValor("ide_ystpea"));
-                tab_detalle_record.setValor("ide_ymanum", tab_malla.getValor(i, "ide_ymanum"));
-                tab_detalle_record.setValor("ide_ymatrc", tab_malla.getValor(i, "ide_ymatrc"));
-                tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
-                tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
-                tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
-                tab_detalle_record.setValor("nota_ynodra", "0");
-                //tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
-            }
-            tab_detalle_record.guardar();
-            tab_cabecera.limpiar();
-        } else {
-
-            //System.out.println("METODO FALSO");
-            //INSERTANDO CAABECERA RECORD ACADEMICO
-            tab_cabecera_record.insertar();
-            tab_cabecera_record.setValor("ide_yaldap", tab_matriculas.getValor("ide_yaldap"));
-            tab_cabecera_record.setValor("ide_ystmen", tab_matriculas.getValor("ide_ystmen"));
-            tab_cabecera_record.setValor("fecha_inicio_ynocra", tab_matriculas.getValor("fecha_ymamat"));
-            tab_cabecera_record.guardar();
-
-            //System.out.println("CABECERA CREADO ID " + tab_cabecera_record.getValor("ide_ynocra"));
-            //INSERTANDO DETALLE RECORD ACADEMICO
-            if (tab_registro_credito.getTotalFilas() > 0) {
+                //System.out.println("METODO VERDADERO");
                 for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
-                    //System.out.println("FOR 2: " + i);
+                    //System.out.println("FOR 1: " + i);
                     tab_detalle_record.insertar();
                     tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
-                    tab_detalle_record.setValor("ide_ynocra", tab_cabecera_record.getValor("ide_ynocra"));
+                    tab_detalle_record.setValor("ide_ynocra", tab_cabecera.getValor("ide_ynocra"));
                     tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
                     tab_detalle_record.setValor("ide_ystpea", tab_malla.getValor("ide_ystpea"));
                     tab_detalle_record.setValor("ide_ymanum", tab_malla.getValor(i, "ide_ymanum"));
@@ -303,9 +273,40 @@ public class Matriculas extends Pantalla {
                     //tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
                 }
                 tab_detalle_record.guardar();
+                tab_cabecera.limpiar();
+            } else {
+
+                //System.out.println("METODO FALSO");
+                //INSERTANDO CAABECERA RECORD ACADEMICO
+                tab_cabecera_record.insertar();
+                tab_cabecera_record.setValor("ide_yaldap", tab_matriculas.getValor("ide_yaldap"));
+                tab_cabecera_record.setValor("ide_ystmen", tab_matriculas.getValor("ide_ystmen"));
+                tab_cabecera_record.setValor("fecha_inicio_ynocra", tab_matriculas.getValor("fecha_ymamat"));
+                tab_cabecera_record.guardar();
+
+                //System.out.println("CABECERA CREADO ID " + tab_cabecera_record.getValor("ide_ynocra"));
+                //INSERTANDO DETALLE RECORD ACADEMICO
+                if (tab_registro_credito.getTotalFilas() > 0) {
+                    for (int i = 0; i < tab_malla.getTotalFilas(); i++) {
+                        //System.out.println("FOR 2: " + i);
+                        tab_detalle_record.insertar();
+                        tab_detalle_record.setValor("ide_ynoest", utilitario.getVariable("p_estado_cursando"));
+                        tab_detalle_record.setValor("ide_ynocra", tab_cabecera_record.getValor("ide_ynocra"));
+                        tab_detalle_record.setValor("ide_ystmat", tab_malla.getValor(i, "ide_ystmat"));
+                        tab_detalle_record.setValor("ide_ystpea", tab_malla.getValor("ide_ystpea"));
+                        tab_detalle_record.setValor("ide_ymanum", tab_malla.getValor(i, "ide_ymanum"));
+                        tab_detalle_record.setValor("ide_ymatrc", tab_malla.getValor(i, "ide_ymatrc"));
+                        tab_detalle_record.setValor("ide_ystmal", tab_malla.getValor(i, "ide_ystmal"));
+                        tab_detalle_record.setValor("codigo_mate_ynodra", tab_malla.getValor(i, "codigo_ystmal"));
+                        tab_detalle_record.setValor("num_creditos_ynodra", tab_malla.getValor(i, "numero_credito_ystmal"));
+                        tab_detalle_record.setValor("nota_ynodra", "0");
+                        //tab_detalle_record.setValor("observacion_ynodra", tab_malla.getValor(i, "observacion_ymarec"));
+                    }
+                    tab_detalle_record.guardar();
+                }
             }
+            guardarPantalla();
         }
-        guardarPantalla();
     }
 
     public void generarPDF() {
@@ -500,7 +501,6 @@ public class Matriculas extends Pantalla {
                 if (tab_registro_credito.guardar()) {
                     guardarPantalla();
                     registrarRecordAcademico();
-
                 }
             }
         }
