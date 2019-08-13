@@ -122,6 +122,7 @@ public class RegistroAsistenciaTotal extends Pantalla {
             tab_detalle.setTabla("yavirac_nota_det_asistencia", "ide_ynodea", 2);
             tab_detalle.getColumna("ide_yaldap").setNombreVisual("ALUMNO/A");
             tab_detalle.getColumna("total_asistencia").setNombreVisual("TOTAL ASISTENCIA");
+            tab_detalle.getColumna("total_asistencia").setMetodoChange("validarNotaEvaluacion");
             tab_detalle.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle.getColumna("ide_yaldap").setLectura(true);
             tab_detalle.getColumna("boqueado_ynodea").setVisible(false);
@@ -161,6 +162,31 @@ public class RegistroAsistenciaTotal extends Pantalla {
         }
     }
 
+     public void validarNotaEvaluacion(AjaxBehaviorEvent evt) {
+        tab_detalle.modificar(evt);
+        String cod = com_periodo_academico.getValue() + "";
+        String nota = tab_detalle.getValor("total_asistencia");
+        TablaGenerica tab_consuta = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true,false", "0"));
+        String notaglobal = tab_consuta.getValor("nota_evaluacion_ystpea");
+        String notarecu = tab_consuta.getValor("nota_recuperacion_ystpea");
+        Double notaevaluacion = Double.parseDouble(notaglobal);
+        Double notaactividad = Double.parseDouble(nota);
+        Double recuperacion = Double.parseDouble(notarecu);
+
+        if (notaactividad < 0) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones menores a 0");
+            tab_detalle.setValor("total_asistencia", "0");
+            utilitario.addUpdate("tab_detalle");
+            return;
+        } else if (notaactividad > notaevaluacion) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones mayores a " + notaevaluacion);
+            tab_detalle.setValor("total_asistencia", "0");
+            utilitario.addUpdate("tab_detalle");
+            return;
+        }
+
+    }
+    
     public void bloquearAsistencia(SelectEvent evt) {
         tab_cabecera.seleccionarFila(evt);
         tab_cabecera.getFilaSeleccionada().setLectura(true);

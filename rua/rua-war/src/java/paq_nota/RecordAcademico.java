@@ -5,6 +5,7 @@
  */
 package paq_nota;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.AutoCompletar;
 import framework.componentes.Boton;
 import framework.componentes.Calendario;
@@ -20,6 +21,7 @@ import framework.componentes.VisualizarPDF;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_matricula.ejb.ServicioMatriculas;
@@ -49,6 +51,8 @@ public class RecordAcademico extends Pantalla {
     private final ServicioMatriculas ser_matricula = (ServicioMatriculas) utilitario.instanciarEJB(ServicioMatriculas.class);
     @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
 
     public RecordAcademico() {
 
@@ -122,6 +126,7 @@ public class RecordAcademico extends Pantalla {
         tab_detalle.getColumna("num_creditos_ynodra").setNombreVisual("N° CRÉDITOS");
         tab_detalle.getColumna("nota_ynodra").setNombreVisual("CALIFICACIÓN");
         tab_detalle.getColumna("observacion_ynodra").setNombreVisual("OBSERVACIÓN");
+        tab_detalle.getColumna("nota_ynodra").setMetodoChange("validarNotaEvaluacion");
         tab_detalle.setRows(12);
         tab_detalle.dibujar();
 
@@ -195,7 +200,7 @@ public class RecordAcademico extends Pantalla {
         Espacio esp = new Espacio();
         Grid gru_cuerpo = new Grid();
         gru_cuerpo.setColumns(2);
-        
+
         gru_cuerpo.getChildren().add(new Etiqueta("FECHA CULMINACIÓN: "));
         gru_cuerpo.getChildren().add(cal_fecha);
         gri_cuerpo.getChildren().add(eti_mensaje);
@@ -206,6 +211,32 @@ public class RecordAcademico extends Pantalla {
         agregarComponente(dia_dialogo);
 
     }
+
+    public void validarNotaEvaluacion(AjaxBehaviorEvent evt) {
+        tab_detalle.modificar(evt);
+        String cod = tab_detalle.getValor(tab_detalle.getFilaActual(), "ide_ystpea");
+        String nota = tab_detalle.getValor(tab_detalle.getFilaActual(),"nota_ynodra");
+        TablaGenerica tab_consuta = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true,false", "0"));
+        String notaglobal = tab_consuta.getValor("nota_evaluacion_ystpea");
+        String notarecu = tab_consuta.getValor("nota_recuperacion_ystpea");
+        Double notaevaluacion = Double.parseDouble(notaglobal);
+        Double notaactividad = Double.parseDouble(nota);
+        Double recuperacion = Double.parseDouble(notarecu);
+
+        if (notaactividad < 0) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones menores a 0");
+            tab_detalle.setValor("nota_ynodra", "0");
+            utilitario.addUpdate("tab_detalle");
+            return;
+        } else if (notaactividad > notaevaluacion) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones mayores a " + notaevaluacion);
+            tab_detalle.setValor("nota_ynodra", "0");
+            utilitario.addUpdate("tab_detalle");
+            return;
+        }
+
+    }
+
     String periodo = "";
 
     public void actualizarFecha() {

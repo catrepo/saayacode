@@ -39,7 +39,7 @@ public class PesoNota extends Pantalla {
         tab_peso_nota.getColumna("ide_ynotie").setCombo(ser_notas.getTipoEvaluacion("true,false"));
         tab_peso_nota.getColumna("ide_ynotie").setAncho(-1);
         tab_peso_nota.getColumna("ide_ynotie").setLongitud(-1);
-        tab_peso_nota.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        tab_peso_nota.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
         //tab_peso_nota.getColumna("ide_ystpea").setAutoCompletar();
         tab_peso_nota.getColumna("ide_ystpea").setAncho(-1);
         tab_peso_nota.getColumna("ide_ystpea").setLongitud(-1);

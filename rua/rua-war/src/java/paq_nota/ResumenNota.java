@@ -246,10 +246,10 @@ public class ResumenNota extends Pantalla {
                     utilitario.addUpdate("tab_resumen_nota");
                     tab_resumen_nota.ejecutarValorForanea(tab_docente_alumno.getValorSeleccionado());
                 } else {
-                    utilitario.agregarNotificacionInfo("ADVERTENCIA NO PUEDE REALIZAR LOS CALCULOS,", "Los parciales ya se encuentrar bloqueados pongase en contacto con el administrador");
+                    utilitario.agregarNotificacionInfo("ADVERTENCIA NO PUEDE REALIZAR LOS CALCULOS,", "Los parciales ya se encuentran bloqueados póngase en contacto con el administrador");
                 }
             } else {
-                utilitario.agregarNotificacionInfo("ADVERTENCIA NO PUEDE REALIZAR LOS CALCULOS,", "No tiene registrados alumnos pongase en contacto con el administrador");
+                utilitario.agregarNotificacionInfo("ADVERTENCIA NO PUEDE REALIZAR LOS CALCULOS,", "No tiene registrados alumnos póngase en contacto con el administrador");
             }
         }
 
