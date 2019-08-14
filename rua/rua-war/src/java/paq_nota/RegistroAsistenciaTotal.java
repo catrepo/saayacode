@@ -221,7 +221,7 @@ public class RegistroAsistenciaTotal extends Pantalla {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Curso para Generar Nota");
             return;
         } else {
-            com_parcial.setCombo(ser_notas.getPeriodoEvaluacion(com_periodo_academico.getValue().toString(), "true"));
+            com_parcial.setCombo(ser_notas.getPeriodoEvaluacion(com_periodo_academico.getValue().toString(), "false"));
             abrirDialogo();
         }
     }
