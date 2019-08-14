@@ -150,7 +150,7 @@ public class RegistroAsistenciaTotal extends Pantalla {
             gri_cuerpo.setStyle("width:100%;overflow: auto;display: block;");
             gri_cuerpo.getChildren().clear();
             gri_cuerpo.getChildren().add(new Etiqueta("PARCIAL: "));
-            com_parcial.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "true", "-1"));
+            com_parcial.setCombo(ser_notas.getPeriodoActividadEvaluacion("-1", "0", "false", "-1"));
             gri_cuerpo.getChildren().add(com_parcial);
 
             dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
