@@ -636,12 +636,12 @@ public class ServicioNotas {
 
     public String getConsultaNotaRecord(String periodo, String alumno, String malla, String mension) {
         String sql = "";
-        sql += "select ide_ynoalr,a.ide_ystpea,a.ide_ystmen,a.ide_ystnie,a.ide_ypedpe,a.ide_yhogra,a.ide_ystjor,a.ide_ystmal,a.ide_yaldap,nota_minima_aprobada_ystpea,nota_ynoalr,total,\n"
+        sql += "select ide_ynoalr,a.ide_ystpea,a.ide_ystmen,a.ide_ystnie,a.ide_ypedpe,a.ide_yhogra,a.ide_ystjor,a.ide_ystmal,a.ide_yaldap,nota_minima_aprobada_ystpea,nota_ynoalr as nota_total,trunc(((nota_ynoalr * 10)/a.peso_ynopen),2) as nota_ynoalr,total,\n"
                 + "(case when nota_ynoalr >= nota_minima_aprobada_ystpea and total >= nota_minima_aprobada_ystpea then \n"
                 + "cast((select valor_para from sis_parametros where nom_para = 'p_estado_aprobado') as numeric)\n"
-                + "else cast((select valor_para from sis_parametros where nom_para = 'p_estado_reprobado') as numeric) end ) as estado\n"
+                + "else cast((select valor_para from sis_parametros where nom_para = 'p_estado_reprobado') as numeric) end ) as estado,a.peso_ynopen\n"
                 + "from (\n"
-                + "select ide_ynoalr,nivel_ynopen,a.ide_ynopen,d.ide_ystpea,ide_yaldap,d.ide_ystmal,ide_yhogra,ide_ystjor,ide_ystmen,ide_ystnie,ide_ypedpe,nota_ynoalr,nota_minima_aprobada_ystpea\n"
+                + "select ide_ynoalr,nivel_ynopen,a.ide_ynopen,d.ide_ystpea,ide_yaldap,d.ide_ystmal,ide_yhogra,ide_ystjor,ide_ystmen,ide_ystnie,ide_ypedpe,nota_ynoalr,nota_minima_aprobada_ystpea,peso_ynopen\n"
                 + "from yavirac_nota_alumno_resumen a\n"
                 + "left join yavirac_nota_peso_nota b on a.ide_ynopen=b.ide_ynopen\n"
                 + "left  join yavirac_perso_malla_docen_alum c on a.ide_ypemda=c.ide_ypemda  \n"
