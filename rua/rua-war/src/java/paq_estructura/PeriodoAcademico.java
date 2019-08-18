@@ -131,7 +131,7 @@ public class PeriodoAcademico extends Pantalla {
         actualizarNotaRecordAcademico();
         utilitario.getConexion().ejecutarSql(ser_notas.getCerrarPeriodoAcademico(tab_periodo_academic.getValor(tab_periodo_academic.getFilaActual(), "ide_ystpea")));
         utilitario.agregarMensaje("SUCCESSFULL,", "Periodo Académico cerrado con exito");
-        utilitario.addUpdateTabla(tab_periodo_academic, "activo_ystpea", "");
+        tab_periodo_academic.actualizar();
         con_confirma.cerrar();
     }
 
