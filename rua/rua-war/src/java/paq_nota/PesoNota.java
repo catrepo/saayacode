@@ -60,6 +60,7 @@ public class PesoNota extends Pantalla {
         tab_peso_nota.getColumna("nivel_ynopen").setNombreVisual("NIVEL");
         tab_peso_nota.getColumna("bloqueo_ynopen").setNombreVisual("ACTIVO");
         tab_peso_nota.getColumna("bloqueo_ynopen").setValorDefecto("true");
+        tab_peso_nota.getColumna("bloqueo_ynopen").setLectura(true);
         tab_peso_nota.dibujar();
 
         PanelTabla pat_peso_nota = new PanelTabla();
