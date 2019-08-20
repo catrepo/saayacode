@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_record_academico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="34" bottomMargin="34" uuid="b53f5a34-8377-4b44-b3c2-d119f2e8894e">
 	<property name="ireport.zoom" value="1.1000000000000028"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="12"/>
+	<property name="ireport.y" value="61"/>
 	<parameter name="ide_yaldap" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -22,7 +22,8 @@
 		<![CDATA[select a.ide_ynocra,apellido_yaldap||' '||nombre_yaldap as alumno,doc_identidad_yaldap,descripcion_ystmen,fecha_inicio_ynocra,fecha_fin_ynocra,detalle_ysttfe,
 b.ide_ystmal,f.ide_ystnie,descripcion_ystnie,detalle_ystmat,codigo_mate_ynodra, num_creditos_ynodra,extract(year from fecha_inicio_ystpea)||'-'||extract(year from fecha_final_ystpea) as periodo,
 abreviatura_ymanum,nota_ynodra,detalle_ynoest,detalle_ymatrc,observacion_ynodra,
-(select valor_para from sis_parametros where nom_para = 'p_nombre_secretaria' ) as secretaria
+(select valor_para from sis_parametros where nom_para = 'p_nombre_secretaria' ) as secretaria,suma,num_materia,round((suma/num_materia),2) as promedio
+
 from yavirac_nota_cab_rec_acad a
 left join yavirac_nota_det_rec_acad b on a.ide_ynocra=b.ide_ynocra
 left join yavirac_alum_dato_personal c on a.ide_yaldap=c.ide_yaldap
@@ -41,6 +42,12 @@ from yavirac_nota_det_rec_acad a,yavirac_matri_numero_matricula b
 where a.ide_ymanum=b.ide_ymanum
 group by ide_ystmal,ide_ynocra,ide_ystmat
 ) m on b.ide_ymanum=m.ide_max and b.ide_ystmal=m.ide_ystmal and b.ide_ynocra=m.ide_ynocra and b.ide_ystmat=m.ide_ystmat
+left join (
+select sum(nota_ynodra) as suma,ide_ynocra ,count(ide_ynodra) as num_materia
+from yavirac_nota_det_rec_acad a, yavirac_stror_malla b
+where a.ide_ystmal=b.ide_ystmal and aplica_calculo_ystmal=true
+group by ide_ynocra
+)n on a.ide_ynocra=n.ide_ynocra
 where a.ide_yaldap =$P!{ide_yaldap} and a.ide_ystmen =$P!{ide_ystmen}
 order by ide_ystnie,ide_ystmal]]>
 	</queryString>
@@ -70,20 +77,14 @@ order by ide_ystnie,ide_ystmal]]>
 	<field name="detalle_ymatrc" class="java.lang.String"/>
 	<field name="observacion_ynodra" class="java.lang.String"/>
 	<field name="secretaria" class="java.lang.String"/>
+	<field name="suma" class="java.math.BigDecimal"/>
+	<field name="num_materia" class="java.lang.Long"/>
+	<field name="promedio" class="java.math.BigDecimal"/>
 	<variable name="numeracion" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Count">
 		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
 	</variable>
 	<variable name="total" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{detalle_ystmat}]]></variableExpression>
-	</variable>
-	<variable name="promedio_general" class="java.lang.Double">
-		<variableExpression><![CDATA[$V{suma_notas}/$V{num_materias}]]></variableExpression>
-	</variable>
-	<variable name="suma_notas" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{nota_ynodra}]]></variableExpression>
-	</variable>
-	<variable name="num_materias" class="java.lang.Double" calculation="Count">
-		<variableExpression><![CDATA[$F{ide_ystmal}]]></variableExpression>
 	</variable>
 	<group name="nivel">
 		<groupExpression><![CDATA[$F{ide_ystnie}]]></groupExpression>
@@ -278,14 +279,14 @@ order by ide_ystnie,ide_ystmal]]>
 	</columnHeader>
 	<detail>
 		<band height="11" splitType="Stretch">
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="0" y="0" width="20" height="11"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{numeracion}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="20" y="0" width="70" height="11"/>
 				<textElement>
 					<font size="7"/>
@@ -293,7 +294,7 @@ order by ide_ystnie,ide_ystmal]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigo_mate_ynodra}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="90" y="0" width="239" height="11"/>
 				<textElement>
 					<font size="7"/>
@@ -301,7 +302,7 @@ order by ide_ystnie,ide_ystmal]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_ystmat}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="329" y="0" width="40" height="11"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
@@ -309,7 +310,7 @@ order by ide_ystnie,ide_ystmal]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{num_creditos_ynodra}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="369" y="0" width="70" height="11"/>
 				<textElement>
 					<font size="7"/>
@@ -317,7 +318,7 @@ order by ide_ystnie,ide_ystmal]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{periodo}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="439" y="0" width="46" height="11"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
@@ -325,7 +326,7 @@ order by ide_ystnie,ide_ystmal]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nota_ynodra}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" stretchType="RelativeToBandHeight" x="485" y="0" width="52" height="11"/>
 				<textElement>
 					<font size="7"/>
@@ -380,7 +381,7 @@ order by ide_ystnie,ide_ystmal]]>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SECRETRIA]]></text>
+				<text><![CDATA[SECRETRIA GENERAL]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="d9c05066-759b-49ad-bcc8-242f9f5cb1fa" x="204" y="87" width="150" height="13"/>
@@ -397,11 +398,11 @@ order by ide_ystnie,ide_ystmal]]>
 				<text><![CDATA[PROMEDIO GENERAL:]]></text>
 			</staticText>
 			<textField pattern="###0.00">
-				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" x="439" y="16" width="46" height="11" backcolor="#CCCCCC"/>
+				<reportElement uuid="877addb9-0592-4668-b30f-e406d608d721" mode="Opaque" x="439" y="16" width="46" height="11" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{promedio_general}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{promedio}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="6cbd080b-4438-4402-9277-251ba989adf8" x="0" y="6" width="551" height="10"/>
@@ -415,6 +416,13 @@ order by ide_ystnie,ide_ystmal]]>
 				<textElement/>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="dd7f2c88-d586-4e53-99f2-6e8306154e19" x="1" y="27" width="399" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SUMA: "+$F{suma}+" / "+ $F{num_materia}+" = "+$F{promedio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

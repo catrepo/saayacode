@@ -93,12 +93,8 @@ and a.ide_ystjor=q.ide_ystjor and a.ide_ynopae=q.ide_ynopae and a.ide_ystmal=q.i
 where a.ide_ystpea in($P!{ide_ystpea}) and a.ide_ystnie in ($P!{ide_ystnie}) and a.ide_yhogra in($P!{ide_yhogra}) and a.ide_ystmal in ($P!{ide_ystmal}) and a.ide_ypedpe in ($P!{ide_ypedpe}) and a.ide_ystjor in ($P!{ide_ystjor})
 and j.ide_ynotie in ($P!{ide_ynotie}) and i.ide_ynoace in($P!{ide_ynoace})]]>
 	</queryString>
-	<field name="ide_ystpea" class="java.lang.Long">
-		<fieldDescription><![CDATA[este campo reprecenta la clave primaria de la tabla periodo academico]]></fieldDescription>
-	</field>
-	<field name="descripcion_ystpea" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite gusrdar informacion del periodo de inico y final del año lectivo]]></fieldDescription>
-	</field>
+	<field name="ide_ystpea" class="java.lang.Long"/>
+	<field name="descripcion_ystpea" class="java.lang.String"/>
 	<field name="ide_ystmen" class="java.lang.Long"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
 	<field name="ide_ystnie" class="java.lang.Long"/>
