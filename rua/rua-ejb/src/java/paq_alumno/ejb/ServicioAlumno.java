@@ -64,5 +64,30 @@ public class ServicioAlumno {
         sql="SELECT ide_yalocu, descripcion_yalocu FROM yavirac_alum_ocupacion where activo_yalocu in ("+activo+")";
         return sql;
     } 
-    
+  public String getDatosFamiliaremergencia() {
+        String sql="";
+        sql="select ide_yaldfe,nombre_yaldfe from yavirac_alum_dato_fami_emerg";
+        return sql;
+    }
+        public String getTipoAficion() {
+        String sql="";
+        sql="select ide_yaltia,descripcion_yaltia from yavirac_alum_tipo_aficion";
+        return sql;
+    }
+     public String getEnfermedad() {
+        String sql="";
+        sql="select ide_yalenf,descripcion_yalenf from yavirac_alum_enfermedad";
+        return sql;
+    }    
+    public String getTipoTratamiento() {
+        String sql="";
+        sql="select ide_yaltit,descripcion_yaltit from yavirac_alum_tipo_tratamiento";
+        return sql;
+    }    
+    public String getCarrera() {
+        String sql="";
+        sql="select ide_yalcar,descripcion_yalcar FROM yavirac_alum_carrera";
+        return sql;
+    }   
+  
 }
