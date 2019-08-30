@@ -422,4 +422,41 @@ public class ServicioEstructuraOrganizacional {
                 + "left join yavirac_stror_tipo_for_educaci h on g.ide_ysttfe=h.ide_ysttfe";
         return sql;
     }
+    public String getTipoOperadora() {
+
+        String sql = "";
+        sql = "select ide_ysttio,descripcion_ysttio from yavirac_stror_tipo_operadora";
+        return sql;
+    }
+    public String getTipoTelefono() {
+
+        String sql = "";
+        sql = "select ide_ysttit,descripcion_ysttit from yavirac_stror_tipo_telefonia";
+        return sql;
+    }
+    public String getTipoCorreo() {
+
+        String sql = "";
+        sql = "select ide_ysttoc,descripcion_ysttic from yavirac_stror_tipo_correo";
+        return sql;
+    }
+    public String getTipoDiscapacidad() {
+
+        String sql = "";
+        sql = "select ide_ysttid,descripcion_ysttid from yavirac_stror_tipo_discapacid";
+        return sql;
+    }
+    public String getTipoArchivo() {
+
+        String sql = "";
+        sql = "select ide_ysttia,descripcion_ysttia from yavirac_stror_tipo_archivo";
+        return sql;
+    }
+    
+    public String getInstitucion() {
+
+        String sql = "";
+        sql = "select ide_ystins,descripcion_ystins from yavirac_stror_institucion;";
+        return sql;
+    }
 }
