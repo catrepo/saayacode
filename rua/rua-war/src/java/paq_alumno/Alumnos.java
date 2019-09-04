@@ -407,7 +407,8 @@ tab_alumno_telefono.setId("tab_alumno_telefono");
  tab_dato_academico.getColumna("yav_ide_ystdip").setNombreVisual("DISTRIBUCIÓN POLÍTICA");
  tab_dato_academico.getColumna("yav_ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));        
  tab_dato_academico.getColumna("ide_ypetip").setNombreVisual("TÍTULO PROFESIONAL");
-// tab_dato_academico.getColumna("ide_ypetip").setCombo(ser_personal.getTituloProfesional());
+// tab_dato_academico.getColumna("ide_ypetip").setCombo(ser_personal.getTituloProfesional()); 
+ tab_dato_academico.getColumna("ide_yalpea").setCombo(ser_estructura.getPeriodoAcademico("true,false"));        
  tab_dato_academico.getColumna("ide_yalpea").setNombreVisual("PERIODO ACADEMICO");
  tab_dato_academico.getColumna("anio_graduacion_yaldaa").setNombreVisual("AÑO GRADUACIÓN");
  tab_dato_academico.getColumna("estudio_adicional_yaldaa").setNombreVisual("ESTUDIOS ADICIONALES");
@@ -432,6 +433,7 @@ public void dibujarTablaDatosLaborales(){
  tab_dato_laboral.setCondicion("ide_yaldap="+aut_alumno.getValor());
  tab_dato_laboral.getColumna("ide_yaldap").setVisible(false);
  tab_dato_laboral.getColumna("ide_yaldal").setNombreVisual("IDE");
+ tab_dato_academico.getColumna("ide_yalpea").setCombo(ser_estructura.getPeriodoAcademico("true,false")); 
  tab_dato_laboral.getColumna("ide_yalpea").setNombreVisual("PERIODO ACADEMICO");
  tab_dato_laboral.getColumna("laborando_yaldal").setNombreVisual("TRABAJA");
  tab_dato_laboral.getColumna("nombre_empresa_yaldal").setNombreVisual("NOMBRE EMPRESA");
@@ -492,6 +494,7 @@ public void dibujarTablaAficiones(){
  tab_aficiones.getColumna("ide_yalafi").setNombreVisual("IDE"); 
  tab_aficiones.getColumna("ide_yaltia").setCombo(ser_alumno.getTipoAficion());
  tab_aficiones.getColumna("ide_yaltia").setNombreVisual("TIPO AFICION");
+ tab_dato_academico.getColumna("ide_yalpea").setCombo(ser_estructura.getPeriodoAcademico("true,false")); 
  tab_aficiones.getColumna("ide_yalpea").setNombreVisual("PERIODO ACADEMICO");
  tab_aficiones.getColumna("detalle_yalafi").setNombreVisual("DETALLE AFICIONES");
  tab_aficiones.getColumna("activo_yalafi").setNombreVisual("ACTIVO");
