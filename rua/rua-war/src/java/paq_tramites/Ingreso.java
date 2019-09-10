@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
@@ -120,6 +121,10 @@ public class Ingreso extends Pantalla {
             tab_ingreso.getColumna("ide_yaldap").setOrden(3);
             tab_ingreso.getColumna("ide_ypedpe").setNombreVisual("RESPONSABLE");
             tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
+            tab_ingreso.getColumna("anexo_ytring").setNombreVisual("ANEXO");
+            tab_ingreso.getColumna("anexo_ytring").setUpload();
+            tab_ingreso.getColumna("anexo_ytring").setOrden(12);
+            
             
             
             //tab_ingreso.getColumna("ide_ypede").setOrden(14);
