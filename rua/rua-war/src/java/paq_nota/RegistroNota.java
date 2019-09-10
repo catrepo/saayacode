@@ -11,14 +11,21 @@ import framework.componentes.Calendario;
 import framework.componentes.Combo;
 import framework.componentes.Dialogo;
 import framework.componentes.Division;
+import framework.componentes.Espacio;
 import framework.componentes.Etiqueta;
 import framework.componentes.Grid;
+import framework.componentes.Imagen;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Texto;
+import framework.componentes.Upload;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
+import jxl.Sheet;
+import jxl.Workbook;
+import org.primefaces.component.editor.Editor;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_asistencia.ejb.ServicioAsistencia;
@@ -33,7 +40,7 @@ import sistema.aplicacion.Pantalla;
  * @author JHON
  */
 public class RegistroNota extends Pantalla {
-    
+
     private Combo com_periodo_academico = new Combo();
     private Combo com_materia_docente = new Combo();
     private Tabla tab_docente_mencion = new Tabla();
@@ -47,7 +54,13 @@ public class RegistroNota extends Pantalla {
     private Texto tex_detalle = new Texto();
     private Calendario cal_fecha_calificacion = new Calendario();
     private Etiqueta eti_notificacion = new Etiqueta();
-    
+    private Dialogo dia_importar = new Dialogo();
+    private Upload upl_archivo = new Upload();
+    private Editor edi_mensajes = new Editor();
+    private Texto txt_actividad = new Texto();
+    private Texto txt_detalle = new Texto();
+    private Texto txt_fecha = new Texto();
+
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
     @EJB
@@ -60,27 +73,27 @@ public class RegistroNota extends Pantalla {
     private final ServicioAsistencia ser_asistencia = (ServicioAsistencia) utilitario.instanciarEJB(ServicioAsistencia.class);
     @EJB
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
-    
+
     public RegistroNota() {
         if (TienePerfilNota()) {
-            
+
             bar_botones.getBot_insertar().setRendered(false);
             bar_botones.getBot_eliminar().setRendered(false);
             bar_botones.getBot_atras().setRendered(false);
             bar_botones.getBot_fin().setRendered(false);
             bar_botones.getBot_siguiente().setRendered(false);
             bar_botones.getBot_inicio().setRendered(false);
-            
+
             com_periodo_academico.setId("com_periodo_academico");
             com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
             bar_botones.agregarComponente(new Etiqueta("Periodo Académico "));
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
-            
+
             com_materia_docente.setId("com_materia_docente");
             com_materia_docente.setMetodo("mostrarNota");
             com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente("-1", "2"));
-            
+
             bar_botones.agregarComponente(new Etiqueta("Curso "));
             bar_botones.agregarComponente(com_materia_docente);
 
@@ -96,7 +109,14 @@ public class RegistroNota extends Pantalla {
             bot_nota.setIcon("ui-icon-note");//set icono Registrar///
             bot_nota.setMetodo("registrarNota");
             bar_botones.agregarBoton(bot_nota);
-            
+
+            //Boton importar nota
+            Boton bot_impor_alumno = new Boton();
+            bot_impor_alumno.setValue("Importar notas");
+            bot_impor_alumno.setIcon("ui-icon-upload");
+            bot_impor_alumno.setMetodo("abrirDialogoImportar");
+            bar_botones.agregarBoton(bot_impor_alumno);
+
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
             eti_notificacion.setId("eti_notificacion");
@@ -129,7 +149,7 @@ public class RegistroNota extends Pantalla {
             //tab_cabecera_nota.setTipoFormulario(true);
             //tab_cabecera_nota.getGrid().setColumns(8);
             tab_cabecera_nota.dibujar();
-            
+
             PanelTabla pa_cabecera_nota = new PanelTabla();
             pa_cabecera_nota.setId("pa_cabecera_nota"); // nombre de i
             pa_cabecera_nota.setPanelTabla(tab_cabecera_nota);
@@ -145,7 +165,7 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_detalle_nota.getColumna("ide_yaldap").setAutoCompletar();
             tab_detalle_nota.getColumna("ide_yaldap").setLectura(true);
-            
+
             tab_detalle_nota.getColumna("nota_ynodet").setMetodoChange("validarNotaEvaluDacion");
             tab_detalle_nota.getColumna("recuperacion_ynodet").setLectura(true);
             tab_detalle_nota.getColumna("recuperacion_ynodet").setVisible(false);
@@ -170,7 +190,7 @@ public class RegistroNota extends Pantalla {
             dia_dialogo.setWidth("50%");
             dia_dialogo.setHeight("25%");
             dia_dialogo.setResizable(false);
-            
+
             Grid gri_cuerpo = new Grid();
             gri_cuerpo.setColumns(2);
             gri_cuerpo.setWidth("100%");
@@ -182,27 +202,289 @@ public class RegistroNota extends Pantalla {
             gri_cuerpo.getChildren().add(new Etiqueta("DETALLE DE TAREA: "));
             tex_detalle.setId("tex_detalle");
             gri_cuerpo.getChildren().add(tex_detalle);
-            
+
             tex_detalle.setMaxlength(50);
             tex_detalle.setSize(60);
             gri_cuerpo.getChildren().add(new Etiqueta("FECHA CALIFICACIÓN: "));
             gri_cuerpo.getChildren().add(cal_fecha_calificacion);
-            
+
             dia_dialogo.getBot_aceptar().setMetodo("aceptarDialogo");
             dia_dialogo.setDialogo(gri_cuerpo);
             agregarComponente(dia_dialogo);
-            
+
+            //Dialogo importar nota
+            dia_importar.setId("dia_importar");
+            dia_importar.setTitle("IMPORTAR NOTAS");
+            dia_importar.setWidth("50%");
+            dia_importar.setHeight("75%");
+            dia_importar.getBot_aceptar().setRendered(false);
+            dia_importar.getBot_cancelar().setMetodo("limpiarMensaje");
+            Grid gri_cuerpos = new Grid();
+
+            Grid gri_impo = new Grid();
+            gri_impo.setColumns(2);
+
+            gri_impo.getChildren().add(new Etiqueta("ACTIVIDAD EVALUACIÓN: "));
+            txt_actividad.setId("txt_actividad");
+            txt_actividad.setSize(80);
+            txt_actividad.setDisabled(true);
+            gri_impo.getChildren().add(txt_actividad);
+            gri_impo.getChildren().add(new Etiqueta("DETALLE TAREA: "));
+            txt_detalle.setId("txt_detalle");
+            txt_detalle.setSize(80);
+            txt_detalle.setDisabled(true);
+            gri_impo.getChildren().add(txt_detalle);
+            gri_impo.getChildren().add(new Etiqueta("FECHA CALIFICACIÓN: "));
+            txt_fecha.setSize(15);
+            txt_fecha.setDisabled(true);
+            txt_fecha.setId("txt_fecha");
+            gri_impo.getChildren().add(txt_fecha);
+
+            Grid gri_archivo = new Grid();
+            gri_archivo.setColumns(2);
+            gri_archivo.getChildren().add(new Etiqueta("Seleccione el archivo: "));
+            upl_archivo.setId("upl_archivo");
+            upl_archivo.setMetodo("validarArchivo");
+
+            upl_archivo.setUpdate("gri_valida");
+            upl_archivo.setAuto(false);
+            upl_archivo.setAllowTypes("/(\\.|\\/)(xls)$/");
+            upl_archivo.setUploadLabel("Validar");
+            upl_archivo.setCancelLabel("Cancelar Seleccion");
+
+            gri_archivo.getChildren().add(upl_archivo);
+            gri_archivo.setWidth("90%");
+
+            Grid gri_valida = new Grid();
+            gri_valida.setId("gri_valida");
+            gri_valida.setColumns(3);
+
+            Etiqueta eti_valida = new Etiqueta();
+            eti_valida.setValueExpression("value", "pre_index.clase.upl_archivo.nombreReal");
+            eti_valida.setValueExpression("rendered", "pre_index.clase.upl_archivo.nombreReal != null");
+            gri_valida.getChildren().add(eti_valida);
+
+            Imagen ima_valida = new Imagen();
+            ima_valida.setWidth("22");
+            ima_valida.setHeight("22");
+            ima_valida.setValue("/imagenes/im_excel.gif");
+            ima_valida.setValueExpression("rendered", "pre_index.clase.upl_archivo.nombreReal != null");
+            gri_valida.getChildren().add(ima_valida);
+
+            edi_mensajes.setControls("");
+            edi_mensajes.setId("edi_mensajes");
+            edi_mensajes.setStyle("overflow:auto;");
+            edi_mensajes.setWidth(dia_importar.getAnchoPanel() - 15);
+            edi_mensajes.setDisabled(true);
+            gri_valida.setFooter(edi_mensajes);
+
+            gri_cuerpos.setStyle("width:" + (dia_importar.getAnchoPanel() - 5) + "px;");
+            gri_cuerpos.setMensajeInfo("Esta opción  permite subir valores a un rubro a partir de un archivo xls");
+            gri_cuerpos.getChildren().add(gri_impo);
+            gri_cuerpos.getChildren().add(gri_archivo);
+            gri_cuerpos.getChildren().add(gri_valida);
+            gri_cuerpos.getChildren().add(edi_mensajes);
+            gri_cuerpos.getChildren().add(new Espacio("0", "10"));
+
+            dia_importar.setDialogo(gri_cuerpos);
+            dia_importar.setDynamic(false);
+
+            agregarComponente(dia_importar);
+
         } else {
             utilitario.agregarNotificacionInfo("Mensaje,", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
     }
-    
+
+    public void abrirDialogoImportar() {
+        if (com_periodo_academico.getValue() != null) {
+            if (com_materia_docente.getValue() != null) {
+                if (tab_cabecera_nota.getTotalFilas() > 0) {
+                    TablaGenerica tab_bloqueo = utilitario.consultar("select * from yavirac_nota_cabecera_nota a,yavirac_nota_periodo_activ_eva b\n"
+                            + "where a.ide_ynopae=b.ide_ynopae and activo_ynopae=false and ide_ynocan =" + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"));
+                    if (tab_bloqueo.getTotalFilas() > 0) {
+                        utilitario.agregarNotificacionInfo("ADVERTENCIA,", "No se puede importar notas a esta actividad por que esta bloqueado");
+                    } else {
+                        TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getConsultaActividad(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan")));
+                        txt_actividad.setValue(tab_consulta.getValor("actividad"));
+                        txt_detalle.setValue(tab_consulta.getValor("detalle_ynocan"));
+                        txt_fecha.setValue(tab_consulta.getValor("fecha_calificacion_ynocan"));
+                        utilitario.addUpdate("txt_actividad,txt_detalle,txt_fecha");
+                        dia_importar.dibujar();
+                    }
+                } else {
+                    utilitario.agregarMensajeInfo("ADVERTENCIA,", "Registre una tarea o actividad");
+                }
+            } else {
+                utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione una materia");
+            }
+        } else {
+            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
+        }
+    }
+
+    public void limpiarMensaje() {
+        upl_archivo.limpiar();
+        edi_mensajes.setValue("");
+        dia_importar.cerrar();
+        utilitario.addUpdate("edi_mensajes");
+    }
+
+    /**
+     * Valida el archivo para que pueda importar un rubro a la nomina
+     *
+     * @param evt
+     */
+    public void validarArchivo(FileUploadEvent evt) {
+
+        //Leer el archivo
+        int acumulador = 0;
+
+        String str_msg_info = "";
+        String str_msg_adve = "";
+        String str_msg_erro = "";
+        String str_msg_ok = "";
+
+        try {
+
+            Workbook archivoExcel = Workbook.getWorkbook(evt.getFile().getInputstream());
+            Sheet hoja = archivoExcel.getSheet(0);//LEE LA PRIMERA HOJA
+            int num_hoja =archivoExcel.getNumberOfSheets();
+            System.out.println("NUMERO DE HOJAS "+num_hoja);
+            if (hoja == null) {
+                utilitario.agregarMensajeError("No existe ninguna hoja en el archivo seleccionado", "");
+                return;
+            }
+            int int_fin = hoja.getRows();
+            upl_archivo.setNombreReal(evt.getFile().getFileName());
+
+            str_msg_info += getFormatoInformacion("El archivo " + upl_archivo.getNombreReal() + " contiene " + int_fin + " filas");
+            str_msg_ok += getFormatoOk("Se importo los datos con exito");
+
+            TablaGenerica tab_periodo = utilitario.consultar("select ide_ystpea,nota_evaluacion_ystpea,aplica_recuperacion_ystpea from yavirac_stror_periodo_academic  where ide_ystpea=" + com_periodo_academico.getValue());
+            double nota_evaluacion = Double.parseDouble(tab_periodo.getValor("nota_evaluacion_ystpea"));
+            String aplica_recuperacion = tab_periodo.getValor("aplica_recuperacion_ystpea");
+            for (int i = 0; i < int_fin; i++) {
+                String str_cedula = hoja.getCell(0, i).getContents();
+                str_cedula = str_cedula.trim();
+
+                String str_nota = hoja.getCell(1, i).getContents();
+                str_nota = str_nota.trim();
+
+                double nota = Double.parseDouble(str_nota);
+                TablaGenerica tab_cedula = utilitario.consultar("select * from yavirac_nota_detalle_nota a,yavirac_alum_dato_personal b\n"
+                        + "where a.ide_yaldap=b.ide_yaldap and ide_ynocan = " + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan") + " and doc_identidad_yaldap='" + str_cedula + "'");
+
+                if (tab_cedula.getTotalFilas() > 0) {
+                    if (nota < 0) {
+                        str_msg_erro += getFormatoError("La calificación " + str_nota + " no puede ser menor a 0, fila " + (i + 1));
+                        acumulador = acumulador + 1;
+
+                    } else if (nota > nota_evaluacion) {
+                        str_msg_erro += getFormatoError("La calificación :" + str_nota + " no puede ser mayor a " + nota_evaluacion + " , fila " + (i + 1));
+                        acumulador = acumulador + 1;
+                    } else {
+                        acumulador = 0;
+                    }
+                } else {
+                    str_msg_erro += getFormatoError("El estudiante con número de cedula:" + str_cedula + " no se encuentra en la lista , fila " + (i + 1));
+                    acumulador = acumulador + 1;
+                }
+
+            }
+
+            if (acumulador > 0) {
+                String str_resultado = "";
+                if (!str_msg_info.isEmpty()) {
+                    str_resultado = "<strong><font color='#3333ff'>INFORMACION</font></strong>" + str_msg_info;
+                }
+                if (!str_msg_adve.isEmpty()) {
+                    str_resultado += "<strong><font color='#ffcc33'>ADVERTENCIAS</font></strong>" + str_msg_adve;
+                }
+                if (!str_msg_erro.isEmpty()) {
+                    str_resultado += "<strong><font color='#ff0000'>ERRORES</font></strong>" + str_msg_erro;
+                }
+                edi_mensajes.setValue(str_resultado);
+                utilitario.addUpdate("edi_mensajes");
+            } else {
+                for (int j = 0; j < int_fin; j++) {
+                    String str_cedu = hoja.getCell(0, j).getContents();
+                    str_cedu = str_cedu.trim();
+
+                    String str_nota = hoja.getCell(1, j).getContents();
+                    str_nota = str_nota.trim();
+
+                    TablaGenerica tab_nota = utilitario.consultar("select ide_ynodet,ide_ynocan,a.ide_yaldap from yavirac_nota_detalle_nota a,yavirac_alum_dato_personal b\n"
+                            + "where a.ide_yaldap=b.ide_yaldap and ide_ynocan = " + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan") + " and doc_identidad_yaldap='" + str_cedu + "'");
+                    utilitario.getConexion().ejecutarSql("update yavirac_nota_detalle_nota  set nota_ynodet=" + str_nota + " where ide_ynodet=" + tab_nota.getValor("ide_ynodet"));
+
+                }
+
+                String str_resultado = "";
+                if (!str_msg_info.isEmpty()) {
+                    str_resultado = "<strong><font color='#3333ff'>INFORMACION</font></strong>" + str_msg_info;
+                }
+                if (!str_msg_ok.isEmpty()) {
+                    str_resultado += "<strong><font color='#00FF00'>SUCCESSFUL</font></strong>" + str_msg_ok;
+                }
+                edi_mensajes.setValue(str_resultado);
+                utilitario.addUpdate("edi_mensajes");
+
+            }
+            archivoExcel.close();
+            tab_detalle_nota.actualizar();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+    }
+
+    /**
+     * Genera un mensaje de información color azul
+     *
+     * @param mensaje
+     * @return
+     */
+    private String getFormatoInformacion(String mensaje) {
+        return "<div><font color='#3333ff'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
+    }
+
+    /**
+     * Genera un mensaje de Advertencia color tomate
+     *
+     * @param mensaje
+     * @return
+     */
+    private String getFormatoAdvertencia(String mensaje) {
+        return "<div><font color='#ffcc33'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
+    }
+
+    /**
+     * Genera un mensaje de Error color rojo
+     *
+     * @param mensaje
+     * @return
+     */
+    private String getFormatoError(String mensaje) {
+        return "<div><font color='#ff0000'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
+    }
+
+    /**
+     * Genera un mensaje de exito color verde
+     *
+     * @param mensaje
+     * @return
+     */
+    private String getFormatoOk(String mensaje) {
+        return "<div><font color='#00FF00'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
+    }
+
     String docente = "";
     String documento = "";
     String ide_docente = "";
-    
+
     public void bloquearNota(SelectEvent evt) {
-        
+
         tab_cabecera_nota.seleccionarFila(evt);
         tab_cabecera_nota.getFilaSeleccionada().setLectura(true);
         tab_detalle_nota.getColumna("nota_ynodet").setLectura(true);
@@ -213,7 +495,7 @@ public class RegistroNota extends Pantalla {
             }
         }
     }
-     
+
     public void registrarNota() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Periodo Academico para Generar nota");
@@ -229,14 +511,14 @@ public class RegistroNota extends Pantalla {
             String formacion = tab_formacion.getValor("ide_ysttfe");
             //tab_formacion.imprimirSql();
             com_actividad.setCombo(ser_notas.getPeriodoActividadEvaluacion(com_periodo_academico.getValue().toString(), "1", "true", tab_formacion.getValor("ide_ysttfe")));
-            
+
             abrirDialogo();
         }
     }
-    
+
     private boolean TienePerfilNota() {
         List sql = utilitario.getConexion().consultar(ser_estructura_organizacional.getUsuarioSistema(utilitario.getVariable("IDE_USUA"), " and not ide_ypedpe is null"));
-        
+
         if (!sql.isEmpty()) {
             Object[] fila = (Object[]) sql.get(0);
             List sql2 = utilitario.getConexion().consultar(ser_personal.getDatoPersonalCodigo(fila[3].toString()));
@@ -253,7 +535,7 @@ public class RegistroNota extends Pantalla {
             return false;
         }
     }
-    
+
     public void filtraAlumno() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("Adevertencia,", "Seleccione el Periodo Académico");
@@ -264,20 +546,20 @@ public class RegistroNota extends Pantalla {
             return;
         }
     }
-    
+
     public void filtraEstudiantes() {
         String malla = tab_docente_mencion.getValorSeleccionado();
         TablaGenerica tab_malla = utilitario.consultar("select ide_ypemad,ide_ystmal,ide_ypedpe from yavirac_perso_malla_docente where ide_ypemad=" + malla);
-        
+
     }
-    
+
     public void filtroComboPeriodoAcademico() {
-        
+
         com_materia_docente.setCombo(ser_asistencia.getMateriaNivelDocente(com_periodo_academico.getValue().toString(), ide_docente));
         utilitario.addUpdate("com_materia_docente");
-        
+
     }
-    
+
     public void validarNotaEvaluDacion(AjaxBehaviorEvent evt) {
         tab_detalle_nota.modificar(evt);
         String cod = com_periodo_academico.getValue() + "";
@@ -288,7 +570,7 @@ public class RegistroNota extends Pantalla {
         Double notaevaluacion = Double.parseDouble(notaglobal);
         Double notaactividad = Double.parseDouble(nota);
         Double recuperacion = Double.parseDouble(notarecu);
-        
+
         if (notaactividad < 0) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "No puede ingresar calificaciones menores a 0");
             tab_detalle_nota.setValor("nota_ynodet", "0");
@@ -304,7 +586,7 @@ public class RegistroNota extends Pantalla {
         TablaGenerica tab_examen = utilitario.consultar(ser_notas.getConsultaTipoExamen(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"), utilitario.getVariable("p_tipo_eva_examen")));
         TablaGenerica tab_validacion = utilitario.consultar(ser_estructura_organizacional.getPeriodoAcademicoGeneral(cod, "true", "1"));
         if (tab_validacion.getTotalFilas() > 0) {
-            
+
             if (tab_examen.getTotalFilas() > 0) {
                 if (notaactividad < recuperacion) {
                     tab_detalle_nota.setValor("recuperacion_ynodet", "true");
@@ -324,11 +606,11 @@ public class RegistroNota extends Pantalla {
             tab_detalle_nota.guardar();
             guardarPantalla();
         }
-        
+
         utilitario.addUpdate("tab_detalle_nota");
-        
+
     }
-    
+
     public void limpiar() {
         tab_cabecera_nota.limpiar();
         tab_detalle_nota.limpiar();
@@ -336,14 +618,14 @@ public class RegistroNota extends Pantalla {
         com_periodo_academico.setValue("");
         utilitario.addUpdate(" tab_cabecera_nota,tab_detalle_nota,com_materia_docente,com_periodo_academico");
     }
-    
+
     public void abrirDialogo() {
         dia_dialogo.dibujar();
         tex_detalle.limpiar();
         cal_fecha_calificacion.limpiar();
         cal_fecha_calificacion.setFechaActual();
     }
-    
+
     public void mostrarNota() {
         if (com_periodo_academico.getValue() == null) {
             utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el Periodo Académico");
@@ -357,7 +639,7 @@ public class RegistroNota extends Pantalla {
             tab_cabecera_nota.getColumna("ide_ystpea").setOnClick(cod);
         }
     }
-    
+
     public void aceptarDialogo() {
         String cod = com_materia_docente.getValue() + "";
         TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(cod));
@@ -376,7 +658,7 @@ public class RegistroNota extends Pantalla {
             String malla = tab_malla_docente.getValor("ide_ystmal");
             String grupo = tab_malla_docente.getValor("ide_yhogra");
             String jornada = tab_malla_docente.getValor("ide_ystjor");
-            
+
             tab_cabecera_nota.insertar();
             tab_cabecera_nota.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
             tab_cabecera_nota.setValor("ide_ystmen", tab_consuta.getValor("ide_ystmen"));
@@ -397,7 +679,7 @@ public class RegistroNota extends Pantalla {
                 tab_detalle_nota.setValor("recuperacion_ynodet", "FALSE");
                 tab_detalle_nota.setValor("bloqueo_ynodet", "false");
             }
-            
+
             tab_cabecera_nota.guardar();
             tab_detalle_nota.guardar();
             guardarPantalla();
@@ -407,155 +689,190 @@ public class RegistroNota extends Pantalla {
             dia_dialogo.cerrar();
             tab_detalle_nota.actualizar();
         }
-        
+
     }
-    
+
     public void validarFechaPeriodo() {
         TablaGenerica tab_consulta = utilitario.consultar("select ide_ystpea,descripcion_ystpea,fecha_inicio_ystpea,fecha_final_ystpea from yavirac_stror_periodo_academic \n"
                 + "where ide_ystpea=" + com_periodo_academico.getValue() + " ");
         String fecha_inicio = tab_consulta.getValor("fecha_inicio_ystpea");
         String fecha_final = tab_consulta.getValor("fecha_final_ystpea");
         String fecha = cal_fecha_calificacion.getValue().toString();
-        
+
     }
-    
+
     @Override
     public void insertar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void guardar() {
-        if (tab_cabecera_nota.guardar()) {
+        if (tab_cabecera_nota.getTotalFilas() > 0) {
+            TablaGenerica tab_bloqueo = utilitario.consultar("select * from yavirac_nota_cabecera_nota a,yavirac_nota_periodo_activ_eva b\n"
+                    + "where a.ide_ynopae=b.ide_ynopae and activo_ynopae=false and ide_ynocan =" + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"));
+            if (tab_bloqueo.getTotalFilas() > 0) {
+                utilitario.agregarNotificacionInfo("ADVERTENCIA,", "No se puede modificar las notas a esta actividad por que esta bloqueado");
+                tab_detalle_nota.actualizar();
+            } else if (tab_cabecera_nota.guardar()) {
+                if (tab_detalle_nota.guardar()) {
+                    guardarPantalla();
+                }
+            }
+        } else if (tab_cabecera_nota.guardar()) {
             if (tab_detalle_nota.guardar()) {
                 guardarPantalla();
             }
         }
     }
-    
+
     @Override
     public void eliminar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public Combo getCom_periodo_academico() {
         return com_periodo_academico;
     }
-    
+
     public void setCom_periodo_academico(Combo com_periodo_academico) {
         this.com_periodo_academico = com_periodo_academico;
     }
-    
+
     public Combo getCom_materia_docente() {
         return com_materia_docente;
     }
-    
+
     public void setCom_materia_docente(Combo com_materia_docente) {
         this.com_materia_docente = com_materia_docente;
     }
-    
+
     public Tabla getTab_docente_mencion() {
         return tab_docente_mencion;
     }
-    
+
     public void setTab_docente_mencion(Tabla tab_docente_mencion) {
         this.tab_docente_mencion = tab_docente_mencion;
     }
-    
+
     public Etiqueta getEti_docente() {
         return eti_docente;
     }
-    
+
     public void setEti_docente(Etiqueta eti_docente) {
         this.eti_docente = eti_docente;
     }
-    
+
     public Etiqueta getEti_materia() {
         return eti_materia;
     }
-    
+
     public void setEti_materia(Etiqueta eti_materia) {
         this.eti_materia = eti_materia;
     }
-    
+
     public Etiqueta getEti_fecha_asistencia() {
         return eti_fecha_asistencia;
     }
-    
+
     public void setEti_fecha_asistencia(Etiqueta eti_fecha_asistencia) {
         this.eti_fecha_asistencia = eti_fecha_asistencia;
     }
-    
+
     public Tabla getTab_detalle_nota() {
         return tab_detalle_nota;
     }
-    
+
     public void setTab_detalle_nota(Tabla tab_detalle_nota) {
         this.tab_detalle_nota = tab_detalle_nota;
     }
-    
+
     public Tabla getTab_cabecera_nota() {
         return tab_cabecera_nota;
     }
-    
+
     public void setTab_cabecera_nota(Tabla tab_cabecera_nota) {
         this.tab_cabecera_nota = tab_cabecera_nota;
     }
-    
+
     public Dialogo getDia_dialogo() {
         return dia_dialogo;
     }
-    
+
     public void setDia_dialogo(Dialogo dia_dialogo) {
         this.dia_dialogo = dia_dialogo;
     }
-    
+
     public Texto getTex_detalle() {
         return tex_detalle;
     }
-    
+
     public void setTex_detalle(Texto tex_detalle) {
         this.tex_detalle = tex_detalle;
     }
-    
+
     public Calendario getCal_fecha_calificacion() {
         return cal_fecha_calificacion;
     }
-    
+
     public void setCal_fecha_calificacion(Calendario cal_fecha_calificacion) {
         this.cal_fecha_calificacion = cal_fecha_calificacion;
     }
-    
+
     public String getDocente() {
         return docente;
     }
-    
+
     public void setDocente(String docente) {
         this.docente = docente;
     }
-    
+
     public String getDocumento() {
         return documento;
     }
-    
+
     public void setDocumento(String documento) {
         this.documento = documento;
     }
-    
+
     public String getIde_docente() {
         return ide_docente;
     }
-    
+
     public void setIde_docente(String ide_docente) {
         this.ide_docente = ide_docente;
     }
-    
+
     public Etiqueta getEti_notificacion() {
         return eti_notificacion;
     }
-    
+
     public void setEti_notificacion(Etiqueta eti_notificacion) {
         this.eti_notificacion = eti_notificacion;
     }
-    
+
+    public Dialogo getDia_importar() {
+        return dia_importar;
+    }
+
+    public void setDia_importar(Dialogo dia_importar) {
+        this.dia_importar = dia_importar;
+    }
+
+    public Upload getUpl_archivo() {
+        return upl_archivo;
+    }
+
+    public void setUpl_archivo(Upload upl_archivo) {
+        this.upl_archivo = upl_archivo;
+    }
+
+    public Editor getEdi_mensajes() {
+        return edi_mensajes;
+    }
+
+    public void setEdi_mensajes(Editor edi_mensajes) {
+        this.edi_mensajes = edi_mensajes;
+    }
+
 }
