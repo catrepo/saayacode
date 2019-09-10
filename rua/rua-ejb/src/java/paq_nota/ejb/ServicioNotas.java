@@ -310,7 +310,7 @@ public class ServicioNotas {
             sql += " ) a\n"
                     + "group by ide_ystpea,ide_ypedpe,ide_ystmal,ide_ystnie,ide_yhogra,ide_ystjor,ide_ynotie,ide_yaldap,ide_ysttfe,ide_ynoace,ide_ynopae,recuperacion_ynodet";
         }
-        
+
         //System.out.println("SUMA: >>>>>>>>>"+sql);
         return sql;
     }
@@ -351,12 +351,12 @@ public class ServicioNotas {
         return sql;
     }
 
-    public String getPorcientoParametroEvaluacion(String nota, String docente, String malla, String nivel, String paralelo, String jornada, String actividad,String parcial) {
+    public String getPorcientoParametroEvaluacion(String nota, String docente, String malla, String nivel, String paralelo, String jornada, String actividad, String parcial) {
         String sql = "";
         sql += "select ide_ynoacd,round(((" + nota + ") * porciento_evaluacion_ynoacd),2) as porcentaje \n"
                 + "from yavirac_nota_actividad_docente a,yavirac_nota_periodo_activ_eva c,yavirac_nota_actividad_evaluac d,yavirac_nota_periodo_evaluacio e\n"
                 + "where a.ide_ynopae=c.ide_ynopae and c.ide_ynoace=d.ide_ynoace and c.ide_ynopee=e.ide_ynopee and\n"
-                + "ide_ypedpe in (" + docente + ")  and ide_ystmal in (" + malla + ") and ide_ystnie in (" + nivel + ") and ide_yhogra in (" + paralelo + ") and ide_ystjor in (" + jornada + ") and d.ide_ynoace in (" + actividad + ")and ide_ynotie in ("+parcial+") ";
+                + "ide_ypedpe in (" + docente + ")  and ide_ystmal in (" + malla + ") and ide_ystnie in (" + nivel + ") and ide_yhogra in (" + paralelo + ") and ide_ystjor in (" + jornada + ") and d.ide_ynoace in (" + actividad + ")and ide_ynotie in (" + parcial + ") ";
         //System.out.println("PORCENTAJE: >>>>>>>>>>>>>> "+sql);
         return sql;
     }
@@ -713,9 +713,18 @@ public class ServicioNotas {
         return sql;
     }
 
-    public String getActualizarFechaFinRecord(String fecha,String alumno, String mension) {
+    public String getActualizarFechaFinRecord(String fecha, String alumno, String mension) {
         String sql = "";
-        sql += "update yavirac_nota_cab_rec_acad  set fecha_fin_ynocra='"+fecha+"' where ide_yaldap="+alumno+" and ide_ystmen=" + mension + "";
+        sql += "update yavirac_nota_cab_rec_acad  set fecha_fin_ynocra='" + fecha + "' where ide_yaldap=" + alumno + " and ide_ystmen=" + mension + "";
+        return sql;
+    }
+
+    public String getConsultaActividad(String codigo) {
+        String sql = "";
+        sql += "select ide_ynocan,descripcion_ynoace||' - '||descripcion_ynotie as actividad,detalle_ynocan,fecha_calificacion_ynocan\n"
+                + "from yavirac_nota_cabecera_nota a,yavirac_nota_periodo_activ_eva b,yavirac_nota_actividad_evaluac c,yavirac_nota_periodo_evaluacio d,\n"
+                + "yavirac_nota_tipo_evaluacion e\n"
+                + "where a.ide_ynopae=b.ide_ynopae and b.ide_ynoace=c.ide_ynoace and b.ide_ynopee=d.ide_ynopee and d.ide_ynotie=e.ide_ynotie and ide_ynocan = "+codigo+"  ";
         return sql;
     }
 }
