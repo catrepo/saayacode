@@ -117,6 +117,10 @@ public class Seguimiento extends Pantalla {
             tab_ingreso.getColumna("procedencia_ytring").setEtiqueta();
             tab_ingreso.getColumna("ide_yaldap").setVisible(false);
             tab_ingreso.getColumna("ide_ypedpe").setOrden(11);
+            tab_ingreso.getColumna("anexo_ytring").setNombreVisual("ANEXO");
+            tab_ingreso.getColumna("anexo_ytring").setUpload();
+            tab_ingreso.getColumna("anexo_ytring").setImagenAutocompletar(50);
+            tab_ingreso.getColumna("anexo_ytring").setOrden(24);
             //tab_ingreso.getColumna("ide_ypede").setOrden(14);
 
             tab_ingreso.getColumna("ide_ytrtie").setCombo(ser_tramite.getSqlTipoEntidad()); // Asignacion de metodo combo
