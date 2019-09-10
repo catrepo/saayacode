@@ -127,7 +127,10 @@ public class IngresoExterno extends Pantalla {
             tab_ingreso.getColumna("fecha_entrega_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:blue");
             tab_ingreso.getColumna("hora_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:blue");
             tab_ingreso.getColumna("fecha_documento_ytring").setEstilo("font-size:15px;font-weight: bold;text-decoration: underline;color:blue");
-
+            tab_ingreso.getColumna("anexo_ytring").setNombreVisual("ANEXO");
+            tab_ingreso.getColumna("anexo_ytring").setUpload();
+            tab_ingreso.getColumna("anexo_ytring").setOrden(12);
+            
             tab_ingreso.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_ingreso.getColumna("ide_yaldap").setAutoCompletar();
             tab_ingreso.getColumna("numero_sec_ytring").setEtiqueta();
@@ -135,7 +138,7 @@ public class IngresoExterno extends Pantalla {
             //tab_ingreso.getColumna("ide_ypedpe").setVisible(false);  
             tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setValorDefecto("2");
             tab_ingreso.getColumna("TIPO_TRAMITE_YTRING").setVisible(false);
-            tab_ingreso.setHeader("REGISTRO DOCUMENTAL EXTRENO");
+            tab_ingreso.setHeader("REGISTRO DOCUMENTAL EXTERNO");
             tab_ingreso.agregarRelacion(tab_asignacion); //Se agrega rekacion con las dos variables creadas
             //tab_ingreso.agregarRelacion(tab_anexo);
             tab_ingreso.setTipoFormulario(true); //se asigna el tipo de formulario
