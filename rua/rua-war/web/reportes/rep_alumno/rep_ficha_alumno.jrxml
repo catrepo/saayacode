@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_ficha_alumno" language="groovy" pageWidth="595" pageHeight="842" columnWidth="511" leftMargin="42" rightMargin="42" topMargin="56" bottomMargin="56" uuid="78e344f7-8cf0-4aa7-8851-93a59ce2f85b">
+	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="908"/>
+	<queryString>
+		<![CDATA[select a.ide_yaldap,descripcion_ystnac,descripcion_ysttis,descripcion_ystdoi,e.descripcion_ystesc,descripcion_ystgen,nombre_yaldap,apellido_yaldap,
+doc_identidad_yaldap,edad_yaldap,fecha_nac_yaldap,fotografia_yaldap,firma_yaldap,g.ide_ystdip,descripcion_yaldia,numero_yaltel,celular_yaltel,descripcion_yalcor,
+descripcion_yalgas as gasto,descripcion_yaltip as tipo_vivienda,m.descripcion_ystesc as estado_civi_familiar,descripcion_ystpaf as parentesco,
+o.descripcion_yalocu as ocupacion1,p.descripcion_yalocu as ocupacion2,q.descripcion_yalocu as ocupacion3,nombre_padre_yaldfa,edad_padre_yaldfa,
+nombre_madre_yaldfa, edad_madre_yaldfa, nombre_conyuge_yaldfa,edad_conyuge_yaldfa, numero_hijo_yaldfa, hermanos_yaldfa, puesto_ocupa_yaldfa,
+instutucion1,instutucion2,carrera,anio_graduacion_yaldaa,estudio_adicional_yaldaa, anio_ingreso_yaldaa, anio_egreso_yaldaa,laborando_yaldal,
+nombre_empresa_yaldal,lugar_empresa_yaldal, cargo_empresa_yaldal, horario_empresa_yaldal,telefono_empresa_yaldal, email_empresa_yaldal
+from yavirac_alum_dato_personal  a
+left join yavirac_stror_nacionalidad  b on a.ide_ystnac=b.ide_ystnac
+left join yavirac_stror_tipo_sangre c on a.ide_ysttis=c.ide_ysttis
+left join yavirac_stror_docu_identidad d on a.ide_ystdoi=d.ide_ystdoi
+left join yavirac_stror_estado_civil e on a.ide_ystesc=e.ide_ystesc
+left join yavirac_stror_genero f on a.ide_ystgen=f.ide_ystgen
+left join yavirac_alum_direccion_alumno g on a.ide_yaldap=g.ide_yaldap
+left join yavirac_alum_telefono h on a.ide_yaldap=h.ide_yaldap
+left join yavirac_alum_correo i on a.ide_yaldap=i.ide_yaldap
+left join yavirac_alum_dato_fami_alumno j on a.ide_yaldap=j.ide_yaldap
+left join yavirac_alum_gasto k on j.ide_yalgas=k.ide_yalgas
+left join yavirac_alum_tipo_vivienda l on j.ide_yaltiv=l.ide_yaltiv
+left join yavirac_stror_estado_civil m on j.ide_ystesc=m.ide_ystesc
+left join yavirac_stror_parentezco_fami n on j.ide_ystpaf=n.ide_ystpaf
+left join yavirac_alum_ocupacion o on j.ide_yalocu=o.ide_yalocu
+left join yavirac_alum_ocupacion p on j.yav_ide_yalocu=p.ide_yalocu
+left join yavirac_alum_ocupacion q on j.yav_ide_yalocu2=q.ide_yalocu
+left join (
+select ide_yaldaa,ide_yaldap,b.descripcion_ystins as instutucion1,d.descripcion_ystins as instutucion2,descripcion_yalcar as carrera,anio_graduacion_yaldaa,estudio_adicional_yaldaa, anio_ingreso_yaldaa, anio_egreso_yaldaa
+from yavirac_alum_dato_academico a
+left join yavirac_stror_institucion b on a.ide_ystins=b.ide_ystins
+left join yavirac_alum_carrera  c on a.ide_yalcar=c.ide_yalcar
+left join yavirac_stror_institucion d on a.yav_ide_ystins=d.ide_ystins
+) r on a.ide_yaldap=r.ide_yaldap
+left join yavirac_alum_dato_laboral s on a.ide_yaldap=s.ide_yaldap
+where a.ide_yaldap=27]]>
+	</queryString>
+	<field name="ide_yaldap" class="java.lang.Long"/>
+	<field name="descripcion_ystnac" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo permite descripir la nacionalidad del sea personal o estediante de la institucion]]></fieldDescription>
+	</field>
+	<field name="descripcion_ysttis" class="java.lang.String">
+		<fieldDescription><![CDATA[permite conocer el tipo de sangre acorde a las caracteristicas de la persona]]></fieldDescription>
+	</field>
+	<field name="descripcion_ystdoi" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo visualiza la identidad delas personas]]></fieldDescription>
+	</field>
+	<field name="descripcion_ystesc" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo permive conocer el estado civil de la tabla ejemplo casado,divorciado, viudo, union libre, soltero,etc]]></fieldDescription>
+	</field>
+	<field name="descripcion_ystgen" class="java.lang.String">
+		<fieldDescription><![CDATA[valor de estado vachar que almacena el tipo de documento identidad ejem:
+C.I.- SEXO]]></fieldDescription>
+	</field>
+	<field name="nombre_yaldap" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicara el nombre del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="apellido_yaldap" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicara el apellido del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="doc_identidad_yaldap" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicara el documento de identidad del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="edad_yaldap" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo nos indicara la edad del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="fecha_nac_yaldap" class="java.sql.Date">
+		<fieldDescription><![CDATA[Este campo nos indicara la fecha de nacimiento del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
+	</field>
+	<field name="fotografia_yaldap" class="java.lang.Object"/>
+	<field name="firma_yaldap" class="java.lang.Object"/>
+	<field name="ide_ystdip" class="java.lang.Long"/>
+	<field name="descripcion_yaldia" class="java.lang.String">
+		<fieldDescription><![CDATA[describe el lugar de residencia del alumno como provincia,canton,parroquia]]></fieldDescription>
+	</field>
+	<field name="numero_yaltel" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicará el el numero de telefono del alumno]]></fieldDescription>
+	</field>
+	<field name="celular_yaltel" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo almacenara el numero celular del alumno]]></fieldDescription>
+	</field>
+	<field name="descripcion_yalcor" class="java.lang.String">
+		<fieldDescription><![CDATA[este campo almacenar que clase de correo tiene el alumno]]></fieldDescription>
+	</field>
+	<field name="gasto" class="java.lang.String"/>
+	<field name="tipo_vivienda" class="java.lang.String"/>
+	<field name="estado_civi_familiar" class="java.lang.String"/>
+	<field name="parentesco" class="java.lang.String"/>
+	<field name="ocupacion1" class="java.lang.String"/>
+	<field name="ocupacion2" class="java.lang.String"/>
+	<field name="ocupacion3" class="java.lang.String"/>
+	<field name="nombre_padre_yaldfa" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo registrara el nombre del padre del alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="edad_padre_yaldfa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo registrara la edad del padre del alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="nombre_madre_yaldfa" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo registrara el nombre de la madre del alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="edad_madre_yaldfa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo registrara la edad de la madre del alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="nombre_conyuge_yaldfa" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo registrara el nombre del conyuge del familiar del alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="edad_conyuge_yaldfa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo registrara la edad del conyuge del familiar del alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="numero_hijo_yaldfa" class="java.lang.Long">
+		<fieldDescription><![CDATA[Este campo registrara el numero de hijos del conyuge de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="hermanos_yaldfa" class="java.lang.Long">
+		<fieldDescription><![CDATA[Este campo registrara la cantidad de hermanos y hermanas que tendra el alumno de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="puesto_ocupa_yaldfa" class="java.lang.Long">
+		<fieldDescription><![CDATA[Este campo registrara el puesto que ocupa el alumno entre sus hermanos  de la tabla yavirac_alum_dato_fami_alumno]]></fieldDescription>
+	</field>
+	<field name="instutucion1" class="java.lang.String"/>
+	<field name="instutucion2" class="java.lang.String"/>
+	<field name="carrera" class="java.lang.String"/>
+	<field name="anio_graduacion_yaldaa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo almacena el anio de graduacion del alumno de la tabla yavirac_alum_dato_academico]]></fieldDescription>
+	</field>
+	<field name="estudio_adicional_yaldaa" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Este campo registrara si el alumno posee estudios adicionales superiores de la tabla yavirac_alum_dato_academico]]></fieldDescription>
+	</field>
+	<field name="anio_ingreso_yaldaa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo registrara el anio de ingreso a la educacion superior del alumno de la tabla yavirac_alum_dato_academico]]></fieldDescription>
+	</field>
+	<field name="anio_egreso_yaldaa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Este campo define el anio de egreso del alumno culminado los estudios superiores de la tabla yavirac_alum_dato_academico]]></fieldDescription>
+	</field>
+	<field name="laborando_yaldal" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Este campo nos indicará si el alumno se encuentra laborando actualmente]]></fieldDescription>
+	</field>
+	<field name="nombre_empresa_yaldal" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicará el nombre de la empresa en la cual el alumno esta laborando]]></fieldDescription>
+	</field>
+	<field name="lugar_empresa_yaldal" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicará el lugar de trabajo del alumno]]></fieldDescription>
+	</field>
+	<field name="cargo_empresa_yaldal" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicará el cargo que ejerce el alumno]]></fieldDescription>
+	</field>
+	<field name="horario_empresa_yaldal" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicará el horario en el cual trabaja el alumno.]]></fieldDescription>
+	</field>
+	<field name="telefono_empresa_yaldal" class="java.lang.String"/>
+	<field name="email_empresa_yaldal" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo nos indicará el email de la empresa en la cual esta laborando]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a18da938-c3f2-42d9-ad7c-ca9ae838d018" x="0" y="0" width="511" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRUEBAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="686" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="131" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[1. DATOS PERSONALES]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="46" y="146" width="213" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_yaldap}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="146" width="45" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="161" width="45" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="176" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cédula de identidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="191" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha de nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="206" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Lugar de nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="245" width="55" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="226" y="176" width="33" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="346" y="176" width="29" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="230" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección Actual del Domicilio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="177" y="245" width="40" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cantón]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="321" y="245" width="45" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Parroquia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="321" y="260" width="36" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[E-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="275" width="55" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo sangre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="260" width="55" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="177" y="260" width="40" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Celular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="290" width="511" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[En caso de emergencia se puede notificar a:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="305" width="43" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="320" width="43" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="213" y="305" width="133" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Relción con el estudiante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="213" y="320" width="67" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Celular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="339" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. DATOS FAMILIARES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="354" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre de su padre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="369" width="35" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="177" y="369" width="67" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ocupación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="474" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo de vivienda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="489" width="213" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[¿Quién cubre los gastos para sus estudios?:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b89de49-a065-4461-8057-54edfb71ffac" x="0" y="20" width="511" height="110"/>
+				<textElement textAlignment="Justified">
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.3"/>
+				</textElement>
+				<text><![CDATA[Estimado estudiante, el ISTY, te da la más cordial bienvenida y te invita a formar parte activa de su comunidad académica.
+Con el objetivo de mejorar nuestros procesos internos y la base de datos de nuestros estudiantes, te solicitamos llenar la siguiente ficha de registro. Los datos que consignes en esta ficha se mantendrán en absoluta reserva y únicamente serán empleados para seguimiento y apoyo a nuestros estudiantes.
+Todos los campos son obligatorios.
+Agradecemos tu colaboración.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="46bb53c5-75b3-440d-88b5-9512ed4847c9" x="0" y="0" width="511" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA DEL ESTUDIANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="384" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre de su madre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="399" width="35" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="177" y="399" width="67" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ocupación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="414" width="67" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Estado civil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="177" y="414" width="103" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre del Cónyuge]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="429" width="121" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ocupación del Cónyuge]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="308" y="429" width="38" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="404" y="429" width="50" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[N° Hijos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="444" width="192" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[¿Cuántos hermanos y hermanas tiene?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="279" y="444" width="146" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Puesto que ocupa entre ellos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="459" width="105" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Actualente vive con:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="507" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. DATOS ACADÉMICOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="522" width="67" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Institución]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="535" width="93" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Año de graduación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="202" y="535" width="77" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Titulo Obtenido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="550" width="202" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ubicación (Provincia, Cantón, Parroquia)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="565" width="425" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Adicional de los estudios realizados en el ITSA, ¿Posees otros estudios de nivel superior?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="580" width="67" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Institución]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="595" width="80" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Año de ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="610" width="80" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Año de egreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="192" y="595" width="52" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Carrera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="0" y="625" width="202" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ubicación (Provincia, Cantón, Parroquia) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="640" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTRAS CAPACITACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="08900a9e-d346-44b5-aa22-70a2059b3406" x="0" y="655" width="511" height="28"/>
+				<textElement/>
+				<text><![CDATA[¿Realizas otro tipo de estudios o capacitación fuera del instituto tales como música, idiomas, informática, capacitación técnica?]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="46" y="161" width="213" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{apellido_yaldap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="176" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{doc_identidad_yaldap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="259" y="176" width="62" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{edad_yaldap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="375" y="176" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descripcion_ystgen}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="191" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_nac_yaldap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="55" y="275" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descripcion_ysttis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="55" y="260" width="98" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero_yaltel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="357" y="260" width="123" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descripcion_yalcor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="217" y="260" width="98" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{celular_yaltel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="354" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_padre_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="35" y="369" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{edad_padre_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="244" y="369" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ocupacion1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="35" y="399" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{edad_madre_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="384" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_madre_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="244" y="399" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ocupacion2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="55" y="414" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estado_civi_familiar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="280" y="414" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_conyuge_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="116" y="429" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ocupacion3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="474" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo_vivienda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="346" y="429" width="41" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{edad_conyuge_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="454" y="429" width="41" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero_hijo_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="193" y="444" width="41" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{hermanos_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="425" y="444" width="41" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{puesto_ocupa_yaldfa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="213" y="489" width="118" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{gasto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="67" y="520" width="444" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{instutucion1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="95" y="535" width="90" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anio_graduacion_yaldaa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="280" y="535" width="231" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="67" y="580" width="444" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{instutucion2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="80" y="595" width="90" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anio_ingreso_yaldaa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="80" y="610" width="90" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anio_egreso_yaldaa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="244" y="595" width="210" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{carrera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="425" y="565" width="86" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{estudio_adicional_yaldaa}.equals( true ) ? "SI" : "NO" )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="289" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="0" width="239" height="15"/>
+				<textElement/>
+				<text><![CDATA[Institución / Academia / Centro de Capacitación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="15" width="145" height="15"/>
+				<textElement/>
+				<text><![CDATA[Tipo de capacitación o curso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="33" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[4. DATOS LABORALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="48" width="192" height="15"/>
+				<textElement/>
+				<text><![CDATA[Se encuentra laborando actualmente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="78" width="38" height="15"/>
+				<textElement/>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="63" width="121" height="15"/>
+				<textElement/>
+				<text><![CDATA[Nombre de la Empresa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="93" width="105" height="15"/>
+				<textElement/>
+				<text><![CDATA[Teéfono de la empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="275" y="63" width="41" height="15"/>
+				<textElement/>
+				<text><![CDATA[Lugar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="278" y="78" width="38" height="15"/>
+				<textElement/>
+				<text><![CDATA[Horario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="234" y="93" width="87" height="15"/>
+				<textElement/>
+				<text><![CDATA[E-mail Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1eed5c06-cb8c-42c0-844e-06fd51d606b3" x="0" y="110" width="511" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5. DATOS MÉDICOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6e52d565-5715-4827-b00b-8c9c04a8ed23" x="0" y="132" width="511" height="28"/>
+				<textElement/>
+				<text><![CDATA[¿Padeces alguna enfermedad o existe alguna condición física especial que pueda afectar tus estudios (oído, vista, enfermedades respiratorias)? ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="160" width="67" height="15"/>
+				<textElement/>
+				<text><![CDATA[Especifique]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="175" width="375" height="15"/>
+				<textElement/>
+				<text><![CDATA[¿Actualmente recibes o has recibido algún tratamiento médico o psicológico?]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="121" y="63" width="145" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_empresa_yaldal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="194" y="48" width="86" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{laborando_yaldal}.equals( true ) ? "SI" : "NO" )]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="38" y="78" width="206" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cargo_empresa_yaldal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="315" y="63" width="196" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lugar_empresa_yaldal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="316" y="78" width="138" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{horario_empresa_yaldal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="93" width="110" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{telefono_empresa_yaldal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="321" y="93" width="190" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{email_empresa_yaldal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b429425e-bbc9-4d3f-98d7-2f4619cf856c" x="0" y="190" width="67" height="15"/>
+				<textElement/>
+				<text><![CDATA[Especifique]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
