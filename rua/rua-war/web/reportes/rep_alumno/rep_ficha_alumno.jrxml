@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_ficha_alumno" language="groovy" pageWidth="595" pageHeight="842" columnWidth="511" leftMargin="42" rightMargin="42" topMargin="56" bottomMargin="56" uuid="78e344f7-8cf0-4aa7-8851-93a59ce2f85b">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="908"/>
+	<property name="ireport.y" value="1004"/>
 	<queryString>
 		<![CDATA[select a.ide_yaldap,descripcion_ystnac,descripcion_ysttis,descripcion_ystdoi,e.descripcion_ystesc,descripcion_ystgen,nombre_yaldap,apellido_yaldap,
 doc_identidad_yaldap,edad_yaldap,fecha_nac_yaldap,fotografia_yaldap,firma_yaldap,g.ide_ystdip,descripcion_yaldia,numero_yaltel,celular_yaltel,descripcion_yalcor,
@@ -46,14 +46,15 @@ where a.ide_yaldap=27]]>
 		<fieldDescription><![CDATA[permite conocer el tipo de sangre acorde a las caracteristicas de la persona]]></fieldDescription>
 	</field>
 	<field name="descripcion_ystdoi" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo visualiza la identidad delas personas]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo visualiza la identidad delas personas ]]></fieldDescription>
 	</field>
 	<field name="descripcion_ystesc" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo permive conocer el estado civil de la tabla ejemplo casado,divorciado, viudo, union libre, soltero,etc]]></fieldDescription>
 	</field>
 	<field name="descripcion_ystgen" class="java.lang.String">
 		<fieldDescription><![CDATA[valor de estado vachar que almacena el tipo de documento identidad ejem:
-C.I.- SEXO]]></fieldDescription>
+C.I.- SEXO
+]]></fieldDescription>
 	</field>
 	<field name="nombre_yaldap" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo nos indicara el nombre del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
