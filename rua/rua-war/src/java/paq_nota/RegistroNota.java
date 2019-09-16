@@ -54,12 +54,7 @@ public class RegistroNota extends Pantalla {
     private Texto tex_detalle = new Texto();
     private Calendario cal_fecha_calificacion = new Calendario();
     private Etiqueta eti_notificacion = new Etiqueta();
-    private Dialogo dia_importar = new Dialogo();
-    private Upload upl_archivo = new Upload();
-    private Editor edi_mensajes = new Editor();
-    private Texto txt_actividad = new Texto();
-    private Texto txt_detalle = new Texto();
-    private Texto txt_fecha = new Texto();
+    
 
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
@@ -109,13 +104,6 @@ public class RegistroNota extends Pantalla {
             bot_nota.setIcon("ui-icon-note");//set icono Registrar///
             bot_nota.setMetodo("registrarNota");
             bar_botones.agregarBoton(bot_nota);
-
-            //Boton importar nota
-            Boton bot_impor_alumno = new Boton();
-            bot_impor_alumno.setValue("Importar notas");
-            bot_impor_alumno.setIcon("ui-icon-upload");
-            bot_impor_alumno.setMetodo("abrirDialogoImportar");
-            bar_botones.agregarBoton(bot_impor_alumno);
 
             eti_docente.setStyle("font-size: 16px;font-weight: bold");
             eti_docente.setValue("Docente: " + docente);
@@ -212,272 +200,14 @@ public class RegistroNota extends Pantalla {
             dia_dialogo.setDialogo(gri_cuerpo);
             agregarComponente(dia_dialogo);
 
-            //Dialogo importar nota
-            dia_importar.setId("dia_importar");
-            dia_importar.setTitle("IMPORTAR NOTAS");
-            dia_importar.setWidth("50%");
-            dia_importar.setHeight("75%");
-            dia_importar.getBot_aceptar().setRendered(false);
-            dia_importar.getBot_cancelar().setMetodo("limpiarMensaje");
-            Grid gri_cuerpos = new Grid();
-
-            Grid gri_impo = new Grid();
-            gri_impo.setColumns(2);
-
-            gri_impo.getChildren().add(new Etiqueta("ACTIVIDAD EVALUACIÓN: "));
-            txt_actividad.setId("txt_actividad");
-            txt_actividad.setSize(80);
-            txt_actividad.setDisabled(true);
-            gri_impo.getChildren().add(txt_actividad);
-            gri_impo.getChildren().add(new Etiqueta("DETALLE TAREA: "));
-            txt_detalle.setId("txt_detalle");
-            txt_detalle.setSize(80);
-            txt_detalle.setDisabled(true);
-            gri_impo.getChildren().add(txt_detalle);
-            gri_impo.getChildren().add(new Etiqueta("FECHA CALIFICACIÓN: "));
-            txt_fecha.setSize(15);
-            txt_fecha.setDisabled(true);
-            txt_fecha.setId("txt_fecha");
-            gri_impo.getChildren().add(txt_fecha);
-
-            Grid gri_archivo = new Grid();
-            gri_archivo.setColumns(2);
-            gri_archivo.getChildren().add(new Etiqueta("Seleccione el archivo: "));
-            upl_archivo.setId("upl_archivo");
-            upl_archivo.setMetodo("validarArchivo");
-
-            upl_archivo.setUpdate("gri_valida");
-            upl_archivo.setAuto(false);
-            upl_archivo.setAllowTypes("/(\\.|\\/)(xls)$/");
-            upl_archivo.setUploadLabel("Validar");
-            upl_archivo.setCancelLabel("Cancelar Seleccion");
-
-            gri_archivo.getChildren().add(upl_archivo);
-            gri_archivo.setWidth("90%");
-
-            Grid gri_valida = new Grid();
-            gri_valida.setId("gri_valida");
-            gri_valida.setColumns(3);
-
-            Etiqueta eti_valida = new Etiqueta();
-            eti_valida.setValueExpression("value", "pre_index.clase.upl_archivo.nombreReal");
-            eti_valida.setValueExpression("rendered", "pre_index.clase.upl_archivo.nombreReal != null");
-            gri_valida.getChildren().add(eti_valida);
-
-            Imagen ima_valida = new Imagen();
-            ima_valida.setWidth("22");
-            ima_valida.setHeight("22");
-            ima_valida.setValue("/imagenes/im_excel.gif");
-            ima_valida.setValueExpression("rendered", "pre_index.clase.upl_archivo.nombreReal != null");
-            gri_valida.getChildren().add(ima_valida);
-
-            edi_mensajes.setControls("");
-            edi_mensajes.setId("edi_mensajes");
-            edi_mensajes.setStyle("overflow:auto;");
-            edi_mensajes.setWidth(dia_importar.getAnchoPanel() - 15);
-            edi_mensajes.setDisabled(true);
-            gri_valida.setFooter(edi_mensajes);
-
-            gri_cuerpos.setStyle("width:" + (dia_importar.getAnchoPanel() - 5) + "px;");
-            gri_cuerpos.setMensajeInfo("Esta opción  permite subir valores a un rubro a partir de un archivo xls");
-            gri_cuerpos.getChildren().add(gri_impo);
-            gri_cuerpos.getChildren().add(gri_archivo);
-            gri_cuerpos.getChildren().add(gri_valida);
-            gri_cuerpos.getChildren().add(edi_mensajes);
-            gri_cuerpos.getChildren().add(new Espacio("0", "10"));
-
-            dia_importar.setDialogo(gri_cuerpos);
-            dia_importar.setDynamic(false);
-
-            agregarComponente(dia_importar);
+            
 
         } else {
             utilitario.agregarNotificacionInfo("Mensaje,", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
         }
     }
 
-    public void abrirDialogoImportar() {
-        if (com_periodo_academico.getValue() != null) {
-            if (com_materia_docente.getValue() != null) {
-                if (tab_cabecera_nota.getTotalFilas() > 0) {
-                    TablaGenerica tab_bloqueo = utilitario.consultar("select * from yavirac_nota_cabecera_nota a,yavirac_nota_periodo_activ_eva b\n"
-                            + "where a.ide_ynopae=b.ide_ynopae and activo_ynopae=false and ide_ynocan =" + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan"));
-                    if (tab_bloqueo.getTotalFilas() > 0) {
-                        utilitario.agregarNotificacionInfo("ADVERTENCIA,", "No se puede importar notas a esta actividad por que esta bloqueado");
-                    } else {
-                        TablaGenerica tab_consulta = utilitario.consultar(ser_notas.getConsultaActividad(tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan")));
-                        txt_actividad.setValue(tab_consulta.getValor("actividad"));
-                        txt_detalle.setValue(tab_consulta.getValor("detalle_ynocan"));
-                        txt_fecha.setValue(tab_consulta.getValor("fecha_calificacion_ynocan"));
-                        utilitario.addUpdate("txt_actividad,txt_detalle,txt_fecha");
-                        dia_importar.dibujar();
-                    }
-                } else {
-                    utilitario.agregarMensajeInfo("ADVERTENCIA,", "Registre una tarea o actividad");
-                }
-            } else {
-                utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione una materia");
-            }
-        } else {
-            utilitario.agregarMensajeInfo("ADVERTENCIA,", "Seleccione el periodo académico");
-        }
-    }
-
-    public void limpiarMensaje() {
-        upl_archivo.limpiar();
-        edi_mensajes.setValue("");
-        dia_importar.cerrar();
-        utilitario.addUpdate("edi_mensajes");
-    }
-
-    /**
-     * Valida el archivo para que pueda importar un rubro a la nomina
-     *
-     * @param evt
-     */
-    public void validarArchivo(FileUploadEvent evt) {
-
-        //Leer el archivo
-        int acumulador = 0;
-
-        String str_msg_info = "";
-        String str_msg_adve = "";
-        String str_msg_erro = "";
-        String str_msg_ok = "";
-
-        try {
-
-            Workbook archivoExcel = Workbook.getWorkbook(evt.getFile().getInputstream());
-            Sheet hoja = archivoExcel.getSheet(0);//LEE LA PRIMERA HOJA
-            int num_hoja =archivoExcel.getNumberOfSheets();
-            System.out.println("NUMERO DE HOJAS "+num_hoja);
-            if (hoja == null) {
-                utilitario.agregarMensajeError("No existe ninguna hoja en el archivo seleccionado", "");
-                return;
-            }
-            int int_fin = hoja.getRows();
-            upl_archivo.setNombreReal(evt.getFile().getFileName());
-
-            str_msg_info += getFormatoInformacion("El archivo " + upl_archivo.getNombreReal() + " contiene " + int_fin + " filas");
-            str_msg_ok += getFormatoOk("Se importo los datos con exito");
-
-            TablaGenerica tab_periodo = utilitario.consultar("select ide_ystpea,nota_evaluacion_ystpea,aplica_recuperacion_ystpea from yavirac_stror_periodo_academic  where ide_ystpea=" + com_periodo_academico.getValue());
-            double nota_evaluacion = Double.parseDouble(tab_periodo.getValor("nota_evaluacion_ystpea"));
-            String aplica_recuperacion = tab_periodo.getValor("aplica_recuperacion_ystpea");
-            for (int i = 0; i < int_fin; i++) {
-                String str_cedula = hoja.getCell(0, i).getContents();
-                str_cedula = str_cedula.trim();
-
-                String str_nota = hoja.getCell(1, i).getContents();
-                str_nota = str_nota.trim();
-
-                double nota = Double.parseDouble(str_nota);
-                TablaGenerica tab_cedula = utilitario.consultar("select * from yavirac_nota_detalle_nota a,yavirac_alum_dato_personal b\n"
-                        + "where a.ide_yaldap=b.ide_yaldap and ide_ynocan = " + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan") + " and doc_identidad_yaldap='" + str_cedula + "'");
-
-                if (tab_cedula.getTotalFilas() > 0) {
-                    if (nota < 0) {
-                        str_msg_erro += getFormatoError("La calificación " + str_nota + " no puede ser menor a 0, fila " + (i + 1));
-                        acumulador = acumulador + 1;
-
-                    } else if (nota > nota_evaluacion) {
-                        str_msg_erro += getFormatoError("La calificación :" + str_nota + " no puede ser mayor a " + nota_evaluacion + " , fila " + (i + 1));
-                        acumulador = acumulador + 1;
-                    } else {
-                        acumulador = 0;
-                    }
-                } else {
-                    str_msg_erro += getFormatoError("El estudiante con número de cedula:" + str_cedula + " no se encuentra en la lista , fila " + (i + 1));
-                    acumulador = acumulador + 1;
-                }
-
-            }
-
-            if (acumulador > 0) {
-                String str_resultado = "";
-                if (!str_msg_info.isEmpty()) {
-                    str_resultado = "<strong><font color='#3333ff'>INFORMACION</font></strong>" + str_msg_info;
-                }
-                if (!str_msg_adve.isEmpty()) {
-                    str_resultado += "<strong><font color='#ffcc33'>ADVERTENCIAS</font></strong>" + str_msg_adve;
-                }
-                if (!str_msg_erro.isEmpty()) {
-                    str_resultado += "<strong><font color='#ff0000'>ERRORES</font></strong>" + str_msg_erro;
-                }
-                edi_mensajes.setValue(str_resultado);
-                utilitario.addUpdate("edi_mensajes");
-            } else {
-                for (int j = 0; j < int_fin; j++) {
-                    String str_cedu = hoja.getCell(0, j).getContents();
-                    str_cedu = str_cedu.trim();
-
-                    String str_nota = hoja.getCell(1, j).getContents();
-                    str_nota = str_nota.trim();
-
-                    TablaGenerica tab_nota = utilitario.consultar("select ide_ynodet,ide_ynocan,a.ide_yaldap from yavirac_nota_detalle_nota a,yavirac_alum_dato_personal b\n"
-                            + "where a.ide_yaldap=b.ide_yaldap and ide_ynocan = " + tab_cabecera_nota.getValor(tab_cabecera_nota.getFilaActual(), "ide_ynocan") + " and doc_identidad_yaldap='" + str_cedu + "'");
-                    utilitario.getConexion().ejecutarSql("update yavirac_nota_detalle_nota  set nota_ynodet=" + str_nota + " where ide_ynodet=" + tab_nota.getValor("ide_ynodet"));
-
-                }
-
-                String str_resultado = "";
-                if (!str_msg_info.isEmpty()) {
-                    str_resultado = "<strong><font color='#3333ff'>INFORMACION</font></strong>" + str_msg_info;
-                }
-                if (!str_msg_ok.isEmpty()) {
-                    str_resultado += "<strong><font color='#00FF00'>SUCCESSFUL</font></strong>" + str_msg_ok;
-                }
-                edi_mensajes.setValue(str_resultado);
-                utilitario.addUpdate("edi_mensajes");
-
-            }
-            archivoExcel.close();
-            tab_detalle_nota.actualizar();
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-
-    }
-
-    /**
-     * Genera un mensaje de información color azul
-     *
-     * @param mensaje
-     * @return
-     */
-    private String getFormatoInformacion(String mensaje) {
-        return "<div><font color='#3333ff'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
-    }
-
-    /**
-     * Genera un mensaje de Advertencia color tomate
-     *
-     * @param mensaje
-     * @return
-     */
-    private String getFormatoAdvertencia(String mensaje) {
-        return "<div><font color='#ffcc33'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
-    }
-
-    /**
-     * Genera un mensaje de Error color rojo
-     *
-     * @param mensaje
-     * @return
-     */
-    private String getFormatoError(String mensaje) {
-        return "<div><font color='#ff0000'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
-    }
-
-    /**
-     * Genera un mensaje de exito color verde
-     *
-     * @param mensaje
-     * @return
-     */
-    private String getFormatoOk(String mensaje) {
-        return "<div><font color='#00FF00'><strong>*&nbsp;</strong>" + mensaje + "</font></div>";
-    }
+   
 
     String docente = "";
     String documento = "";
@@ -849,30 +579,6 @@ public class RegistroNota extends Pantalla {
 
     public void setEti_notificacion(Etiqueta eti_notificacion) {
         this.eti_notificacion = eti_notificacion;
-    }
-
-    public Dialogo getDia_importar() {
-        return dia_importar;
-    }
-
-    public void setDia_importar(Dialogo dia_importar) {
-        this.dia_importar = dia_importar;
-    }
-
-    public Upload getUpl_archivo() {
-        return upl_archivo;
-    }
-
-    public void setUpl_archivo(Upload upl_archivo) {
-        this.upl_archivo = upl_archivo;
-    }
-
-    public Editor getEdi_mensajes() {
-        return edi_mensajes;
-    }
-
-    public void setEdi_mensajes(Editor edi_mensajes) {
-        this.edi_mensajes = edi_mensajes;
     }
 
 }
