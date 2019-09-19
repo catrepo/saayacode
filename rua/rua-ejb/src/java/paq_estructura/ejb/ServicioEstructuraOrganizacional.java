@@ -142,6 +142,28 @@ public class ServicioEstructuraOrganizacional {
         sql = "SELECT ide_ysttdp ,descripcion_ysttdp FROM yavirac_stror_tipo_divisio_po where activo_ysttdp in (" + activo + ")";
         return sql;
     }
+    
+    
+    /**
+     * Retorna la division politica por parroquias
+     */
+    public String getDivisionPolitcaParroquia() {
+        String sql = "";
+        sql = "select ide_ystdip,pais,provincia,canton,parroquia from (\n"
+                + "	select  a.ide_ystdip,codigo_pais,c.descripcion_ystdip ||' ' as pais,codigo_provincia,provincia||' ' as provincia,codigo_canton,canton ||' ' as canton,a.descripcion_ystdip ||' 'as parroquia\n"
+                + "	from (select * from yavirac_stror_distribucion_pol  where ide_ysttdp=4) a\n"
+                + "	left join (\n"
+                + "		select a.ide_ystdip,a.ide_ystdip as codigo_canton,a.descripcion_ystdip as canton,b.ide_ystdip as codigo_provincia,b.descripcion_ystdip as provincia,b.yav_ide_ystdip as codigo_pais  \n"
+                + "		from (select * from  yavirac_stror_distribucion_pol  where ide_ysttdp=3) a\n"
+                + "		left join (select * from  yavirac_stror_distribucion_pol  where ide_ysttdp=2) b on a.yav_ide_ystdip=b.ide_ystdip\n"
+                + "	) b on a.yav_ide_ystdip=b.ide_ystdip \n"
+                + "	left join yavirac_stror_distribucion_pol c on b.codigo_pais=c.ide_ystdip\n"
+                + "	where not c.ide_ysttdp is null \n"
+                + ")a\n"
+                + "order by pais, provincia,canton,parroquia";
+        return sql;
+    }
+
 
     /**
      * Retorna el Estado Civil
