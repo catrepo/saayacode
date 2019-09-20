@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_ficha_alumno" language="groovy" pageWidth="595" pageHeight="842" columnWidth="511" leftMargin="42" rightMargin="42" topMargin="56" bottomMargin="56" uuid="78e344f7-8cf0-4aa7-8851-93a59ce2f85b">
 	<property name="ireport.zoom" value="1.331000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="777"/>
+	<property name="ireport.y" value="921"/>
 	<queryString>
 		<![CDATA[select *
 from (--dato  alumno
@@ -48,18 +48,18 @@ left join (--dato academico
 	left join view_division_politica g on a.yav_ide_ystdip=g.ide_ystdip
 )c on a.ide_yaldap=c.ide_yaldap
 left join (--curso o capacitacion
-select ide_yaldap,descripcion_ystins as inst_capacitacion,observacion_yalcap
+select ide_yaldap,descripcion_ystins as inst_capacitacion,observacion_yalcap,capacitacion_yalcap
 from yavirac_alum_capacitacion a
 left join yavirac_stror_institucion b on a.ide_ystins=b.ide_ystins
 )d on a.ide_yaldap=d.ide_yaldap
 left join yavirac_alum_dato_laboral e on a.ide_yaldap=e.ide_yaldap --dato laboral
 left join (--dato medico
 select ide_yaldap,padece_yaldam,c.descripcion_yalenf as enfermedad,tratamiento_yaldam,descripcion_yaltit as tipo_tratamiento,detalle_tratamiento_yaldam,
-hospitalizado_yaldam,motivo_especializado_yaldam,operado_yaldam,motivo_operado_yaldam,enfermedad_cronica_yaldam,d.descripcion_yalenf as enfermedad_cronica
+hospitalizado_yaldam,motivo_especializado_yaldam,operado_yaldam,motivo_operado_yaldam,enfermedad_cronica_yaldam,enfermedad_yaldam as enfermedad_cronica
 from yavirac_alum_dato_medico a
 left join yavirac_alum_tipo_tratamiento b on a.ide_yaltit=b.ide_yaltit
 left join yavirac_alum_enfermedad c on a.ide_yalenf=c.ide_yalenf
-left join yavirac_alum_enfermedad d on a.yav_ide_yalenf=d.ide_yalenf
+
 ) f on a.ide_yaldap=f.ide_yaldap
 left join (-- alumno aficion
 select ide_yaldap,actividad_yalafi,detalle_yalafi as aficion,descripcion_yaltia as tipo_aficion
@@ -81,14 +81,15 @@ where a.ide_yaldap=27]]>
 		<fieldDescription><![CDATA[permite conocer el tipo de sangre acorde a las caracteristicas de la persona]]></fieldDescription>
 	</field>
 	<field name="descripcion_ystdoi" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo visualiza la identidad delas personas]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo visualiza la identidad delas personas ]]></fieldDescription>
 	</field>
 	<field name="descripcion_ystesc" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo permive conocer el estado civil de la tabla ejemplo casado,divorciado, viudo, union libre, soltero,etc]]></fieldDescription>
 	</field>
 	<field name="descripcion_ystgen" class="java.lang.String">
 		<fieldDescription><![CDATA[valor de estado vachar que almacena el tipo de documento identidad ejem:
-C.I.- SEXO]]></fieldDescription>
+C.I.- SEXO
+]]></fieldDescription>
 	</field>
 	<field name="nombre_yaldap" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo nos indicara el nombre del alumno de la tabla yavirac_alum_dato_personal]]></fieldDescription>
@@ -179,6 +180,7 @@ C.I.- SEXO]]></fieldDescription>
 	<field name="observacion_yalcap" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo almacenara si el alumno tiene alguna capacitacion]]></fieldDescription>
 	</field>
+	<field name="capacitacion_yalcap" class="java.lang.Boolean"/>
 	<field name="ide_yaldal" class="java.lang.Long"/>
 	<field name="ide_yalpea" class="java.lang.Long"/>
 	<field name="laborando_yaldal" class="java.lang.Boolean">
@@ -863,7 +865,7 @@ Agradecemos tu colaboración.]]></text>
 			<textField>
 				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="105" y="28" width="40" height="15"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["OJO NO HAY CAMPO"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{capacitacion_yalcap}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="135" y="58" width="291" height="15"/>
