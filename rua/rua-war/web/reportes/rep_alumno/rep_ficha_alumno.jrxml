@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_ficha_alumno" language="groovy" pageWidth="595" pageHeight="842" columnWidth="511" leftMargin="42" rightMargin="42" topMargin="56" bottomMargin="56" uuid="78e344f7-8cf0-4aa7-8851-93a59ce2f85b">
 	<property name="ireport.zoom" value="1.331000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="393"/>
+	<property name="ireport.y" value="777"/>
 	<queryString>
 		<![CDATA[select *
 from (--dato  alumno
@@ -743,6 +743,16 @@ Agradecemos tu colaboración.]]></text>
 				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="251" y="320" width="90" height="15"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{celular_yaldfe}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3eaa1086-95ad-40be-8eab-8e83937d726c" x="1" y="646" width="185" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ubicación (Provincia, Cantón, Parroquia):]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="0daac702-0d20-4e20-a911-8a7d39421566" x="186" y="646" width="326" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dir_institucion2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
