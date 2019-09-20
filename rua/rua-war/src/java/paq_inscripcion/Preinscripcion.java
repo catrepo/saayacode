@@ -105,20 +105,63 @@ public class Preinscripcion extends Pantalla {
             //com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
             //
 
+            Grid grup_cuerpo = new Grid();
+
+            grup_cuerpo.setId("grup_cuerpo");
+
+            grup_cuerpo.setColumns(14);
+            grup_cuerpo.setWidth("100%");
+            grup_cuerpo.setId("grup_cuerpo");
+
             //bar_botones.agregarBoton(bot_anular);
             Boton bot_imprimir = new Boton();
             bot_imprimir.setIcon("ui-icon-print");
             bot_imprimir.setValue("CERTIFICADO INSCRIPCION");
             bot_imprimir.setMetodo("generarPDF");
 
-            bar_botones.agregarBoton(bot_imprimir);
+            grup_cuerpo.getChildren().add(bot_imprimir);
 
             //bar_botones.agregarBoton(bot_anular);
             Boton bot_imprimir_ins = new Boton();
             bot_imprimir_ins.setIcon("ui-icon-print");
             bot_imprimir_ins.setValue("REPORTE INSTITUTOS");
             bot_imprimir_ins.setMetodo("generarPDFins");
-            bar_botones.agregarBoton(bot_imprimir_ins);
+            grup_cuerpo.getChildren().add(bot_imprimir_ins);
+
+            //BOTON REGISTRO DE ALUMNOS
+            Boton bot_registroAlumno = new Boton();
+            bot_registroAlumno.setValue("Listado Alumnos");
+            bot_registroAlumno.setIcon("ui-icon-note");
+            bot_registroAlumno.setMetodo("selregistraAlumno");
+            grup_cuerpo.getChildren().add(bot_registroAlumno);
+
+            //BOTON ACTUALIZAR DE ALUMNOS
+            Boton bot_actualizaAlumno = new Boton();
+            bot_actualizaAlumno.setValue("Actualizar Alumno");
+            bot_actualizaAlumno.setIcon("ui-icon-refresh");
+            bot_actualizaAlumno.setMetodo("selactualizaAlumno");
+            grup_cuerpo.getChildren().add(bot_actualizaAlumno);
+
+            //BOTON RECEPCION DE DOCUMENTOS
+            Boton bot_recibe_documento = new Boton();
+            bot_recibe_documento.setValue("Recibir Documentos");
+            bot_recibe_documento.setIcon("ui-icon-clipboard");
+            bot_recibe_documento.setMetodo("recibeDocumento");
+            grup_cuerpo.getChildren().add(bot_recibe_documento);
+
+            //BOTON CARGAR ARCHIVO
+            Boton bot_archivo = new Boton();
+            bot_archivo.setValue("Cargar Archivo SENECYT");
+            bot_archivo.setIcon("ui-icon-clipboard");
+            bot_archivo.setMetodo("abrirDialogoImportar");
+            grup_cuerpo.getChildren().add(bot_archivo);
+
+            //BOTON AGREGAR ALUMNO
+            Boton bot_agregarAlumno = new Boton();
+            bot_agregarAlumno.setValue("Crear Alumno");
+            bot_agregarAlumno.setIcon("ui-icon-person");
+            bot_agregarAlumno.setMetodo("crearAlumno");
+            grup_cuerpo.getChildren().add(bot_agregarAlumno);
 
             tab_pre_inscrip.setId("tab_pre_inscrip");
             tab_pre_inscrip.setTabla("yavirac_ins_pre_inscripcion", "ide_yinpin", 1);
@@ -172,16 +215,10 @@ public class Preinscripcion extends Pantalla {
 
             Division div_pre_inscrip = new Division();
             div_pre_inscrip.setId("div_pre_inscripo");
-            div_pre_inscrip.dividir2(pat_pre_inscrip, pat_requ_entregado, "50%", "H");
+            div_pre_inscrip.dividir3(grup_cuerpo,pat_pre_inscrip, pat_requ_entregado, "14%","50%", "H");
 
             agregarComponente(div_pre_inscrip);
 
-            //BOTON AGREGAR ALUMNO
-            Boton bot_agregarAlumno = new Boton();
-            bot_agregarAlumno.setValue("Crear Alumno");
-            bot_agregarAlumno.setIcon("ui-icon-person");
-            bot_agregarAlumno.setMetodo("crearAlumno");
-            bar_botones.agregarBoton(bot_agregarAlumno);
             //PANTALLA CREAR alumno
             crear_alumno.setId("crear_alumno");
             crear_alumno.setTitle("CREAR ALUMNO ASPIRANTE");
@@ -227,34 +264,6 @@ public class Preinscripcion extends Pantalla {
             crear_alumno.getBot_aceptar().setMetodo("aceptarDialogoAlumno");
             crear_alumno.setDialogo(gri_cuerpo);
             agregarComponente(crear_alumno);
-
-            //BOTON REGISTRO DE ALUMNOS
-            Boton bot_registroAlumno = new Boton();
-            bot_registroAlumno.setValue("Listado Alumnos");
-            bot_registroAlumno.setIcon("ui-icon-note");
-            bot_registroAlumno.setMetodo("selregistraAlumno");
-            bar_botones.agregarBoton(bot_registroAlumno);
-
-            //BOTON ACTUALIZAR DE ALUMNOS
-            Boton bot_actualizaAlumno = new Boton();
-            bot_actualizaAlumno.setValue("Actualizar Alumno");
-            bot_actualizaAlumno.setIcon("ui-icon-refresh");
-            bot_actualizaAlumno.setMetodo("selactualizaAlumno");
-            bar_botones.agregarBoton(bot_actualizaAlumno);
-
-            //BOTON RECEPCION DE DOCUMENTOS
-            Boton bot_recibe_documento = new Boton();
-            bot_recibe_documento.setValue("Recibir Documentos");
-            bot_recibe_documento.setIcon("ui-icon-clipboard");
-            bot_recibe_documento.setMetodo("recibeDocumento");
-            bar_botones.agregarBoton(bot_recibe_documento);
-
-            //BOTON CARGAR ARCHIVO
-            Boton bot_archivo = new Boton();
-            bot_archivo.setValue("Cargar Archivo SENECYT");
-            bot_archivo.setIcon("ui-icon-clipboard");
-            bot_archivo.setMetodo("abrirDialogoImportar");
-            bar_botones.agregarBoton(bot_archivo);
 
             //PANTALLA INGRESA ALUMNO
             sel_registra_alumno.setId("sel_registra_alumno");
@@ -625,20 +634,16 @@ public class Preinscripcion extends Pantalla {
                 if (str_cedula == null || str_cedula.isEmpty()) {
                     //No existe el documento en la tabla de empleados
                     str_msg_erro += getFormatoError("No existe un número de cédula en la Fila: " + (i + 1));
-                } else {
-                    if (!utilitario.validarCedula(str_cedula)) {
-                        //No existe el documento en la tabla de empleados
-                        str_msg_erro += getFormatoError("Número de cédula en la Fila: " + (i + 1) + " no es válido");
-                    }
+                } else if (!utilitario.validarCedula(str_cedula)) {
+                    //No existe el documento en la tabla de empleados
+                    str_msg_erro += getFormatoError("Número de cédula en la Fila: " + (i + 1) + " no es válido");
                 }
 
                 if (str_correo == null || str_correo.isEmpty()) {
                     //No existe el documento en la tabla de empleados
-                } else {
-                    if (!utilitario.isEmailValido(str_correo)) {
-                        //No existe el documento en la tabla de empleados
-                        str_msg_erro += getFormatoError("El correo << " + str_correo + " >> en la Fila: " + (i + 1) + " no es válido");
-                    }
+                } else if (!utilitario.isEmailValido(str_correo)) {
+                    //No existe el documento en la tabla de empleados
+                    str_msg_erro += getFormatoError("El correo << " + str_correo + " >> en la Fila: " + (i + 1) + " no es válido");
                 }
 
             }
