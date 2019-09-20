@@ -20,6 +20,7 @@ import javax.ejb.EJB;
 import org.primefaces.event.SelectEvent;
 import paq_alumno.ejb.ServicioAlumno;
 import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
 
 /**
@@ -49,6 +50,8 @@ import sistema.aplicacion.Pantalla;
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
     private final ServicioEstructuraOrganizacional ser_estructura = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    @EJB
+    private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     public Alumnos() {
 
                 
@@ -68,8 +71,8 @@ import sistema.aplicacion.Pantalla;
  menup.agregarItem ("DIRECCION", "dibujarTablaDireccion", "ui-icon-contact");
  menup.agregarItem ("TELEFONO", "dibujarTablaTelefono", "ui-icon-contact");
  menup.agregarItem ("CORREO", "dibujarTablaCorreo", "ui-icon-contact");
- menup.agregarItem ("DISCAPACIDAD", "dibujarTablaDiscapacidad", "ui-icon-contact");
- menup.agregarItem ("DOCUMENTOS ADJUNTOS", "dibujarTablaDocumentos", "ui-icon-contact");
+ menup.agregarItem ("CAPACITACIÓN", "dibujarTablaDiscapacidad", "ui-icon-contact");
+ menup.agregarItem ("DATO FAMILIAR EMERGENCIA", "dibujarTablaDocumentos", "ui-icon-contact");
  menup.agregarItem ("DATOS FAMILIARES", "dibujarTablaDatosFamiliares", "ui-icon-document");
  menup.agregarSubMenu("ESTUDIOS");
  menup.agregarItem ("DATOS ACADEMICOS", "dibujarTablaDatosAcademicos", "ui-icon-document");
@@ -184,9 +187,10 @@ public void alumno(SelectEvent evt){
  tab_alumno.getColumna("ide_ystnac").setCombo(ser_estructura.getNacionalidad("true,false"));
  tab_alumno.getColumna("ide_ysttis").setCombo(ser_estructura.getTipoSangre("true,false"));
  tab_alumno.getColumna("ide_ystdoi").setCombo(ser_estructura.getDocumentoIdentidad("true,false")); 
- tab_alumno.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+ tab_alumno.getColumna("ide_ystdip").setCombo(ser_estructura.getDivisionPolitcaParroquia());
  tab_alumno.getColumna("ide_ystesc").setCombo(ser_estructura.getEstadoCivil("true,false"));
  tab_alumno.getColumna("ide_ystgen").setCombo(ser_estructura.getGenero("true,false"));
+ tab_alumno.getColumna("nombre_yaldap").setOrden(2);
  tab_alumno.getColumna("fotografia_yaldap").setNombreVisual("Foto");
  tab_alumno.getColumna("fotografia_yaldap").setUpload();
  tab_alumno.getColumna("fotografia_yaldap").setImagen(); 
@@ -218,8 +222,8 @@ public void alumno(SelectEvent evt){
      tab_alumno_direccion.setCondicion("ide_yaldap="+aut_alumno.getValor());
      tab_alumno_direccion.getColumna("ide_yaldap").setVisible(false); // para ocultar
      tab_alumno_direccion.getColumna("ide_yaldia").setNombreVisual("IDE");
-     tab_alumno_direccion.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
-     tab_alumno_direccion.getColumna("ide_ystdip").setNombreVisual("DISTRIBUCIÓN POLÍTICA");
+     tab_alumno_direccion.getColumna("ide_ystdip").setCombo(ser_estructura.getDivisionPolitcaParroquia());
+     tab_alumno_direccion.getColumna("ide_ystdip").setNombreVisual("DIRECCIÓN ACTUAL");
      tab_alumno_direccion.getColumna("descripcion_yaldia").setNombreVisual("LUGAR RESIDENCIA");
      tab_alumno_direccion.getColumna("notificacion_yaldia").setNombreVisual("REGISTRO CAMBIOS EN LA DIRECCIÓN");
      tab_alumno_direccion.getColumna("activo_yaldia").setNombreVisual("ACTIVO");
@@ -296,18 +300,16 @@ tab_alumno_telefono.setId("tab_alumno_telefono");
  public void dibujarTablaDiscapacidad(){
  int_opcion=5;    
  tab_alumno_discapacidad.setId("tab_alumno_discapacidad");
-     tab_alumno_discapacidad.setTabla("yavirac_alum_discapacidad", "ide_yaldis", 5);
+     tab_alumno_discapacidad.setTabla("yavirac_alum_capacitacion", "ide_yalcap", 5);
       tab_alumno_discapacidad.setCondicion("ide_yaldap="+aut_alumno.getValor());
      tab_alumno_discapacidad.getColumna("ide_yaldap").setVisible(false);
-     tab_alumno_discapacidad.getColumna("ide_yaldis").setNombreVisual("IDE");
-     tab_alumno_discapacidad.getColumna("ide_ystgrd").setCombo(ser_estructura.getGradoDiscapacidad());
-     tab_alumno_discapacidad.getColumna("ide_ystgrd").setNombreVisual("GRADO DISCAPACIDAD");
-     tab_alumno_discapacidad.getColumna("ide_ysttid").setCombo(ser_estructura.getTipoDiscapacidad());
-     tab_alumno_discapacidad.getColumna("ide_ysttid").setNombreVisual("TIPO DISCAPACIDAD");
-     tab_alumno_discapacidad.getColumna("numero_conadis_yaldis").setNombreVisual("NÚMERO  DE CARNET CONADIS");
-     tab_alumno_discapacidad.getColumna("fecha_emision_yaldis").setNombreVisual("FECHA EMISION CARNET ");
-     tab_alumno_discapacidad.getColumna("porcentaje_disca_yaldis").setNombreVisual("PORCENTAJE");
-     tab_alumno_discapacidad.getColumna("activo_yaldis").setNombreVisual("ACTIVO");
+     tab_alumno_discapacidad.getColumna("ide_yalcap").setNombreVisual("IDE");
+     tab_alumno_discapacidad.getColumna("ide_ystins").setCombo(ser_estructura.getInstitucion());
+     tab_alumno_discapacidad.getColumna("ide_ystins").setNombreVisual("INSTITUCIÓN");
+     tab_alumno_discapacidad.getColumna("observacion_yalcap").setNombreVisual("TIPO DE CAPACITACIÓN O CURSO");
+     tab_alumno_discapacidad.getColumna("fecha_inicio_yalcap").setNombreVisual("FECHA DE INICIO");
+     tab_alumno_discapacidad.getColumna("fecha_fin_yalcap").setNombreVisual("FECHA DE FINALIZACIÓN");
+     tab_alumno_discapacidad.getColumna("activo_yalcap").setNombreVisual("ACTIVO");
      tab_alumno_discapacidad.setTipoFormulario(true);
      tab_alumno_discapacidad.getGrid().setColumns(4);
      tab_alumno_discapacidad.dibujar();
@@ -319,20 +321,20 @@ tab_alumno_telefono.setId("tab_alumno_telefono");
      div_division.dividir1(pat_panel5);//Agrego el Tabulador a una Division
      agregarComponente(div_division);//
 
-    menup.dibujar(5,"DISCAPACIDAD",div_division);
+    menup.dibujar(5,"CAPACITACIÓN",div_division);
  }
   public void dibujarTablaDocumentos(){
   int_opcion=6;   
    tab_archivo_alumno.setId("tab_archivo_alumno");
-    tab_archivo_alumno.setTabla("yavirac_alum_documento", "ide_yaldoc", 6);
+    tab_archivo_alumno.setTabla("yavirac_alum_dato_fami_emerg", "ide_yaldfe", 6);
     tab_archivo_alumno.setCondicion("ide_yaldap="+aut_alumno.getValor());
      tab_archivo_alumno.getColumna("ide_yaldap").setVisible(false);
-     tab_archivo_alumno.getColumna("ide_yaldoc").setNombreVisual("IDE");
-     tab_archivo_alumno.getColumna("ide_ysttia").setCombo(ser_estructura.getTipoArchivo());
-     tab_archivo_alumno.getColumna("ide_ysttia").setNombreVisual("TIPO ARCHIVO");
-     tab_archivo_alumno.getColumna("descripcion_yaldoc").setNombreVisual("DESCRIPCION");
-     tab_archivo_alumno.getColumna("fecha_yaldoc").setNombreVisual("FECHA");
-     tab_archivo_alumno.getColumna("archivo_anexo_yaldoc").setNombreVisual("ARCHIVO ANEXO");
+     tab_archivo_alumno.getColumna("ide_yaldfe").setNombreVisual("IDE");
+     tab_archivo_alumno.getColumna("ide_ystpaf").setCombo(ser_estructura.getParentezcoFamiliar("true,false"));
+     tab_archivo_alumno.getColumna("ide_ystpaf").setNombreVisual("PARENTEZCO FAMILIAR");
+     tab_archivo_alumno.getColumna("nombre_yaldfe").setNombreVisual("NOMBRE");
+     tab_archivo_alumno.getColumna("celular_yaldfe").setNombreVisual("TELÉFONO");
+     tab_archivo_alumno.getColumna("activo_yaldfe").setNombreVisual("ACTIVO");
      tab_archivo_alumno.setTipoFormulario(true);
      tab_archivo_alumno.getGrid().setColumns(4);
      tab_archivo_alumno.dibujar();
@@ -344,7 +346,7 @@ tab_alumno_telefono.setId("tab_alumno_telefono");
      div_division.dividir1(pat_panel6);//Agrego el Tabulador a una Division
      agregarComponente(div_division);//
 
-    menup.dibujar(6,"DOCUMENTOS ADJUNTOS",div_division);
+    menup.dibujar(6,"DATO FAMILIAR EMERGENCIA",div_division);
  }
  public void dibujarTablaDatosFamiliares(){
  int_opcion=7;
@@ -398,16 +400,16 @@ tab_alumno_telefono.setId("tab_alumno_telefono");
  tab_dato_academico.getColumna("ide_yaldap").setVisible(false);
  tab_dato_academico.getColumna("ide_ystins").setNombreVisual("INSTITUCIÓN SECUNDARIA");
  tab_dato_academico.getColumna("ide_ystins").setCombo(ser_estructura.getInstitucion());
- tab_dato_academico.getColumna("ide_ystdip").setNombreVisual("DISTRIBUCIÓN POLÍTICA");
- tab_dato_academico.getColumna("ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));
+ tab_dato_academico.getColumna("ide_ystdip").setNombreVisual("UBICACIÓN");
+ tab_dato_academico.getColumna("ide_ystdip").setCombo(ser_estructura.getDivisionPolitcaParroquia());
  tab_dato_academico.getColumna("ide_yalcar").setNombreVisual("CARRERA");
  tab_dato_academico.getColumna("ide_yalcar").setCombo(ser_alumno.getCarrera());
  tab_dato_academico.getColumna("yav_ide_ystins").setNombreVisual("INSTITUCIÓN SUPERIOR");
  tab_dato_academico.getColumna("yav_ide_ystins").setCombo(ser_estructura.getInstitucion());
- tab_dato_academico.getColumna("yav_ide_ystdip").setNombreVisual("DISTRIBUCIÓN POLÍTICA");
- tab_dato_academico.getColumna("yav_ide_ystdip").setCombo(ser_estructura.getDistribucionPolitica("true,false"));        
+ tab_dato_academico.getColumna("yav_ide_ystdip").setNombreVisual("UBICACIÓN");
+ tab_dato_academico.getColumna("yav_ide_ystdip").setCombo(ser_estructura.getDivisionPolitcaParroquia());        
  tab_dato_academico.getColumna("ide_ypetip").setNombreVisual("TÍTULO PROFESIONAL");
-// tab_dato_academico.getColumna("ide_ypetip").setCombo(ser_personal.getTituloProfesional()); 
+ tab_dato_academico.getColumna("ide_ypetip").setCombo(ser_personal.getTituloProfesional()); 
  tab_dato_academico.getColumna("ide_yalpea").setCombo(ser_estructura.getPeriodoAcademico("true,false"));        
  tab_dato_academico.getColumna("ide_yalpea").setNombreVisual("PERIODO ACADEMICO");
  tab_dato_academico.getColumna("anio_graduacion_yaldaa").setNombreVisual("AÑO GRADUACIÓN");
