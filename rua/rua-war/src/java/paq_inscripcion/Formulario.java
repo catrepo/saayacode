@@ -54,7 +54,7 @@ public class Formulario extends Pantalla{
         bar_botones.agregarComponente(new Etiqueta("PERIODO ACADÉMICO"));
         bar_botones.agregarComponente(com_periodo_academico);
         
-        
+        /*
           //bar_botones.agregarBoton(bot_anular);
         Boton bot_imprimir = new Boton();
         bot_imprimir.setIcon("ui-icon-print");
@@ -62,7 +62,7 @@ public class Formulario extends Pantalla{
         bot_imprimir.setMetodo("generarPDF");
 
         bar_botones.agregarBoton(bot_imprimir);
-        
+        */
         tab_formulario_alumno.setId("tab_formulario_alumno");
         tab_formulario_alumno.setTabla("yavirac_ins_formulario", "ide_yinfor",1);
         tab_formulario_alumno.setCondicion("ide_ystpea=-1");
