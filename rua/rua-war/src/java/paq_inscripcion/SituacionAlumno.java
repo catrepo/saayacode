@@ -12,7 +12,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author USER
+ * @author Cristian
  */
 public class SituacionAlumno extends Pantalla{
     
