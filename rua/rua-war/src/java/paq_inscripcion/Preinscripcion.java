@@ -117,7 +117,7 @@ public class Preinscripcion extends Pantalla {
             bot_aceptar_cupo.setValue("Aceptar Cupo");
             bot_aceptar_cupo.setIcon("ui-icon-refresh");
             bot_aceptar_cupo.setMetodo("selactualizaAlumno");
-            bar_botones.agregarBoton(bot_aceptar_cupo);
+            //bar_botones.agregarBoton(bot_aceptar_cupo);
 
             //BOTON CONTACTAR ALUMNO
             Boton bot_contactar = new Boton();
