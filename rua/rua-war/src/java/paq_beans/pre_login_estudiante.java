@@ -4,6 +4,7 @@
  */
 package paq_beans;
 
+import framework.aplicacion.TablaGenerica;
 import framework.componentes.Boton;
 import framework.componentes.Clave;
 import framework.componentes.Dialogo;
@@ -87,7 +88,7 @@ public class pre_login_estudiante {
         bot_login.setId("bot_login");
         bot_login.setValue("Iniciar Sesión");
         bot_login.setStyleClass("btn btn-primary btn-block btn-flat");
-        bot_login.setMetodoRuta("pre_login.ingresar");
+        bot_login.setMetodoRuta("pre_login_estudiante.ingresar");
         bot_login.setOnclick("dimiensionesNavegador()");
 
         pg_boton.getChildren().add(bot_login);
@@ -139,13 +140,15 @@ public class pre_login_estudiante {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("CONEXION", conexion);
             utilitario.crearVariable("IDE_EMPR", utilitario.getPropiedad("ide_empr"));
         }
-        String str_mensaje = ser_seguridad.ingresar(tex_usuario.getValue().toString(), pas_clave.getValue().toString());
+        String str_mensaje = ser_seguridad.ingresarPortal(tex_usuario.getValue().toString(), pas_clave.getValue().toString());
         if (str_mensaje.isEmpty()) {
             //Valida si tiene que cambiar la clave
             if (ser_seguridad.isCambiarClave(utilitario.getVariable("IDE_USUA"))) {
                 cambiarClave();
             } else {
                 try {
+                    TablaGenerica tab_usuario= ser_seguridad.getUsuario(utilitario.getVariable("IDE_USUA"));
+                    utilitario.crearVariable("ALUMNO",tab_usuario.getValor("ide_yaldap"));
                     utilitario.crearVariable("NICK", tex_usuario.getValue() + "");
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("pre_index");
                     String str_url = utilitario.getURL() + "/index.jsf";
