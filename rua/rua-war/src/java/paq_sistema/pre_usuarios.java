@@ -29,6 +29,7 @@ import framework.componentes.Texto;
 import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.SelectEvent;
+import paq_alumno.ejb.ServicioAlumno;
 import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
 import servicios.sistema.ServicioSeguridad;
@@ -58,6 +59,8 @@ public class pre_usuarios extends Pantalla {
     private final ServicioSeguridad ser_seguridad = (ServicioSeguridad) utilitario.instanciarEJB(ServicioSeguridad.class);
     @EJB
     private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
+    @EJB
+    private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
 
 
 
@@ -124,6 +127,9 @@ public class pre_usuarios extends Pantalla {
         tab_tabla1.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true,false"));
         tab_tabla1.getColumna("ide_ypedpe").setAutoCompletar();
         tab_tabla1.getColumna("ide_ypedpe").setMetodoChange("seleccionaEmpelado");
+        tab_tabla1.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
+        tab_tabla1.getColumna("portal_usua").setValorDefecto("false");
+        tab_tabla1.getColumna("ide_yaldap").setAutoCompletar();
 
         tab_tabla1.agregarRelacion(tab_tabla2);
         tab_tabla1.agregarRelacion(tab_tabla3);
