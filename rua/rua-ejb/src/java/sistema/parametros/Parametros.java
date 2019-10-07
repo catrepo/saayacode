@@ -84,6 +84,10 @@ public class Parametros {
          * TITULACION MODULO =8
          */
         lis_parametros.add(new Parametro("8", "p_secuencial_vinculacion", "Indica el el secuencial para el formato proyecto vincualcion", "2", "yavirac_stror_modulo_secuencial", "ide_ystmos", "abreviatura_ystmos"));
+        /*
+         * PORTAL MODULO =8
+         */
+        lis_parametros.add(new Parametro("9", "p_menu_rep_portal", "Indica los reportes que tiene el modulo notas portal", "2", "sis_opcion", "ide_opci", "nom_opci"));
 
 //////////////////////////////////////////////////////////////////////
         return lis_parametros;
