@@ -481,4 +481,22 @@ public class ServicioEstructuraOrganizacional {
         sql = "select ide_ystins,descripcion_ystins from yavirac_stror_institucion;";
         return sql;
     }
+    public String getMensionAlumno(String alumno) {
+
+        String sql = "";
+        sql = "select * from yavirac_stror_mension where ide_ystmen in ( select ide_ystmen from yavirac_matri_matricula  where ide_yaldap="+alumno+" order by ide_ymamat desc limit 1)";
+        return sql;
+    }    
+    public String getCarreraMension(String mension) {
+
+        String sql = "";
+        sql = "select a.ide_ystmen,descripcion_ystmen,total_horas_ystmen,codigo_ystmal,numero_horas_ystmal,b.ide_ystmal,detalle_ystmat,descripcion_ystnie\n" +
+"   from yavirac_stror_mension a, yavirac_stror_malla b,yavirac_stror_materia c,yavirac_stror_nivel_educacion d\n" +
+"   where a.ide_ystmen=b.ide_ystmen\n" +
+"   and b.ide_ystmat= c.ide_ystmat\n" +
+"   and b.ide_ystnie=d.ide_ystnie\n" +
+"   and a.ide_ystmen=" +mension+
+"   order by orden_ystnie,detalle_ystmat";
+        return sql;
+    }    
 }
