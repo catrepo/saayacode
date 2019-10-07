@@ -271,8 +271,8 @@ public class Alumnos extends Pantalla {
         tab_alumno_telefono.getColumna("activo_yaltel").setOrden(6);
         tab_alumno_telefono.getColumna("notificacion_yaltel").setNombreVisual("MODIFICACIÓN TELEFONO");
         tab_alumno_telefono.getColumna("notificacion_yaltel").setOrden(5);
-        tab_alumno_telefono.getColumna("celular_yaltel").setNombreVisual("CELULAR");
-        tab_alumno_telefono.getColumna("celular_yaltel").setOrden(3);
+        tab_alumno_telefono.getColumna("ide_ysttit").setNombreVisual("TIPO TELEFONO");
+        tab_alumno_telefono.getColumna("ide_ysttit").setCombo(ser_estructura.getTipoTelefono());
         tab_alumno_telefono.setTipoFormulario(true);
         tab_alumno_telefono.getGrid().setColumns(4);
         tab_alumno_telefono.dibujar();
