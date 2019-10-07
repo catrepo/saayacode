@@ -223,12 +223,119 @@ public class ServicioSeguridad {
     public String ingresar(String nick, String clave) {
         String str_mensaje = "";
         TablaGenerica tab_usuario = utilitario
-                .consultar("SELECT * FROM SIS_USUARIO WHERE NICK_USUA='" + nick + "' AND ACTIVO_USUA=true");
+                .consultar("SELECT * FROM SIS_USUARIO WHERE NICK_USUA='" + nick + "' AND ACTIVO_USUA=true and portal_usua=false");
         if (tab_usuario.getTotalFilas() > 0) {
             utilitario.crearVariable("IDE_USUA", tab_usuario.getValor("IDE_USUA"));
             // Verifico que el usuario no este bloqueado
             if (tab_usuario.getValor("BLOQUEADO_USUA") == null || tab_usuario.getValor("BLOQUEADO_USUA").equals("false") || tab_usuario.getValor("BLOQUEADO_USUA").equals("0")) {
 
+                // Verifica que el usuario no este caducoado
+                if (tab_usuario.getValor("fecha_caduc_usua") != null) {
+                    if (utilitario.isFechaMayor(utilitario.getDate(), utilitario.getFecha(tab_usuario.getValor("fecha_caduc_usua")))) {
+                        str_mensaje = "La vigencia de su usuario a caducado, contactese con el administrador del sistema";
+                        return str_mensaje;
+                    }
+                }
+                // Verifica que el usuario no haya iniciado en otra maquina
+                if (isUsuarioLogeado(tab_usuario.getValor("IDE_USUA")) == false) {
+
+                    // Verifica intentos fallidos vs intentos maximon
+                    int int_maximo_intentos = getNumeroIntentosAcceso();
+                    int int_intentos = getIntentosAcceso(
+                            tab_usuario.getValor("IDE_USUA"), utilitario.getFechaActual());
+                    if (int_intentos < int_maximo_intentos) {
+                        // Verifica que exista una clave activa para el usuario
+                        TablaGenerica tab_clave = getClaveActivaUusario(tab_usuario.getValor("IDE_USUA"));
+                        if (tab_clave.getTotalFilas() > 0) {
+                            // Verifica que la clave no haya caducado
+                            if (tab_clave.getValor("fecha_vence_uscl") != null) {
+                                if (utilitario.isFechaMayor(utilitario
+                                        .getDate(), utilitario
+                                        .getFecha(tab_clave
+                                                .getValor("fecha_vence_uscl")))) {
+                                    str_mensaje = "La vigencia de su clave a caducado, contactese con el administrador del sistema";
+                                    return str_mensaje;
+                                }
+                            }
+                            // Verifico que la clave sea correcta
+                            if (encriptar.getEncriptar(clave).equals(
+                                    tab_clave.getValor("CLAVE_USCL"))) {
+                                try {
+                                    if (isPerfilActivo(tab_usuario.getValor("IDE_PERF"))) {
+                                        utilitario.crearVariable("IDE_PERF", tab_usuario.getValor("IDE_PERF"));
+                                        utilitario.crearVariable("TEMA", tab_usuario.getValor("TEMA_USUA"));
+                                        solicitarCambiarClave(tab_usuario.getValor("IDE_USUA"));
+                                        // Guarda en auditoria de acceso si no tiene
+                                        // q cambiar la clave el usuario
+                                        if (isCambiarClave(tab_usuario.getValor("IDE_USUA")) == false) {
+                                            //si tiene intentos fallidos de acceso los reseteo poniendoles fin
+                                            utilitario.getConexion().agregarSql("UPDATE sis_auditoria_acceso set fin_auac=true WHERE ide_usua=" + tab_usuario.getValor("IDE_USUA") + " and fecha_auac=" + utilitario.getFormatoFechaSQL(utilitario.getFechaActual()) + " and ip_auac='" + utilitario.getIp() + "'");
+                                            utilitario.getConexion().agregarSql(crearSQLAuditoriaAcceso(tab_usuario.getValor("IDE_USUA"), P_SIS_INGRESO_USUARIO, "Ingresó al sistema"));
+                                            utilitario.getConexion().ejecutarListaSql();
+                                        }
+                                    } else {
+                                        str_mensaje = "El perfil de su usuario esta desactivado, contactese con el administrador del sistema";
+                                    }
+
+                                } catch (Exception e) {
+                                }
+                            } else {
+                                // Fallo el ingreso
+                                utilitario.getConexion().ejecutarSql(crearSQLAuditoriaAcceso(tab_usuario.getValor("IDE_USUA"), P_SIS_FALLO_INGRESO, "Fallo ingreso intento : " + int_intentos));
+                                str_mensaje = "La clave ingresada es incorrecta";
+                                int_intentos++;
+                                if (int_intentos == int_maximo_intentos) {
+                                    str_mensaje = " A sobrepasado el número máximo de intentos para acceder al sistema, se bloqueara el usuario, contáctese con el administrador del sistema para desbloquearlo";
+                                    bloquearUsuario(tab_usuario.getValor("IDE_USUA"), "Bloquear usuario por sobrepasar el numero maximo de intentos : " + int_maximo_intentos);
+                                }
+                            }
+                        } else {
+                            str_mensaje = "El usuario no tiene una clave activa contactese con el administrador del sistema";
+                        }
+                    } else {
+                        // bloqueo el usuario por sobrepasar el numero maximo de
+                        // intentos permitidos
+                        str_mensaje = "A sobrepasado el número máximo de intentos para acceder al sistema, se bloqueara el usuario, contáctese con el administrador del sistema para desbloquearlo";
+                        bloquearUsuario(tab_usuario.getValor("IDE_USUA"), "Bloquear usuario por sobrepasar el numero maximo de intentos : " + int_maximo_intentos);
+                    }
+                } else {
+                    // Guarda intento fallido al acceder se ya se encuentra en
+                    // ssesion
+                    utilitario.getConexion().ejecutarSql(crearSQLAuditoriaAcceso(tab_usuario.getValor("IDE_USUA"), P_SIS_FALLO_INGRESO, "Fallo ingreso, el usuario tiene sessión iniciada en otra máquina "));
+
+                    str_mensaje = "El usuario ingresado tiene sessión iniciada en otra máquina,contactese con el administrador del sistema ";
+                }
+            } else {
+                str_mensaje = "El usuario esta bloqueado contactese con el administrador del sistema";
+            }
+        } else {
+            str_mensaje = "El nombre del usuario es incorrecto o no está activo";
+        }
+        return str_mensaje;
+    }
+/**
+     * Ingresar al sistema
+     *
+     * @param nick Nick de login del usuario
+     * @param clave Clave del usuario
+     * @return mensaje de error si el fallo alguna validación, caso contrario
+     * retorna vacio
+     */
+    public String ingresarPortal(String nick, String clave) {
+        String str_mensaje = "";
+        TablaGenerica tab_usuario = utilitario
+                .consultar("SELECT * FROM SIS_USUARIO WHERE NICK_USUA='" + nick + "' AND ACTIVO_USUA=true and portal_usua=true");
+        if (tab_usuario.getTotalFilas() > 0) {
+            utilitario.crearVariable("IDE_USUA", tab_usuario.getValor("IDE_USUA"));
+            // Verifico que el usuario no este bloqueado
+            if (tab_usuario.getValor("BLOQUEADO_USUA") == null || tab_usuario.getValor("BLOQUEADO_USUA").equals("false") || tab_usuario.getValor("BLOQUEADO_USUA").equals("0")) {
+                
+                // Verifica que el usuario no este caducoado
+                if (tab_usuario.getValor("ide_yaldap") == null) {
+                        str_mensaje = "Estudiante no registrado en el sistema";
+                        return str_mensaje;
+                    
+                }
                 // Verifica que el usuario no este caducoado
                 if (tab_usuario.getValor("fecha_caduc_usua") != null) {
                     if (utilitario.isFechaMayor(utilitario.getDate(), utilitario.getFecha(tab_usuario.getValor("fecha_caduc_usua")))) {
