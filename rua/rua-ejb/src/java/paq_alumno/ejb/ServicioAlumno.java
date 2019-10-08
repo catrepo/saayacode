@@ -37,7 +37,7 @@ public class ServicioAlumno {
      */
     public String getDatosAlumnosCodigo(String ide) {
         String sql = "";
-        sql = "Select ide_yaldap,nombre_yaldap,apellido_yaldap,doc_identidad_yaldap FROM yavirac_alum_dato_personal where ide_yaldap in (" + ide + ") order by nombre_yaldap";
+        sql = "Select ide_yaldap,apellido_yaldap,nombre_yaldap,doc_identidad_yaldap FROM yavirac_alum_dato_personal where ide_yaldap in (" + ide + ") order by nombre_yaldap";
         return sql;
     }
 
