@@ -61,12 +61,15 @@ public class MallaCurricular extends Pantalla{
         tab_carrera.getColumna("detalle_ystmat").setNombreVisual("MATERIA");
         tab_carrera.getColumna("descripcion_ystnie").setNombreVisual("NIVEL");
         tab_carrera.getColumna("numero_horas_ystmal").setNombreVisual("NRO. HORAS");
+        tab_carrera.getColumna("codigo_ystmal").setNombreVisual("CODIGO MATERIA");
+        tab_carrera.getColumna("codigo_ystmal").setOrden(4);        
         tab_carrera.getColumna("detalle_ystmat").setOrden(2);
         tab_carrera.getColumna("descripcion_ystnie").setOrden(1);
         tab_carrera.getColumna("numero_horas_ystmal").setOrden(3);
         tab_carrera.getColumna("detalle_ystmat").setLectura(true);
         tab_carrera.getColumna("descripcion_ystnie").setLectura(true);
         tab_carrera.getColumna("numero_horas_ystmal").setLectura(true);
+        tab_carrera.getColumna("codigo_ystmal").setLectura(true);
         tab_carrera.dibujar();
         
         PanelTabla pat_carrera =new PanelTabla();
