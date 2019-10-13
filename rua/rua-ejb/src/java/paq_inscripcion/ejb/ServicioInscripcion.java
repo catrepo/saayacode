@@ -26,8 +26,8 @@ public class ServicioInscripcion {
      */
     public String getSqlInstituos() {
         String sql="";
-        sql="select ide_yinsin,nombre_yinsin,codigo_instit_yinsin,abreviatura_yinsin from yavirac_ins_instituto";
-        return sql;
+        sql="select ide_yinsin,nombre_ins_yinsin,codigo_instit_yinsin,abreviatura_yinsin from yavirac_ins_instituto";
+        return sql; 
     }
    
 }
