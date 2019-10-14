@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 package paq_inscripcion;
-
+ 
 import framework.aplicacion.TablaGenerica;
 import framework.componentes.AreaTexto;
 import framework.componentes.AutoCompletar;

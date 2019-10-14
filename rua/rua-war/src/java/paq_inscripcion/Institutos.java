@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package paq_inscripcion;
-
+   
 import framework.componentes.Division;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
