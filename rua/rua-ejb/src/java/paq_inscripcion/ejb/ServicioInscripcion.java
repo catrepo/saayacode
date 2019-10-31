@@ -30,10 +30,4 @@ public class ServicioInscripcion {
         sql = "select ide_yinsin,nombre_yinsin,codigo_instit_yinsin,abreviatura_yinsin from yavirac_ins_instituto";
         return sql;
     }
-
-    public String getSqlDocenteMension() {
-        String sql = "";
-        sql = "select ide_yindom, observacion_yindom from yavirac_ins_docente_mension";
-        return sql; 
-    }
-}         
+}          
