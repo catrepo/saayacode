@@ -164,12 +164,12 @@ public class Preinscripcion extends Pantalla {
             grup_cuerpo.getChildren().add(bot_actualizaAlumno);
 
             //BOTON RECEPCION DE DOCUMENTOS
-            Boton bot_recibe_documento = new Boton();
-            bot_recibe_documento.setValue("Recibir Documentos");
-            bot_recibe_documento.setIcon("ui-icon-clipboard");
-            bot_recibe_documento.setMetodo("recibeDocumento");
-            grup_cuerpo.getChildren().add(bot_recibe_documento);
-
+            //Boton bot_recibe_documento = new Boton();
+            //bot_recibe_documento.setValue("Recibir Documentos");
+            //bot_recibe_documento.setIcon("ui-icon-clipboard");
+            //bot_recibe_documento.setMetodo("recibeDocumento");
+            //grup_cuerpo.getChildren().add(bot_recibe_documento);
+    
             //BOTON CARGAR ARCHIVO
             Boton bot_archivo = new Boton();
             bot_archivo.setValue("Cargar Archivo SENECYT");
