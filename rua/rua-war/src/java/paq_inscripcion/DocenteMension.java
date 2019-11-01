@@ -58,11 +58,11 @@ public class DocenteMension extends Pantalla {
         //tab_docentemension.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("false"));
         tab_docentemension.getColumna("ide_ystpea").setVisible(false);
         tab_docentemension.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true"));
-        tab_docentemension.getColumna("ide_ypedpe").setNombreVisual("DATO PERSONAL");
+        tab_docentemension.getColumna("ide_ypedpe").setNombreVisual("DDOCENTE DATO");
         tab_docentemension.getColumna("ide_ypedpe").setAutoCompletar();
         tab_docentemension.getColumna("observacion_yindom").setNombreVisual("OBSERVACION");
 
-        tab_docentemension.setTipoFormulario(true);
+        tab_docentemension.setTipoFormulario(true);        
         tab_docentemension.getGrid().setColumns(2);
 
         tab_docentemension.dibujar();   
@@ -95,7 +95,7 @@ public class DocenteMension extends Pantalla {
 
     @Override
     public void insertar() {
-        if (com_periodo_academico.getValue() == null) {
+        if (com_periodo_academico.getValue() == null) {   
 
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
             return;
