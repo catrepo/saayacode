@@ -192,6 +192,9 @@ public class pre_principal extends Pantalla {
         tab_form_usuario.setId("tab_form_usuario");
         tab_form_usuario.setTabla("sis_usuario", "ide_usua", 0);
         tab_form_usuario.getColumna("IDE_USUA").setVisible(false);
+        tab_form_usuario.getColumna("IDE_YPEDPE").setVisible(false);
+        tab_form_usuario.getColumna("IDE_YALDAP").setVisible(false);
+        tab_form_usuario.getColumna("fecha_caduc_usua").setVisible(false);
         tab_form_usuario.getColumna("IDE_USUA").setLectura(true);
         tab_form_usuario.getColumna("IDE_PERF").setNombreVisual("PERFIL");
         tab_form_usuario.getColumna("IDE_PERF").setLectura(true);

@@ -124,6 +124,7 @@ public class RecordAcademicoEstudiante extends Pantalla {
         tab_detalle.getColumna("ide_ymanum").setLongitud(-1);
         tab_detalle.getColumna("ide_ystmal").setAncho(-1);
         tab_detalle.getColumna("ide_ystmal").setLongitud(-1);
+        tab_detalle.getColumna("ide_ystmal").setOrden(1);
         tab_detalle.getColumna("ide_ynodra").setNombreVisual("CODIGO");
         tab_detalle.getColumna("ide_ynoest").setNombreVisual("ESTADO");
         tab_detalle.getColumna("ide_ystpea").setNombreVisual("PERIODO ACADÉMICO");
