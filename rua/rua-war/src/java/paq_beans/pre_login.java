@@ -46,7 +46,7 @@ public class pre_login {
     private ServicioSeguridad ser_seguridad;
 
     /**
-     * Creates a new instance of pre_login
+     * Crea una nueva instancia de pre_login
      */
     public pre_login() {
         formulario.setTransient(true);
