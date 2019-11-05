@@ -54,71 +54,65 @@ public class NotaEstudiante extends Pantalla {
     private final ServicioNotas ser_notas = (ServicioNotas) utilitario.instanciarEJB(ServicioNotas.class);
 
     public NotaEstudiante() {
-        if (TienePerfilNota()) {
 
-            bar_botones.getBot_insertar().setRendered(false);
-            bar_botones.getBot_guardar().setRendered(false);
-            bar_botones.getBot_eliminar().setRendered(false);
-            bar_botones.quitarBotonsNavegacion();
+        bar_botones.getBot_insertar().setRendered(false);
+        bar_botones.getBot_guardar().setRendered(false);
+        bar_botones.getBot_eliminar().setRendered(false);
+        bar_botones.quitarBotonsNavegacion();
 
-            bar_botones.agregarComponente(new Etiqueta("Lista de Reportes"));
-            com_reportes.setId("com_reportes");
-            com_reportes.setCombo(ser_estructura.getListaReportes(utilitario.getVariable("p_menu_rep_portal")));
-            bar_botones.agregarComponente(com_reportes);
+        bar_botones.agregarComponente(new Etiqueta("Lista de Reportes"));
+        com_reportes.setId("com_reportes");
+        com_reportes.setCombo(ser_estructura.getListaReportes(utilitario.getVariable("p_menu_rep_portal")));
+        bar_botones.agregarComponente(com_reportes);
 
-            bar_botones.agregarComponente(new Etiqueta("Periodo Académico "));
-            com_periodo_academico.setId("com_periodo_academico");
-            com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
-            com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
-            bar_botones.agregarComponente(com_periodo_academico);
+        bar_botones.agregarComponente(new Etiqueta("Periodo Académico "));
+        com_periodo_academico.setId("com_periodo_academico");
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
+        bar_botones.agregarComponente(com_periodo_academico);
 
-            Boton bot_imprimirpdf = new Boton();
-            bot_imprimirpdf.setIcon("ui-icon-print");
-            bot_imprimirpdf.setValue("IMPRIMIR REPORTE");
-            bot_imprimirpdf.setMetodo("abrirListaReportes");
-            bar_botones.agregarBoton(bot_imprimirpdf);
+        Boton bot_imprimirpdf = new Boton();
+        bot_imprimirpdf.setIcon("ui-icon-print");
+        bot_imprimirpdf.setValue("IMPRIMIR REPORTE");
+        bot_imprimirpdf.setMetodo("abrirListaReportes");
+        bar_botones.agregarBoton(bot_imprimirpdf);
 
-            Imagen ImaReportes = new Imagen();
-            ImaReportes.setValue("imagenes/ModAsistencia/Asistencia.png");
+        Imagen ImaReportes = new Imagen();
+        ImaReportes.setValue("imagenes/ModAsistencia/Asistencia.png");
 
-            Grid grid_pant = new Grid();
-            grid_pant.setColumns(1);
-            grid_pant.setStyle("text-align:center;position:absolute;top:210px;left:535px;");
-            Etiqueta eti_encab = new Etiqueta();
-            grid_pant.getChildren().add(ImaReportes);
-            Boton bot_imprimir = new Boton();
-            bot_imprimir.setValue("Imprimir Reporte");
-            bot_imprimir.setIcon("ui-icon-print");
-            bot_imprimir.setMetodo("abrirListaReportes");
-            bar_botones.agregarBoton(bot_imprimir);
-            grid_pant.getChildren().add(bot_imprimir);
+        Grid grid_pant = new Grid();
+        grid_pant.setColumns(1);
+        grid_pant.setStyle("text-align:center;position:absolute;top:210px;left:535px;");
+        Etiqueta eti_encab = new Etiqueta();
+        grid_pant.getChildren().add(ImaReportes);
+        Boton bot_imprimir = new Boton();
+        bot_imprimir.setValue("Imprimir Reporte");
+        bot_imprimir.setIcon("ui-icon-print");
+        bot_imprimir.setMetodo("abrirListaReportes");
+        bar_botones.agregarBoton(bot_imprimir);
+        grid_pant.getChildren().add(bot_imprimir);
 
-            Grid gri_formulario = new Grid();
-            gri_formulario.setColumns(2);
+        Grid gri_formulario = new Grid();
+        gri_formulario.setColumns(2);
 
+        lis_parcial.setListaSeleccion(ser_notas.getTipoEvaluacion("true,false"));
+        lis_parcial.setLayout("pageDirection");
 
-            lis_parcial.setListaSeleccion(ser_notas.getTipoEvaluacion("true,false"));
-            lis_parcial.setLayout("pageDirection");
+        Espacio esp = new Espacio();
+        Etiqueta eti_parcial = new Etiqueta("PARCIAL");
+        eti_parcial.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
+        gri_formulario.getChildren().add(esp);
+        gri_formulario.getChildren().add(eti_parcial);
+        gri_formulario.getChildren().add(ImaReportes);
+        gri_formulario.getChildren().add(lis_parcial);
 
-            Espacio esp = new Espacio();
-            Etiqueta eti_parcial = new Etiqueta("PARCIAL");
-            eti_parcial.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
-            gri_formulario.getChildren().add(esp);
-            gri_formulario.getChildren().add(eti_parcial);
-            gri_formulario.getChildren().add(ImaReportes);
-            gri_formulario.getChildren().add(lis_parcial);
+        Division div = new Division();
+        div.dividir1(gri_formulario);
+        agregarComponente(div);
 
-            Division div = new Division();
-            div.dividir1(gri_formulario);
-            agregarComponente(div);
-
-            vipdf_comprobante.setId("vipdf_comprobante");
-            vipdf_comprobante.setTitle("REPORTES NOTAS");
-            agregarComponente(vipdf_comprobante);
-
-        } else {
-            utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el control de Asistencia. Consulte con el Administrador");
-        }
+        vipdf_comprobante.setId("vipdf_comprobante");
+        vipdf_comprobante.setTitle("REPORTES NOTAS");
+        agregarComponente(vipdf_comprobante);
     }
 
     String docente = "";
@@ -181,11 +175,11 @@ public class NotaEstudiante extends Pantalla {
                 //System.out.println("MATERIA >>>>>> " + materia);
                 TablaGenerica tab_consuta = utilitario.consultar(ser_notas.getPersonMallaDocente(materia));
                 Map map_parametros = new HashMap();
-               
-                    map_parametros.put("nombre", utilitario.getVariable("NICK"));
-                    map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
-                    map_parametros.put("ide_ypedpe", ide_docente);
-                    map_parametros.put("ide_yaldap", utilitario.getVariable("ALUMNO"));
+
+                map_parametros.put("nombre", utilitario.getVariable("NICK"));
+                map_parametros.put("ide_ystpea", com_periodo_academico.getValue().toString());
+                map_parametros.put("ide_ypedpe", ide_docente);
+                map_parametros.put("ide_yaldap", utilitario.getVariable("ALUMNO"));
                 vipdf_comprobante.setVisualizarPDF(reporte, map_parametros);
                 vipdf_comprobante.dibujar();
             } else {
