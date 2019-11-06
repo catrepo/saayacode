@@ -57,6 +57,12 @@ public class HoraGrupoMension extends Pantalla {
         tab_grupo_jornada.dibujar();
         PanelTabla pat_grupo_jornada = new PanelTabla();
         pat_grupo_jornada.setId("pat_grupo_jornada");
+        pat_grupo_jornada.getMenuTabla().getItem_buscar().setRendered(false);
+        pat_grupo_jornada.getMenuTabla().getItem_importar().setRendered(false);
+        pat_grupo_jornada.getMenuTabla().getItem_excel().setRendered(false);
+        pat_grupo_jornada.getMenuTabla().getItem_excel_filtro().setRendered(false);
+        pat_grupo_jornada.getMenuTabla().getItem_formato().setRendered(false);
+        pat_grupo_jornada.getMenuTabla().quitarSubmenuOtros();
         pat_grupo_jornada.setPanelTabla(tab_grupo_jornada);
         
         Division div_grupo_mension = new Division();

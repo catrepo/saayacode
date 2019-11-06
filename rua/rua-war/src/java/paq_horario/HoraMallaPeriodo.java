@@ -39,6 +39,12 @@ public class HoraMallaPeriodo extends Pantalla{
         
         PanelTabla pat_hora_malla_periodo = new PanelTabla();
         pat_hora_malla_periodo.setId("pat_hora_malla_periodo");
+        pat_hora_malla_periodo.getMenuTabla().getItem_buscar().setRendered(false);
+        pat_hora_malla_periodo.getMenuTabla().getItem_importar().setRendered(false);
+        pat_hora_malla_periodo.getMenuTabla().getItem_excel().setRendered(false);
+        pat_hora_malla_periodo.getMenuTabla().getItem_excel_filtro().setRendered(false);
+        pat_hora_malla_periodo.getMenuTabla().getItem_formato().setRendered(false);
+        pat_hora_malla_periodo.getMenuTabla().quitarSubmenuOtros();
         pat_hora_malla_periodo.setPanelTabla(tab_hora_malla_periodo);
         Division div_hora_malla_periodo = new Division();
         div_hora_malla_periodo.setId("div_hora_dia");

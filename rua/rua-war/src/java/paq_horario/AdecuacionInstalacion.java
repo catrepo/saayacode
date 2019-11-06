@@ -28,6 +28,15 @@ public class AdecuacionInstalacion extends Pantalla {
     tab_instalacion.setTabla("yavirac_stror_instalacion", "ide_ystins", 1);
     tab_instalacion.getColumna("ide_ysttin").setCombo(ser_instalacion.getTipoInstalacion());
     tab_instalacion.getColumna("ide_yhodin").setCombo(ser_instalacion_horarios.getDistribucionInstalacion());
+    tab_instalacion.getColumna("ide_ystins").setNombreVisual("CÓDIGO PRINCIPAL");
+    tab_instalacion.getColumna("ide_ysttin").setNombreVisual("TIPO INSTALACIÓN");
+    tab_instalacion.getColumna("ide_yhodin").setNombreVisual("DISTRIBUCIÓN INSTALACIÓN");
+    tab_instalacion.getColumna("nombre_ystins").setNombreVisual("LABORATORIO/AULA");
+    tab_instalacion.getColumna("abreviatura_ystins").setNombreVisual("ABREVIATURA");
+    tab_instalacion.getColumna("capinicial_ystins").setNombreVisual("CAPACIDAD INICIAL");
+    tab_instalacion.getColumna("capfinal_ystins").setNombreVisual("CAPACIDAD FINAL");
+    tab_instalacion.getColumna("estado_ystins").setNombreVisual("ACTIVO");
+
    
     tab_instalacion.agregarRelacion(tab_adecu_instalacion);
     tab_instalacion.dibujar();
@@ -35,6 +44,12 @@ public class AdecuacionInstalacion extends Pantalla {
     tab_adecu_instalacion.setId("tab_adecu_instalacion");   
     tab_adecu_instalacion.setTabla("yavirac_hora_adecu_instalacion", "ide_yhoain", 2);
     tab_adecu_instalacion.getColumna("ide_yhotad").setCombo(ser_instalacion_horarios.getTipoAdecuacion());
+    tab_instalacion.getColumna("ide_yhoain").setNombreVisual("CÓDIGO PRINCIPAL");
+    tab_instalacion.getColumna("ide_yhotad").setNombreVisual("EQUIPO");
+    tab_instalacion.getColumna("descrpcion_yhoain").setNombreVisual("DESCRIPCIÓN");
+    tab_instalacion.getColumna("fechaalta_yhoain").setNombreVisual("FECHA SALIDA");
+    tab_instalacion.getColumna("fechabaja_yhoain").setNombreVisual("FECHA INGRESO");
+    tab_instalacion.getColumna("estado_yhoain").setNombreVisual("ACTIVO");
     tab_adecu_instalacion.dibujar();    
 
     PanelTabla pat_instalacion = new PanelTabla();
@@ -64,13 +79,24 @@ public class AdecuacionInstalacion extends Pantalla {
 
     @Override
     public void guardar() {
-        tab_adecu_instalacion.guardar();
+        if(tab_instalacion.isFocus()){
+        tab_instalacion.guardar();    
+        }
+        else if (tab_adecu_instalacion.isFocus()){
+        tab_adecu_instalacion.guardar();    
+        }
+
         guardarPantalla();
     }
 
     @Override
     public void eliminar() {
-        tab_adecu_instalacion.eliminar();
+        if(tab_instalacion.isFocus()){
+        tab_instalacion.eliminar();    
+        }
+        else if (tab_adecu_instalacion.isFocus()){
+        tab_adecu_instalacion.eliminar();    
+        }
     }
 
     public Tabla getTab_adecu_instalacion() {

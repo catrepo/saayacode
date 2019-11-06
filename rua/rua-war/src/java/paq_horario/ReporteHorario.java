@@ -31,6 +31,8 @@ import javax.ejb.EJB;
 import paq_asistencia.ejb.ServicioAsistencia;
 import sistema.aplicacion.Pantalla;
 import framework.componentes.Panel;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
+import paq_personal.ejb.ServicioPersonal;
 
 public class ReporteHorario extends Pantalla{
     private Reporte rep_reporte=new Reporte();
@@ -40,8 +42,21 @@ public class ReporteHorario extends Pantalla{
     private Radio rad_tipo_justificacion = new Radio();
     private SeleccionTabla sel_tab_carrera = new SeleccionTabla();
     private Panel panOpcion = new Panel();
-    String fechai="";
-    String fechaf="";
+    private SeleccionTabla sel_tab_periodo = new SeleccionTabla();
+    private SeleccionTabla sel_tab_jornada = new SeleccionTabla();
+    private SeleccionTabla sel_tab_mension = new SeleccionTabla();
+    private SeleccionTabla sel_tab_nivel = new SeleccionTabla();
+    private SeleccionTabla sel_tab_docente = new SeleccionTabla();
+    String periodo="";
+    String jornada="";
+    String mension="";
+    String nivel="";
+    
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
+    
+    @EJB
+    private final ServicioPersonal ser_personal = (ServicioPersonal) utilitario.instanciarEJB(ServicioPersonal.class);
     
     public ReporteHorario(){
         bar_botones.getBot_insertar().setRendered(false);
@@ -83,77 +98,220 @@ public class ReporteHorario extends Pantalla{
         agregarComponente(grid_pant);
         panOpcion.getChildren().add(grid_pant);
         agregarComponente(panOpcion);
+        
+        sel_tab_periodo.setId("sel_tab_periodo");
+        sel_tab_periodo.setTitle("SELECCIONE EL PERIODO");
+        sel_tab_periodo.setSeleccionTabla(ser_estructura_organizacional.getPeriodoAcademico("true, false"), "IDE_YSTPEA");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        sel_tab_periodo.setWidth("60%");
+        sel_tab_periodo.setHeight("60%");
+        sel_tab_periodo.setRadio();
+        sel_tab_periodo.getBot_aceptar().setMetodo("aceptarReporte");
+        agregarComponente(sel_tab_periodo);
+        
+        sel_tab_jornada.setId("sel_tab_jornada");
+        sel_tab_jornada.setTitle("SELECCIONE LA JORNADA");
+        sel_tab_jornada.setSeleccionTabla(ser_estructura_organizacional.getJornada("true"), "IDE_YSTJOR");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        sel_tab_jornada.setWidth("60%");
+        sel_tab_jornada.setHeight("60%");
+        sel_tab_jornada.setRadio();
+        sel_tab_jornada.getBot_aceptar().setMetodo("aceptarReporte");
+        agregarComponente(sel_tab_jornada);
+        
+        sel_tab_mension.setId("sel_tab_mension");
+        sel_tab_mension.setTitle("SELECCIONE LA MENSIÓN");
+        sel_tab_mension.setSeleccionTabla(ser_estructura_organizacional.getMension(), "IDE_YSTMEN");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        sel_tab_mension.setWidth("60%");
+        sel_tab_mension.setHeight("60%");
+        sel_tab_mension.setRadio();
+        sel_tab_mension.getBot_aceptar().setMetodo("aceptarReporte");
+        agregarComponente(sel_tab_mension);
+        
+        sel_tab_nivel.setId("sel_tab_nivel");
+        sel_tab_nivel.setTitle("SELECCIONE EL NIVEL");
+        sel_tab_nivel.setSeleccionTabla(ser_estructura_organizacional.getNivelEducacion(), "IDE_YSTNIE");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        //set_tab_dias.getTab_seleccion().getColumna("descripcion_ystjor").setNombreVisual("Jornada");
+        sel_tab_nivel.setWidth("60%");
+        sel_tab_nivel.setHeight("60%");
+        sel_tab_nivel.setRadio();
+        sel_tab_nivel.getBot_aceptar().setMetodo("aceptarReporte");
+        agregarComponente(sel_tab_nivel);
+        
+        sel_tab_docente.setId("sel_tab_docente");
+        sel_tab_docente.setTitle("SELECCIONE EL DOCENTE");
+        sel_tab_docente.setSeleccionTabla(ser_personal.getDatopersonal("true,false"), "IDE_YPEDPE");
+        //select ide_yhodia, descripcion_yhodia from yavirac_hora_dia order by orden_yhodia asc", "ide_yhodia
+        sel_tab_docente.getTab_seleccion().getColumna("apellido_ypedpe").setFiltro(true);
+        sel_tab_docente.getTab_seleccion().getColumna("nombre_ypedpe").setFiltro(true);
+        sel_tab_docente.setWidth("60%");
+        sel_tab_docente.setHeight("60%");
+        sel_tab_docente.setRadio();
+        sel_tab_docente.getBot_aceptar().setMetodo("aceptarReporte");
+        agregarComponente(sel_tab_docente);
     }
     public void abrirListaReportes() {
 // TODO Auto-generated method stub
-rep_reporte.dibujar();
+     rep_reporte.dibujar();
 }
 
 
 public void aceptarReporte() {
-    if (rep_reporte.getReporteSelecionado().equals("Registro Justificaciones")){
+    if (rep_reporte.getReporteSelecionado().equals("Horarios por Jornada")){
                 
         if(rep_reporte.isVisible()){
                 rep_reporte.cerrar();
-                sel_fechas.dibujar();
+                sel_tab_periodo.dibujar();
         }
-        else if (sel_fechas.isVisible()){
-                
-                fechai=sel_fechas.getFecha1String();
-                fechaf=sel_fechas.getFecha2String();
-                sel_fechas.cerrar();
-                dia_tipo.dibujar();
+        else if (sel_tab_periodo.isVisible()){
+                periodo = sel_tab_periodo.getValorSeleccionado();
+                sel_tab_periodo.cerrar();
+                sel_tab_jornada.dibujar();
+                System.out.println("per "+periodo);
         }
-        else if(dia_tipo.isVisible()){
+        else if(sel_tab_jornada.isVisible()){
+            if (sel_tab_jornada.getValorSeleccionado()!= null && sel_tab_jornada.getValorSeleccionado().isEmpty() == false) {
+                System.out.println("per "+periodo);
                 Map map_parametros = new HashMap();
-                map_parametros.put("nombre", utilitario.getVariable("NICK"));
-                map_parametros.put("pfechai",fechai );
-                map_parametros.put("pfechaf", fechaf);
-                map_parametros.put("ptipo", Integer.parseInt(rad_tipo_justificacion.getValue().toString()));
+                map_parametros.put("p_periodo",Integer.parseInt(periodo));
+                map_parametros.put("p_jornada", Integer.parseInt(sel_tab_jornada.getValorSeleccionado()));
                 sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
-                dia_tipo.cerrar();
+                sel_tab_jornada.cerrar();
                 sel_rep.dibujar();
         }
+        } 
         else{
             utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
         }
     }
-    if (rep_reporte.getReporteSelecionado().equals("Registro Asistencia Alumnos")){
-         if(rep_reporte.isVisible()){
+    else {
+        utilitario.agregarMensajeInfo("No se puede continuar", "No ha seleccionado ningun registro requerido");
+    }
+    
+    if (rep_reporte.getReporteSelecionado().equals("Horarios por nivel")){
+                
+        if(rep_reporte.isVisible()){
                 rep_reporte.cerrar();
-                sel_fechas.dibujar();
+                sel_tab_periodo.dibujar();
         }
-         else if (sel_fechas.isVisible()){
-                
-                fechai=sel_fechas.getFecha1String();
-                fechaf=sel_fechas.getFecha2String();
-                sel_fechas.cerrar();
-                sel_tab_carrera.dibujar();
+        else if (sel_tab_periodo.isVisible()){
+                periodo = sel_tab_periodo.getValorSeleccionado();
+                sel_tab_periodo.cerrar();
+                sel_tab_jornada.dibujar();
+                System.out.println("per "+periodo);
         }
-         else if (sel_tab_carrera.isVisible()){
-                String str_seleccionado = sel_tab_carrera.getSeleccionados();
-                if (str_seleccionado != null) {
-                
-              
-                    
+        else if(sel_tab_jornada.isVisible()){
+               jornada = sel_tab_jornada.getValorSeleccionado();
+               System.out.println("jornada "+jornada);
+               sel_tab_jornada.cerrar();
+               sel_tab_mension.dibujar();
+        }
+        else if(sel_tab_mension.isVisible()){
+               mension = sel_tab_mension.getValorSeleccionado();
+               System.out.println("mension "+mension);
+               sel_tab_mension.cerrar();
+               sel_tab_nivel.dibujar();
+        }
+        else if(sel_tab_nivel.isVisible()){
+               if (sel_tab_nivel.getValorSeleccionado()!= null && sel_tab_nivel.getValorSeleccionado().isEmpty() == false) {
+                //System.out.println("per "+periodo);
                 Map map_parametros = new HashMap();
-                map_parametros.put("nombre", utilitario.getVariable("NICK"));
-                map_parametros.put("pfechai",fechai );
-                map_parametros.put("pfechaf", fechaf);
-                map_parametros.put("ptipo", str_seleccionado);
+                map_parametros.put("p_periodo",Integer.parseInt(periodo));
+                map_parametros.put("p_jornada",Integer.parseInt(jornada));
+                map_parametros.put("p_mension",Integer.parseInt(mension));
+                map_parametros.put("p_nivel", Integer.parseInt(sel_tab_nivel.getValorSeleccionado()));
                 sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
-                sel_tab_carrera.cerrar();
-                sel_rep.dibujar();    
-                
-                } else {
-                    utilitario.agregarMensajeInfo("Debe seleccionar al menos un registro", "");
-                }
+                sel_tab_nivel.cerrar();
+                System.out.println("nivel "+nivel);
+                sel_rep.dibujar();
         }
+        } 
         else{
             utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
         }
     }
+    else {
+        utilitario.agregarMensajeInfo("No se puede continuar", "No ha seleccionado ningun registro requerido");
+    }
+    
+    if (rep_reporte.getReporteSelecionado().equals("Horarios por docente")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                sel_tab_periodo.dibujar();
+        }
+        else if (sel_tab_periodo.isVisible()){
+                periodo = sel_tab_periodo.getValorSeleccionado();
+                sel_tab_periodo.cerrar();
+                sel_tab_jornada.dibujar();
+                System.out.println("per "+periodo);
+        }
+        else if(sel_tab_jornada.isVisible()){
+               jornada = sel_tab_jornada.getValorSeleccionado();
+               System.out.println("jornada "+jornada);
+               sel_tab_jornada.cerrar();
+               sel_tab_mension.dibujar();
+        }
+        else if(sel_tab_mension.isVisible()){
+               mension = sel_tab_mension.getValorSeleccionado();
+               System.out.println("mension "+mension);
+               sel_tab_mension.cerrar();
+               sel_tab_docente.dibujar();
+        }
+        else if(sel_tab_docente.isVisible()){
+               if (sel_tab_docente.getValorSeleccionado()!= null && sel_tab_docente.getValorSeleccionado().isEmpty() == false) {
+                //System.out.println("per "+periodo);
+                Map map_parametros = new HashMap();
+                map_parametros.put("p_periodo",Integer.parseInt(periodo));
+                map_parametros.put("p_jornada",Integer.parseInt(jornada));
+                map_parametros.put("p_mension",Integer.parseInt(mension));
+                map_parametros.put("p_docente", Integer.parseInt(sel_tab_docente.getValorSeleccionado()));
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_nivel.cerrar();
+                System.out.println("nivel "+nivel);
+                sel_rep.dibujar();
+        }
+        } 
+        else{
+            utilitario.agregarMensajeInfo("No se puede continuar", "No ha selccionado ningun registro");
+        }
+    }
+    else {
+        utilitario.agregarMensajeInfo("No se puede continuar", "No ha seleccionado ningun registro requerido");
+    }
+    
+     if (rep_reporte.getReporteSelecionado().equals("Horarios por docente grupos")){
+                
+        if(rep_reporte.isVisible()){
+                rep_reporte.cerrar();
+                 sel_tab_periodo.dibujar();
+                }
+
+             else if (sel_tab_periodo.isVisible()){
+                //System.out.println("per "+periodo);
+                Map map_parametros = new HashMap();
+                map_parametros.put("p_periodo", Integer.parseInt(sel_tab_periodo.getValorSeleccionado()));
+                sel_rep.setSeleccionFormatoReporte(map_parametros, rep_reporte.getPath());
+                sel_tab_nivel.cerrar();
+                System.out.println("nivel "+nivel);
+                sel_tab_periodo.cerrar();
+                sel_rep.dibujar();
+                
+             }
+        
+        
+    }
+    else {
+        utilitario.agregarMensajeInfo("No se puede continuar", "No ha seleccionado ningun registro requerido");
+    }
+    
 }    
+   
     @Override
     public void insertar() {
     }
@@ -222,6 +380,46 @@ public void aceptarReporte() {
 
     public void setPanOpcion(Panel panOpcion) {
         this.panOpcion = panOpcion;
+    }
+
+    public SeleccionTabla getSel_tab_periodo() {
+        return sel_tab_periodo;
+    }
+
+    public void setSel_tab_periodo(SeleccionTabla sel_tab_periodo) {
+        this.sel_tab_periodo = sel_tab_periodo;
+    }
+
+    public SeleccionTabla getSel_tab_jornada() {
+        return sel_tab_jornada;
+    }
+
+    public void setSel_tab_jornada(SeleccionTabla sel_tab_jornada) {
+        this.sel_tab_jornada = sel_tab_jornada;
+    }
+
+    public SeleccionTabla getSel_tab_mension() {
+        return sel_tab_mension;
+    }
+
+    public void setSel_tab_mension(SeleccionTabla sel_tab_mension) {
+        this.sel_tab_mension = sel_tab_mension;
+    }
+
+    public SeleccionTabla getSel_tab_nivel() {
+        return sel_tab_nivel;
+    }
+
+    public void setSel_tab_nivel(SeleccionTabla sel_tab_nivel) {
+        this.sel_tab_nivel = sel_tab_nivel;
+    }
+
+    public SeleccionTabla getSel_tab_docente() {
+        return sel_tab_docente;
+    }
+
+    public void setSel_tab_docente(SeleccionTabla sel_tab_docente) {
+        this.sel_tab_docente = sel_tab_docente;
     }
     
 }

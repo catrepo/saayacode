@@ -50,7 +50,7 @@ public class HoraDefinicion extends Pantalla{
     bar_botones.agregarReporte();
         
         com_periodo_academico.setId("cmb_periodo_academico");
-        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true,false"));
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true, false"));
         com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
        
         bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
@@ -58,8 +58,8 @@ public class HoraDefinicion extends Pantalla{
         
         Boton bot_replicar = new Boton();
         bot_replicar.setIcon("ui-icon-newwin");
-        bot_replicar.setValue("Duplicar");
-        bot_replicar.setTitle("Duplicar");
+        bot_replicar.setValue("DUPLICAR");
+        bot_replicar.setTitle("DUPLICAR");
         bar_botones.agregarBoton(bot_replicar);    
         bot_replicar.setMetodo("replicarDefinicionHora");
         
@@ -79,10 +79,11 @@ public class HoraDefinicion extends Pantalla{
     tab_hora_definicion.getColumna("hora_inicio_yhodeh").setNombreVisual("HORA INICIO");
     tab_hora_definicion.getColumna("hora_final_yhodeh").setNombreVisual("HORA FINAL");
     tab_hora_definicion.getColumna("activo_yhodeh").setNombreVisual("ACTIVO");
+    tab_hora_definicion.getColumna("activo_yhodeh").setValorDefecto("TRUE");
     tab_hora_definicion.dibujar();
     
         set_tab_duplicar_def_hora.setId("set_tab_duplicar_def_hora");
-        set_tab_duplicar_def_hora.setTitle("TABLA DEL PERIODO ACADEMICO");
+        set_tab_duplicar_def_hora.setTitle("ESCOJA LOS TIEMPOS DE JORNADA");
         set_tab_duplicar_def_hora.setSeleccionTabla(ser_horarios.getDescripcionHora("-1"), "ide_yhodeh");
         set_tab_duplicar_def_hora.getTab_seleccion().getColumna("ide_ystpea").setVisible(false);
         set_tab_duplicar_def_hora.getTab_seleccion().getColumna("ide_yhothj").setVisible(false);
@@ -115,6 +116,12 @@ public class HoraDefinicion extends Pantalla{
         
         PanelTabla pat_hora_definicion = new PanelTabla();
         pat_hora_definicion.setId("pat_hora_definicion");
+        pat_hora_definicion.getMenuTabla().getItem_buscar().setRendered(false);
+        pat_hora_definicion.getMenuTabla().getItem_importar().setRendered(false);
+        pat_hora_definicion.getMenuTabla().getItem_excel().setRendered(false);
+        pat_hora_definicion.getMenuTabla().getItem_excel_filtro().setRendered(false);
+        pat_hora_definicion.getMenuTabla().getItem_formato().setRendered(false);
+        pat_hora_definicion.getMenuTabla().quitarSubmenuOtros();
         pat_hora_definicion.setPanelTabla(tab_hora_definicion);
         Division div_hora_definicion = new Division();
         div_hora_definicion.setId("div_hora_tipo_horario_jornada");
@@ -122,14 +129,13 @@ public class HoraDefinicion extends Pantalla{
         agregarComponente(div_hora_definicion); 
         
         Imagen modalidadIma = new Imagen();
-        modalidadIma.setValue("imagenes/logocabeceras.png");
+        modalidadIma.setValue("imagenes/logoinstituto_pequeño.png");
         pat_hora_definicion.setWidth("100%");
         pat_hora_definicion.setHeader(modalidadIma);
         
-        
         // creo dialogo para crear periodo activo
         dia_periodo_activo.setId("dia_periodo_activo");
-        dia_periodo_activo.setTitle("Seleccion de Periodo Academico");
+        dia_periodo_activo.setTitle("Selección de Periodo Académico");
         dia_periodo_activo.setWidth("40%");
         dia_periodo_activo.setHeight("18%");
         dia_periodo_activo.getBot_aceptar().setMetodo("aceptarPeriodo");
@@ -149,8 +155,6 @@ public class HoraDefinicion extends Pantalla{
         dia_periodo_activo.setDialogo(gru_cuerpo);
         agregarComponente(dia_periodo_activo);
         
-        
-    
     sel_rep.setId("sel_rep");
     agregarComponente(sel_rep);
     }
@@ -206,7 +210,6 @@ private void abrirperfilesSistemas(){
         
             set_tab_duplicar_def_hora.getTab_seleccion().setSql(ser_horarios.getDescripcionHora(com_periodo_academico.getValue().toString()));
             set_tab_duplicar_def_hora.getTab_seleccion().ejecutarSql();
-                    
             set_tab_duplicar_def_hora.dibujar();
                 }
     
@@ -230,7 +233,7 @@ private void abrirperfilesSistemas(){
             int numero_filas = set_tab_duplicar_def_hora.getNumeroSeleccionados();
             System.out.println("filas eleccionadas "+numero_filas);
             String valor1="";
-            for (int i=1;i<=numero_filas;i++){
+            for (int i=0;i<numero_filas;i++){
                 
                 TablaGenerica codigo_maximo = utilitario.consultar(ser_estructura_organizacional.getCodigoMaximoTabla("yavirac_hora_definicion_hora", "ide_yhodeh"));
                 String primario = codigo_maximo.getValor("maximo");
@@ -243,9 +246,10 @@ private void abrirperfilesSistemas(){
                  dia_periodo_activo.cerrar();
                  set_tab_duplicar_def_hora.cerrar();
                  filtroComboPeriodoAcademnico();
-                 utilitario.agregarMensaje("Duplicado con exito","");
+                 utilitario.agregarMensaje("Duplicado exitosamente","");
         }
     }
+    
     
     public void replicar(){
         

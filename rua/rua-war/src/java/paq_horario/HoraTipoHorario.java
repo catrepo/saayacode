@@ -20,6 +20,12 @@ public class HoraTipoHorario extends Pantalla {
         
         PanelTabla pat_hora_tipo_horario = new PanelTabla();
         pat_hora_tipo_horario.setId("pat_hora_tipo_horario");
+        pat_hora_tipo_horario.getMenuTabla().getItem_buscar().setRendered(false);
+        pat_hora_tipo_horario.getMenuTabla().getItem_importar().setRendered(false);
+        pat_hora_tipo_horario.getMenuTabla().getItem_excel().setRendered(false);
+        pat_hora_tipo_horario.getMenuTabla().getItem_excel_filtro().setRendered(false);
+        pat_hora_tipo_horario.getMenuTabla().getItem_formato().setRendered(false);
+        pat_hora_tipo_horario.getMenuTabla().quitarSubmenuOtros();
         pat_hora_tipo_horario.setPanelTabla(tab_hora_tipo_horario);
         Division div_hora_tipo_horario = new Division();
         div_hora_tipo_horario.setId("div_hora_tipo_horario");
