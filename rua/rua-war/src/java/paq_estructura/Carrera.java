@@ -62,6 +62,7 @@ public class Carrera extends Pantalla{
         tab_malla.setId("tab_malla");
         tab_malla.setTabla("yavirac_stror_malla", "ide_ystmal",3 );
         tab_malla.getColumna("ide_ystnie").setCombo(ser_estructura.getNivelEducacion());
+        tab_malla.getColumna("ide_ystnie").setFiltro(true);
         tab_malla.getColumna("ide_ystmat").setCombo(ser_estructura.getMaterias());
         tab_malla.getColumna("ide_ysttif").setCombo(ser_estructura.getTipoFormacion());
         tab_malla.setHeader("MALLA ACADEMICA");
