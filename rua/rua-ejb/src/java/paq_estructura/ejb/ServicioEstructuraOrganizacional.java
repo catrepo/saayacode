@@ -258,15 +258,15 @@ public class ServicioEstructuraOrganizacional {
         String sql = "";
         sql = "select ide_usua,nom_usua,nick_usua,ide_ypedpe from sis_usuario where ide_usua in(" + ide_usua + ") " + condicion;
         return sql;
-    }
-
-    public String getMalla() {
-        String sql = "";
-        sql = "select a.ide_ystmal,descripcion_ystnie,detalle_ystmat,descripcion_ystmen "
-                + " from yavirac_stror_malla a, yavirac_stror_nivel_educacion b,yavirac_stror_mension c,yavirac_stror_materia d"
-                + " where a.ide_ystnie = b.ide_ystnie"
-                + " and a.ide_ystmen = c.ide_ystmen"
-                + " and a.ide_ystmat = d.ide_ystmat";
+    }    
+       public String getMalla() {
+        String sql="";
+        sql="select a.ide_ystmal, descripcion_ystnie, detalle_ystmat, descripcion_ystmen \n" +
+            "from yavirac_stror_malla a, yavirac_stror_nivel_educacion b,yavirac_stror_mension c,yavirac_stror_materia d\n" +
+            "where a.ide_ystnie = b.ide_ystnie\n" +
+            "and a.ide_ystmen = c.ide_ystmen\n" +
+            "and a.ide_ystmat = d.ide_ystmat\n" +
+            "order by descripcion_ystmen, descripcion_ystnie";
         return sql;
     }
 
