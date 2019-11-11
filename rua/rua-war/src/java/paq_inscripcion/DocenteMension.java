@@ -51,22 +51,22 @@ public class DocenteMension extends Pantalla {
         tab_docentemension.setTabla("yavirac_ins_docente_mension", "ide_yindom", 1);
         tab_docentemension.setCondicion("ide_yindom = -1");
         tab_docentemension.getColumna("ide_yindom").setNombreVisual("CODIGO");
-        tab_docentemension.setHeader("DOCENTE MENSION");
+        tab_docentemension.setHeader("COORDINADOR CARRERA");
         tab_docentemension.getColumna("ide_ystmen").setCombo(ser_estructura_organizacional.getMension());
         tab_docentemension.getColumna("ide_ystmen").setNombreVisual("MENSION");
         tab_docentemension.getColumna("ide_ystmen").setAutoCompletar();
         //tab_docentemension.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("false"));
         tab_docentemension.getColumna("ide_ystpea").setVisible(false);
         tab_docentemension.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true"));
-        tab_docentemension.getColumna("ide_ypedpe").setNombreVisual("DDOCENTE DATO");
+        tab_docentemension.getColumna("ide_ypedpe").setNombreVisual("DOCENTE DATO");
         tab_docentemension.getColumna("ide_ypedpe").setAutoCompletar();
         tab_docentemension.getColumna("observacion_yindom").setNombreVisual("OBSERVACION");
-
-        tab_docentemension.setTipoFormulario(true);        
-        tab_docentemension.getGrid().setColumns(2);
+                           
+        //tab_docentemension.setTipoFormulario(true);        
+        //tab_docentemension.getGrid().setColumns(2);
 
         tab_docentemension.dibujar();   
-
+         
         PanelTabla pat_docentemension = new PanelTabla();
         pat_docentemension.setId("pat_docentemension");
         pat_docentemension.setPanelTabla(tab_docentemension);

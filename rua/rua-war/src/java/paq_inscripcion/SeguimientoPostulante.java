@@ -5,12 +5,16 @@
  */
 package paq_inscripcion;
 
+import framework.componentes.Boton;
+import framework.componentes.Combo;
 import framework.componentes.Division;
+import framework.componentes.Etiqueta;
 import framework.componentes.PanelTabla;
 import framework.componentes.Tabla;
 import framework.componentes.Tabulador;
 import javax.ejb.EJB;
 import paq_alumno.ejb.ServicioAlumno;
+import paq_estructura.ejb.ServicioEstructuraOrganizacional;
 import paq_inscripcion.ejb.ServicioInscripcion;
 import paq_personal.ejb.ServicioPersonal;
 import sistema.aplicacion.Pantalla;
@@ -21,6 +25,8 @@ import sistema.aplicacion.Pantalla;
  */
 public class SeguimientoPostulante extends Pantalla {
 
+    private Combo com_periodo_academico = new Combo();
+    private Boton bot_clean = new Boton();
     private Tabla tab_docentealumno = new Tabla();
     private Tabla tab_docenteseguimiento = new Tabla();
 
@@ -30,9 +36,22 @@ public class SeguimientoPostulante extends Pantalla {
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
     @EJB
     private final ServicioInscripcion ser_inscripcion = (ServicioInscripcion) utilitario.instanciarEJB(ServicioInscripcion.class);
+    @EJB
+    private final ServicioEstructuraOrganizacional ser_estructura_organizacional = (ServicioEstructuraOrganizacional) utilitario.instanciarEJB(ServicioEstructuraOrganizacional.class);
 
     public SeguimientoPostulante() {
+/*
+        com_periodo_academico.setId("com_periodo_academico");
+        com_periodo_academico.setCombo(ser_estructura_organizacional.getPeriodoAcademico("true"));
+        bar_botones.agregarComponente(new Etiqueta("Periodo Academico"));
+        bar_botones.agregarComponente(com_periodo_academico);
+        com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
 
+        bot_clean.setIcon("ui-icon-cancel");
+        bot_clean.setTitle("Limpiar");
+        bot_clean.setMetodo("limpiar");
+        bar_botones.agregarComponente(bot_clean);
+*/
         tab_docentealumno.setId("tab_docentealumno");
         tab_docentealumno.setTabla("yavirac_ins_docente_alumno", "ide_yindoa", 2);
         tab_docentealumno.getColumna("ide_yindoa").setNombreVisual("CODIGO");
@@ -68,16 +87,29 @@ public class SeguimientoPostulante extends Pantalla {
 
         Division div_division = new Division();
         div_division.setId("div_division");
-        div_division.dividir2(pat_docentealumno, pat_docenteseguimiento, "50%", "H");    
+        div_division.dividir2(pat_docentealumno, pat_docenteseguimiento, "50%", "H");
 
         agregarComponente(div_division);
 
     }
+/*
+    public void filtroComboPeriodoAcademico() {
 
+        tab_docenteseguimiento.setCondicion("ide_ystpea=" + com_periodo_academico.getValue().toString());
+        tab_docenteseguimiento.ejecutarSql();
+        ///tab_docentemension.ejecutarValorForanea(tab_docentemension.getValorSeleccionado());   
+    }
+*/
     @Override
     public void insertar() {
-        if (tab_docentealumno.isFocus()) {
-            tab_docentealumno.insertar();
+        if (com_periodo_academico.getValue() == null) {    
+
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Seleccione el Periodo Academico que desea generar");
+            return;
+        } else if (tab_docenteseguimiento.isFocus()) {
+            tab_docenteseguimiento.insertar();
+            tab_docenteseguimiento.setValor("ide_ystpea", com_periodo_academico.getValue().toString());
+            utilitario.addUpdate("tab_docenteseguimiento");
         } else if (tab_docenteseguimiento.isFocus()) {
             tab_docenteseguimiento.insertar();
         }
@@ -99,6 +131,22 @@ public class SeguimientoPostulante extends Pantalla {
         } else if (tab_docenteseguimiento.isFocus()) {
             tab_docenteseguimiento.eliminar();
         }
+    }
+
+    public Boton getBot_clean() {
+        return bot_clean;
+    }
+
+    public void setBot_clean(Boton bot_clean) {
+        this.bot_clean = bot_clean;
+    }
+
+    public Combo getCom_periodo_academico() {
+        return com_periodo_academico;
+    }
+
+    public void setCom_periodo_academico(Combo com_periodo_academico) {
+        this.com_periodo_academico = com_periodo_academico;
     }
 
     public Tabla getTab_docentealumno() {
