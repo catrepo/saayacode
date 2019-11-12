@@ -54,8 +54,6 @@ public class DocenteMension extends Pantalla {
         tab_docentemension.setHeader("COORDINADOR CARRERA");
         tab_docentemension.getColumna("ide_ystmen").setCombo(ser_estructura_organizacional.getMension());
         tab_docentemension.getColumna("ide_ystmen").setNombreVisual("MENSION");
-        tab_docentemension.getColumna("ide_ystmen").setAutoCompletar();
-        //tab_docentemension.getColumna("ide_ystpea").setCombo(ser_estructura_organizacional.getPeriodoAcademico("false"));
         tab_docentemension.getColumna("ide_ystpea").setVisible(false);
         tab_docentemension.getColumna("ide_ypedpe").setCombo(ser_personal.getDatopersonal("true"));
         tab_docentemension.getColumna("ide_ypedpe").setNombreVisual("DOCENTE DATO");
