@@ -37,7 +37,9 @@ public class ServicioInscripcion {
                 + "from yavirac_ins_docente_mension a \n"
                 + "left join yavirac_stror_mension b on a.ide_ystmen = b.ide_ystmen \n"
                 + "where ide_ystpea=" + ide_ystpea + " and ide_ypedpe= " + ide_ypedpe;
+        System.out.println("SQL===>"+sql);
         return sql;
+        
     }
 
     public String getSqlAlumnosInscritos(String ide_ystpea, String ide_ystmen) {
