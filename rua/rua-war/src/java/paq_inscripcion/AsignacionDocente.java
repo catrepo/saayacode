@@ -93,7 +93,7 @@ public class AsignacionDocente extends Pantalla {
             tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO DATO PERSONAL");
             tab_docentealumno.getColumna("ide_yaldap").setAutoCompletar();
             tab_docentealumno.getColumna("ide_yinpin").setNombreVisual("PRE INSCRIPCION");
-            tab_docentealumno.getColumna("asigna_yindoa").setNombreVisual("ASIGNA");
+                
             tab_docentealumno.dibujar();
 
             PanelTabla pat_docentealumno = new PanelTabla();
