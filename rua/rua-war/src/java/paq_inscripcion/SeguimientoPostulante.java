@@ -63,7 +63,7 @@ public class SeguimientoPostulante extends Pantalla {
             bar_botones.agregarComponente(bot_clean);
 
             tab_docentealumno.setId("tab_docentealumno");
-            tab_docentealumno.setTabla("yavirac_ins_docente_alumno", "ide_yindoa", 1);           
+            tab_docentealumno.setTabla("yavirac_ins_docente_alumno", "ide_yindoa", 1);
             tab_docentealumno.getColumna("ide_yindoa").setNombreVisual("CODIGO");
             tab_docentealumno.setHeader("DOCENTE: " + docente);
             tab_docentealumno.setCondicion("ide_yincda in (select ide_yincda from yavirac_ins_coordin_docent_as  where ide_ypedpe=" + ide_docente + ")");
@@ -73,11 +73,10 @@ public class SeguimientoPostulante extends Pantalla {
             tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO DATO PERSONAL");
             tab_docentealumno.getColumna("ide_yaldap").setLectura(true);
             tab_docentealumno.getColumna("ide_yinpin").setVisible(false);
-            //tab_docentealumno.getColumna("asigna_yindoa").setNombreVisual("ASIGNA");     
             tab_docentealumno.agregarRelacion(tab_docenteseguimiento);
             tab_docentealumno.dibujar();
 
-            PanelTabla pat_docentealumno = new PanelTabla();     
+            PanelTabla pat_docentealumno = new PanelTabla();
             pat_docentealumno.setId("pat_docentealumno");
             pat_docentealumno.setPanelTabla(tab_docentealumno);
 
@@ -107,15 +106,15 @@ public class SeguimientoPostulante extends Pantalla {
         }
     }
 
-    public void filtroComboPeriodoAcademico() {      
+    public void filtroComboPeriodoAcademico() {
 
         com_mension.setCombo(ser_inscripcion.getSqlDocenteMension(com_periodo_academico.getValue().toString(), ide_docente));
         utilitario.addUpdate("com_mension");
         ///tab_docentemension.ejecutarValorForanea(tab_docentemension.getValorSeleccionado());   
     }
 
-    String docente = "";                   
-    String documento = "";                
+    String docente = "";
+    String documento = "";
     String ide_docente = "";
 
     private boolean TienePermiso() {
@@ -156,10 +155,10 @@ public class SeguimientoPostulante extends Pantalla {
             }
         }
 
-    }       
+    }
 
     @Override
-    public void eliminar() {           
+    public void eliminar() {
         if (tab_docentealumno.isFocus()) {
             tab_docentealumno.eliminar();
         } else if (tab_docenteseguimiento.isFocus()) {
