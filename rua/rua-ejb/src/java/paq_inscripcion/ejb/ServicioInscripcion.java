@@ -37,26 +37,38 @@ public class ServicioInscripcion {
                 + "from yavirac_ins_docente_mension a \n"
                 + "left join yavirac_stror_mension b on a.ide_ystmen = b.ide_ystmen \n"
                 + "where ide_ystpea=" + ide_ystpea + " and ide_ypedpe= " + ide_ypedpe;
-        System.out.println("SQL===>"+sql);
+        //System.out.println("SQL===>"+sql);
         return sql;
-        
+
+    }
+
+    public String getSqlDocenteAsignado(String ide_ystpea, String ide_ypedpe) {
+        String sql = "";
+        sql = "select ide_yincda,a.ide_yindom, descripcion_ystmen \n"
+                + "from yavirac_ins_docente_mension a \n"
+                + "left join yavirac_stror_mension b on a.ide_ystmen = b.ide_ystmen\n"
+                + "left join yavirac_ins_coordin_docent_as c on a.ide_yindom=c.ide_yindom\n"
+                + "where ide_ystpea=" + ide_ystpea + " and c.ide_ypedpe=" + ide_ypedpe;
+        //System.out.println("SQL===>"+sql);
+        return sql;
+
     }
 
     public String getSqlAlumnosInscritos(String ide_ystpea, String ide_ystmen) {
         String sql = "";
-        sql = "select a.ide_yinpin, a.ide_yaldap, ide_ystpea, doc_identidad_yaldap, nombre_yaldap, apellido_yaldap, " +
-                "                a.ide_ystmen, descripcion_ystmen " +
-                "from (                " +
-                "select ide_yinpin, a.ide_yaldap, ide_ystpea, doc_identidad_yaldap, nombre_yaldap, apellido_yaldap, " +
-                "                a.ide_ystmen, descripcion_ystmen " +
-                "                from yavirac_ins_pre_inscripcion a" +
-                "                left join yavirac_alum_dato_personal b on a.ide_yaldap=b.ide_yaldap" +
-                "                left join yavirac_stror_mension c on a.ide_ystmen=c.ide_ystmen" +
-                "                where ide_ystpea="+ide_ystpea+" and a.ide_ystmen="+ide_ystmen+
-                " ) a "+
-                " left join yavirac_ins_docente_alumno b on a.ide_yinpin=b.ide_yinpin" +
-                " where b.ide_yinpin is null";        
+        sql = "select a.ide_yinpin, a.ide_yaldap, ide_ystpea, doc_identidad_yaldap, nombre_yaldap, apellido_yaldap, "
+                + "                a.ide_ystmen, descripcion_ystmen "
+                + "from (                "
+                + "select ide_yinpin, a.ide_yaldap, ide_ystpea, doc_identidad_yaldap, nombre_yaldap, apellido_yaldap, "
+                + "                a.ide_ystmen, descripcion_ystmen "
+                + "                from yavirac_ins_pre_inscripcion a"
+                + "                left join yavirac_alum_dato_personal b on a.ide_yaldap=b.ide_yaldap"
+                + "                left join yavirac_stror_mension c on a.ide_ystmen=c.ide_ystmen"
+                + "                where ide_ystpea=" + ide_ystpea + " and a.ide_ystmen=" + ide_ystmen
+                + " ) a "
+                + " left join yavirac_ins_docente_alumno b on a.ide_yinpin=b.ide_yinpin"
+                + " where b.ide_yinpin is null";
         //System.out.println("SQL ----> "+sql);
-        return sql;      
+        return sql;
     }
 }
