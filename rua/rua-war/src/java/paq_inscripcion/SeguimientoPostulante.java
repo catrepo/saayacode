@@ -52,7 +52,7 @@ public class SeguimientoPostulante extends Pantalla {
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademico");
 
             com_mension.setId("com_mension");
-            com_mension.setCombo(ser_inscripcion.getSqlDocenteMension("-1", "-1"));
+            com_mension.setCombo(ser_inscripcion.getSqlDocenteAsignado("-1", "-1"));
             bar_botones.agregarComponente(new Etiqueta("CARRERA:"));
             bar_botones.agregarComponente(com_mension);
             com_mension.setMetodo("filtroDocentes");
@@ -67,12 +67,12 @@ public class SeguimientoPostulante extends Pantalla {
             tab_docentealumno.getColumna("ide_yindoa").setNombreVisual("CODIGO");
             tab_docentealumno.setHeader("DOCENTE: " + docente);
             tab_docentealumno.setCondicion("ide_yincda in (select ide_yincda from yavirac_ins_coordin_docent_as  where ide_ypedpe=" + ide_docente + ")");
-            tab_docentealumno.getColumna("ide_yincda").setNombreVisual("DOCENTE ASIGNADO");
-            tab_docentealumno.getColumna("ide_yincda").setLectura(true);
+            tab_docentealumno.getColumna("ide_yincda").setVisible(false);
             tab_docentealumno.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true"));
-            tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO DATO PERSONAL");
+            tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO");
             tab_docentealumno.getColumna("ide_yaldap").setLectura(true);
             tab_docentealumno.getColumna("ide_yinpin").setVisible(false);
+            tab_docentealumno.getColumna("asigna_yindoa").setVisible(false);
             tab_docentealumno.agregarRelacion(tab_docenteseguimiento);
             tab_docentealumno.dibujar();
 
@@ -88,6 +88,7 @@ public class SeguimientoPostulante extends Pantalla {
             tab_docenteseguimiento.getColumna("fecha_contacto_yindos").setNombreVisual("FECHA CONTACTO");
             tab_docenteseguimiento.getColumna("novedad_yindos").setNombreVisual("NOVEDAD");
             tab_docenteseguimiento.getColumna("contactado_yindos").setNombreVisual("CONTACTADO");
+            tab_docenteseguimiento.getColumna("contactado_yindos").setValorDefecto("false");
 
             tab_docenteseguimiento.dibujar();
 
@@ -111,6 +112,17 @@ public class SeguimientoPostulante extends Pantalla {
         com_mension.setCombo(ser_inscripcion.getSqlDocenteMension(com_periodo_academico.getValue().toString(), ide_docente));
         utilitario.addUpdate("com_mension");
         ///tab_docentemension.ejecutarValorForanea(tab_docentemension.getValorSeleccionado());   
+    }
+
+    public void filtroDocentes() {
+
+        String cod = com_mension.getValue().toString() + "";
+        //System.out.println("COD: "+cod);
+        tab_docentealumno.setCondicion(" ide_yincda=" + cod);
+        tab_docentealumno.ejecutarSql();
+        //tab_asignaciondocente.imprimirSql();
+        //tab_docentealumno.ejecutarValorForanea(tab_asignaciondocente.getValorSeleccionado());
+        utilitario.addUpdate("tab_docentealumno");
     }
 
     String docente = "";
@@ -139,11 +151,8 @@ public class SeguimientoPostulante extends Pantalla {
 
     @Override
     public void insertar() {
-        if (tab_docentealumno.isFocus()) {
-            tab_docentealumno.insertar();
-            if (tab_docenteseguimiento.isFocus()) {
-                tab_docenteseguimiento.insertar();
-            }
+        if (tab_docenteseguimiento.isFocus()) {
+            tab_docenteseguimiento.insertar();
         }
     }
 

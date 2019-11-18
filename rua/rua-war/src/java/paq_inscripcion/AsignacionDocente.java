@@ -88,12 +88,12 @@ public class AsignacionDocente extends Pantalla {
             tab_docentealumno.setTabla("yavirac_ins_docente_alumno", "ide_yindoa", 2);
             tab_docentealumno.getColumna("ide_yindoa").setNombreVisual("CODIGO");
             tab_docentealumno.setHeader("DOCENTE ALUMNO");
-            tab_docentealumno.getColumna("ide_yincda").setNombreVisual("COORDINADOR ASIGNA DOCENTE");
             tab_docentealumno.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true"));
-            tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO DATO PERSONAL");
+            tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO");
             tab_docentealumno.getColumna("ide_yaldap").setAutoCompletar();
-            tab_docentealumno.getColumna("ide_yinpin").setNombreVisual("PRE INSCRIPCION");
-                
+            tab_docentealumno.getColumna("ide_yinpin").setVisible(false);
+            tab_docentealumno.getColumna("asigna_yindoa").setVisible(false);
+             tab_docentealumno.getColumna("ide_yaldap").setLectura(true);
             tab_docentealumno.dibujar();
 
             PanelTabla pat_docentealumno = new PanelTabla();
@@ -163,7 +163,7 @@ public class AsignacionDocente extends Pantalla {
     public void filtroDocentes() {
 
         String cod = com_mension.getValue().toString() + "";
-        System.out.println("COD: "+cod);
+        //System.out.println("COD: "+cod);
         tab_asignaciondocente.setCondicion(" ide_yindom=" + cod);
         tab_asignaciondocente.ejecutarSql();
         //tab_asignaciondocente.imprimirSql();
