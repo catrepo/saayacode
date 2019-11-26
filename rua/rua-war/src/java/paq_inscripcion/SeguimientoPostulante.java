@@ -72,10 +72,10 @@ public class SeguimientoPostulante extends Pantalla {
             tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO");
             tab_docentealumno.getColumna("ide_yaldap").setLectura(true);
             tab_docentealumno.getColumna("ide_yinpin").setVisible(false);
-            tab_docentealumno.getColumna("asigna_yindoa").setVisible(false);
+            //tab_docentealumno.getColumna("asigna_yindoa").setVisible(false);
             tab_docentealumno.agregarRelacion(tab_docenteseguimiento);
             tab_docentealumno.dibujar();
-
+                 
             PanelTabla pat_docentealumno = new PanelTabla();
             pat_docentealumno.setId("pat_docentealumno");
             pat_docentealumno.setPanelTabla(tab_docentealumno);

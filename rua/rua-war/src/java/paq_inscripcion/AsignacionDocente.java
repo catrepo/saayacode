@@ -92,10 +92,10 @@ public class AsignacionDocente extends Pantalla {
             tab_docentealumno.getColumna("ide_yaldap").setNombreVisual("ALUMNO");
             tab_docentealumno.getColumna("ide_yaldap").setAutoCompletar();
             tab_docentealumno.getColumna("ide_yinpin").setVisible(false);
-            tab_docentealumno.getColumna("asigna_yindoa").setVisible(false);
+            //tab_docentealumno.getColumna("asigna_yindoa").setVisible(false);
              tab_docentealumno.getColumna("ide_yaldap").setLectura(true);
             tab_docentealumno.dibujar();
-
+                                         
             PanelTabla pat_docentealumno = new PanelTabla();
             pat_docentealumno.setId("pat_docentealumno");
             pat_docentealumno.setPanelTabla(tab_docentealumno);
@@ -143,13 +143,13 @@ public class AsignacionDocente extends Pantalla {
                 tab_docentealumno.insertar();
                 tab_docentealumno.setValor("ide_yaldap", tab_consulta.getValor(i, "ide_yaldap"));
                 tab_docentealumno.setValor("ide_yinpin", tab_consulta.getValor(i, "ide_yinpin"));
-                tab_docentealumno.setValor("asigna_yindoa", "true");
+                //tab_docentealumno.setValor("asigna_yindoa", "true");
             }
             tab_docentealumno.guardar();
             guardarPantalla();
             sel_registra_alumno.cerrar();
             //tab_docentealumno.actualizar();  
-
+           
         }
     }
 
@@ -190,7 +190,7 @@ public class AsignacionDocente extends Pantalla {
             utilitario.agregarMensajeInfo("ADVERTENCIA", "Registre un docente para asignar los alumnos");
         }
 
-    }
+    }         
 
     @Override
     public void insertar() {
@@ -204,8 +204,8 @@ public class AsignacionDocente extends Pantalla {
             tab_asignaciondocente.insertar();
             tab_asignaciondocente.setValor("ide_yindom", com_mension.getValue().toString());
             utilitario.addUpdate("tab_asignaciondocente");
-        } else if (tab_docenteseguimiento.isFocus()) {
-            tab_docenteseguimiento.insertar();
+        } else if (tab_docentealumno.isFocus()) {
+            utilitario.agregarMensajeInfo("ADVERTENCIA", "Selecione del listado de alumnos");
         } /*tab_asignaciondocente.insertar();
             tab_asignaciondocente.setValor("ide_ypedpe", tab_consuta.getValor("ide_ypedpe"));
             tab_asignaciondocente.setValor("ide_ystmal", tab_consuta.getValor("ide_ystmal"));
@@ -247,7 +247,7 @@ public class AsignacionDocente extends Pantalla {
             }
         } else {
             return false;
-        }
+        }                     
     }
 
     @Override
@@ -291,6 +291,30 @@ public class AsignacionDocente extends Pantalla {
 
     public void setSel_registra_alumno(SeleccionTabla sel_registra_alumno) {
         this.sel_registra_alumno = sel_registra_alumno;
+    }
+
+    public Combo getCom_mension() {
+        return com_mension;
+    }
+
+    public void setCom_mension(Combo com_mension) {
+        this.com_mension = com_mension;
+    }
+
+    public Combo getCom_periodo_academico() {
+        return com_periodo_academico;
+    }
+
+    public void setCom_periodo_academico(Combo com_periodo_academico) {
+        this.com_periodo_academico = com_periodo_academico;
+    }
+
+    public Boton getBot_clean() {
+        return bot_clean;
+    }
+
+    public void setBot_clean(Boton bot_clean) {
+        this.bot_clean = bot_clean;
     }
 
 }
