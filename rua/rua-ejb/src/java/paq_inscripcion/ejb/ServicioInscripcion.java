@@ -37,12 +37,12 @@ public class ServicioInscripcion {
                 + "from yavirac_ins_docente_mension a \n"
                 + "left join yavirac_stror_mension b on a.ide_ystmen = b.ide_ystmen \n"
                 + "where ide_ystpea=" + ide_ystpea + " and ide_ypedpe= " + ide_ypedpe;
-        //System.out.println("SQL===>"+sql);
+        System.out.println("SQL===>"+sql);       
         return sql;
 
     }
 
-    public String getSqlDocenteAsignado(String ide_ystpea, String ide_ypedpe) {
+     public String getSqlDocenteAsignado(String ide_ystpea, String ide_ypedpe) {
         String sql = "";
         sql = "select ide_yincda,a.ide_yindom, descripcion_ystmen \n"
                 + "from yavirac_ins_docente_mension a \n"
@@ -52,8 +52,7 @@ public class ServicioInscripcion {
         //System.out.println("SQL===>"+sql);
         return sql;
 
-    }
-
+    }        
     public String getSqlAlumnosInscritos(String ide_ystpea, String ide_ystmen) {
         String sql = "";
         sql = "select a.ide_yinpin, a.ide_yaldap, ide_ystpea, doc_identidad_yaldap, nombre_yaldap, apellido_yaldap, "
