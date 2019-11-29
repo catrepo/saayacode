@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 package paq_inscripcion;
- 
+
 import framework.aplicacion.TablaGenerica;
 import framework.componentes.AreaTexto;
 import framework.componentes.AutoCompletar;
@@ -95,13 +95,6 @@ public class Preinscripcion extends Pantalla {
     public Preinscripcion() {
         if (tienePerfiInscripcion()) {
 
-            aut_alumno.setId("aut_alumno");
-            aut_alumno.setAutoCompletar(ser_alumno.getDatosAlumnos("true,false"));
-            aut_alumno.setSize(75);
-            aut_alumno.setMetodoChange("filtrarAlumno");
-            //bar_botones.agregarComponente(new Etiqueta("Alumno :"));
-            //bar_botones.agregarComponente(aut_alumno);
-
             par_modulo_inscripcion = utilitario.getVariable("p_documento_inscripcion");
 
             com_periodo_academico.setId("com_periodo_academico");
@@ -110,7 +103,13 @@ public class Preinscripcion extends Pantalla {
             bar_botones.agregarComponente(new Etiqueta("Periodo Académico:"));
             bar_botones.agregarComponente(com_periodo_academico);
             com_periodo_academico.setMetodo("filtroComboPeriodoAcademnico");
-            //
+
+            aut_alumno.setId("aut_alumno");
+            aut_alumno.setAutoCompletar(ser_alumno.getDatosAlumnos("true,false"));
+            aut_alumno.setSize(75);
+            aut_alumno.setMetodoChange("filtrarAlumno");
+            bar_botones.agregarComponente(new Etiqueta("Alumno :"));
+            bar_botones.agregarComponente(aut_alumno);       
 
             //BOTON ACEPTAR CUPO DE ALUMNOS
             Boton bot_aceptar_cupo = new Boton();
@@ -164,12 +163,12 @@ public class Preinscripcion extends Pantalla {
             grup_cuerpo.getChildren().add(bot_actualizaAlumno);
 
             //BOTON RECEPCION DE DOCUMENTOS
-            //Boton bot_recibe_documento = new Boton();
-            //bot_recibe_documento.setValue("Recibir Documentos");
-            //bot_recibe_documento.setIcon("ui-icon-clipboard");
-            //bot_recibe_documento.setMetodo("recibeDocumento");
+            Boton bot_recibe_documento = new Boton();
+            bot_recibe_documento.setValue("Recibir Documentos");
+            bot_recibe_documento.setIcon("ui-icon-clipboard");
+            bot_recibe_documento.setMetodo("recibeDocumento");
             //grup_cuerpo.getChildren().add(bot_recibe_documento);
-    
+
             //BOTON CARGAR ARCHIVO
             Boton bot_archivo = new Boton();
             bot_archivo.setValue("Cargar Archivo SENECYT");
@@ -186,7 +185,7 @@ public class Preinscripcion extends Pantalla {
 
             tab_pre_inscrip.setId("tab_pre_inscrip");
             tab_pre_inscrip.setTabla("yavirac_ins_pre_inscripcion", "ide_yinpin", 1);
-            //tab_pre_inscrip.setCondicion("ide_yinpin=-1");
+            tab_pre_inscrip.setCondicion("ide_yinpin=-1");
             tab_pre_inscrip.getColumna("ide_yaldap").setCombo(ser_alumno.getDatosAlumnos("true,false"));
             tab_pre_inscrip.getColumna("ide_yaldap").setAutoCompletar();
             tab_pre_inscrip.getColumna("ide_yaldap").setLectura(true);
@@ -217,15 +216,15 @@ public class Preinscripcion extends Pantalla {
             tab_pre_inscrip.getColumna("docum_senecyd_yinpin").setNombreVisual("DOCUMENTO SENESCYT");
             tab_pre_inscrip.getColumna("fecha_inscripcion_yinpin").setNombreVisual("FECHA INSCRIPCION");
             tab_pre_inscrip.getColumna("observacion_yinpin").setNombreVisual("OBSERVACION");
-            tab_pre_inscrip.getColumna("recibido_yinpin").setNombreVisual("RECIBIDO");
+            //tab_pre_inscrip.getColumna("recibido_yinpin").setNombreVisual("RECIBIDO");
             tab_pre_inscrip.getColumna("contactado_yinpin").setNombreVisual("CONTACTADO");
             tab_pre_inscrip.getColumna("fecha_contac_yinpin").setNombreVisual("FECHA CONTACTADO");
             tab_pre_inscrip.getColumna("observacion_contac_yinpin").setNombreVisual("NOTA CONTACTO");
-            tab_pre_inscrip.dibujar();
+            tab_pre_inscrip.dibujar();    
 
             PanelTabla pat_pre_inscrip = new PanelTabla();
             pat_pre_inscrip.setId("pat_pre_inscrip");
-            pat_pre_inscrip.setPanelTabla(tab_pre_inscrip);
+            pat_pre_inscrip.setPanelTabla(tab_pre_inscrip);    
 
             tab_requ_entregado.setId("tab_requ_entregado");
             tab_requ_entregado.setTabla("yavirac_ins_registro_entregado", "ide_yinree", 2);

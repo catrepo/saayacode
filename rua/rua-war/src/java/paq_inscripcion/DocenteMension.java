@@ -19,7 +19,7 @@ import sistema.aplicacion.Pantalla;
 
 /**
  *
- * @author OROCHII VEGA
+ * @author CRISTIAN VEGA       
  */
 public class DocenteMension extends Pantalla {
 
