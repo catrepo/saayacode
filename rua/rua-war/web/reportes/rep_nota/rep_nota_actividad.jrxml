@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_actividad" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4649e587-8d94-4070-af96-ab5678658e14">
 	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="128"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
 		<box>
@@ -91,7 +91,8 @@ where a.ide_ynopen=b.ide_ynopen and nivel_ynopen=3
 ) q on a.ide_ystpea=q.ide_ystpea and a.ide_ystmen=q.ide_ystmen and a.ide_ystnie=q.ide_ystnie and a.ide_ypedpe=q.ide_ypedpe and a.ide_yhogra=q.ide_yhogra
 and a.ide_ystjor=q.ide_ystjor and a.ide_ynopae=q.ide_ynopae and a.ide_ystmal=q.ide_ystmal and b.ide_yaldap=q.ide_yaldap
 where a.ide_ystpea in($P!{ide_ystpea}) and a.ide_ystnie in ($P!{ide_ystnie}) and a.ide_yhogra in($P!{ide_yhogra}) and a.ide_ystmal in ($P!{ide_ystmal}) and a.ide_ypedpe in ($P!{ide_ypedpe}) and a.ide_ystjor in ($P!{ide_ystjor})
-and j.ide_ynotie in ($P!{ide_ynotie}) and i.ide_ynoace in($P!{ide_ynoace})]]>
+and j.ide_ynotie in ($P!{ide_ynotie}) and i.ide_ynoace in($P!{ide_ynoace})
+order by j.ide_ynotie,i.ide_ynoace,b.ide_yaldap]]>
 	</queryString>
 	<field name="ide_ystpea" class="java.lang.Long"/>
 	<field name="descripcion_ystpea" class="java.lang.String"/>
@@ -109,12 +110,18 @@ and j.ide_ynotie in ($P!{ide_ynotie}) and i.ide_ynoace in($P!{ide_ynoace})]]>
 	<field name="descripcion_ystjor" class="java.lang.String">
 		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
 	</field>
-	<field name="ide_ynopae" class="java.lang.Long"/>
-	<field name="ide_ynoace" class="java.lang.Long"/>
+	<field name="ide_ynopae" class="java.lang.Long">
+		<fieldDescription><![CDATA[es el dato primario de la tabla periodo actividad evaluacion]]></fieldDescription>
+	</field>
+	<field name="ide_ynoace" class="java.lang.Long">
+		<fieldDescription><![CDATA[Campo primario de la tabla yavirac_nota_actividad_evaluac]]></fieldDescription>
+	</field>
 	<field name="descripcion_ynoace" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena las actividades de evaluación]]></fieldDescription>
 	</field>
-	<field name="ide_ynotie" class="java.lang.Long"/>
+	<field name="ide_ynotie" class="java.lang.Long">
+		<fieldDescription><![CDATA[Campo primario de la tabla yavirac_nota_tipo_evaluacion]]></fieldDescription>
+	</field>
 	<field name="descripcion_ynotie" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>
@@ -175,7 +182,7 @@ and j.ide_ynotie in ($P!{ide_ynotie}) and i.ide_ynoace in($P!{ide_ynoace})]]>
 					<textFieldExpression><![CDATA[$F{descripcion_ynoace}+" - "+$F{descripcion_ynotie}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement uuid="5c220082-b109-4c83-986c-ff5b0577f71f" x="45" y="0" width="225" height="79"/>
+					<reportElement uuid="5c220082-b109-4c83-986c-ff5b0577f71f" x="12" y="0" width="225" height="79"/>
 					<subreportParameter name="ide_sucu">
 						<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
 					</subreportParameter>

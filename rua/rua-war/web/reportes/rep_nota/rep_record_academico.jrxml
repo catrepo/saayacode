@@ -416,13 +416,6 @@ order by ide_ystnie,ide_ystmal]]>
 				<textElement/>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="dd7f2c88-d586-4e53-99f2-6e8306154e19" x="1" y="27" width="399" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["SUMA: "+$F{suma}+" / "+ $F{num_materia}+" = "+$F{promedio}]]></textFieldExpression>
-			</textField>
 		</band>
 	</summary>
 </jasperReport>

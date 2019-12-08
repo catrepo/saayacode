@@ -76,11 +76,16 @@ left join (
 	group by ide_yaldap,ide_ystpea,ide_ystmen,ide_ystnie,ide_ypedpe,ide_yhogra,ide_ystjor,ide_ystmal
 ) b on  a.ide_ystpea=b.ide_ystpea and a.ide_ystmen=b.ide_ystmen and a.ide_ystnie=b.ide_ystnie and a.ide_ypedpe=b.ide_ypedpe
 and a.ide_yhogra=b.ide_yhogra and a.ide_ystmal=b.ide_ystmal
-and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap]]>
+and a.ide_ystjor=b.ide_ystjor and a.ide_yaldap=b.ide_yaldap
+order by a.ide_yaldap]]>
 	</queryString>
-	<field name="ide_ynoalr" class="java.lang.Long"/>
+	<field name="ide_ynoalr" class="java.lang.Long">
+		<fieldDescription><![CDATA[Campo primario de la tabla yavirac_nota_alumno_resumen]]></fieldDescription>
+	</field>
 	<field name="periodo_academico" class="java.lang.String"/>
-	<field name="ide_ynotie" class="java.lang.Long"/>
+	<field name="ide_ynotie" class="java.lang.Long">
+		<fieldDescription><![CDATA[Campo primario de la tabla yavirac_nota_tipo_evaluacion]]></fieldDescription>
+	</field>
 	<field name="descripcion_ynotie" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>

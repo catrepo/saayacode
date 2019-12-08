@@ -79,10 +79,13 @@ from yavirac_nota_cabe_asistencia a
 left join yavirac_nota_det_asistencia b on a.ide_ynocaa=b.ide_ynocaa
 ) b  on a.ide_ystpea=b.ide_ystpea and a.ide_ystmen=b.ide_ystmen and a.ide_ystnie=b.ide_ystnie and a.ide_ypedpe=b.ide_ypedpe
 and a.ide_yhogra=b.ide_yhogra and a.ide_ystmal=b.ide_ystmal
-and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.ide_yaldap]]>
+and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.ide_yaldap
+order by a.ide_ynotie,a.ide_yaldap]]>
 	</queryString>
 	<field name="periodo_academico" class="java.lang.String"/>
-	<field name="ide_ynotie" class="java.lang.Long"/>
+	<field name="ide_ynotie" class="java.lang.Long">
+		<fieldDescription><![CDATA[Campo primario de la tabla yavirac_nota_tipo_evaluacion]]></fieldDescription>
+	</field>
 	<field name="detalle_ynopen" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena el detalle del peso nota es decir nota final, nota final primer parcial, nota final gestión clase y nota final examen]]></fieldDescription>
 	</field>
@@ -90,7 +93,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.i
 		<fieldDescription><![CDATA[Este campo almacena la descripcion del periodo academico es decir primer parcial segundo parcial, etc.]]></fieldDescription>
 	</field>
 	<field name="codigo_ystmal" class="java.lang.String">
-		<fieldDescription><![CDATA[este  campo es el codigo de la malla]]></fieldDescription>
+		<fieldDescription><![CDATA[este  campo es el codigo de la malla ]]></fieldDescription>
 	</field>
 	<field name="detalle_ystmat" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
@@ -99,7 +102,7 @@ and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.i
 	</field>
 	<field name="detalle_yhogra" class="java.lang.String"/>
 	<field name="descripcion_ystjor" class="java.lang.String">
-		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina]]></fieldDescription>
+		<fieldDescription><![CDATA[este campo permite describir las actividades tanto vespertina como matutina ]]></fieldDescription>
 	</field>
 	<field name="ide_yaldap" class="java.lang.Long"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -119,7 +122,8 @@ peso examen15]]></fieldDescription>
 	<field name="abreviatura_ynopen" class="java.lang.String"/>
 	<field name="descripcion_ystmen" class="java.lang.String"/>
 	<field name="nota_ynoalr" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[Este campo almacena las notas finales]]></fieldDescription>
+		<fieldDescription><![CDATA[Este campo almacena las notas finales
+]]></fieldDescription>
 	</field>
 	<field name="total_asistencia" class="java.math.BigDecimal"/>
 	<variable name="grupo_alumno" class="java.lang.Integer" resetType="Group" resetGroup="parcial" incrementType="Group" incrementGroup="alumno" calculation="Count">
