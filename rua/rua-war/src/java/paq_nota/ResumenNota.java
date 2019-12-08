@@ -217,7 +217,7 @@ public class ResumenNota extends Pantalla {
             TablaGenerica tab_consulta2 = utilitario.consultar("select * from yavirac_perso_malla_docen_alum  where ide_ypemad = " + tab_consulta.getValor("ide_ypemad"));
             TablaGenerica tab_peso = utilitario.consultar(ser_notas.getPesoNota("3", "true", tab_consulta.getValor("ide_ysttfe")));
             //System.out.println(" <<<<<<<<<<<<<<<<< TAB PESO >>>>>>>>>>>>>>>>>");
-            tab_peso.imprimirSql();
+            //tab_peso.imprimirSql();
             if (tab_consulta2.getTotalFilas() > 0) {
                 if (tab_peso.getTotalFilas() > 0) {
                     for (int i = 0; i < tab_peso.getTotalFilas(); i++) {
