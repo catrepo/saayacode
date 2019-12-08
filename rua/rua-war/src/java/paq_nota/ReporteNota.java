@@ -105,11 +105,11 @@ public class ReporteNota extends Pantalla {
 
             Espacio esp = new Espacio();
             Etiqueta eti_materia = new Etiqueta("MATERIAS");
-            eti_materia.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
+            eti_materia.setEstiloContenido("font-size:16px;font-weight: bold;color:blue");
             Etiqueta eti_actividad = new Etiqueta("ACTIVIDADES EVALUACION");
-            eti_actividad.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
+            eti_actividad.setEstiloContenido("font-size:16px;font-weight: bold;color:blue");
             Etiqueta eti_parcial = new Etiqueta("PARCIAL");
-            eti_parcial.setEstiloContenido("font-size:16px;font-weight: bold;text-decoration: underline;color:blue");
+            eti_parcial.setEstiloContenido("font-size:16px;font-weight: bold;color:blue");
             gri_formulario.getChildren().add(esp);
             gri_formulario.getChildren().add(eti_materia);
             gri_formulario.getChildren().add(eti_actividad);
