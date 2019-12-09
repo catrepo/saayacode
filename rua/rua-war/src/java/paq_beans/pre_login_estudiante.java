@@ -114,8 +114,8 @@ public class pre_login_estudiante {
         //Para cambiar contraseña
         dia_cambia.setId("dia_cambia");
         dia_cambia.setTitle("Cambiar la clave");
-        dia_cambia.getBot_cancelar().setMetodoRuta("pre_login.cancelarCambiarClave");
-        dia_cambia.getBot_aceptar().setMetodoRuta("pre_login.aceptarCambiarClave");
+        dia_cambia.getBot_cancelar().setMetodoRuta("pre_login_estudiante.cancelarCambiarClave");
+        dia_cambia.getBot_aceptar().setMetodoRuta("pre_login_estudiante.aceptarCambiarClave");
         cla_nueva.setFeedback(true);
         cla_confirmar.setFeedback(true);
         cla_clave_actual.setDisabled(true);
@@ -171,7 +171,9 @@ public class pre_login_estudiante {
     }
 
     public void aceptarCambiarClave() {
-        if (cla_nueva.getValue() == null) {
+        System.out.println("cla_nueva++ "+cla_nueva+" cla_confirmar++ "+cla_confirmar+" cla_clave_actual ++ "+cla_clave_actual);
+        
+       if (cla_nueva.getValue() == null) {
             utilitario.agregarMensajeInfo("Validación", "Es necesario ingresar la nueva clave");
             return;
         }
