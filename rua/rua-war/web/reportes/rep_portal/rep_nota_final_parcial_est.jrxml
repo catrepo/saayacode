@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_nota_final_parcial" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a0aad2ce-408e-465f-8afd-045b7855aaf3">
-	<property name="ireport.zoom" value="1.2100000000000002"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="15"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="43"/>
+	<property name="ireport.y" value="165"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="ide_sucu" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -85,9 +85,7 @@ and a.ide_yhogra=b.ide_yhogra and a.ide_ystmal=b.ide_ystmal
 and a.ide_ystjor=b.ide_ystjor and a.ide_ynotie=b.ide_ynotie and a.ide_yaldap=b.ide_yaldap]]>
 	</queryString>
 	<field name="periodo_academico" class="java.lang.String"/>
-	<field name="ide_ynotie" class="java.lang.Long">
-		<fieldDescription><![CDATA[Campo primario de la tabla yavirac_nota_tipo_evaluacion]]></fieldDescription>
-	</field>
+	<field name="ide_ynotie" class="java.lang.Long"/>
 	<field name="detalle_ynopen" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo almacena el detalle del peso nota es decir nota final, nota final primer parcial, nota final gestión clase y nota final examen]]></fieldDescription>
 	</field>
@@ -136,34 +134,34 @@ peso examen15]]></fieldDescription>
 		<groupHeader>
 			<band height="166">
 				<rectangle radius="10">
-					<reportElement x="0" y="0" width="555" height="80" uuid="88a84616-f23a-4073-ab7e-b19d96d88aa9"/>
+					<reportElement uuid="88a84616-f23a-4073-ab7e-b19d96d88aa9" x="0" y="0" width="555" height="80"/>
 				</rectangle>
 				<staticText>
-					<reportElement x="275" y="0" width="280" height="38" uuid="64440180-6447-4d20-9449-3d4c9e1f0cbe"/>
+					<reportElement uuid="64440180-6447-4d20-9449-3d4c9e1f0cbe" x="275" y="0" width="280" height="38"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="13" isBold="true"/>
 					</textElement>
 					<text><![CDATA[REPORTE NOTA FINAL]]></text>
 				</staticText>
 				<line direction="BottomUp">
-					<reportElement x="275" y="0" width="1" height="80" uuid="b41ea93f-2d60-4c42-8b74-9796f0310186"/>
+					<reportElement uuid="b41ea93f-2d60-4c42-8b74-9796f0310186" x="275" y="0" width="1" height="80"/>
 				</line>
 				<textField>
-					<reportElement x="276" y="38" width="278" height="24" uuid="fc228a12-4356-47d5-a6cd-2fd0bcd6cf03"/>
+					<reportElement uuid="fc228a12-4356-47d5-a6cd-2fd0bcd6cf03" x="276" y="38" width="278" height="24"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ynotie}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="276" y="62" width="278" height="18" uuid="24046b74-e02c-42dc-9214-774225b28b87"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="276" y="62" width="278" height="18"/>
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{periodo_academico}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement x="1" y="0" width="242" height="80" uuid="707a2f2e-760c-4795-b57c-d8582328a1cf"/>
+					<reportElement uuid="707a2f2e-760c-4795-b57c-d8582328a1cf" x="1" y="0" width="242" height="80"/>
 					<subreportParameter name="ide_sucu">
 						<subreportParameterExpression><![CDATA[$P{ide_sucu}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -174,229 +172,204 @@ peso examen15]]></fieldDescription>
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
 				</subreport>
 				<textField>
-					<reportElement x="79" y="123" width="255" height="11" uuid="24046b74-e02c-42dc-9214-774225b28b87"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="79" y="101" width="255" height="11"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystnie}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="1" y="134" width="78" height="11" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="1" y="112" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PARALELO:]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="79" y="145" width="255" height="11" uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629"/>
+					<reportElement uuid="79575ce7-ca6e-4b51-a6cd-4b916b496629" x="79" y="123" width="255" height="11"/>
 					<textElement>
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystjor}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="1" y="87" width="78" height="14" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="1" y="87" width="78" height="14"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CARRERA:]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="79" y="112" width="255" height="11" uuid="24046b74-e02c-42dc-9214-774225b28b87"/>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{docente}]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement x="1" y="145" width="78" height="11" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="1" y="123" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[JORNADA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="1" y="101" width="78" height="11" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
-					<textElement verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
-					</textElement>
-					<text><![CDATA[ASIGNATURA:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="1" y="123" width="78" height="11" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="1" y="101" width="78" height="11"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NIVEL:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="79" y="87" width="255" height="14" uuid="24046b74-e02c-42dc-9214-774225b28b87"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="79" y="87" width="255" height="14"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descripcion_ystmen}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="79" y="101" width="255" height="11" uuid="24046b74-e02c-42dc-9214-774225b28b87"/>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{detalle_ystmat}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="1" y="112" width="78" height="11" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
-					<textElement verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
-					</textElement>
-					<text><![CDATA[DOCENTE:]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="79" y="134" width="255" height="11" uuid="24046b74-e02c-42dc-9214-774225b28b87"/>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="79" y="112" width="255" height="11"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{detalle_yhogra}]]></textFieldExpression>
 				</textField>
 				<rectangle radius="10">
-					<reportElement x="364" y="87" width="190" height="72" uuid="2a5c9f68-f8ba-46c1-9044-a43a30c529e9"/>
+					<reportElement uuid="2a5c9f68-f8ba-46c1-9044-a43a30c529e9" x="364" y="87" width="190" height="72"/>
 				</rectangle>
 				<staticText>
-					<reportElement x="383" y="87" width="111" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="87" width="111" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[DESCRIPCION:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="411" y="127" width="126" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="411" y="127" width="126" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="false"/>
 					</textElement>
 					<text><![CDATA[GESTION DE APRENDIZAJE 2]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="383" y="117" width="28" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="117" width="28" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PA1:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="383" y="106" width="28" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="106" width="28" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[EP:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="411" y="96" width="126" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="411" y="96" width="126" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="false"/>
 					</textElement>
 					<text><![CDATA[GESTION DE APRENDIZAJE 1]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="411" y="137" width="126" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="411" y="137" width="126" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="false"/>
 					</textElement>
 					<text><![CDATA[PROYECTO DE AULA 2]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="383" y="147" width="28" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="147" width="28" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[EF:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="411" y="106" width="126" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="411" y="106" width="126" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="false"/>
 					</textElement>
 					<text><![CDATA[EVALUACION PARCIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="411" y="117" width="126" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="411" y="117" width="126" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="false"/>
 					</textElement>
 					<text><![CDATA[PROYECTO DE AULA 1]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="411" y="147" width="126" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="411" y="147" width="126" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="false"/>
 					</textElement>
 					<text><![CDATA[EVALUACION FINAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="383" y="127" width="28" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="127" width="28" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[GA2:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="383" y="96" width="28" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="96" width="28" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[GA1:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="383" y="137" width="28" height="10" uuid="883cc7dd-e504-4b93-a16d-83c587ea1688"/>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="383" y="137" width="28" height="10"/>
 					<textElement verticalAlignment="Middle">
 						<font size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PA2:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="24046b74-e02c-42dc-9214-774225b28b87" x="80" y="134" width="254" height="10"/>
+					<textElement verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{alumno}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="883cc7dd-e504-4b93-a16d-83c587ea1688" x="0" y="134" width="79" height="10"/>
+					<textElement verticalAlignment="Middle">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ALUMNO:]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="100">
 				<crosstab>
-					<reportElement x="0" y="0" width="555" height="100" printWhenGroupChanges="parcial" uuid="6681a4df-5a62-499f-8ae0-b36b0182f4e2"/>
+					<reportElement uuid="6681a4df-5a62-499f-8ae0-b36b0182f4e2" x="0" y="0" width="555" height="100" printWhenGroupChanges="parcial"/>
 					<crosstabDataset>
 						<dataset resetType="Group" resetGroup="parcial"/>
 					</crosstabDataset>
 					<crosstabHeaderCell>
 						<cellContents>
 							<staticText>
-								<reportElement style="Crosstab Data Text" x="25" y="0" width="246" height="30" uuid="d3c9ba37-3fa4-4482-ad6d-604119767795"/>
+								<reportElement uuid="d3c9ba37-3fa4-4482-ad6d-604119767795" style="Crosstab Data Text" x="0" y="0" width="271" height="30"/>
 								<box>
 									<topPen lineWidth="0.75"/>
 									<leftPen lineWidth="0.75"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="7" isBold="true"/>
+									<font isBold="true"/>
 								</textElement>
-								<text><![CDATA[NOMBRE DEL DOCENTE]]></text>
-							</staticText>
-							<staticText>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="30" uuid="d3c9ba37-3fa4-4482-ad6d-604119767795"/>
-								<box>
-									<topPen lineWidth="0.75"/>
-									<leftPen lineWidth="0.75"/>
-								</box>
-								<textElement verticalAlignment="Middle">
-									<font size="7" isBold="true"/>
-								</textElement>
-								<text><![CDATA[N°]]></text>
+								<text><![CDATA[MATERIAS]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabHeaderCell>
 					<rowGroup name="alumno" width="271">
 						<bucket class="java.lang.String">
-							<bucketExpression><![CDATA[$F{alumno}]]></bucketExpression>
+							<bucketExpression><![CDATA[$F{codigo_ystmal}]]></bucketExpression>
 						</bucket>
 						<crosstabRowHeader>
-							<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField>
-									<reportElement style="Crosstab Data Text" x="25" y="0" width="246" height="10" uuid="61396589-11cc-44d4-85f1-af5bb0017070"/>
+									<reportElement uuid="61396589-11cc-44d4-85f1-af5bb0017070" style="Crosstab Data Text" x="0" y="0" width="271" height="10"/>
 									<box>
 										<topPen lineWidth="0.75"/>
-										<leftPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.75"/>
 										<bottomPen lineWidth="0.75"/>
 										<rightPen lineWidth="0.0"/>
 									</box>
@@ -405,20 +378,6 @@ peso examen15]]></fieldDescription>
 										<paragraph leftIndent="3" rightIndent="3"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$V{docente}]]></textFieldExpression>
-								</textField>
-								<textField>
-									<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="10" uuid="61396589-11cc-44d4-85f1-af5bb0017070"/>
-									<box>
-										<topPen lineWidth="0.75"/>
-										<leftPen lineWidth="0.75"/>
-										<bottomPen lineWidth="0.75"/>
-										<rightPen lineWidth="0.75"/>
-									</box>
-									<textElement verticalAlignment="Middle">
-										<font size="7"/>
-										<paragraph leftIndent="3" rightIndent="3"/>
-									</textElement>
-									<textFieldExpression><![CDATA[$V{numeracion}]]></textFieldExpression>
 								</textField>
 							</cellContents>
 						</crosstabRowHeader>
@@ -431,9 +390,9 @@ peso examen15]]></fieldDescription>
 							<bucketExpression><![CDATA[$F{descripcion_ynotie}]]></bucketExpression>
 						</bucket>
 						<crosstabColumnHeader>
-							<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-									<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="65" height="15" isPrintWhenDetailOverflows="true" uuid="de7cd6b0-1bc6-4b4a-b54b-4027036ba829"/>
+									<reportElement uuid="de7cd6b0-1bc6-4b4a-b54b-4027036ba829" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="65" height="15" isPrintWhenDetailOverflows="true"/>
 									<box>
 										<topPen lineWidth="0.75"/>
 										<leftPen lineWidth="0.75"/>
@@ -450,7 +409,7 @@ peso examen15]]></fieldDescription>
 						<crosstabTotalColumnHeader>
 							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<staticText>
-									<reportElement x="0" y="0" width="65" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="64177180-efce-44cc-951a-b39311554cd2"/>
+									<reportElement uuid="64177180-efce-44cc-951a-b39311554cd2" x="0" y="0" width="65" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
 									<box>
 										<topPen lineWidth="0.75"/>
 										<rightPen lineWidth="0.75"/>
@@ -468,11 +427,11 @@ peso examen15]]></fieldDescription>
 							<bucketExpression><![CDATA[$F{peso_ynopen}]]></bucketExpression>
 						</bucket>
 						<crosstabColumnHeader>
-							<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<cellContents backcolor="#FFFFFF" mode="Opaque">
 								<textField>
-									<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="15" uuid="868b974e-1fc5-4329-8b7f-79b2924763ce"/>
+									<reportElement uuid="868b974e-1fc5-4329-8b7f-79b2924763ce" style="Crosstab Data Text" x="0" y="0" width="65" height="15"/>
 									<box>
-										<topPen lineWidth="0.0"/>
+										<topPen lineWidth="0.75"/>
 										<leftPen lineWidth="0.75"/>
 										<bottomPen lineWidth="0.0"/>
 										<rightPen lineWidth="0.75"/>
@@ -501,12 +460,12 @@ peso examen15]]></fieldDescription>
 						<measureExpression><![CDATA[$V{grupo_alumno}]]></measureExpression>
 					</measure>
 					<measure name="docente" class="java.lang.String">
-						<measureExpression><![CDATA[$F{docente}]]></measureExpression>
+						<measureExpression><![CDATA[$F{detalle_ystmat}]]></measureExpression>
 					</measure>
 					<crosstabCell width="65" height="10">
 						<cellContents>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="10" uuid="e325103e-bdf6-49f0-8934-a7a5d3aff7ca"/>
+								<reportElement uuid="e325103e-bdf6-49f0-8934-a7a5d3aff7ca" style="Crosstab Data Text" x="0" y="0" width="65" height="10"/>
 								<box>
 									<topPen lineWidth="0.75"/>
 									<leftPen lineWidth="0.75"/>
@@ -523,7 +482,8 @@ peso examen15]]></fieldDescription>
 					<crosstabCell height="25" rowTotalGroup="alumno">
 						<cellContents backcolor="#BFE1FF" mode="Opaque">
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="db1889a4-4812-4290-a8c7-309d806fee6b"/>
+								<reportElement uuid="db1889a4-4812-4290-a8c7-309d806fee6b" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
 								<textFieldExpression><![CDATA[$V{nota_ynoalrMeasure}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -531,7 +491,7 @@ peso examen15]]></fieldDescription>
 					<crosstabCell width="65" height="10" columnTotalGroup="descripcion_ynotie">
 						<cellContents backcolor="#FFFFFF" mode="Opaque">
 							<textField pattern="###0.00">
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="10" forecolor="#000000" uuid="a687c3e2-2f4c-4912-a1cd-dd7b8d555ff7"/>
+								<reportElement uuid="a687c3e2-2f4c-4912-a1cd-dd7b8d555ff7" style="Crosstab Data Text" x="0" y="0" width="65" height="10" forecolor="#000000"/>
 								<box>
 									<topPen lineWidth="0.75"/>
 									<leftPen lineWidth="0.75"/>
@@ -548,7 +508,8 @@ peso examen15]]></fieldDescription>
 					<crosstabCell rowTotalGroup="alumno" columnTotalGroup="descripcion_ynotie">
 						<cellContents backcolor="#005FB3" mode="Opaque">
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="d85b67b6-ca01-46a2-b675-f7ff57c3b047"/>
+								<reportElement uuid="d85b67b6-ca01-46a2-b675-f7ff57c3b047" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+								<textElement/>
 								<textFieldExpression><![CDATA[$V{nota_ynoalrMeasure}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -559,7 +520,8 @@ peso examen15]]></fieldDescription>
 					<crosstabCell rowTotalGroup="alumno" columnTotalGroup="peso_ynopen">
 						<cellContents backcolor="#BFE1FF" mode="Opaque">
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="2dcf8b79-ae95-40cd-8792-06559f63ca09"/>
+								<reportElement uuid="2dcf8b79-ae95-40cd-8792-06559f63ca09" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
 								<textFieldExpression><![CDATA[$V{nota_ynoalrMeasure}]]></textFieldExpression>
 							</textField>
 						</cellContents>
