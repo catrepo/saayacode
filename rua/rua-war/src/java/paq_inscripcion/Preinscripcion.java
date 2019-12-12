@@ -25,6 +25,7 @@ import framework.componentes.Reporte;
 import framework.componentes.SeleccionFormatoReporte;
 import framework.componentes.SeleccionTabla;
 import framework.componentes.Tabla;
+import framework.componentes.Texto;
 import framework.componentes.Upload;
 import framework.componentes.VisualizarPDF;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class Preinscripcion extends Pantalla {
     private Combo com_periodo_academico = new Combo();
     private SeleccionTabla sel_registra_alumno = new SeleccionTabla();
     private SeleccionTabla sel_actualiza_alumno = new SeleccionTabla();
+    private SeleccionTabla sel_recib_documento = new SeleccionTabla();
     private Confirmar con_guardar_alumno = new Confirmar();
     private Reporte rep_reporte = new Reporte();
     private SeleccionFormatoReporte sel_rep = new SeleccionFormatoReporte();
@@ -77,9 +79,12 @@ public class Preinscripcion extends Pantalla {
     private List<String[]> lis_importa = null; //Guardo los empleados y el valor del rubro
     private AutoCompletar aut_alumno = new AutoCompletar();
     private Dialogo dia_dialogo = new Dialogo();
+    private Dialogo dia_dialogo_ins = new Dialogo();
     private Radio rad_contacto = new Radio();
     private Calendario cal_fecha_contacto = new Calendario();
+    private Calendario cal_fecha_inscripcion = new Calendario();
     private AreaTexto are_observacion = new AreaTexto();
+    private AreaTexto are_observacion2 = new AreaTexto();
 
     @EJB
     private final ServicioAlumno ser_alumno = (ServicioAlumno) utilitario.instanciarEJB(ServicioAlumno.class);
@@ -109,7 +114,7 @@ public class Preinscripcion extends Pantalla {
             aut_alumno.setSize(75);
             aut_alumno.setMetodoChange("filtrarAlumno");
             bar_botones.agregarComponente(new Etiqueta("Alumno :"));
-            bar_botones.agregarComponente(aut_alumno);       
+            bar_botones.agregarComponente(aut_alumno);
 
             //BOTON ACEPTAR CUPO DE ALUMNOS
             Boton bot_aceptar_cupo = new Boton();
@@ -162,12 +167,12 @@ public class Preinscripcion extends Pantalla {
             bot_actualizaAlumno.setMetodo("selactualizaAlumno");
             grup_cuerpo.getChildren().add(bot_actualizaAlumno);
 
-            //BOTON RECEPCION DE DOCUMENTOS
-            Boton bot_recibe_documento = new Boton();
-            bot_recibe_documento.setValue("Recibir Documentos");
-            bot_recibe_documento.setIcon("ui-icon-clipboard");
-            bot_recibe_documento.setMetodo("recibeDocumento");
-            //grup_cuerpo.getChildren().add(bot_recibe_documento);
+            //BOTON REGISTRAR INSCRIPCION
+            Boton bot_registra_inscripcion = new Boton();
+            bot_registra_inscripcion.setValue("Registar Inscripcion");
+            bot_registra_inscripcion.setIcon("ui-icon-clipboard");
+            bot_registra_inscripcion.setMetodo("abrirDialogoIncripcion");
+            grup_cuerpo.getChildren().add(bot_registra_inscripcion);
 
             //BOTON CARGAR ARCHIVO
             Boton bot_archivo = new Boton();
@@ -205,6 +210,8 @@ public class Preinscripcion extends Pantalla {
             tab_pre_inscrip.getColumna("contactado_yinpin").setLectura(true);
             tab_pre_inscrip.getColumna("fecha_contac_yinpin").setLectura(true);
             tab_pre_inscrip.getColumna("observacion_contac_yinpin").setLectura(true);
+            tab_pre_inscrip.getColumna("inscrito_yinpin").setLectura(true);
+            tab_pre_inscrip.getColumna("fecha_registro_yinpin").setLectura(true);
 
             tab_pre_inscrip.agregarRelacion(tab_requ_entregado);
             tab_pre_inscrip.setTipoFormulario(true);
@@ -220,11 +227,13 @@ public class Preinscripcion extends Pantalla {
             tab_pre_inscrip.getColumna("contactado_yinpin").setNombreVisual("CONTACTADO");
             tab_pre_inscrip.getColumna("fecha_contac_yinpin").setNombreVisual("FECHA CONTACTADO");
             tab_pre_inscrip.getColumna("observacion_contac_yinpin").setNombreVisual("NOTA CONTACTO");
-            tab_pre_inscrip.dibujar();    
+            tab_pre_inscrip.getColumna("inscrito_yinpin").setNombreVisual("INSCRITO");
+            tab_pre_inscrip.getColumna("fecha_registro_yinpin").setNombreVisual("FECHA REGISTRO");
+            tab_pre_inscrip.dibujar();
 
             PanelTabla pat_pre_inscrip = new PanelTabla();
             pat_pre_inscrip.setId("pat_pre_inscrip");
-            pat_pre_inscrip.setPanelTabla(tab_pre_inscrip);    
+            pat_pre_inscrip.setPanelTabla(tab_pre_inscrip);
 
             tab_requ_entregado.setId("tab_requ_entregado");
             tab_requ_entregado.setTabla("yavirac_ins_registro_entregado", "ide_yinree", 2);
@@ -420,9 +429,38 @@ public class Preinscripcion extends Pantalla {
             dia_dialogo.setDialogo(gra_cuerpo);
             agregarComponente(dia_dialogo);
 
+            //DIALOGO INSCRIPCION
+            dia_dialogo_ins.setId("dia_dialogo_ins");
+            dia_dialogo_ins.setTitle("REGISTRO INSCRIPCION");
+            dia_dialogo_ins.setWidth("25%");
+            dia_dialogo_ins.setHeight("25%");
+
+            Grid grap_cuerpo = new Grid();
+
+            dia_dialogo_ins.setDialogo(grap_cuerpo);
+            dia_dialogo_ins.getBot_aceptar().setMetodo("abrirArchivos");
+            dia_dialogo_ins.setDialogo(grap_cuerpo);
+
+            grap_cuerpo.setColumns(2);
+            grap_cuerpo.getChildren().add(new Etiqueta("FECHA INSCRIPCION: "));
+            cal_fecha_inscripcion.setDisabled(true);//permite bloquear la linea de la fecha
+            grap_cuerpo.getChildren().add(cal_fecha_inscripcion);
+            grap_cuerpo.getChildren().add(new Etiqueta("OBSERVACION: "));
+            grap_cuerpo.getChildren().add(are_observacion2);//detalle del postulante
+            agregarComponente(dia_dialogo_ins);
+
+            //PANTALLA RECIBE DOCUMENTO
+            sel_recib_documento.setId("sel_recib_documento");
+            sel_recib_documento.setTitle("REGISTRE DOCUMENTOS");
+            sel_recib_documento.getBot_aceptar().setMetodo("ingreseInscrip");
+            sel_recib_documento.setSeleccionTabla(ser_EstructuraOrganizacional.getDocumentoRequerido("true,false"), "ide_ystdor");
+
+            agregarComponente(sel_recib_documento);
+
         } else {
             utilitario.agregarNotificacionInfo("Mensaje", "EL usuario ingresado no registra permisos para el registro de Inscricpiones. Consulte con el Administrador");
         }
+
     }
 
     public void aceptarDialogo() {
@@ -891,7 +929,7 @@ public class Preinscripcion extends Pantalla {
         }
     }
 
-    public void recibeDocumento() {
+    public void registraInscripcion() {
         if (tab_pre_inscrip.getValor("recibido_yinpin").equals("false")) {
             TablaGenerica tab_documento = utilitario.consultar(ser_EstructuraOrganizacional.getDocumentoRequeridoPeriodo(com_periodo_academico.getValue().toString(), par_modulo_inscripcion));
             utilitario.getConexion().ejecutarSql(ser_EstructuraOrganizacional.deleteBloqueos(utilitario.getVariable("IDE_USUA")));
@@ -917,6 +955,36 @@ public class Preinscripcion extends Pantalla {
         } else {
             utilitario.agregarMensajeError("No puede recibir Documentos", "Usted ya ejecuto la opcion recibir documentos, y no puede volver a ejecutarle pues recibirlo individualmente si lo deses");
         }
+    }
+
+    public void abrirDialogoIncripcion() {
+        cal_fecha_inscripcion.setFechaActual();
+        dia_dialogo_ins.dibujar();
+        System.out.println("error");
+    }
+
+    public void abrirArchivos() {
+        sel_recib_documento.dibujar();
+    }
+
+    public void ingreseInscrip() {
+        String str_seleccionado = sel_recib_documento.getSeleccionados();     
+        TablaGenerica tab_documento = utilitario.consultar("select * from yavirac_stror_documento_reque where ide_ystdor in (" + str_seleccionado + ")");
+        tab_documento.imprimirSql();       
+        //Se inserta la tabla de documentos requeridos
+        for (int i = 0; i < tab_documento.getTotalFilas(); i++) {
+            tab_requ_entregado.insertar();
+            tab_requ_entregado.setValor("ide_yinpin", tab_pre_inscrip.getValor("ide_yinpin"));
+            tab_requ_entregado.setValor("ide_ystdor", tab_documento.getValor(i, "ide_ystdor"));
+            tab_requ_entregado.setValor("entregado_yinree", "true");
+        } 
+        tab_requ_entregado.guardar();       
+        guardarPantalla();
+        //Se actualiza la tabla pre_inscripcion afirmando que el postulante esta inscrito
+        utilitario.getConexion().ejecutarSql("update yavirac_ins_pre_inscripcion set inscrito_yinpin = true,fecha_registro_yinpin ='" + cal_fecha_inscripcion.getFecha() + "', observacion_yinpin ='" + are_observacion2.getValue() + "' where ide_yinpin = " + tab_pre_inscrip.getValor("ide_yinpin"));
+        dia_dialogo_ins.cerrar();
+        sel_recib_documento.cerrar();
+        tab_requ_entregado.actualizar();                
     }
 
     public void aceptarDialogoAlumno() {
@@ -1198,6 +1266,14 @@ public class Preinscripcion extends Pantalla {
 
     public void setCal_fecha_contacto(Calendario cal_fecha_contacto) {
         this.cal_fecha_contacto = cal_fecha_contacto;
+    }
+
+    public SeleccionTabla getSel_recib_documento() {
+        return sel_recib_documento;
+    }
+
+    public void setSel_recib_documento(SeleccionTabla sel_recib_documento) {
+        this.sel_recib_documento = sel_recib_documento;
     }
 
 }
