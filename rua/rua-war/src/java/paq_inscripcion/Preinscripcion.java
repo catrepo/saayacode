@@ -65,6 +65,7 @@ public class Preinscripcion extends Pantalla {
     private SeleccionFormatoReporte sel_rep = new SeleccionFormatoReporte();
     private VisualizarPDF vipdf_comprobante = new VisualizarPDF();
     private VisualizarPDF vipdf_rep_grafico = new VisualizarPDF();
+    private VisualizarPDF vipdf_rep_final = new VisualizarPDF();
 
     private Tabla tab_direccion = new Tabla();
     private Tabla tab_telefono = new Tabla();
@@ -155,38 +156,45 @@ public class Preinscripcion extends Pantalla {
 
             //BOTON REGISTRO DE ALUMNOS
             Boton bot_registroAlumno = new Boton();
-            bot_registroAlumno.setValue("Listado Alumnos");
+            bot_registroAlumno.setValue("LISTADO ALUMNOS");
             bot_registroAlumno.setIcon("ui-icon-note");
             bot_registroAlumno.setMetodo("selregistraAlumno");
             grup_cuerpo.getChildren().add(bot_registroAlumno);
 
             //BOTON ACTUALIZAR DE ALUMNOS
             Boton bot_actualizaAlumno = new Boton();
-            bot_actualizaAlumno.setValue("Actualizar Alumno");
+            bot_actualizaAlumno.setValue("ACTUALIZAR ALUMNO");
             bot_actualizaAlumno.setIcon("ui-icon-refresh");
             bot_actualizaAlumno.setMetodo("selactualizaAlumno");
             grup_cuerpo.getChildren().add(bot_actualizaAlumno);
 
             //BOTON REGISTRAR INSCRIPCION
             Boton bot_registra_inscripcion = new Boton();
-            bot_registra_inscripcion.setValue("Registar Inscripcion");
+            bot_registra_inscripcion.setValue("REGISTRAR INSCRIPCION");
             bot_registra_inscripcion.setIcon("ui-icon-clipboard");
             bot_registra_inscripcion.setMetodo("abrirDialogoIncripcion");
             grup_cuerpo.getChildren().add(bot_registra_inscripcion);
 
             //BOTON CARGAR ARCHIVO
             Boton bot_archivo = new Boton();
-            bot_archivo.setValue("Cargar Archivo SENECYT");
+            bot_archivo.setValue("CARGAR ARCHIVO SENECYT");
             bot_archivo.setIcon("ui-icon-clipboard");
             bot_archivo.setMetodo("abrirDialogoImportar");
             grup_cuerpo.getChildren().add(bot_archivo);
 
             //BOTON AGREGAR ALUMNO
             Boton bot_agregarAlumno = new Boton();
-            bot_agregarAlumno.setValue("Crear Alumno");
+            bot_agregarAlumno.setValue("CREAR ALUMNO");
             bot_agregarAlumno.setIcon("ui-icon-person");
             bot_agregarAlumno.setMetodo("crearAlumno");
             grup_cuerpo.getChildren().add(bot_agregarAlumno);
+
+            //BOTON IMPRIMIR REPORTE FINAL
+            Boton bot_imprimirReporte = new Boton();         
+            bot_imprimirReporte.setValue("IMPRIMIR REPORTE");
+            bot_imprimirReporte.setIcon("ui-icon-print");
+            bot_imprimirReporte.setMetodo("imprimirReporte");
+            grup_cuerpo.getChildren().add(bot_imprimirReporte);
 
             tab_pre_inscrip.setId("tab_pre_inscrip");
             tab_pre_inscrip.setTabla("yavirac_ins_pre_inscripcion", "ide_yinpin", 1);
@@ -333,6 +341,10 @@ public class Preinscripcion extends Pantalla {
             vipdf_rep_grafico.setTitle("REPORTE POR INSTITUTOS");
             agregarComponente(vipdf_rep_grafico);
 
+            vipdf_rep_final.setId("vipdf_rep_final");
+            vipdf_rep_final.setTitle("REPORTE TOTAL INSCRITOS");
+            agregarComponente(vipdf_rep_final);
+
             //subir archivo
             Grid gri_cuerpo_archivo = new Grid();
 
@@ -463,6 +475,20 @@ public class Preinscripcion extends Pantalla {
 
     }
 
+    public void imprimirReporte() {
+        if (com_periodo_academico.getValue() != null){
+            ///////////AQUI ABRE EL REPORTE
+            Map map_parametros = new HashMap();
+            map_parametros.put("nombre", utilitario.getVariable("NICK"));
+            map_parametros.put("ide_ystpea", Integer.parseInt(com_periodo_academico.getValue().toString()));     
+            //System.out.println(" " + str_titulos);
+            vipdf_rep_final.setVisualizarPDF("rep_inscripcion/rep_ins_resultado.jasper", map_parametros);
+            vipdf_rep_final.dibujar();
+            utilitario.addUpdate("vipdf_rep_final");                            
+    } else {
+            utilitario.agregarMensajeInfo("Seleccione un Periodo Académico", "");
+        }
+    }         
     public void aceptarDialogo() {
         utilitario.getConexion().ejecutarSql("update yavirac_ins_pre_inscripcion set contactado_yinpin=" + rad_contacto.getValue() + ",fecha_contac_yinpin='" + cal_fecha_contacto.getFecha() + "',observacion_contac_yinpin='" + are_observacion.getValue() + "' where ide_yinpin =" + tab_pre_inscrip.getValor("ide_yinpin"));
         dia_dialogo.cerrar();
@@ -968,23 +994,23 @@ public class Preinscripcion extends Pantalla {
     }
 
     public void ingreseInscrip() {
-        String str_seleccionado = sel_recib_documento.getSeleccionados();     
+        String str_seleccionado = sel_recib_documento.getSeleccionados();
         TablaGenerica tab_documento = utilitario.consultar("select * from yavirac_stror_documento_reque where ide_ystdor in (" + str_seleccionado + ")");
-        tab_documento.imprimirSql();       
+        tab_documento.imprimirSql();
         //Se inserta la tabla de documentos requeridos
         for (int i = 0; i < tab_documento.getTotalFilas(); i++) {
             tab_requ_entregado.insertar();
             tab_requ_entregado.setValor("ide_yinpin", tab_pre_inscrip.getValor("ide_yinpin"));
             tab_requ_entregado.setValor("ide_ystdor", tab_documento.getValor(i, "ide_ystdor"));
             tab_requ_entregado.setValor("entregado_yinree", "true");
-        } 
-        tab_requ_entregado.guardar();       
+        }
+        tab_requ_entregado.guardar();
         guardarPantalla();
         //Se actualiza la tabla pre_inscripcion afirmando que el postulante esta inscrito
         utilitario.getConexion().ejecutarSql("update yavirac_ins_pre_inscripcion set inscrito_yinpin = true,fecha_registro_yinpin ='" + cal_fecha_inscripcion.getFecha() + "', observacion_yinpin ='" + are_observacion2.getValue() + "' where ide_yinpin = " + tab_pre_inscrip.getValor("ide_yinpin"));
         dia_dialogo_ins.cerrar();
         sel_recib_documento.cerrar();
-        tab_requ_entregado.actualizar();                
+        tab_requ_entregado.actualizar();
     }
 
     public void aceptarDialogoAlumno() {
@@ -1274,6 +1300,14 @@ public class Preinscripcion extends Pantalla {
 
     public void setSel_recib_documento(SeleccionTabla sel_recib_documento) {
         this.sel_recib_documento = sel_recib_documento;
+    }
+
+    public VisualizarPDF getVipdf_rep_final() {
+        return vipdf_rep_final;
+    }
+
+    public void setVipdf_rep_final(VisualizarPDF vipdf_rep_final) {
+        this.vipdf_rep_final = vipdf_rep_final;
     }
 
 }
