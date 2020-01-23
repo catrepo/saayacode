@@ -232,6 +232,8 @@ public class Preinscripcion extends Pantalla {
             tab_pre_inscrip.getColumna("fecha_inscripcion_yinpin").setNombreVisual("FECHA INSCRIPCION");
             tab_pre_inscrip.getColumna("observacion_yinpin").setNombreVisual("OBSERVACION");
             //tab_pre_inscrip.getColumna("recibido_yinpin").setNombreVisual("RECIBIDO");
+            tab_pre_inscrip.getColumna("nro_folio_yinpin").setNombreVisual("NRO. FOLIO");
+            tab_pre_inscrip.getColumna("nota_obtenida_yinsin").setNombreVisual("NOTA OBTENIDA");      
             tab_pre_inscrip.getColumna("contactado_yinpin").setNombreVisual("CONTACTADO");
             tab_pre_inscrip.getColumna("fecha_contac_yinpin").setNombreVisual("FECHA CONTACTADO");
             tab_pre_inscrip.getColumna("observacion_contac_yinpin").setNombreVisual("NOTA CONTACTO");
