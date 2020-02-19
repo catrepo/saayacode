@@ -56,10 +56,6 @@ where b.ide_ystmen in ($P!{ide_ystmen})]]>
 					</textElement>
 					<text><![CDATA[MALLA CURRICULAR]]></text>
 				</staticText>
-				<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-					<reportElement uuid="3cca7227-a464-4bb8-9c09-66c6921a70ea" x="10" y="0" width="115" height="71"/>
-					<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/web/imagenes/logo3.png"]]></imageExpression>
-				</image>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="0b39a7b1-a882-407c-9b47-9f838b46c126" stretchType="RelativeToBandHeight" x="139" y="36" width="416" height="15"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -67,6 +63,16 @@ where b.ide_ystmen in ($P!{ide_ystmen})]]>
 					</textElement>
 					<textFieldExpression><![CDATA["MODALIDAD "+$F{detalle_ysttfe}+"   Nª RESOLUCION "+$F{resolucion_ystmen}]]></textFieldExpression>
 				</textField>
+				<image scaleImage="FillFrame">
+					<reportElement uuid="e8e73aa3-71c2-4761-bc0c-49d9328161e6" key="image-1" stretchType="RelativeToBandHeight" x="15" y="0" width="105" height="72" isRemoveLineWhenBlank="true"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/imagenes/logo3.png"]]></imageExpression>
+				</image>
 			</band>
 		</groupHeader>
 		<groupFooter>
