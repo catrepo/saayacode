@@ -160,8 +160,8 @@ where b.ide_ystmen in ($P!{ide_ystmen})]]>
 			</band>
 		</groupFooter>
 	</group>
-	<group name="mension" isStartNewPage="true">
-		<groupExpression><![CDATA[$F{descripcion_ystcrr}]]></groupExpression>
+	<group name="prueba" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{ide_ystmen}]]></groupExpression>
 		<groupFooter>
 			<band height="50">
 				<subreport>
