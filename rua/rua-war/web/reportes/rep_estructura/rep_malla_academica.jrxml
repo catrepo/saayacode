@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\JHON\\Documents\\PROYECTOS\\saaya_02\\trunk\\rua\\rua-war\\web\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ide_ystmen" class="java.lang.String">
@@ -58,7 +58,7 @@ where b.ide_ystmen in ($P!{ide_ystmen})]]>
 				</staticText>
 				<image hAlign="Center" vAlign="Middle">
 					<reportElement uuid="3cca7227-a464-4bb8-9c09-66c6921a70ea" x="10" y="0" width="114" height="71"/>
-					<imageExpression><![CDATA["C:\\Users\\JHON\\Documents\\PROYECTOS\\saaya_02\\trunk\\rua\\rua-war\\web\\imagenes\\logo3.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"imagenes/logo3.png"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="0b39a7b1-a882-407c-9b47-9f838b46c126" stretchType="RelativeToBandHeight" x="139" y="36" width="416" height="15"/>
