@@ -57,7 +57,7 @@ where b.ide_ystmen in ($P!{ide_ystmen})]]>
 					<text><![CDATA[MALLA CURRICULAR]]></text>
 				</staticText>
 				<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-					<reportElement uuid="3cca7227-a464-4bb8-9c09-66c6921a70ea" x="10" y="0" width="114" height="71"/>
+					<reportElement uuid="3cca7227-a464-4bb8-9c09-66c6921a70ea" x="10" y="0" width="115" height="71"/>
 					<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/web/imagenes/logo3.png"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true">
