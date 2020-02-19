@@ -98,6 +98,7 @@ public class Carrera extends Pantalla {
         bar_botones.agregarBoton(bot_malla);
 
         sel_mesion.setId("sel_mesion");
+        sel_mesion.setTitle("SELECION DE MALLAS");
         sel_mesion.setSeleccionTabla(ser_estructura.getMensionFormacion(), "ide_ystmen");
         sel_mesion.getTab_seleccion().getColumna("descripcion_ystmen").setFiltro(true);
         sel_mesion.getTab_seleccion().setRows(12);
