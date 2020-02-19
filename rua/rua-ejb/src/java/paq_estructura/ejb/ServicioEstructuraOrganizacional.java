@@ -142,8 +142,7 @@ public class ServicioEstructuraOrganizacional {
         sql = "SELECT ide_ysttdp ,descripcion_ysttdp FROM yavirac_stror_tipo_divisio_po where activo_ysttdp in (" + activo + ")";
         return sql;
     }
-    
-    
+
     /**
      * Retorna la division politica por parroquias
      */
@@ -163,7 +162,6 @@ public class ServicioEstructuraOrganizacional {
                 + "order by pais, provincia,canton,parroquia";
         return sql;
     }
-
 
     /**
      * Retorna el Estado Civil
@@ -258,15 +256,16 @@ public class ServicioEstructuraOrganizacional {
         String sql = "";
         sql = "select ide_usua,nom_usua,nick_usua,ide_ypedpe from sis_usuario where ide_usua in(" + ide_usua + ") " + condicion;
         return sql;
-    }    
-       public String getMalla() {
-        String sql="";
-        sql="select a.ide_ystmal, descripcion_ystnie, detalle_ystmat, descripcion_ystmen \n" +
-            "from yavirac_stror_malla a, yavirac_stror_nivel_educacion b,yavirac_stror_mension c,yavirac_stror_materia d\n" +
-            "where a.ide_ystnie = b.ide_ystnie\n" +
-            "and a.ide_ystmen = c.ide_ystmen\n" +
-            "and a.ide_ystmat = d.ide_ystmat\n" +
-            "order by descripcion_ystmen, descripcion_ystnie";
+    }
+
+    public String getMalla() {
+        String sql = "";
+        sql = "select a.ide_ystmal, descripcion_ystnie, detalle_ystmat, descripcion_ystmen \n"
+                + "from yavirac_stror_malla a, yavirac_stror_nivel_educacion b,yavirac_stror_mension c,yavirac_stror_materia d\n"
+                + "where a.ide_ystnie = b.ide_ystnie\n"
+                + "and a.ide_ystmen = c.ide_ystmen\n"
+                + "and a.ide_ystmat = d.ide_ystmat\n"
+                + "order by descripcion_ystmen, descripcion_ystnie";
         return sql;
     }
 
@@ -444,59 +443,75 @@ public class ServicioEstructuraOrganizacional {
                 + "left join yavirac_stror_tipo_for_educaci h on g.ide_ysttfe=h.ide_ysttfe";
         return sql;
     }
+
     public String getTipoOperadora() {
 
         String sql = "";
         sql = "select ide_ysttio,descripcion_ysttio from yavirac_stror_tipo_operadora";
         return sql;
     }
+
     public String getTipoTelefono() {
 
         String sql = "";
         sql = "select ide_ysttit,descripcion_ysttit from yavirac_stror_tipo_telefonia";
         return sql;
     }
+
     public String getTipoCorreo() {
 
         String sql = "";
         sql = "select ide_ysttoc,descripcion_ysttic from yavirac_stror_tipo_correo";
         return sql;
     }
+
     public String getTipoDiscapacidad() {
 
         String sql = "";
         sql = "select ide_ysttid,descripcion_ysttid from yavirac_stror_tipo_discapacid";
         return sql;
     }
+
     public String getTipoArchivo() {
 
         String sql = "";
         sql = "select ide_ysttia,descripcion_ysttia from yavirac_stror_tipo_archivo";
         return sql;
     }
-    
+
     public String getInstitucion() {
 
         String sql = "";
         sql = "select ide_ystins,descripcion_ystins from yavirac_stror_institucion;";
         return sql;
     }
+
     public String getMensionAlumno(String alumno) {
 
         String sql = "";
-        sql = "select * from yavirac_stror_mension where ide_ystmen in ( select ide_ystmen from yavirac_matri_matricula  where ide_yaldap="+alumno+" order by ide_ymamat desc limit 1)";
+        sql = "select * from yavirac_stror_mension where ide_ystmen in ( select ide_ystmen from yavirac_matri_matricula  where ide_yaldap=" + alumno + " order by ide_ymamat desc limit 1)";
         return sql;
-    }    
+    }
+
     public String getCarreraMension(String mension) {
 
         String sql = "";
-        sql = "select a.ide_ystmen,descripcion_ystmen,total_horas_ystmen,codigo_ystmal,numero_horas_ystmal,b.ide_ystmal,detalle_ystmat,descripcion_ystnie\n" +
-"   from yavirac_stror_mension a, yavirac_stror_malla b,yavirac_stror_materia c,yavirac_stror_nivel_educacion d\n" +
-"   where a.ide_ystmen=b.ide_ystmen\n" +
-"   and b.ide_ystmat= c.ide_ystmat\n" +
-"   and b.ide_ystnie=d.ide_ystnie\n" +
-"   and a.ide_ystmen=" +mension+
-"   order by orden_ystnie,detalle_ystmat";
+        sql = "select a.ide_ystmen,descripcion_ystmen,total_horas_ystmen,codigo_ystmal,numero_horas_ystmal,b.ide_ystmal,detalle_ystmat,descripcion_ystnie\n"
+                + "   from yavirac_stror_mension a, yavirac_stror_malla b,yavirac_stror_materia c,yavirac_stror_nivel_educacion d\n"
+                + "   where a.ide_ystmen=b.ide_ystmen\n"
+                + "   and b.ide_ystmat= c.ide_ystmat\n"
+                + "   and b.ide_ystnie=d.ide_ystnie\n"
+                + "   and a.ide_ystmen=" + mension
+                + "   order by orden_ystnie,detalle_ystmat";
         return sql;
-    }    
+    }
+
+    public String getMensionFormacion() {
+        String sql = "";
+        sql = "select ide_ystmen,detalle_ysttfe,descripcion_ystmen,fechaapro_ystmen\n"
+                + "from yavirac_stror_mension a\n"
+                + "left join yavirac_stror_tipo_for_educaci b on a.ide_ysttfe=b.ide_ysttfe\n"
+                + "order by detalle_ysttfe,descripcion_ystmen";
+        return sql;
+    }
 }
