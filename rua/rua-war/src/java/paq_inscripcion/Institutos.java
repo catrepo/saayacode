@@ -11,8 +11,8 @@ import framework.componentes.Tabla;
 import sistema.aplicacion.Pantalla;
 
 /**
- *
- * @author OROCHII VEGA
+ *    
+ * @author CRISTIAN VEGA
  */
 public class Institutos extends Pantalla{
     
@@ -20,11 +20,15 @@ public class Institutos extends Pantalla{
     public Institutos (){
         tab_instituto.setId("tab_instituto");
         tab_instituto.setTabla("yavirac_ins_instituto", "ide_yinsin", 0);
+        tab_instituto.getColumna("ide_yinsin").setNombreVisual("CÓDIGO");
+        tab_instituto.getColumna("nombre_yinsin").setNombreVisual("NOMBRE INSTITUTO");
+        tab_instituto.getColumna("codigo_instit_yinsin").setNombreVisual("CÓDIGO INSTITUTO");
+        tab_instituto.getColumna("abreviatura_yinsin").setNombreVisual("ABREVIATURA INSTITUTO");
         tab_instituto.dibujar();
         
         PanelTabla pat_institutos=new PanelTabla();
         pat_institutos.setId("pat_institutos");
-        pat_institutos.setPanelTabla(tab_instituto);
+        pat_institutos.setPanelTabla(tab_instituto);    
         
         Division div_institutos=new Division();
         div_institutos.setId("div_institutos");
@@ -32,10 +36,7 @@ public class Institutos extends Pantalla{
         agregarComponente(div_institutos);
         
    }
-    
-    
-    
-    
+
     @Override
     public void insertar() {
         tab_instituto.insertar();

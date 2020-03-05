@@ -164,11 +164,11 @@ public class AsignacionDocente extends Pantalla {
 
         String cod = com_mension.getValue().toString() + "";
         //System.out.println("COD: "+cod);
-        tab_asignaciondocente.setCondicion(" ide_yindom=" + cod);
+        tab_asignaciondocente.setCondicion("ide_yindom=" + cod);
         tab_asignaciondocente.ejecutarSql();
-        //tab_asignaciondocente.imprimirSql();
+        tab_asignaciondocente.imprimirSql();
         //tab_docentealumno.ejecutarValorForanea(tab_asignaciondocente.getValorSeleccionado());
-        utilitario.addUpdate("tab_asignaciondocente");
+        utilitario.addUpdate("tab_asignaciondocente");     
     }
 
     public void selregistraAlumno() {
